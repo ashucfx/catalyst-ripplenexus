@@ -47,8 +47,8 @@ export default function BlueprintPage() {
               <div className="prose-catalyst">
                 <p>
                   Research identifies the mid-career segment (ages 43–62) as the most vulnerable
-                  and the most lucrative. These professionals are experiencing the "two-edged
-                  problem" of skill obsolescence anxiety and career plateauing simultaneously.
+                  and the most lucrative. These professionals are experiencing the &ldquo;two-edged
+                  problem&rdquo; of skill obsolescence anxiety and career plateauing simultaneously.
                 </p>
                 <p>
                   The stagnation is not caused by lack of skill. It is caused by a failure of

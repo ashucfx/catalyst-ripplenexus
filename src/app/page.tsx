@@ -165,7 +165,7 @@ export default function HomePage() {
           {/* Headline — passes 5-second test */}
           <h1 className="font-serif font-light text-bone leading-tight tracking-[-0.025em] mb-6"
               style={{ fontSize: 'clamp(2.8rem, 7vw, 6rem)' }}>
-            You're worth more<br />
+            You&apos;re worth more<br />
             than your salary says.
           </h1>
 

@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/Button'
-import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Intelligence — Research & Thought Leadership',
