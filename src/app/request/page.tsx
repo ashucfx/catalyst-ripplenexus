@@ -174,6 +174,25 @@ export default function RequestPage() {
                   </div>
                 ))}
               </div>
+              {process.env.NEXT_PUBLIC_CALENDLY_URL && (
+                <div className="border border-signal-gold/20 bg-graphite/10 p-6 mb-8">
+                  <p className="label-inst mb-3">Skip the wait — book directly</p>
+                  <p className="font-sans text-muted text-sm mb-4">
+                    If you prefer to schedule immediately, use the link below to book your
+                    first conversation in your own time zone.
+                  </p>
+                  <a
+                    href={process.env.NEXT_PUBLIC_CALENDLY_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block font-sans text-signal-gold text-[0.7rem] tracking-[0.15em]
+                               uppercase hover:text-bone transition-colors border-b border-signal-gold/40
+                               hover:border-bone pb-0.5"
+                  >
+                    Schedule directly →
+                  </a>
+                </div>
+              )}
               <Button href="/" variant="ghost">← Return home</Button>
             </div>
           </div>

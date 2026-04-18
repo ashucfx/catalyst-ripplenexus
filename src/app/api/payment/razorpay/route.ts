@@ -2,14 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createRazorpayOrder } from '@/lib/payment/razorpay'
 import { rateLimit } from '@/lib/rateLimit'
 
-// Fixed price per product slug
 const PRICES_INR: Record<string, number> = {
   audit: 15000,
 }
 
 export async function POST(req: NextRequest) {
-  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
-  const { ok } = rateLimit(ip, { limit: 5, windowMs: 60 * 60 * 1000 })
+  const ip     = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
+  const { ok } = await rateLimit(ip, { limit: 5, windowMs: 60 * 60 * 1000 }, 'payment')
   if (!ok) return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
 
   try {
@@ -18,11 +17,10 @@ export async function POST(req: NextRequest) {
     const amountINR = PRICES_INR[product]
     if (!amountINR) return NextResponse.json({ error: 'Invalid product.' }, { status: 400 })
 
-    const receipt = `${product}_${Date.now()}`
-    const order   = await createRazorpayOrder({
+    const order = await createRazorpayOrder({
       amountINR,
-      receipt,
-      notes: { email: email ?? '', product },
+      receipt: `${product}_${Date.now()}`,
+      notes:   { email: email ?? '', product },
     })
 
     return NextResponse.json(order)

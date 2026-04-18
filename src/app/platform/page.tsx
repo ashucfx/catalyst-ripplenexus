@@ -4,6 +4,7 @@ import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/Button'
 import { TPIMeter } from '@/components/ui/TPIMeter'
 import { InflectionMark } from '@/components/ui/InflectionMark'
+import { PlatformWaitlist } from '@/components/ui/PlatformWaitlist'
 
 export const metadata: Metadata = {
   title: 'Catalyst Platform — The Intelligence Engine',
@@ -236,12 +237,7 @@ export default function PlatformPage() {
                     ))}
                   </ul>
                   <div className="mt-auto pt-4 border-t border-graphite">
-                    <Button
-                      href="/request"
-                      variant={plan.featured ? 'primary' : 'ghost'}
-                    >
-                      {plan.cta}
-                    </Button>
+                    <PlatformWaitlist plan={plan.name} />
                   </div>
                 </div>
               ))}
