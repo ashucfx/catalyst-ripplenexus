@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { Button } from '@/components/ui/Button'
 import { TPIMeter } from '@/components/ui/TPIMeter'
+import { AuditCheckout } from '@/components/ui/AuditCheckout'
 
 export const metadata: Metadata = {
   title: 'Market Value Audit — Tier I',
@@ -147,17 +147,17 @@ export default function AuditPage() {
             </div>
           </div>
 
-          {/* CTA */}
-          <div className="border-t border-graphite pt-16 text-center">
-            <h2 className="font-serif text-bone text-3xl font-light mb-6">
-              Begin with a conversation.
-            </h2>
-            <p className="font-serif text-muted text-lg mb-10 max-w-xl mx-auto">
-              45 minutes. One TPI score. A repositioning map that changes the next negotiation.
-            </p>
-            <Button href="/request" variant="primary">
-              Request the Market Value Audit →
-            </Button>
+          {/* CTA — live checkout */}
+          <div className="border-t border-graphite pt-16">
+            <div className="max-w-xl mx-auto text-center mb-10">
+              <h2 className="font-serif text-bone text-3xl font-light mb-4">
+                Book your Audit now.
+              </h2>
+              <p className="font-serif text-muted text-lg">
+                45 minutes. Your TPI score. A repositioning map that changes the next negotiation.
+              </p>
+            </div>
+            <AuditCheckout />
           </div>
 
         </div>
