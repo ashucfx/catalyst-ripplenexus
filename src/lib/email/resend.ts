@@ -3,7 +3,7 @@ import { Resend } from 'resend'
 export const FROM_EMAIL  = process.env.RESEND_FROM_EMAIL  ?? 'onboarding@resend.dev'
 export const FROM_NAME   = process.env.RESEND_FROM_NAME   ?? 'Catalyst'
 export const FROM        = `${FROM_NAME} <${FROM_EMAIL}>`
-export const ADMIN_EMAIL = process.env.RESEND_ADMIN_EMAIL ?? 'ashutosh6471@gmail.com'
+export const ADMIN_EMAIL = process.env.RESEND_ADMIN_EMAIL ?? 'catalyst@theripplenexus.com'
 
 // Lazy singleton — instantiated on first request, not at module load.
 // Avoids Next.js build-time crash when RESEND_API_KEY is not set.

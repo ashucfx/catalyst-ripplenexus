@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
           </p>
           <p style="color:#8B8681;font-size:15px;line-height:1.6;margin:0;">
             In the meantime, the free TPI score calculator is live at
-            <a href="${process.env.NEXT_PUBLIC_BASE_URL}/tpi" style="color:#B8935B;">catalystripple.com/tpi</a>.
+            <a href="${process.env.NEXT_PUBLIC_BASE_URL}/tpi" style="color:#B8935B;">www.catalyst.theripplenexus.com/tpi</a>.
           </p>
         </div>`,
       }),

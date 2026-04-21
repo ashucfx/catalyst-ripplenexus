@@ -4,7 +4,7 @@ import { Footer } from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
-  description: 'Terms governing the use of Catalyst services and the catalystripple.com website.',
+  description: 'Terms governing the use of Catalyst services and the www.catalyst.theripplenexus.com website.',
   robots: { index: false, follow: false },
 }
 
@@ -30,7 +30,7 @@ export default function TermsPage() {
               <section>
                 <h2 className="font-serif text-bone text-xl font-light mb-4">1. Acceptance</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
-                  By accessing catalystripple.com or submitting any form on this website, you
+                  By accessing www.catalyst.theripplenexus.com or submitting any form on this website, you
                   agree to be bound by these Terms of Service. If you do not agree, do not
                   use this website. These terms are governed by the laws of India.
                 </p>
@@ -125,9 +125,9 @@ export default function TermsPage() {
                 <h2 className="font-serif text-bone text-xl font-light mb-4">Contact</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   For legal enquiries, email{' '}
-                  <a href="mailto:legal@catalystripple.com"
+                  <a href="mailto:legal@www.catalyst.theripplenexus.com"
                      className="text-signal-gold hover:text-bone transition-colors">
-                    legal@catalystripple.com
+                    legal@www.catalyst.theripplenexus.com
                   </a>
                 </p>
               </section>

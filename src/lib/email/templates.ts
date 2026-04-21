@@ -46,7 +46,7 @@ function wrap(body: string): string {
           <tr>
             <td style="padding:32px 0 0 0;border-top:1px solid ${C.graphite};">
               <p style="margin:0;font-family:Arial,sans-serif;font-size:10px;color:${C.muted};letter-spacing:0.1em;text-transform:uppercase;">
-                Catalyst · Ripple Nexus Institution · catalystripple.com
+                Catalyst · Ripple Nexus Institution · www.catalyst.theripplenexus.com
               </p>
             </td>
           </tr>
@@ -360,7 +360,7 @@ export function tpiScoreEmail(d: TPIEmailData): { subject: string; html: string 
       </tr>
     </table>
 
-    ${cta('Book the Full Audit — $499 →', 'https://www.catalystripple.com/request')}
+    ${cta('Book the Full Audit — $499 →', 'https://www.catalyst.theripplenexus.com/request')}
 
     <p style="margin:24px 0 0 0;font-family:Georgia,serif;font-size:13px;
                color:${C.muted};line-height:1.6;font-style:italic;">
@@ -414,7 +414,7 @@ export function newsletterWelcomeEmail(): { subject: string; html: string } {
             Five questions. Five minutes. Tells you exactly where you stand in the market
             and what the gap is costing you annually.
           </p>
-          ${cta('Get Free TPI Score →', 'https://www.catalystripple.com/tpi')}
+          ${cta('Get Free TPI Score →', 'https://www.catalyst.theripplenexus.com/tpi')}
         </td>
       </tr>
     </table>

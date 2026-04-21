@@ -11,7 +11,7 @@ interface BookingEmailData {
   meetingTypeId: string
 }
 
-const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://www.catalystripple.com'
+const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://www.catalyst.theripplenexus.com'
 
 function cancelLink(token: string): string {
   return `${BASE}/book/cancel?token=${token}`

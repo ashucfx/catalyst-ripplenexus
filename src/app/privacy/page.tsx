@@ -32,7 +32,7 @@ export default function PrivacyPage() {
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   Catalyst is operated by Ripple Nexus Institution (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;).
                   This policy explains how we handle personal information submitted through
-                  catalystripple.com and related services.
+                  www.catalyst.theripplenexus.com and related services.
                 </p>
               </section>
 
@@ -130,9 +130,9 @@ export default function PrivacyPage() {
                 <h2 className="font-serif text-bone text-xl font-light mb-4">Contact</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   For privacy enquiries or data requests, email{' '}
-                  <a href="mailto:privacy@catalystripple.com"
+                  <a href="mailto:privacy@www.catalyst.theripplenexus.com"
                      className="text-signal-gold hover:text-bone transition-colors">
-                    privacy@catalystripple.com
+                    privacy@www.catalyst.theripplenexus.com
                   </a>
                 </p>
               </section>

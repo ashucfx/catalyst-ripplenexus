@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next'
 
-const BASE = 'https://www.catalystripple.com'
+const BASE = 'https://www.catalyst.theripplenexus.com'
 
 const intelligenceSlugs = [
   'resume-worthless-2026',

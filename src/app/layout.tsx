@@ -26,7 +26,7 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 })
 
-const BASE = 'https://www.catalystripple.com'
+const BASE = 'https://www.catalyst.theripplenexus.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE),

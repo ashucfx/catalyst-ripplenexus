@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       { userAgent: '*', allow: '/' },
     ],
-    sitemap: 'https://www.catalystripple.com/sitemap.xml',
-    host: 'https://www.catalystripple.com',
+    sitemap: 'https://www.catalyst.theripplenexus.com/sitemap.xml',
+    host: 'https://www.catalyst.theripplenexus.com',
   }
 }

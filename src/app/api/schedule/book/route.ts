@@ -6,7 +6,7 @@ import { generateSlots } from '@/lib/schedule/slots'
 import { resend } from '@/lib/email/resend'
 import { bookingConfirmationClient, bookingConfirmationAdmin } from '@/lib/email/bookingTemplates'
 
-const FROM    = `${process.env.RESEND_FROM_NAME ?? 'Catalyst'} <${process.env.RESEND_FROM_EMAIL ?? 'noreply@catalystripple.com'}>`
+const FROM    = `${process.env.RESEND_FROM_NAME ?? 'Catalyst'} <${process.env.RESEND_FROM_EMAIL ?? 'noreply@www.catalyst.theripplenexus.com'}>`
 const ADMIN   = process.env.RESEND_ADMIN_EMAIL ?? ''
 
 export async function POST(req: NextRequest) {
