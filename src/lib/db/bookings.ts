@@ -84,11 +84,31 @@ export async function getBookingsForMonth(year: number, month: number) {
   const to   = new Date(year, month, 1).toISOString()
   const { data } = await db
     .from('bookings')
-    .select('starts_at,ends_at,status')
+    .select('id,starts_at,ends_at,status,created_at')
     .gte('starts_at', from)
     .lt('starts_at', to)
     .in('status', ['confirmed','pending_payment'])
-  return data ?? []
+    
+  if (!data) return []
+
+  // 1. Lazy Cleanup
+  const now = Date.now()
+  const TTL = 15 * 60 * 1000
+  const validBookings = data.filter(b => {
+    if (b.status === 'confirmed') return true
+    return (now - new Date(b.created_at).getTime()) < TTL
+  })
+
+  // 2. Fire and Forget cleanup
+  const expiredIds = data.filter(b => !validBookings.includes(b)).map(b => b.id)
+  if (expiredIds.length > 0) {
+    db.from('bookings')
+      .update({ status: 'cancelled', cancel_reason: 'abandoned_checkout' })
+      .in('id', expiredIds)
+      .then(({ error }) => error && console.error('Lazy cleanup error:', error))
+  }
+
+  return validBookings
 }
 
 export async function getBookingsForDate(dateISO: string) {
@@ -98,11 +118,31 @@ export async function getBookingsForDate(dateISO: string) {
   const dayEnd   = new Date(dateISO + 'T23:59:59Z').toISOString()
   const { data } = await db
     .from('bookings')
-    .select('starts_at,ends_at,status')
+    .select('id,starts_at,ends_at,status,created_at')
     .gte('starts_at', dayStart)
     .lte('starts_at', dayEnd)
     .in('status', ['confirmed','pending_payment'])
-  return data ?? []
+
+  if (!data) return []
+
+  // 1. Lazy Cleanup
+  const now = Date.now()
+  const TTL = 15 * 60 * 1000
+  const validBookings = data.filter(b => {
+    if (b.status === 'confirmed') return true
+    return (now - new Date(b.created_at).getTime()) < TTL
+  })
+
+  // 2. Fire and Forget cleanup
+  const expiredIds = data.filter(b => !validBookings.includes(b)).map(b => b.id)
+  if (expiredIds.length > 0) {
+    db.from('bookings')
+      .update({ status: 'cancelled', cancel_reason: 'abandoned_checkout' })
+      .in('id', expiredIds)
+      .then(({ error }) => error && console.error('Lazy cleanup error:', error))
+  }
+
+  return validBookings
 }
 
 export async function getPendingBookingForUser(email: string, startISO: string): Promise<Booking | null> {
