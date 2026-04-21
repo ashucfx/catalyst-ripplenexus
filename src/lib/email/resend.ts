@@ -9,14 +9,22 @@ export const ADMIN_EMAIL = process.env.RESEND_ADMIN_EMAIL ?? 'catalyst@theripple
 // Avoids Next.js build-time crash when RESEND_API_KEY is not set.
 let _instance: Resend | null = null
 
-function getInstance(): Resend {
-  if (!_instance) _instance = new Resend(process.env.RESEND_API_KEY)
+function getInstance(): Resend | null {
+  if (_instance) return _instance
+  if (!process.env.RESEND_API_KEY) {
+    console.warn('[email] RESEND_API_KEY missing — skipping email dispatch.')
+    return null
+  }
+  _instance = new Resend(process.env.RESEND_API_KEY)
   return _instance
 }
 
 export const resend = {
   emails: {
-    send: (...args: Parameters<Resend['emails']['send']>) =>
-      getInstance().emails.send(...args),
+    send: async (...args: Parameters<Resend['emails']['send']>) => {
+      const instance = getInstance()
+      if (!instance) return { data: null, error: { name: 'SkipError', message: 'Email skipped (Missing API Key)' } as any }
+      return instance.emails.send(...args)
+    },
   },
 }
