@@ -20,7 +20,7 @@ const links = {
   ],
   Institution: [
     { label: 'Ripple Nexus', href: '/' },
-    { label: 'The Sovereign Network', href: '/request' },
+    { label: 'Book a Session', href: '/book' },
     { label: 'Request an Audit', href: '/request' },
     { label: 'Privacy Policy', href: '/privacy' },
     { label: 'Terms of Service', href: '/terms' },

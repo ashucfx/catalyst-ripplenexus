@@ -14,7 +14,7 @@ const offerTiers = [
     name: 'Market Value Audit',
     subtitle: 'Start here',
     price: '$499',
-    priceINR: '₹15,000',
+    priceINR: '₹14,999',
     anchor: 'Anchored against a $5,000–$10,000 immediate salary gain from better negotiation.',
     deliverables: [
       '45-minute positioning diagnostic',

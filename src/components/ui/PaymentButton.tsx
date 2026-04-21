@@ -5,11 +5,13 @@ import Script from 'next/script'
 import type { GeoResponse } from '@/lib/geo'
 
 type Props = {
-  product:     'audit'
+  product:     string   // 'audit' | 'booking:UUID'
   email:       string
   onSuccess:   (data: { method: 'razorpay' | 'paypal'; id: string }) => void
   onError:     (msg: string) => void
   disabled?:   boolean
+  labelINR?:   string   // override button label
+  labelUSD?:   string
 }
 
 // Razorpay checkout.js types
@@ -22,7 +24,7 @@ declare global {
   }
 }
 
-export function PaymentButton({ product, email, onSuccess, onError, disabled }: Props) {
+export function PaymentButton({ product, email, onSuccess, onError, disabled, labelINR, labelUSD }: Props) {
   const [geo,     setGeo]     = useState<GeoResponse | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -141,7 +143,7 @@ export function PaymentButton({ product, email, onSuccess, onError, disabled }: 
                      tracking-[0.2em] uppercase hover:bg-bone transition-colors duration-200
                      cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {loading ? 'Opening checkout…' : 'Pay ₹15,000 — Book Audit →'}
+          {loading ? 'Opening checkout…' : (labelINR ?? 'Pay ₹14,999 — Book Audit →')}
         </button>
         <p className="font-mono text-muted text-[0.6rem] tracking-widest text-center mt-2">
           UPI · Cards · Net Banking · Wallets — powered by Razorpay
@@ -163,7 +165,7 @@ export function PaymentButton({ product, email, onSuccess, onError, disabled }: 
       )}
       <div id="paypal-button-container" className="w-full min-h-[48px]" />
       <p className="font-mono text-muted text-[0.6rem] tracking-widest text-center mt-2">
-        Cards · PayPal — secure international checkout · $499 USD
+        {labelUSD ?? 'Cards · PayPal — secure international checkout · $499 USD'}
       </p>
     </>
   )

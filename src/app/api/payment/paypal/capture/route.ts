@@ -18,6 +18,16 @@ export async function POST(req: NextRequest) {
 
     const resolvedEmail = email || result.payer.email
 
+    // Confirm booking if this is a booking payment
+    if (product?.startsWith('booking:')) {
+      const bookingId = product.replace('booking:', '')
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'}/api/schedule/confirm`, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ bookingId, paymentId: result.captureId, paymentMethod: 'paypal' }),
+      }).catch(e => console.error('[paypal/capture] booking confirm failed:', e))
+    }
+
     await Promise.all([
       insertPayment({
         email:     resolvedEmail,

@@ -116,3 +116,30 @@ export async function capturePayPalOrder(orderId: string): Promise<{
     },
   }
 }
+
+export async function verifyPayPalWebhook(req: Request, rawBody: string): Promise<boolean> {
+  const token = await getAccessToken()
+  const webhookId = process.env.PAYPAL_WEBHOOK_ID
+  if (!webhookId) return false
+
+  const res = await fetch(`${BASE}/v1/notifications/verify-webhook-signature`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      auth_algo: req.headers.get('paypal-auth-algo'),
+      cert_url: req.headers.get('paypal-cert-url'),
+      transmission_id: req.headers.get('paypal-transmission-id'),
+      transmission_sig: req.headers.get('paypal-transmission-sig'),
+      transmission_time: req.headers.get('paypal-transmission-time'),
+      webhook_id: webhookId,
+      webhook_event: JSON.parse(rawBody)
+    })
+  })
+
+  if (!res.ok) return false
+  const data = await res.json()
+  return data.verification_status === 'SUCCESS'
+}
