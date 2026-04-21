@@ -95,7 +95,14 @@ export async function insertPayment(data: {
     order_id:   data.orderId ?? null,
     status:     'completed',
   })
-  if (error) console.error('[db] payments insert:', error.message)
+  if (error) {
+    if (error.code === '23505') {
+      console.warn('[db] payment already recorded:', error.message)
+    } else {
+      console.error('[db] payments insert:', error.message)
+      throw new Error(`Payment insert failed: ${error.message}`)
+    }
+  }
 }
 
 export async function insertPlatformWaitlist(email: string, plan?: string) {
