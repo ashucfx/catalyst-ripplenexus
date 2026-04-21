@@ -15,7 +15,7 @@ export function Header() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-obsidian/96 backdrop-blur-sm border-b border-graphite">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-obsidian/95 backdrop-blur-sm border-b border-graphite">
       <div className="max-w-dossier mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-16">
 

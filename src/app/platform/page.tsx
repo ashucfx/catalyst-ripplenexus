@@ -197,7 +197,7 @@ export default function PlatformPage() {
             <div className="flex items-center gap-4 mb-4">
               <p className="label-inst">SaaS Pricing</p>
               <span className="font-mono text-[0.6rem] tracking-widest bg-signal-gold/10 text-signal-gold border border-signal-gold/30 px-3 py-1">
-                LAUNCHING 2025 — JOIN WAITLIST
+                LAUNCHING JULY 2026 — JOIN WAITLIST
               </span>
             </div>
             <h2 className="font-serif text-bone text-3xl font-light mb-4">
@@ -214,7 +214,9 @@ export default function PlatformPage() {
                   id={plan.id}
                   className={`flex flex-col gap-6 p-8 ${plan.featured ? 'bg-graphite ring-1 ring-signal-gold' : 'bg-obsidian'}`}
                 >
-                  {plan.featured && <p className="label-inst">Most Popular</p>}
+                  <div className="h-5 flex items-start">
+                    {plan.featured && <p className="label-inst uppercase text-[0.6rem]">Most Popular</p>}
+                  </div>
                   <div>
                     <h3 className="font-serif text-bone text-2xl font-light mb-2">{plan.name}</h3>
                     <div className="flex items-baseline gap-1">
