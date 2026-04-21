@@ -4,7 +4,7 @@ import { getDb } from '@/lib/db/supabase'
 import { resend } from '@/lib/email/resend'
 import { bookingConfirmationClient, bookingConfirmationAdmin } from '@/lib/email/bookingTemplates'
 
-const FROM  = `${process.env.RESEND_FROM_NAME ?? 'Catalyst'} <${process.env.RESEND_FROM_EMAIL ?? 'noreply@www.catalyst.theripplenexus.com'}>`
+const FROM  = `${process.env.RESEND_FROM_NAME ?? 'Catalyst'} <${process.env.RESEND_FROM_EMAIL ?? 'catalyst@theripplenexus.com'}>`
 const ADMIN = process.env.RESEND_ADMIN_EMAIL ?? ''
 
 /** Called by payment routes after successful payment capture */

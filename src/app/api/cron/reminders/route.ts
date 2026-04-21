@@ -3,7 +3,7 @@ import { getPendingReminders, markReminderSent } from '@/lib/db/bookings'
 import { resend } from '@/lib/email/resend'
 import { bookingReminder } from '@/lib/email/bookingTemplates'
 
-const FROM = `${process.env.RESEND_FROM_NAME ?? 'Catalyst'} <${process.env.RESEND_FROM_EMAIL ?? 'noreply@www.catalyst.theripplenexus.com'}>`
+const FROM = `${process.env.RESEND_FROM_NAME ?? 'Catalyst'} <${process.env.RESEND_FROM_EMAIL ?? 'catalyst@theripplenexus.com'}>`
 
 export async function GET(req: NextRequest) {
   // Vercel cron — validate authorization header

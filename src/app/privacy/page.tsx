@@ -130,9 +130,9 @@ export default function PrivacyPage() {
                 <h2 className="font-serif text-bone text-xl font-light mb-4">Contact</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   For privacy enquiries or data requests, email{' '}
-                  <a href="mailto:privacy@www.catalyst.theripplenexus.com"
+                  <a href="mailto:catalyst@theripplenexus.com"
                      className="text-signal-gold hover:text-bone transition-colors">
-                    privacy@www.catalyst.theripplenexus.com
+                    catalyst@theripplenexus.com
                   </a>
                 </p>
               </section>
