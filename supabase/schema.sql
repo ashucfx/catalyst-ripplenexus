@@ -6,6 +6,7 @@ create table if not exists newsletter_subscribers (
   created_at timestamptz default now(),
   email      text        not null unique
 );
+alter table newsletter_subscribers enable row level security;
 
 create table if not exists tpi_submissions (
   id         uuid        default gen_random_uuid() primary key,
@@ -20,6 +21,7 @@ create table if not exists tpi_submissions (
   gaps       text[],
   annual_cost text
 );
+alter table tpi_submissions enable row level security;
 
 create table if not exists leads (
   id         uuid        default gen_random_uuid() primary key,
@@ -35,6 +37,7 @@ create table if not exists leads (
   timeline   text,
   referral   text
 );
+alter table leads enable row level security;
 
 create table if not exists payments (
   id         uuid        default gen_random_uuid() primary key,
@@ -48,6 +51,7 @@ create table if not exists payments (
   order_id   text,
   status     text        not null default 'completed'
 );
+alter table payments enable row level security;
 
 create table if not exists platform_waitlist (
   id         uuid        default gen_random_uuid() primary key,
@@ -55,6 +59,7 @@ create table if not exists platform_waitlist (
   email      text        not null unique,
   plan       text
 );
+alter table platform_waitlist enable row level security;
 
 -- Indexes for common query patterns
 create index if not exists idx_tpi_email    on tpi_submissions (email);
