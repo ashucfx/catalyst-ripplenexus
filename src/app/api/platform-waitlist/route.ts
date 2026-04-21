@@ -45,8 +45,9 @@ export async function POST(req: NextRequest) {
     ])
 
     return NextResponse.json({ success: true })
-  } catch (err) {
+  } catch (err: unknown) {
     console.error('[platform-waitlist/route]', err)
-    return NextResponse.json({ error: 'Something went wrong.' }, { status: 500 })
+    const msg = err instanceof Error ? err.message : String(err)
+    return NextResponse.json({ error: msg || 'Something went wrong.' }, { status: 500 })
   }
 }
