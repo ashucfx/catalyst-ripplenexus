@@ -92,8 +92,8 @@ export async function POST(req: NextRequest) {
       timezone,
       status,
     })
-  } catch (err: any) {
-    if (err.message === 'This slot was just booked. Please select another time.') {
+  } catch (err: unknown) {
+    if (err instanceof Error && err.message === 'This slot was just booked. Please select another time.') {
       return NextResponse.json({ error: err.message }, { status: 409 })
     }
     return NextResponse.json({ error: 'Failed to create booking.' }, { status: 500 })
