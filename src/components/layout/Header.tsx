@@ -7,7 +7,7 @@ import { InflectionMark } from '@/components/ui/InflectionMark'
 const nav = [
   { label: 'How It Works', href: '/system' },
   { label: 'Services', href: '/audit' },
-  { label: 'Platform', href: '/platform' },
+  { label: 'SaaS Preview', href: '/platform' },
   { label: 'Intelligence', href: '/intelligence' },
 ]
 
@@ -49,21 +49,20 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Desktop CTAs — free first, paid second */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* Desktop CTAs — ghost first, primary second */}
+          <div className="hidden md:flex items-center gap-6">
             <Link
               href="/tpi"
-              className="font-sans text-signal-gold text-[0.65rem] tracking-[0.18em] uppercase
-                         hover:text-bone transition-colors duration-200 border border-signal-gold/30
-                         px-4 py-2 hover:border-bone/40"
+              className="font-sans text-muted text-[0.65rem] tracking-[0.18em] uppercase
+                         hover:text-signal-gold transition-colors duration-200"
             >
               Free TPI Score
             </Link>
             <Link
               href="/request"
               className="inline-flex items-center bg-signal-gold text-obsidian
-                         px-5 py-2.5 font-sans text-[0.63rem] tracking-[0.18em] uppercase
-                         hover:bg-bone transition-colors duration-200"
+                         px-6 py-2.5 font-sans text-[0.63rem] tracking-[0.18em] uppercase
+                         font-bold hover:bg-bone transition-colors duration-200"
             >
               Book Audit
             </Link>
@@ -100,8 +99,8 @@ export function Header() {
             <hr className="rule" />
             <Link
               href="/tpi"
-              className="inline-flex justify-center border border-signal-gold text-signal-gold px-5 py-3
-                         font-sans text-[0.65rem] tracking-[0.2em] uppercase text-center"
+              className="inline-flex justify-center text-muted px-5 py-3
+                         font-sans text-[0.65rem] tracking-[0.2em] uppercase text-center hover:text-signal-gold"
               onClick={() => setOpen(false)}
             >
               Free TPI Score
@@ -109,7 +108,7 @@ export function Header() {
             <Link
               href="/request"
               className="inline-flex justify-center bg-signal-gold text-obsidian px-5 py-3
-                         font-sans text-[0.65rem] tracking-[0.2em] uppercase text-center"
+                         font-sans text-[0.65rem] tracking-[0.2em] uppercase text-center font-bold"
               onClick={() => setOpen(false)}
             >
               Book Audit — $199

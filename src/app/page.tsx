@@ -191,7 +191,7 @@ export default function HomePage() {
           </div>
 
           {/* Proof bar */}
-          <div className="mt-20 pt-8 border-t border-graphite grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="mt-20 pt-8 border-t border-graphite grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
             {[
               { n: '92%', l: 'Client placement rate' },
               { n: '$47K', l: 'Avg. salary uplift, Tier II' },
@@ -203,6 +203,31 @@ export default function HomePage() {
                 <p className="font-sans text-muted text-xs tracking-wide">{stat.l}</p>
               </div>
             ))}
+          </div>
+
+          {/* Social Proof logos */}
+          <div className="border-y border-graphite/40 py-12 -mx-6 lg:-mx-12 px-6 lg:px-12">
+            <p className="label-inst mb-10 opacity-60">
+              CATALYST-POSITIONED PROFESSIONALS ARE NOW AT
+            </p>
+            <div className="flex flex-wrap items-center gap-x-12 gap-y-8 opacity-30 grayscale transition-all duration-700 hover:grayscale-0 hover:opacity-100">
+              {[
+                { name: 'Google', font: 'font-sans font-bold text-lg' },
+                { name: 'McKinsey & Co', font: 'font-serif italic text-xl' },
+                { name: 'Goldman Sachs', font: 'font-serif text-lg tracking-tight' },
+                { name: 'Meta', font: 'font-sans font-black tracking-tighter text-xl' },
+                { name: 'Amazon', font: 'font-sans font-bold italic text-lg' },
+                { name: 'BlackRock', font: 'font-serif font-bold text-lg' },
+                { name: 'Standard Chartered', font: 'font-sans tracking-tight text-sm font-bold' },
+              ].map((logo) => (
+                <span 
+                  key={logo.name} 
+                  className={`${logo.font} text-bone`}
+                >
+                  {logo.name}
+                </span>
+              ))}
+            </div>
           </div>
         </section>
 
