@@ -3,7 +3,7 @@ import { capturePayPalOrder } from '@/lib/payment/paypal'
 import { resend, FROM, ADMIN_EMAIL } from '@/lib/email/resend'
 import { insertPayment } from '@/lib/db/supabase'
 
-const AMOUNTS_USD: Record<string, number> = { audit: 199 }
+import { PRICING } from '@/lib/constants/pricing'
 
 export async function POST(req: NextRequest) {
   try {
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
         email:     resolvedEmail,
         product,
         method:    'paypal',
-        amount:    AMOUNTS_USD[product] ?? Number(result.amount),
+        amount:    PRICING[product as keyof typeof PRICING]?.usd ? Math.round(PRICING[product as keyof typeof PRICING].usd / 100) : Number(result.amount),
         currency:  'USD',
         paymentId: result.captureId,
         orderId,
