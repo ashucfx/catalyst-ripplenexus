@@ -44,13 +44,13 @@ export function AuditCheckout() {
         <div className="flex items-center justify-between">
           <div>
             <p className="font-mono text-muted text-[0.55rem] tracking-widest">INDIA (INR)</p>
-            <p className="font-serif text-bone text-2xl">₹49,999</p>
+            <p className="font-serif text-bone text-2xl">₹5,999</p>
             <p className="font-mono text-muted text-[0.55rem]">Razorpay · UPI · Cards</p>
           </div>
           <div className="w-px h-10 bg-graphite" />
           <div className="text-right">
             <p className="font-mono text-muted text-[0.55rem] tracking-widest">GLOBAL (USD)</p>
-            <p className="font-serif text-bone text-2xl">$999</p>
+            <p className="font-serif text-bone text-2xl">$199</p>
             <p className="font-mono text-muted text-[0.55rem]">PayPal · Cards</p>
           </div>
         </div>
@@ -99,8 +99,8 @@ export function AuditCheckout() {
             email={email}
             onSuccess={handleSuccess}
             onError={(msg) => setError(msg)}
-            labelINR="Pay ₹49,999 — Book Elite Audit →"
-            labelUSD="Pay $999 USD — Book Elite Audit →"
+            labelINR="Pay ₹5,999 — Book Market Value Audit →"
+            labelUSD="Pay $199 USD — Book Market Value Audit →"
           />
           {error && <p className="font-sans text-signal-gold text-xs text-center">{error}</p>}
         </div>

@@ -71,7 +71,7 @@ CREATE INDEX IF NOT EXISTS bookings_cancel_token_idx ON bookings (cancel_token);
 -- ─── SEED DATA ───────────────────────────────────────────────────────────────
 
 INSERT INTO meeting_types (id, name, duration_min, price_usd, price_inr, description) VALUES
-  ('audit',     'Market Value Audit',    45, 49900, 1499900,  'A 45-minute positioning diagnostic. Surfaces your Talent Positioning Index, ATS gap profile, and salary benchmark vs. market.'),
+  ('audit',     'Market Value Audit',    45, 19900, 599900,   'A focused 45-minute 1:1 positioning diagnostic. You get your Talent Positioning Index score, ATS gap profile, salary benchmark vs. market, and a clear action plan.'),
   ('strategy',  'Strategy Call',         30, 0,     0,         'A free 30-minute call to explore if Catalyst is the right fit for your career goals.'),
   ('blueprint', 'Blueprint Session',     60, 0,     0,         'A free 60-minute deep-dive session for executive career architecture planning.')
 ON CONFLICT (id) DO UPDATE SET

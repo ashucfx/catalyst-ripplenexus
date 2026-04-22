@@ -40,17 +40,17 @@ const pricingTiers = [
   },
   {
     id: 'elite',
-    name: 'Elite Audit',
-    priceUSD: '$999',
-    priceINR: '₹49,999',
-    period: '/one-time',
-    target: 'For executives who demand done-for-you precision.',
-    outcome: 'A human expert architects your entire market positioning.',
+    name: 'Market Value Audit',
+    priceUSD: '$199',
+    priceINR: '₹5,999',
+    period: '/session',
+    target: 'For executives who need a clear, data-backed answer to "what am I actually worth?"',
+    outcome: '45-minute 1:1 call that gives you your exact market position and a concrete action plan.',
     features: [
-      'Everything in Pro, plus:',
-      '1:1 Human Strategy Audit (60 min)',
-      'Complete LinkedIn & Narrative Rewrite',
-      'Immediate B2B Talent Pool Fast-Tracking',
+      'Talent Positioning Index (TPI) score diagnostic',
+      'ATS gap analysis — see what recruiters see',
+      'Salary benchmark vs. live market data',
+      'Specific 3-step action plan to close the gap',
     ],
     waitlist: false,
     href: '/book/audit',
@@ -71,8 +71,8 @@ export function PricingSection() {
           </h2>
           <p className="font-sans text-muted text-base max-w-xl">
             Choose the intelligence tier that matches your career velocity. 
-            Software tiers (Ignition & Pro) launch July 2026. 
-            The Elite Human Audit is available for booking immediately.
+            The <strong className="text-bone">Market Value Audit</strong> is available for booking right now. 
+            SaaS subscriptions (Ignition &amp; Pro) launch July 2026 — join the waitlist to lock in early pricing.
           </p>
         </div>
         
@@ -168,9 +168,13 @@ export function PricingSection() {
             <p className="font-sans text-muted text-sm leading-relaxed mb-6">
               The engine is calibrated against real-time global labor market data pulling directly from live ATS systems. If your industry hires through digital tracking systems, the Catalyst engine maps the ontology.
             </p>
-            <h3 className="font-serif text-bone text-xl font-light mb-6 mt-8">When do I get access?</h3>
+            <h3 className="font-serif text-bone text-xl font-light mb-6">What exactly do I get from the Market Value Audit?</h3>
+            <p className="font-sans text-muted text-sm leading-relaxed mb-6">
+              A focused 45-minute 1:1 video call with a Catalyst expert. You&apos;ll walk away with your TPI score, a full ATS gap analysis, your salary benchmark vs. live market data, and a 3-step action plan. Booked immediately — no waitlist.
+            </p>
+            <h3 className="font-serif text-bone text-xl font-light mb-6 mt-8">When do I get access to the SaaS platform?</h3>
             <p className="font-sans text-muted text-sm leading-relaxed">
-              The SaaS platform (Ignition & Pro) launches globally in July 2026. Joining the waitlist locks in the early-access pricing shown above forever. If you need immediate intervention, book the Elite Audit.
+              The SaaS platform (Ignition &amp; Pro) launches globally in July 2026. Joining the waitlist locks in the early-access pricing shown above forever. If you need immediate positioning help, book the <strong>Market Value Audit</strong> — available now.
             </p>
           </div>
         </div>

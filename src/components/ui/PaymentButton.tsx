@@ -143,7 +143,7 @@ export function PaymentButton({ product, email, onSuccess, onError, disabled, la
                      tracking-[0.2em] uppercase hover:bg-bone transition-colors duration-200
                      cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {loading ? 'Opening checkout…' : (labelINR ?? 'Pay ₹49,999 — Book Elite Audit →')}
+          {loading ? 'Opening checkout…' : (labelINR ?? 'Pay ₹5,999 — Book Market Value Audit →')}
         </button>
         <p className="font-mono text-muted text-[0.6rem] tracking-widest text-center mt-2">
           UPI · Cards · Net Banking · Wallets — powered by Razorpay
@@ -165,7 +165,7 @@ export function PaymentButton({ product, email, onSuccess, onError, disabled, la
       )}
       <div id="paypal-button-container" className="w-full min-h-[48px]" />
       <p className="font-mono text-muted text-[0.6rem] tracking-widest text-center mt-2">
-        {labelUSD ?? 'Cards · PayPal — secure international checkout · $999 USD'}
+        {labelUSD ?? 'Cards · PayPal — secure international checkout · $199 USD'}
       </p>
     </>
   )
