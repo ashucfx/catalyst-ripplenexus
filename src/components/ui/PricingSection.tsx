@@ -5,7 +5,7 @@ import { PlatformWaitlist } from './PlatformWaitlist'
 import { Button } from './Button'
 
 
-const pricingTiers = [
+const subscriptionPlans = [
   {
     id: 'ignition',
     name: 'Catalyst Ignition',
@@ -37,23 +37,6 @@ const pricingTiers = [
     ],
     featured: true,
     waitlist: true,
-  },
-  {
-    id: 'elite',
-    name: 'Market Value Audit',
-    priceUSD: '$199',
-    priceINR: '₹5,999',
-    period: '/session',
-    target: 'For executives who need a clear, data-backed answer to "what am I actually worth?"',
-    outcome: '45-minute 1:1 call that gives you your exact market position and a concrete action plan.',
-    features: [
-      'Talent Positioning Index (TPI) score diagnostic',
-      'ATS gap analysis — see what recruiters see',
-      'Salary benchmark vs. live market data',
-      'Specific 3-step action plan to close the gap',
-    ],
-    waitlist: false,
-    href: '/book/audit',
   },
 ]
 
@@ -94,42 +77,42 @@ export function PricingSection() {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
-        {pricingTiers.map((tier) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center max-w-4xl">
+        {subscriptionPlans.map((plan) => (
           <div
-            key={tier.id}
+            key={plan.id}
             className={`flex flex-col relative transition-all duration-300 ${
-              tier.featured 
+              plan.featured 
                 ? 'bg-obsidian border border-signal-gold/50 shadow-2xl shadow-signal-gold/5 lg:scale-105 z-10 p-10' 
                 : 'bg-obsidian/40 border border-graphite/40 opacity-90 hover:opacity-100 p-8'
             }`}
           >
-            {tier.featured && (
+            {plan.featured && (
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-signal-gold text-obsidian font-mono text-[0.65rem] tracking-widest font-bold uppercase">
-                The Core Target
+                The Core Intelligence
               </div>
             )}
             
             <div className="mb-6">
-              <h3 className="font-serif text-bone text-2xl font-light mb-4">{tier.name}</h3>
+              <h3 className="font-serif text-bone text-2xl font-light mb-4">{plan.name}</h3>
               <div className="flex items-baseline gap-1 mb-2">
                 <span className="font-serif text-bone text-4xl">
-                  {currency === 'USD' ? tier.priceUSD : tier.priceINR}
+                  {currency === 'USD' ? plan.priceUSD : plan.priceINR}
                 </span>
-                <span className="font-serif text-muted text-lg">{tier.period}</span>
+                <span className="font-serif text-muted text-lg">{plan.period}</span>
               </div>
               <p className="font-sans text-muted text-sm leading-relaxed min-h-[40px]">
-                {tier.target}
+                {plan.target}
               </p>
             </div>
 
             <div className="bg-graphite/30 p-4 border-l-2 border-signal-gold mb-6">
               <p className="font-mono text-signal-gold text-[0.6rem] tracking-widest mb-1 uppercase">Outcome</p>
-              <p className="font-sans text-bone text-sm">{tier.outcome}</p>
+              <p className="font-sans text-bone text-sm">{plan.outcome}</p>
             </div>
 
             <ul className="flex flex-col gap-3 flex-1 mb-8">
-              {tier.features.map((m, i) => (
+              {plan.features.map((m, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <span className="text-signal-gold text-xs mt-1 shrink-0">◈</span>
                   <span className="font-sans text-muted text-sm">{m}</span>
@@ -138,16 +121,25 @@ export function PricingSection() {
             </ul>
 
             <div className="mt-auto">
-              {tier.waitlist ? (
-                <PlatformWaitlist plan={tier.name} />
-              ) : (
-                <Button href={tier.href || '/'} variant="primary" className="w-full text-center">
-                  Book {tier.name} →
-                </Button>
-              )}
+              <PlatformWaitlist plan={plan.name} />
             </div>
           </div>
         ))}
+      </div>
+
+      {/* One-time engagement callout */}
+      <div className="mt-12 bg-graphite/20 border border-graphite p-8 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div>
+          <p className="label-inst mb-2 text-signal-gold">One-Time Engagement</p>
+          <h3 className="font-serif text-bone text-xl font-light">Need immediate diagnostic intelligence?</h3>
+          <p className="font-sans text-muted text-sm max-w-xl mt-2">
+            The Market Value Audit is a focused 45-minute 1:1 session that gives you your exact 
+            Talent Positioning Index and salary benchmark. No subscription required. Available today.
+          </p>
+        </div>
+        <Button href="/audit" variant="primary">
+          Book Audit — $199
+        </Button>
       </div>
       
       {/* Trust & FAQ */}
