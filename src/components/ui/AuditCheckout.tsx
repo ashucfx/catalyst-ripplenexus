@@ -37,6 +37,28 @@ export function AuditCheckout() {
 
   return (
     <div className="max-w-md mx-auto">
+
+      {/* Price Clarity Box */}
+      <div className="border border-graphite bg-graphite/20 p-5 mb-6">
+        <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-3">ELITE AUDIT — PRICING</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="font-mono text-muted text-[0.55rem] tracking-widest">INDIA (INR)</p>
+            <p className="font-serif text-bone text-2xl">₹49,999</p>
+            <p className="font-mono text-muted text-[0.55rem]">Razorpay · UPI · Cards</p>
+          </div>
+          <div className="w-px h-10 bg-graphite" />
+          <div className="text-right">
+            <p className="font-mono text-muted text-[0.55rem] tracking-widest">GLOBAL (USD)</p>
+            <p className="font-serif text-bone text-2xl">$999</p>
+            <p className="font-mono text-muted text-[0.55rem]">PayPal · Cards</p>
+          </div>
+        </div>
+        <p className="font-mono text-signal-gold text-[0.55rem] tracking-widest mt-3 pt-3 border-t border-graphite">
+          ↳ Your payment method is automatically selected based on your location.
+        </p>
+      </div>
+
       {!ready ? (
         <form onSubmit={handleEmailSubmit} className="flex flex-col gap-4" noValidate>
           <label className="font-mono text-muted text-[0.6rem] tracking-widest">
@@ -77,6 +99,8 @@ export function AuditCheckout() {
             email={email}
             onSuccess={handleSuccess}
             onError={(msg) => setError(msg)}
+            labelINR="Pay ₹49,999 — Book Elite Audit →"
+            labelUSD="Pay $999 USD — Book Elite Audit →"
           />
           {error && <p className="font-sans text-signal-gold text-xs text-center">{error}</p>}
         </div>
@@ -88,3 +112,4 @@ export function AuditCheckout() {
     </div>
   )
 }
+
