@@ -49,7 +49,7 @@ const journey = [
     stage: 'Architecture',
     label: '02',
     action: 'Positioning Blueprint — 30 days',
-    outcome: 'Your professional identity is re-built from the ground up. CV, LinkedIn, narrative strategy, sector targeting, and ATS optimisation — delivered as a complete system, not a document.',
+    outcome: 'Your professional identity is re-built from the ground up. Executive Resume Rewrite, LinkedIn Full-Brand Identity (Banner, DP, Authority Signals), and Narrative Cover Letter — delivered as a complete system, not a document.',
     href: '/blueprint',
   },
   {

@@ -88,33 +88,33 @@ export default function BlueprintPage() {
               {[
                 {
                   module: '01',
-                  title: 'Executive CV with Impact-Driven Architecture',
-                  desc: 'Not a summary of your past. A strategic document architected to signal a specific future role. ATS-stress-tested. Built on signaling theory, not template.',
+                  title: 'Executive Resume Rewrite',
+                  desc: 'A complete structural rewrite. Not a summary of your past, but a strategic document architected to signal niche authority for your next role. ATS-stress-tested.',
                 },
                 {
                   module: '02',
-                  title: 'LinkedIn Strategic Authority Suite',
-                  desc: 'Complete LinkedIn reconstruction. Headline, About, Experience, Featured — all re-engineered to function as "signal reconstruction" assets, not a digital CV.',
+                  title: 'LinkedIn Full-Brand Identity Suite',
+                  desc: 'Complete profile reconstruction including a bespoke Banner and DP strategy. Headline, About, and Experience are re-engineered to function as authority assets.',
                 },
                 {
                   module: '03',
-                  title: 'Targeted Market Positioning Report',
-                  desc: 'Maps your Talent Positioning Index against high-growth sectors. GCCs, PE funds, SaaS scaleups. Where your profile generates maximum market heat.',
+                  title: 'Narrative Cover Letter Architecture',
+                  desc: 'The narrative key to the boardroom. A strategic cover letter that bridges the gap between your history and the future value you bring to the specific target firm.',
                 },
                 {
                   module: '04',
-                  title: 'Narrative Discretion Briefing',
-                  desc: 'What to emphasize. What to omit. How to frame the trajectory from where you are to where the market will pay. The single most important document in the system.',
+                  title: 'Targeted Market Positioning Report',
+                  desc: 'Maps your Talent Positioning Index against high-growth sectors: GCCs, Private Equity, and SaaS scaleups. Where your profile generates maximum market heat.',
                 },
                 {
                   module: '05',
-                  title: 'ATS Stress Testing',
-                  desc: 'Every deliverable run through our proprietary ATS Simulator. Workday. Greenhouse. Lever. Your materials will pass, not be filtered.',
+                  title: 'Narrative Discretion Briefing',
+                  desc: 'The definitive guide on what to emphasize and what to strategically omit. How to frame your trajectory for maximum psychological leverage.',
                 },
                 {
                   module: '06',
-                  title: '30-Day Delivery + Human/AI Collaboration',
-                  desc: 'Human architects handle strategy, discretion, and psychological positioning. AI handles the first 70% of drafting. You get institutional-quality output at speed.',
+                  title: 'ATS Stress Testing & Delivery',
+                  desc: 'Every deliverable run through our proprietary ATS Simulator. Delivered in 30 days via our human-architected, AI-powered infrastructure.',
                 },
               ].map((d) => (
                 <div key={d.module} className="bg-obsidian p-8 flex flex-col gap-4">
