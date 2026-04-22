@@ -29,8 +29,8 @@ export default function BlueprintPage() {
               to Niche Authority. The mid-career plateau ends here.
             </p>
             <div className="flex items-baseline gap-4 mt-8">
-              <span className="font-serif text-bone text-4xl">$1,500 – $3,500</span>
-              <span className="font-serif text-muted text-xl">/ ₹1,00,000 – ₹2,50,000</span>
+              <span className="font-serif text-bone text-4xl">$349</span>
+              <span className="font-serif text-muted text-xl">/ ₹9,999</span>
             </div>
             <p className="font-mono text-muted text-xs tracking-widest mt-2">
               ANCHORED AGAINST $20,000–$50,000 ANNUAL SALARY INCREASE
@@ -144,8 +144,8 @@ export default function BlueprintPage() {
                   </thead>
                   <tbody>
                     {[
-                      { role: 'Mid Level (6–10y)', price: '₹1,00,000' },
-                      { role: 'Senior (11–15y)', price: '₹2,50,000' },
+                      { role: 'Mid Level (6–10y)', price: '₹9,999' },
+                      { role: 'Senior (11–15y)', price: '₹14,999' },
                     ].map((r) => (
                       <tr key={r.role} className="border-b border-graphite">
                         <td className="font-serif text-bone py-3">{r.role}</td>
@@ -166,8 +166,8 @@ export default function BlueprintPage() {
                   </thead>
                   <tbody>
                     {[
-                      { role: 'Manager → Director', price: '$1,500' },
-                      { role: 'Director → VP', price: '$2,500–$3,500' },
+                      { role: 'Manager → Director', price: '$349' },
+                      { role: 'Director → VP', price: '$499' },
                     ].map((r) => (
                       <tr key={r.role} className="border-b border-graphite">
                         <td className="font-serif text-bone py-3">{r.role}</td>

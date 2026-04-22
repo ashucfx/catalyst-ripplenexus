@@ -138,7 +138,7 @@ export function PricingSection() {
               Ideal for initial clarity.
             </p>
             <div className="flex items-center justify-between mt-auto">
-              <span className="font-serif text-bone text-2xl">$199</span>
+              <span className="font-serif text-bone text-2xl">$99</span>
               <Button href="/audit" variant="ghost" className="text-[0.6rem]">
                 Book Audit →
               </Button>
@@ -153,7 +153,7 @@ export function PricingSection() {
               direct Architect access to handle the execution with you.
             </p>
             <div className="flex items-center justify-between mt-auto">
-              <span className="font-serif text-bone text-2xl">$499</span>
+              <span className="font-serif text-bone text-2xl">$199</span>
               <Button href="/request?service=sprint" variant="primary" className="text-[0.6rem]">
                 Start Sprint →
               </Button>

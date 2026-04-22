@@ -11,7 +11,13 @@ export type GeoResult = {
 // no external API call. Falls back to 'US' if header is absent (local dev, etc.).
 export async function getGeo(): Promise<GeoResult> {
   const h       = await headers()
-  const country = h.get('x-vercel-ip-country') ?? 'US'
+  let country   = h.get('x-vercel-ip-country')
+  
+  // Default to IN in dev if no header; otherwise default to US
+  if (!country) {
+    country = process.env.NODE_ENV === 'development' ? 'IN' : 'US'
+  }
+  
   const isIndia = country === 'IN'
 
   return {

@@ -13,8 +13,8 @@ const offerTiers = [
     tier: 'I',
     name: 'Market Value Audit',
     subtitle: 'Diagnostic',
-    price: '$199',
-    priceINR: '₹5,999',
+    price: '$99',
+    priceINR: '₹2,999',
     anchor: 'Anchored against a $5,000–$10,000 immediate salary gain.',
     deliverables: [
       '45-minute positioning diagnostic',
@@ -30,8 +30,8 @@ const offerTiers = [
     tier: 'I+',
     name: 'The Momentum Sprint',
     subtitle: 'Audit + Implementation Support',
-    price: '$499',
-    priceINR: '₹14,999',
+    price: '$199',
+    priceINR: '₹5,999',
     anchor: 'For those who want the audit but don’t want to execute alone.',
     deliverables: [
       'Everything in the Market Value Audit',
@@ -47,8 +47,8 @@ const offerTiers = [
     tier: 'II',
     name: 'Positioning Blueprint',
     subtitle: 'Full-Brand Architecture',
-    price: '$1,500 – $3,500',
-    priceINR: '₹1,00,000 – ₹2,50,000',
+    price: '$349',
+    priceINR: '₹9,999',
     anchor: 'Anchored against a $20,000–$50,000 annual salary increase.',
     deliverables: [
       'Executive Resume Rewrite — architected for niche authority',
@@ -67,8 +67,8 @@ const offerTiers = [
     tier: 'III',
     name: 'Sovereign Executive Suite',
     subtitle: 'White-glove Portfolio Management',
-    price: '$5,000 – $15,000+',
-    priceINR: '₹5,00,000 – ₹15,00,000+',
+    price: '$499',
+    priceINR: '₹14,999',
     anchor: 'Risk-premium pricing — fraction of $500k+ package.',
     deliverables: [
       'White-glove executive identity brief',
