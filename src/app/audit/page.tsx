@@ -30,8 +30,8 @@ export default function AuditPage() {
               expensive mistake a professional can make. This audit eliminates it.
             </p>
             <div className="flex items-baseline gap-4 mt-8">
-              <span className="font-serif text-bone text-4xl">$499</span>
-              <span className="font-serif text-muted text-xl">/ ₹15,000</span>
+              <span className="font-serif text-bone text-4xl">$199</span>
+              <span className="font-serif text-muted text-xl">/ ₹5,999</span>
               <span className="font-mono text-muted text-xs tracking-widest ml-2">FIXED FEE</span>
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function AuditPage() {
               </div>
             </div>
             <div className="flex-1 text-right">
-              <p className="font-serif text-bone text-4xl mb-2">$499</p>
+              <p className="font-serif text-bone text-4xl mb-2">$199</p>
               <p className="font-sans text-muted text-sm">vs. $5,000–$10,000 immediate salary gain</p>
               <p className="font-mono text-signal-gold text-xs tracking-widest mt-2">10–20× RETURN POTENTIAL</p>
             </div>

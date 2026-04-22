@@ -112,7 +112,7 @@ export function Header() {
                          font-sans text-[0.65rem] tracking-[0.2em] uppercase text-center"
               onClick={() => setOpen(false)}
             >
-              Book Audit — $499
+              Book Audit — $199
             </Link>
           </div>
         </div>

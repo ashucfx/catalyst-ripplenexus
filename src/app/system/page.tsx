@@ -235,7 +235,7 @@ export default function SystemPage() {
                 Get Free TPI Score →
               </Button>
               <Button href="/request" variant="ghost">
-                Book Audit — $499
+                Book Audit — $199
               </Button>
             </div>
           </div>

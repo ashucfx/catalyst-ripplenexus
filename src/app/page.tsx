@@ -13,8 +13,8 @@ const offerTiers = [
     tier: 'I',
     name: 'Market Value Audit',
     subtitle: 'Start here',
-    price: '$499',
-    priceINR: '₹14,999',
+    price: '$199',
+    priceINR: '₹5,999',
     anchor: 'Anchored against a $5,000–$10,000 immediate salary gain from better negotiation.',
     deliverables: [
       '45-minute positioning diagnostic',
@@ -186,7 +186,7 @@ export default function HomePage() {
               Get Your Free TPI Score →
             </Button>
             <Button href="/request" variant="ghost">
-              Book Audit — $499
+              Book Audit — $199
             </Button>
           </div>
 
@@ -596,7 +596,7 @@ export default function HomePage() {
               in the next 90 days.
             </p>
             <p className="font-mono text-signal-gold text-sm tracking-wide mb-12">
-              Cost of the audit: $499. Cost of not doing it: $10,000–$50,000 per year.
+              Cost of the audit: $199. Cost of not doing it: $10,000–$50,000 per year.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button href="/request" variant="primary">

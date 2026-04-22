@@ -289,7 +289,7 @@ export function TPICalculator() {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <Button href="/request" variant="primary">
-              Book the Full Audit — $499 →
+              Book the Full Audit — $199 →
             </Button>
             <Button href="/blueprint" variant="ghost">
               View the Positioning Blueprint

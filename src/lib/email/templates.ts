@@ -354,13 +354,13 @@ export function tpiScoreEmail(d: TPIEmailData): { subject: string; html: string 
           </p>
           <p style="margin:0;font-family:Arial,sans-serif;font-size:10px;
                      color:${C.muted};letter-spacing:0.15em;text-transform:uppercase;">
-            AUDIT COST: $499 · ANCHORED AGAINST A $5,000–$10,000 SALARY GAIN
+            AUDIT COST: $199 · ANCHORED AGAINST A $5,000–$10,000 SALARY GAIN
           </p>
         </td>
       </tr>
     </table>
 
-    ${cta('Book the Full Audit — $499 →', 'https://www.catalyst.theripplenexus.com/request')}
+    ${cta('Book the Full Audit — $199 →', 'https://www.catalyst.theripplenexus.com/request')}
 
     <p style="margin:24px 0 0 0;font-family:Georgia,serif;font-size:13px;
                color:${C.muted};line-height:1.6;font-style:italic;">

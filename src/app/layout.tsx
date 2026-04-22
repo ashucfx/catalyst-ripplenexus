@@ -113,7 +113,7 @@ const jsonLd = {
       description: 'A 45-minute positioning diagnostic that surfaces your Talent Positioning Index, ATS gap profile, and salary benchmark vs. market.',
       offers: {
         '@type': 'Offer',
-        price: '499',
+        price: '199',
         priceCurrency: 'USD',
       },
     },

@@ -3,7 +3,7 @@ import { capturePayPalOrder } from '@/lib/payment/paypal'
 import { resend, FROM, ADMIN_EMAIL } from '@/lib/email/resend'
 import { insertPayment } from '@/lib/db/supabase'
 
-const AMOUNTS_USD: Record<string, number> = { audit: 499 }
+const AMOUNTS_USD: Record<string, number> = { audit: 199 }
 
 export async function POST(req: NextRequest) {
   try {

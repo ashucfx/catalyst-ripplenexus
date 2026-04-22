@@ -370,7 +370,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 <p className="label-inst mb-3">Apply This Intelligence</p>
                 <p className="font-serif text-muted text-sm leading-relaxed mb-6">
                   A Market Value Audit surfaces your actual positioning gap — with live market
-                  data and a directional TPI score. 45 minutes. $499.
+                  data and a directional TPI score. 45 minutes. $199.
                 </p>
                 <Button href="/request" variant="primary">
                   Request the Audit →

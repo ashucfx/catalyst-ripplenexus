@@ -24,8 +24,8 @@ const pricingTiers = [
   {
     id: 'pro',
     name: 'Catalyst Pro',
-    priceUSD: '$249',
-    priceINR: '₹14,999',
+    priceUSD: '$199',
+    priceINR: '₹5,999',
     period: '/month',
     target: 'For ambitious managers positioning for executive transition.',
     outcome: 'Total narrative control and data-driven career trajectory.',

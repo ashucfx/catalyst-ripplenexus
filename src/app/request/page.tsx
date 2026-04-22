@@ -48,7 +48,7 @@ const timelines = [
 ]
 
 const services = [
-  { label: 'Market Value Audit', price: '$499 / ₹15,000', desc: 'Start here — 45-min diagnostic, TPI score, salary benchmark.' },
+  { label: 'Market Value Audit', price: '$199 / ₹5,999', desc: 'Start here — 45-min diagnostic, TPI score, salary benchmark.' },
   { label: 'Positioning Blueprint', price: '$1,500–$3,500', desc: 'Complete identity re-architecture. CV, LinkedIn, narrative strategy.' },
   { label: 'Sovereign Executive Suite', price: '$5,000–$15,000+', desc: 'White-glove C-suite and board positioning.' },
   { label: 'Catalyst Pro Platform', price: '$199/month', desc: 'Self-serve SaaS — joining the waitlist.' },
@@ -472,7 +472,7 @@ export default function RequestPage() {
                 <p className="label-inst mb-4">Service Reference</p>
                 <div className="flex flex-col gap-3">
                   {[
-                    { tier: 'Tier I', name: 'Market Value Audit', price: '$499 / ₹15,000', href: '/audit' },
+                    { tier: 'Tier I', name: 'Market Value Audit', price: '$199 / ₹5,999', href: '/audit' },
                     { tier: 'Tier II', name: 'Positioning Blueprint', price: '$1,500–$3,500', href: '/blueprint' },
                     { tier: 'Tier III', name: 'Sovereign Executive Suite', price: '$5,000–$15,000+', href: '/executive' },
                   ].map((s) => (
