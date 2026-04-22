@@ -12,37 +12,53 @@ const offerTiers = [
   {
     tier: 'I',
     name: 'Market Value Audit',
-    subtitle: 'Start here',
+    subtitle: 'Diagnostic',
     price: '$199',
     priceINR: '₹5,999',
-    anchor: 'Anchored against a $5,000–$10,000 immediate salary gain from better negotiation.',
+    anchor: 'Anchored against a $5,000–$10,000 immediate salary gain.',
     deliverables: [
       '45-minute positioning diagnostic',
       'Talent Positioning Index (TPI) score',
       'ATS pass-rate analysis',
       'Salary benchmark vs. live market data',
-      'Your three highest-leverage moves in 90 days',
     ],
-    transformation: 'Uncertainty → Clarity on your real market value',
+    transformation: 'Uncertainty → Clarity on market value',
     href: '/audit',
     cta: 'Request Audit',
   },
   {
+    tier: 'I+',
+    name: 'The Momentum Sprint',
+    subtitle: 'Audit + Implementation Support',
+    price: '$499',
+    priceINR: '₹14,999',
+    anchor: 'For those who want the audit but don’t want to execute alone.',
+    deliverables: [
+      'Everything in the Market Value Audit',
+      'Custom Implementation Roadmap',
+      '14 days of direct Architect access (Email/Slack)',
+      'LinkedIn headline & about refactoring',
+    ],
+    transformation: 'Clarity → First-mile execution support',
+    href: '/request?service=sprint',
+    cta: 'Start Sprint',
+  },
+  {
     tier: 'II',
     name: 'Positioning Blueprint',
-    subtitle: 'Primary programme — most popular',
+    subtitle: 'Done-For-You Architecture',
     price: '$1,500 – $3,500',
     priceINR: '₹1,00,000 – ₹2,50,000',
-    anchor: 'Anchored against a $20,000–$50,000 annual salary increase.',
+    anchor: 'Anchored against a $20,000–$50,000 salary increase.',
     deliverables: [
-      'Executive CV — architected for a specific future role',
-      'LinkedIn reconstruction — authority signals, not history',
-      'Sector heat map: GCC / PE / SaaS opportunities',
-      'Narrative strategy — what to say and what to leave out',
-      'ATS stress-tested across Workday, Greenhouse, Lever',
+      'Executive CV — architected for future role',
+      'LinkedIn reconstruction — authority signals',
+      'Sector heat map: GCC / PE / SaaS',
+      'Narrative strategy & discretion brief',
+      'ATS stress-tested across all platforms',
       '30-day delivery · human + AI collaboration',
     ],
-    transformation: 'Experienced Generalist → Recognised Niche Authority',
+    transformation: 'Generalist → Recognized Niche Authority',
     href: '/blueprint',
     cta: 'Engage Blueprint',
     featured: true,
@@ -50,15 +66,15 @@ const offerTiers = [
   {
     tier: 'III',
     name: 'Sovereign Executive Suite',
-    subtitle: 'For C-suite and board-level leaders',
+    subtitle: 'White-glove Portfolio Management',
     price: '$5,000 – $15,000+',
     priceINR: '₹5,00,000 – ₹15,00,000+',
-    anchor: 'Risk-premium pricing — a fraction of a $500,000+ total compensation package.',
+    anchor: 'Risk-premium pricing — fraction of $500k+ package.',
     deliverables: [
-      'White-glove executive identity brief (90 min discovery)',
+      'White-glove executive identity brief',
       'Board-ready governance portfolio',
-      'Identity firewall and digital estate management',
-      'High-stakes compensation negotiation coaching',
+      'Identity firewall & digital estate management',
+      'High-stakes compensation coaching',
       'Stealth-mode visibility strategy',
       'Sovereign Network onboarding',
     ],
@@ -384,7 +400,7 @@ export default function HomePage() {
             <p className="label-inst mb-6">Services</p>
             <h2 className="font-serif text-bone font-light leading-tight mb-4"
                 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.02em' }}>
-              Three tiers. One system.
+              The Catalyst Selection
             </h2>
             <p className="font-serif text-muted text-lg mb-16 max-w-2xl">
               Every price is anchored against a provable salary outcome — not the cost of the service.

@@ -128,18 +128,38 @@ export function PricingSection() {
       </div>
 
       {/* One-time engagement callout */}
-      <div className="mt-12 bg-graphite/20 border border-graphite p-8 flex flex-col md:flex-row items-center justify-between gap-8">
-        <div>
-          <p className="label-inst mb-2 text-signal-gold">One-Time Engagement</p>
-          <h3 className="font-serif text-bone text-xl font-light">Need immediate diagnostic intelligence?</h3>
-          <p className="font-sans text-muted text-sm max-w-xl mt-2">
-            The Market Value Audit is a focused 45-minute 1:1 session that gives you your exact 
-            Talent Positioning Index and salary benchmark. No subscription required. Available today.
-          </p>
+      <div className="mt-12 border border-graphite">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          <div className="p-8 border-b md:border-b-0 md:border-r border-graphite bg-graphite/10">
+            <p className="label-inst mb-2 text-signal-gold">Diagnostic Only</p>
+            <h3 className="font-serif text-bone text-xl font-light mb-4">Market Value Audit</h3>
+            <p className="font-sans text-muted text-sm leading-relaxed mb-8">
+              A 45-minute intelligence session that surfaces your TPI score and salary benchmark. 
+              Ideal for initial clarity.
+            </p>
+            <div className="flex items-center justify-between mt-auto">
+              <span className="font-serif text-bone text-2xl">$199</span>
+              <Button href="/audit" variant="ghost" className="text-[0.6rem]">
+                Book Audit →
+              </Button>
+            </div>
+          </div>
+          
+          <div className="p-8 bg-signal-gold/5 border-l-4 border-l-signal-gold">
+            <p className="label-inst mb-2 text-signal-gold">Audit + Implementation</p>
+            <h3 className="font-serif text-bone text-xl font-light mb-4">The Momentum Sprint</h3>
+            <p className="font-sans text-muted text-sm leading-relaxed mb-8">
+              Everything in the Audit, plus a custom implementation roadmap and 14 days of 
+              direct Architect access to handle the execution with you.
+            </p>
+            <div className="flex items-center justify-between mt-auto">
+              <span className="font-serif text-bone text-2xl">$499</span>
+              <Button href="/request?service=sprint" variant="primary" className="text-[0.6rem]">
+                Start Sprint →
+              </Button>
+            </div>
+          </div>
         </div>
-        <Button href="/audit" variant="primary">
-          Book Audit — $199
-        </Button>
       </div>
       
       {/* Trust & FAQ */}
