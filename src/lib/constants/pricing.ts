@@ -1,7 +1,7 @@
 export const PRICING = {
   audit: {
-    usd: 49900, // Cents ($499.00)
-    inr: 4199900, // Paise (₹41,999.00) - Matched to USD equivalent
+    usd: 99900, // Cents ($999.00)
+    inr: 4999900, // Paise (₹49,999.00)
   },
 } as const;
 

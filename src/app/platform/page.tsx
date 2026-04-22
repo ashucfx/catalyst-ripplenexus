@@ -4,7 +4,7 @@ import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/Button'
 import { TPIMeter } from '@/components/ui/TPIMeter'
 import { InflectionMark } from '@/components/ui/InflectionMark'
-import { PlatformWaitlist } from '@/components/ui/PlatformWaitlist'
+import { PricingSection } from '@/components/ui/PricingSection'
 
 export const metadata: Metadata = {
   title: 'Catalyst Platform — The Intelligence Engine',
@@ -43,39 +43,6 @@ const modules = [
   },
 ]
 
-const saasPlans = [
-  {
-    id: 'lite',
-    name: 'Catalyst Lite',
-    price: '$49',
-    priceMonthly: '/month',
-    priceINR: '₹4,199/mo',
-    target: 'Entry-level professionals seeking their first high-growth role.',
-    modules: ['Skills Ontology Mapper', 'Basic ATS Stress Testing', 'Market Value Benchmarks'],
-    cta: 'Join Lite Waitlist',
-  },
-  {
-    id: 'pro',
-    name: 'Catalyst Pro',
-    price: '$199',
-    priceMonthly: '/month',
-    priceINR: '₹16,999/mo',
-    target: 'Mid-career managers who want to stay competitive and ready for transition at any moment.',
-    modules: ['All Lite features', 'Network Gravity Tracker', 'Narrative Discretion Agent', 'Career Pathing Canvas', 'Monthly Market Heat Reports', 'Ongoing LinkedIn optimization insights'],
-    cta: 'Join Pro Waitlist',
-    featured: true,
-  },
-  {
-    id: 'enterprise',
-    name: 'Catalyst Enterprise',
-    price: 'Custom',
-    priceMonthly: '',
-    priceINR: '',
-    target: 'HR departments for Succession Management and Internal Mobility Intelligence.',
-    modules: ['All Pro features', 'B2B Succession Management Intelligence', 'Internal talent heat mapping', 'High Potential identification engine', 'Turnover risk mitigation analytics', 'Dedicated account architect'],
-    cta: 'Enquire — Enterprise',
-  },
-]
 
 export default function PlatformPage() {
   return (
@@ -193,58 +160,7 @@ export default function PlatformPage() {
           </div>
 
           {/* Pricing tiers */}
-          <div className="mb-20 border-t border-graphite pt-16">
-            <div className="flex items-center gap-4 mb-4">
-              <p className="label-inst">SaaS Pricing</p>
-              <span className="font-mono text-[0.6rem] tracking-widest bg-signal-gold/10 text-signal-gold border border-signal-gold/30 px-3 py-1">
-                LAUNCHING JULY 2026 — JOIN WAITLIST
-              </span>
-            </div>
-            <h2 className="font-serif text-bone text-3xl font-light mb-4">
-              Three subscription tiers
-            </h2>
-            <p className="font-sans text-muted text-sm mb-10 max-w-xl">
-              The platform is in active development. Join the waitlist to be notified at launch
-              and lock in early-access pricing.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-graphite">
-              {saasPlans.map((plan) => (
-                <div
-                  key={plan.id}
-                  id={plan.id}
-                  className={`flex flex-col gap-6 p-8 ${plan.featured ? 'bg-graphite ring-1 ring-signal-gold' : 'bg-obsidian'}`}
-                >
-                  <div className="h-5 flex items-start">
-                    {plan.featured && <p className="label-inst uppercase text-[0.6rem]">Most Popular</p>}
-                  </div>
-                  <div>
-                    <h3 className="font-serif text-bone text-2xl font-light mb-2">{plan.name}</h3>
-                    <div className="flex items-baseline gap-1">
-                      <span className="font-serif text-bone text-3xl">{plan.price}</span>
-                      <span className="font-serif text-muted text-lg">{plan.priceMonthly}</span>
-                    </div>
-                    {plan.priceINR && (
-                      <p className="font-mono text-muted text-xs mt-1">{plan.priceINR}</p>
-                    )}
-                  </div>
-                  <p className="font-sans text-muted text-sm leading-relaxed border-t border-graphite pt-4">
-                    {plan.target}
-                  </p>
-                  <ul className="flex flex-col gap-2 flex-1">
-                    {plan.modules.map((m) => (
-                      <li key={m} className="flex items-start gap-2">
-                        <span className="text-signal-gold text-xs mt-1 shrink-0">—</span>
-                        <span className="font-sans text-muted text-sm">{m}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto pt-4 border-t border-graphite">
-                    <PlatformWaitlist plan={plan.name} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <PricingSection />
 
           {/* B2B callout */}
           <div className="border border-signal-gold/20 p-10 bg-graphite/10 mb-20">
