@@ -23,7 +23,9 @@ export const resend = {
   emails: {
     send: async (...args: Parameters<Resend['emails']['send']>) => {
       const instance = getInstance()
-      if (!instance) return { data: null, error: { name: 'SkipError', message: 'Email skipped (Missing API Key)' } as any }
+      if (!instance) {
+        return { data: null, error: { name: 'internal_server_error', message: 'Email skipped (Missing API Key)', statusCode: 500 } } as Extract<Awaited<ReturnType<Resend['emails']['send']>>, { error: unknown }>
+      }
       return instance.emails.send(...args)
     },
   },
