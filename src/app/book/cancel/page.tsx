@@ -35,7 +35,7 @@ function CancelContent() {
       )}
       {state === 'done' && (
         <>
-          <h1 className="font-serif text-bone font-light text-3xl mb-6">Booking cancelled.</h1>
+          <h1 className="display-card text-3xl mb-6">Booking cancelled.</h1>
           <p className="font-sans text-muted text-sm leading-relaxed mb-8">
             Your session has been cancelled and a confirmation sent to your email.
           </p>
@@ -46,7 +46,7 @@ function CancelContent() {
       )}
       {state === 'error' && (
         <>
-          <h1 className="font-serif text-bone font-light text-3xl mb-6">Unable to cancel.</h1>
+          <h1 className="display-card text-3xl mb-6">Unable to cancel.</h1>
           <p className="font-sans text-muted text-sm leading-relaxed mb-8">{msg}</p>
           <Link href="/book" className="font-mono text-[0.6rem] tracking-widest text-signal-gold">
             Return to booking →

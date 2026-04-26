@@ -46,7 +46,7 @@ function wrap(body: string): string {
           <tr>
             <td style="padding:32px 0 0 0;border-top:1px solid ${C.graphite};">
               <p style="margin:0;font-family:Arial,sans-serif;font-size:10px;color:${C.muted};letter-spacing:0.1em;text-transform:uppercase;">
-                Catalyst · Ripple Nexus Institution · www.catalyst.theripplenexus.com
+                Catalyst · Ripple Nexus · catalyst.theripplenexus.com
               </p>
             </td>
           </tr>
@@ -186,9 +186,9 @@ export function requestUserEmail(name: string, service: string): { subject: stri
             WHAT HAPPENS NEXT
           </p>
           ${[
-            ['01', 'Profile review', 'We benchmark your submission against live market data before the call.'],
-            ['02', '24-hour response', 'A senior Catalyst architect reaches out within one business day.'],
-            ['03', 'First conversation', '45 minutes. Diagnostic, not coaching. You receive a directional TPI score.'],
+            ['01', 'Profile review', 'We review your submission and benchmark your background against live market data.'],
+            ['02', '24-hour response', 'A senior Catalyst architect reaches out within one business day to discuss next steps.'],
+            ['03', 'Engagement scoping', 'We align on the right service tier — Audit, Blueprint, or Executive Suite — based on your goals.'],
           ].map(([n, title, desc]) => `
             <table cellpadding="0" cellspacing="0" style="margin-bottom:16px;width:100%;">
               <tr>
@@ -348,19 +348,19 @@ export function tpiScoreEmail(d: TPIEmailData): { subject: string; html: string 
           <p style="margin:0 0 12px 0;font-family:Georgia,serif;font-size:14px;
                      color:${C.muted};line-height:1.7;">
             This is a directional score based on five data points. The full Market Value Audit
-            uses live compensation benchmarks from Ravio, Taggd, and Lightcast, your actual
-            professional history, and a 45-minute diagnostic conversation with a Catalyst
-            architect. It is significantly more precise.
+            uses live compensation benchmarks from Ravio, Taggd, and Lightcast, plus your
+            actual professional history, to produce a precise AI-generated positioning
+            intelligence report — delivered instantly to your private portal.
           </p>
           <p style="margin:0;font-family:Arial,sans-serif;font-size:10px;
                      color:${C.muted};letter-spacing:0.15em;text-transform:uppercase;">
-            AUDIT COST: $199 · ANCHORED AGAINST A $5,000–$10,000 SALARY GAIN
+            AUDIT COST: $99 · ANCHORED AGAINST A $5,000–$10,000 SALARY GAIN
           </p>
         </td>
       </tr>
     </table>
 
-    ${cta('Book the Full Audit — $199 →', 'https://www.catalyst.theripplenexus.com/request')}
+    ${cta('Book the Full Audit — $99 →', 'https://www.catalyst.theripplenexus.com/audit')}
 
     <p style="margin:24px 0 0 0;font-family:Georgia,serif;font-size:13px;
                color:${C.muted};line-height:1.6;font-style:italic;">
@@ -422,6 +422,82 @@ export function newsletterWelcomeEmail(): { subject: string; html: string } {
     <p style="margin:0;font-family:Georgia,serif;font-size:13px;
                color:${C.muted};line-height:1.6;font-style:italic;">
       You can unsubscribe at any time. Your email is never shared.
+    </p>
+  `)
+
+  return { subject, html }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// 5. AUDIT PORTAL ACCESS — sent after payment to give portal link
+// ═══════════════════════════════════════════════════════════════════════
+
+function intakeItem(title: string, desc: string): string {
+  return `
+    <table cellpadding="0" cellspacing="0" style="margin-bottom:16px;width:100%;">
+      <tr>
+        <td style="vertical-align:top;">
+          <p style="margin:0 0 2px 0;font-family:Arial,sans-serif;font-size:12px;
+                     color:${C.bone};font-weight:600;">${title}</p>
+          <p style="margin:0;font-family:Georgia,serif;font-size:13px;
+                     color:${C.muted};line-height:1.5;">${desc}</p>
+        </td>
+      </tr>
+    </table>`
+}
+
+export function auditPortalEmail(portalUrl: string): { subject: string; html: string } {
+  const subject = 'Your Catalyst Audit Portal — Complete Your Intake'
+
+  const items = [
+    intakeItem('Role &amp; Seniority', 'Your current title, level, and years of experience.'),
+    intakeItem('Compensation', 'Your current package — we benchmark this against live market data.'),
+    intakeItem('Key Achievements', 'The 2-3 results that define your market position today.'),
+    intakeItem('Target Role', 'Where you want to be in 12-18 months — we map the positioning gap.'),
+  ].join('')
+
+  const html = wrap(`
+    <p style="margin:0 0 8px 0;font-family:Arial,sans-serif;font-size:10px;
+               color:${C.gold};letter-spacing:0.3em;text-transform:uppercase;">
+      PAYMENT CONFIRMED &middot; MARKET VALUE AUDIT
+    </p>
+
+    <p style="margin:0 0 24px 0;font-family:Georgia,serif;font-size:28px;
+               color:${C.bone};font-weight:400;letter-spacing:-0.02em;line-height:1.2;">
+      Your private portal<br/>
+      <em style="color:${C.gold};">is ready.</em>
+    </p>
+
+    <p style="margin:0 0 20px 0;font-family:Georgia,serif;font-size:16px;
+               color:${C.muted};line-height:1.7;">
+      Complete your professional intake and your Talent Positioning Index report will be
+      generated immediately &mdash; no waiting, no scheduling. Your report is ready in under
+      90 seconds.
+    </p>
+
+    <table width="100%" cellpadding="0" cellspacing="0"
+           style="border:1px solid ${C.graphite};margin-bottom:32px;">
+      <tr>
+        <td style="padding:24px;">
+          <p style="margin:0 0 16px 0;font-family:Arial,sans-serif;font-size:10px;
+                     color:${C.gold};letter-spacing:0.3em;text-transform:uppercase;">
+            WHAT YOUR INTAKE COVERS
+          </p>
+          ${items}
+        </td>
+      </tr>
+    </table>
+
+    ${cta('Access Your Portal &rarr;', portalUrl)}
+
+    <p style="margin:24px 0 8px 0;font-family:Arial,sans-serif;font-size:10px;
+               color:${C.muted};letter-spacing:0.15em;text-transform:uppercase;">
+      IMPORTANT
+    </p>
+    <p style="margin:0;font-family:Georgia,serif;font-size:13px;
+               color:${C.muted};line-height:1.6;font-style:italic;">
+      This link is unique to you. Keep it private &mdash; anyone with this link can access your
+      report. It does not expire.
     </p>
   `)
 

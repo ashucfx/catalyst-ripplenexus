@@ -9,20 +9,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        obsidian: '#0A0B0D',
-        bone: '#F4F1EB',
-        graphite: '#1F2226',
-        parchment: '#E6DFD1',
-        'signal-gold': '#B8935B',
-        'catalyst-ink': '#0E1A3A',
-        muted: '#8B8681',
+        /* Exact spec values — Catalyst Brand System PDF */
+        obsidian:         '#0A0B0D',   /* Primary ground dark (60%)          */
+        'obsidian-light': '#111417',   /* Intermediate surface               */
+        bone:             '#F4F1EB',   /* Primary ground light (60% inverse) */
+        graphite:         '#1F2226',   /* Component surface dark (30%)       */
+        'graphite-light': '#262B31',   /* Graphite hover/active              */
+        parchment:        '#E6DFD1',   /* Component surface light (30%)      */
+        'signal-gold':    '#B8935B',   /* Accent — CTAs, TPI, Inflection     */
+        'catalyst-ink':   '#0E1A3A',   /* Data visualization only            */
+        muted:            '#7A7A82',
+        'muted-light':    '#9A9A9F',
       },
       fontFamily: {
-        // GT Sectra substitute — Cormorant is the closest open editorial serif
+        /* GT Sectra substitute — Cormorant is the closest open editorial serif */
         serif: ['var(--font-cormorant)', 'Georgia', '"Times New Roman"', 'serif'],
-        // Söhne substitute — Inter has the same precision grotesque register
+        /* Söhne substitute — Inter has the same precision grotesque register */
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        // Berkeley Mono substitute — JetBrains Mono
+        /* Berkeley Mono substitute — JetBrains Mono */
         mono: ['var(--font-mono)', '"JetBrains Mono"', 'monospace'],
       },
       fontSize: {
@@ -39,17 +43,32 @@ const config: Config = {
         dossier: '120ch',
       },
       animation: {
-        reveal: 'reveal 0.9s ease-out forwards',
-        'fade-in': 'fadeIn 0.6s ease-out forwards',
+        reveal:       'reveal 0.9s ease-out forwards',
+        'fade-in':    'fadeIn 0.6s ease-out forwards',
+        marquee:      'marqueeScroll 28s linear infinite',
+        'gold-pulse':  'goldRingPulse 4s ease-in-out infinite',
+        'glow-text':  'goldTextGlow 5s ease-in-out infinite',
       },
       keyframes: {
         reveal: {
           from: { opacity: '0', transform: 'translateY(24px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
+          to:   { opacity: '1', transform: 'translateY(0)' },
         },
         fadeIn: {
           from: { opacity: '0' },
-          to: { opacity: '1' },
+          to:   { opacity: '1' },
+        },
+        marqueeScroll: {
+          from: { transform: 'translateX(0)' },
+          to:   { transform: 'translateX(-50%)' },
+        },
+        goldRingPulse: {
+          '0%, 100%': { boxShadow: '0 0 0 1px rgba(184,147,91,0.12), 0 0 30px rgba(184,147,91,0.06)', borderColor: 'rgba(184,147,91,0.4)' },
+          '50%':       { boxShadow: '0 0 0 1px rgba(184,147,91,0.22), 0 0 55px rgba(184,147,91,0.14)', borderColor: 'rgba(184,147,91,0.7)' },
+        },
+        goldTextGlow: {
+          '0%, 100%': { filter: 'drop-shadow(0 0 20px rgba(184,147,91,0.3))' },
+          '50%':       { filter: 'drop-shadow(0 0 50px rgba(184,147,91,0.55))' },
         },
       },
     },

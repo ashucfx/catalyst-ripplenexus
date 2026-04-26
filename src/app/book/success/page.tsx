@@ -21,8 +21,7 @@ export default function BookSuccessPage() {
               <p className="label-inst">Session confirmed</p>
             </div>
 
-            <h1 className="font-serif text-bone font-light leading-tight mb-6"
-                style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', letterSpacing: '-0.025em' }}>
+            <h1 className="display-editorial mb-6">
               You are booked.
             </h1>
 
@@ -55,7 +54,7 @@ export default function BookSuccessPage() {
                   <div key={step.n} className="flex gap-5">
                     <span className="font-mono text-signal-gold text-[0.6rem] tracking-widest mt-1 shrink-0">{step.n}</span>
                     <div>
-                      <p className="font-serif text-bone text-base font-light mb-1">{step.title}</p>
+                      <p className="display-card text-base mb-1">{step.title}</p>
                       <p className="font-sans text-muted text-sm leading-relaxed">{step.desc}</p>
                     </div>
                   </div>

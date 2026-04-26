@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/Button'
+import { Disclaimer } from '@/components/ui/Disclaimer'
 
 const steps = [
   { id: 1, label: 'Profile' },
@@ -146,9 +147,8 @@ export default function RequestPage() {
           <div className="max-w-dossier mx-auto px-6 lg:px-12">
             <div className="max-w-2xl">
               <p className="label-inst mb-6">Enquiry Received</p>
-              <hr className="rule mb-10 w-16" style={{ borderColor: '#B8935B' }} />
-              <h1 className="font-serif text-bone font-light leading-tight mb-8"
-                  style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', letterSpacing: '-0.025em' }}>
+              <hr className="rule mb-10 w-16" />
+              <h1 className="display-editorial mb-8">
                 Your enquiry is<br />
                 <em className="text-signal-gold not-italic">in trusted hands.</em>
               </h1>
@@ -170,7 +170,7 @@ export default function RequestPage() {
                 ].map((item) => (
                   <div key={item.n} className="bg-obsidian p-6">
                     <p className="font-mono text-signal-gold text-[0.6rem] tracking-widest mb-2">{item.n}</p>
-                    <h3 className="font-serif text-bone text-base font-light mb-2">{item.label}</h3>
+                    <h3 className="display-card text-base mb-2">{item.label}</h3>
                     <p className="font-sans text-muted text-xs leading-relaxed">{item.desc}</p>
                   </div>
                 ))}
@@ -208,9 +208,8 @@ export default function RequestPage() {
 
           <div className="mb-12">
             <p className="label-inst mb-6">Confidential Enquiry</p>
-            <hr className="rule mb-10 w-16" style={{ borderColor: '#B8935B' }} />
-            <h1 className="font-serif text-bone font-light leading-tight mb-4"
-                style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', letterSpacing: '-0.025em' }}>
+            <hr className="rule mb-10 w-16" />
+            <h1 className="display-editorial mb-4">
               Begin the conversation.
             </h1>
             <p className="font-serif text-muted text-lg leading-relaxed max-w-xl">
@@ -485,6 +484,9 @@ export default function RequestPage() {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="max-w-dossier mx-auto px-6 lg:px-12 mt-16">
+            <Disclaimer variant="compact" />
           </div>
         </div>
       </main>

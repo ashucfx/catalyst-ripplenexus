@@ -5,7 +5,7 @@ import { getDb } from '@/lib/db/supabase'
 import { PRICING } from '@/lib/constants/pricing'
 
 const DESCRIPTIONS: Record<string, string> = {
-  audit: 'Catalyst Market Value Audit — 45-minute career positioning diagnostic',
+  audit: 'Catalyst Market Value Audit — AI-Generated Positioning Intelligence Report',
 }
 
 export async function POST(req: NextRequest) {

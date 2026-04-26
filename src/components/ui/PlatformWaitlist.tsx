@@ -36,7 +36,7 @@ export function PlatformWaitlist({ plan }: Props) {
 
   if (submitted) {
     return (
-      <div className="border border-signal-gold/30 bg-graphite/10 p-6 text-center">
+      <div className="border border-signal-gold/30 bg-graphite/10 p-6">
         <p className="label-inst mb-2">You&apos;re on the list.</p>
         <p className="font-sans text-muted text-sm">
           We&apos;ll email you when early access opens{plan ? ` — ${plan} tier` : ''}.

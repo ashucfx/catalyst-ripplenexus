@@ -17,8 +17,7 @@ export default function TermsPage() {
           <div className="max-w-2xl">
 
             <p className="label-inst mb-6">Legal</p>
-            <h1 className="font-serif text-bone font-light leading-tight mb-4"
-                style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.02em' }}>
+            <h1 className="display-editorial mb-4">
               Terms of Service
             </h1>
             <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-16">
@@ -28,16 +27,16 @@ export default function TermsPage() {
             <div className="flex flex-col gap-12">
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">1. Acceptance</h2>
+                <h2 className="display-card text-xl mb-4">1. Acceptance</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
-                  By accessing www.catalyst.theripplenexus.com or submitting any form on this website, you
+                  By accessing catalyst.theripplenexus.com or submitting any form on this website, you
                   agree to be bound by these Terms of Service. If you do not agree, do not
                   use this website. These terms are governed by the laws of India.
                 </p>
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">2. Services</h2>
+                <h2 className="display-card text-xl mb-4">2. Services</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed mb-3">
                   Catalyst provides professional career positioning consultancy services including
                   the Market Value Audit, Positioning Blueprint, and Sovereign Executive Suite.
@@ -52,7 +51,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">3. Free tools</h2>
+                <h2 className="display-card text-xl mb-4">3. Free tools</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   The Talent Positioning Index (TPI) calculator is provided free of charge as
                   an indicative assessment tool. TPI scores are computed from self-reported
@@ -64,16 +63,16 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">4. Intellectual property</h2>
+                <h2 className="display-card text-xl mb-4">4. Intellectual property</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   All content on this website — including text, design, frameworks, and brand
-                  assets — is the property of Ripple Nexus Institution and may not be
+                  assets — is the property of Ripple Nexus and may not be
                   reproduced, distributed, or used commercially without written permission.
                 </p>
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">5. Outcomes and results</h2>
+                <h2 className="display-card text-xl mb-4">5. Outcomes and results</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   Case study outcomes displayed on this website are illustrative examples based
                   on comparable professional profiles. Past results do not guarantee future
@@ -84,7 +83,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">6. Platform (SaaS)</h2>
+                <h2 className="display-card text-xl mb-4">6. Platform (SaaS)</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   The Catalyst Intelligence Platform described on the Platform page is in
                   active development and is not currently available for purchase. Joining the
@@ -94,9 +93,9 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">7. Limitation of liability</h2>
+                <h2 className="display-card text-xl mb-4">7. Limitation of liability</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
-                  To the maximum extent permitted by applicable law, Ripple Nexus Institution
+                  To the maximum extent permitted by applicable law, Ripple Nexus
                   is not liable for any indirect, incidental, or consequential damages arising
                   from the use of this website or Catalyst services. Our total liability for
                   any claim is limited to the amount paid for the specific service giving rise
@@ -105,7 +104,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">8. Confidentiality</h2>
+                <h2 className="display-card text-xl mb-4">8. Confidentiality</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   Catalyst treats all client information with strict confidence. We do not
                   disclose client names, profiles, or engagement details without explicit
@@ -114,7 +113,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">9. Changes</h2>
+                <h2 className="display-card text-xl mb-4">9. Changes</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   We reserve the right to update these terms at any time. Continued use of
                   the website after changes constitutes acceptance of the revised terms.
@@ -122,7 +121,7 @@ export default function TermsPage() {
               </section>
 
               <section className="border-t border-graphite pt-8">
-                <h2 className="font-serif text-bone text-xl font-light mb-4">Contact</h2>
+                <h2 className="display-card text-xl mb-4">Contact</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   For legal enquiries, email{' '}
                   <a href="mailto:catalyst@theripplenexus.com"

@@ -3,6 +3,8 @@ import { verifyRazorpaySignature } from '@/lib/payment/razorpay'
 import { resend, FROM, ADMIN_EMAIL } from '@/lib/email/resend'
 import { PRICING } from '@/lib/constants/pricing'
 import { getDb, insertPayment } from '@/lib/db/supabase'
+import { createPortal } from '@/lib/db/portals'
+import { auditPortalEmail } from '@/lib/email/templates'
 
 export async function POST(req: NextRequest) {
   try {
@@ -43,6 +45,15 @@ export async function POST(req: NextRequest) {
       }).catch(e => console.error('[razorpay/verify] booking confirm failed:', e))
     } else {
       amountINR = Math.round((PRICING[product as keyof typeof PRICING]?.inr || 0) / 100)
+
+      if (product === 'audit' && email) {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'
+        const token   = await createPortal(email, paymentId)
+        const portalUrl = `${baseUrl}/portal/${token}`
+        const { subject, html } = auditPortalEmail(portalUrl)
+        resend.emails.send({ from: FROM, to: email, subject, html })
+          .catch(e => console.error('[razorpay/verify] portal email failed:', e))
+      }
     }
 
     await Promise.all([

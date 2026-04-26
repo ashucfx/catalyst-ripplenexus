@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { capturePayPalOrder } from '@/lib/payment/paypal'
 import { resend, FROM, ADMIN_EMAIL } from '@/lib/email/resend'
 import { insertPayment } from '@/lib/db/supabase'
-
 import { PRICING } from '@/lib/constants/pricing'
+import { createPortal } from '@/lib/db/portals'
+import { auditPortalEmail } from '@/lib/email/templates'
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,6 +27,13 @@ export async function POST(req: NextRequest) {
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ bookingId, paymentId: result.captureId, paymentMethod: 'paypal' }),
       }).catch(e => console.error('[paypal/capture] booking confirm failed:', e))
+    } else if (product === 'audit') {
+      const baseUrl   = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'
+      const token     = await createPortal(resolvedEmail, result.captureId)
+      const portalUrl = `${baseUrl}/portal/${token}`
+      const { subject, html } = auditPortalEmail(portalUrl)
+      resend.emails.send({ from: FROM, to: resolvedEmail, subject, html })
+        .catch(e => console.error('[paypal/capture] portal email failed:', e))
     }
 
     await Promise.all([

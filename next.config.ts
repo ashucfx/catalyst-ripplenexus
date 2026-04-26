@@ -2,6 +2,8 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  transpilePackages: ['@react-pdf/renderer'],
+  serverExternalPackages: ['@anthropic-ai/sdk'],
   compress: true,
   poweredByHeader: false,
   images: {

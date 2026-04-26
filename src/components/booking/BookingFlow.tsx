@@ -174,7 +174,7 @@ export function BookingFlow({ meetingType }: Props) {
       {/* Left: session info */}
       <div className="bg-graphite p-8 border-r border-graphite lg:border-b-0 border-b">
         <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-4">SESSION</p>
-        <h2 className="font-serif text-bone text-2xl font-light mb-2">{meetingType.name}</h2>
+        <h2 className="display-card text-2xl mb-2">{meetingType.name}</h2>
         <p className="font-sans text-muted text-sm leading-relaxed mb-6">{meetingType.description}</p>
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
@@ -227,7 +227,7 @@ export function BookingFlow({ meetingType }: Props) {
             {step === 'calendar' && (
               <>
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="font-serif text-bone text-xl font-light">
+                  <h3 className="display-card text-xl">
                     {MONTHS[month - 1]} {year}
                   </h3>
                   <div className="flex gap-2">
@@ -298,7 +298,7 @@ export function BookingFlow({ meetingType }: Props) {
                     className="font-mono text-muted text-[0.6rem] tracking-widest hover:text-bone">
                     ← Back
                   </button>
-                  <h3 className="font-serif text-bone text-xl font-light">
+                  <h3 className="display-card text-xl">
                     {selectedDate ? formatDateDisplay(selectedDate, tz) : ''}
                   </h3>
                 </div>
@@ -342,7 +342,7 @@ export function BookingFlow({ meetingType }: Props) {
                 className="font-mono text-muted text-[0.6rem] tracking-widest hover:text-bone">
                 ← Back
               </button>
-              <h3 className="font-serif text-bone text-xl font-light">Your details</h3>
+              <h3 className="display-card text-xl">Your details</h3>
             </div>
 
             <form onSubmit={handleSubmitDetails} className="flex flex-col gap-5" noValidate>
@@ -403,7 +403,7 @@ export function BookingFlow({ meetingType }: Props) {
         {step === 'payment' && (
           <>
             <div className="mb-8">
-              <h3 className="font-serif text-bone text-xl font-light mb-2">Complete payment</h3>
+              <h3 className="display-card text-xl mb-2">Complete payment</h3>
               <p className="font-sans text-muted text-sm">
                 Your slot is reserved for 15 minutes. Complete payment to confirm your booking.
               </p>

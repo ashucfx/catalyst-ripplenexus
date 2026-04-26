@@ -124,7 +124,7 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
           ].map(s => (
             <div key={s.label} className="bg-obsidian p-6">
               <p className="font-mono text-muted text-[0.55rem] tracking-widest mb-2">{s.label.toUpperCase()}</p>
-              <p className="font-serif text-bone text-2xl font-light">{s.value}</p>
+              <p className="display-card text-2xl">{s.value}</p>
             </div>
           ))}
         </div>

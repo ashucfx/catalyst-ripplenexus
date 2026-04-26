@@ -10,11 +10,8 @@ export default function NotFound() {
         <div className="max-w-dossier mx-auto px-6 lg:px-12">
           <div className="max-w-2xl">
             <p className="label-inst mb-6">404 — Not Located</p>
-            <hr className="rule mb-10 w-16" style={{ borderColor: '#B8935B' }} />
-            <h1
-              className="font-serif text-bone font-light leading-tight mb-6"
-              style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', letterSpacing: '-0.025em' }}
-            >
+            <hr className="rule mb-10 w-16" />
+            <h1 className="display-section mb-6">
               This page does not<br />
               <em className="text-signal-gold not-italic">exist in this system.</em>
             </h1>

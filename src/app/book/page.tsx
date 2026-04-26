@@ -26,9 +26,8 @@ export default async function BookPage() {
 
           <div className="mb-16">
             <p className="label-inst mb-6">Scheduling</p>
-            <hr className="rule mb-10 w-16 border-signal-gold" style={{ borderColor: '#B8935B' }} />
-            <h1 className="font-serif text-bone font-light leading-tight mb-6"
-                style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', letterSpacing: '-0.025em' }}>
+            <hr className="rule mb-10 w-16" />
+            <h1 className="display-editorial mb-6">
               Choose your session type
             </h1>
             <p className="font-serif text-muted text-lg leading-relaxed max-w-xl">
@@ -38,7 +37,7 @@ export default async function BookPage() {
           </div>
 
           {meetingTypes.length === 0 && (
-            <div className="border border-graphite p-10 text-center">
+            <div className="border border-graphite p-10">
               <p className="font-sans text-muted text-sm">
                 Scheduling is not yet configured. Please check back shortly.
               </p>
@@ -63,7 +62,7 @@ export default async function BookPage() {
                       {!isPaid && (
                         <p className="font-mono text-signal-gold text-[0.55rem] tracking-widest">FREE</p>
                       )}
-                      <h3 className="font-serif text-bone text-xl font-light">{mt.name}</h3>
+                      <h3 className="display-card text-xl">{mt.name}</h3>
                     </div>
                   </div>
 
@@ -104,7 +103,7 @@ export default async function BookPage() {
               ].map(step => (
                 <div key={step.n}>
                   <p className="font-mono text-signal-gold text-[0.6rem] tracking-widest mb-2">{step.n}</p>
-                  <p className="font-serif text-bone text-base font-light mb-2">{step.title}</p>
+                  <p className="display-card text-base mb-2">{step.title}</p>
                   <p className="font-sans text-muted text-sm leading-relaxed">{step.desc}</p>
                 </div>
               ))}

@@ -287,10 +287,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <div className="lg:col-span-2">
               <div className="mb-12">
                 <p className="label-inst mb-4">{article.cluster}</p>
-                <h1
-                  className="font-serif text-bone font-light leading-tight mb-6"
-                  style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', letterSpacing: '-0.02em' }}
-                >
+                <h1 className="display-editorial mb-6">
                   {article.title}
                 </h1>
                 <p className="font-serif text-muted text-xl leading-relaxed mb-8">{article.subtitle}</p>
@@ -304,7 +301,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 {article.body.map((block, i) => {
                   if (block.type === 'h2') {
                     return (
-                      <h2 key={i} className="font-serif text-bone text-2xl font-light mt-12 mb-4">
+                      <h2 key={i} className="display-card text-2xl mt-12 mb-4">
                         {block.content as string}
                       </h2>
                     )
@@ -315,7 +312,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                         key={i}
                         className="border-l-2 border-signal-gold pl-6 my-8"
                       >
-                        <p className="font-serif text-bone text-xl font-light leading-relaxed italic">
+                        <p className="display-card text-xl leading-relaxed italic">
                           {block.content as string}
                         </p>
                       </blockquote>

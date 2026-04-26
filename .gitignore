@@ -35,3 +35,8 @@ next-env.d.ts
 .vscode/settings.json
 .idea/
 *.swp
+
+# brand assets — do not commit
+*.pdf
+Catalyst\ -\ Logo\ System.svg
+Prompt.md

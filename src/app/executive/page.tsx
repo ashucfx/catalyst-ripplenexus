@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/Button'
+import { Disclaimer } from '@/components/ui/Disclaimer'
 
 export const metadata: Metadata = {
   title: 'Sovereign Executive Suite — Tier III',
@@ -19,9 +20,8 @@ export default function ExecutivePage() {
           {/* Header */}
           <div className="mb-20">
             <p className="label-inst mb-6">Tier III — Premium Offer</p>
-            <hr className="rule mb-10 w-16 border-signal-gold" style={{ borderColor: '#B8935B' }} />
-            <h1 className="font-serif text-bone font-light leading-tight mb-6"
-                style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', letterSpacing: '-0.025em' }}>
+            <hr className="rule mb-10 w-16" />
+            <h1 className="display-section mb-6">
               The Sovereign<br />Executive Suite
             </h1>
             <p className="font-serif text-muted text-xl leading-relaxed max-w-2xl mb-4">
@@ -143,7 +143,7 @@ export default function ExecutivePage() {
                     <span className="font-mono text-signal-gold text-xs tracking-widest">{d.n}</span>
                     <hr className="flex-1 rule" />
                   </div>
-                  <h3 className="font-serif text-bone text-xl font-light">{d.title}</h3>
+                  <h3 className="display-card text-xl">{d.title}</h3>
                   <p className="font-sans text-muted text-sm leading-relaxed">{d.detail}</p>
                 </div>
               ))}
@@ -190,6 +190,7 @@ export default function ExecutivePage() {
             </div>
           </div>
 
+          <Disclaimer variant="compact" className="mt-16 pt-8 border-t border-white/[0.06]" />
         </div>
       </main>
       <Footer />

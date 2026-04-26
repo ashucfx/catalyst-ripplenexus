@@ -23,16 +23,22 @@ export function InflectionMark({ size = 'md', className = '' }: InflectionMarkPr
       viewBox="0 0 96 120"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={`${className} overflow-visible`}
       aria-label="Catalyst — The Inflection"
       role="img"
     >
-      {/* Stroke A — Bone trajectory: the career path already in motion */}
+      <defs>
+        <filter id="gold-glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+      {/* Stroke A — Bone trajectory */}
       <polygon points="0,120 22,120 96,0 74,0" fill="#F4F1EB" />
-      {/* Stroke B — Signal Gold intervention: the Catalyst redirects the trajectory */}
-      <polygon points="96,0 74,0 50,38 72,38" fill="#B8935B" />
-      {/* Activation vertex dot — the exact moment the reaction begins */}
-      <circle cx="85" cy="12" r="2.5" fill="#0A0B0D" />
+      {/* Stroke B — Signal Gold intervention */}
+      <polygon points="96,0 74,0 50,38 72,38" fill="#B8935B" filter="url(#gold-glow)" />
+      {/* Activation vertex dot */}
+      <circle cx="85" cy="12" r="2.5" fill="#050505" />
     </svg>
   )
 }

@@ -4,122 +4,550 @@
 
 /* ─── Brand Token Layer ─────────────────────────────────────────────── */
 :root {
-  --obsidian:      #0A0B0D;
-  --bone:          #F4F1EB;
-  --graphite:      #1F2226;
-  --parchment:     #E6DFD1;
-  --signal-gold:   #B8935B;
-  --catalyst-ink:  #0E1A3A;
-  --muted:         #8B8681;
+  /* Core palette — exact spec values from Catalyst Brand System PDF */
+  --obsidian:        #0A0B0D;   /* Primary ground dark (60%)           */
+  --obsidian-light:  #111417;   /* Intermediate surface                */
+  --bone:            #F4F1EB;   /* Primary ground light (60% inverse)  */
+  --graphite:        #1F2226;   /* Component surface dark (30%)        */
+  --graphite-light:  #262B31;   /* Graphite hover/active state         */
+  --parchment:       #E6DFD1;   /* Component surface light (30%)       */
+  --signal-gold:     #B8935B;   /* Accent — CTAs, TPI meter (10%)      */
+  --catalyst-ink:    #0E1A3A;   /* Data visualization layer            */
+  --muted:           #8C8C96;
+  --muted-light:     #ABABB2;
+
+  /* Glass — derived from spec obsidian */
+  --premium-glass:   rgba(10, 11, 13, 0.72);
+  --glass-border:    rgba(255, 255, 255, 0.06);
+
+  /* Selection */
+  --selection:       rgba(184, 147, 91, 0.25);
+
+  /* Spacing scale */
+  --space-section: 9rem;
+  --space-block:   4rem;
 }
 
 /* ─── Base Reset ────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing:  antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
-  text-rendering: optimizeLegibility;
+  scroll-behavior:         smooth;
+  text-rendering:          optimizeLegibility;
+  background-color:        var(--obsidian);
 }
 
 body {
   background-color: var(--obsidian);
-  color: var(--bone);
-  font-family: var(--font-inter), system-ui, sans-serif;
-  font-size: 1rem;
-  line-height: 1.6;
-  /* Prevent layout shift on scroll */
-  overflow-x: hidden;
+  color:            var(--bone);
+  font-family:      var(--font-inter), -apple-system, system-ui, sans-serif;
+  font-size:        1rem;
+  line-height:      1.5;
+  overflow-x:       hidden;
+  letter-spacing:   -0.012em;
 }
 
-/* ─── Typography Utilities ──────────────────────────────────────────── */
+/* ─── Premium Layout Utilities ──────────────────────────────────────── */
 
-/* Institutional label — small-caps gold, wide tracked */
+/* Constrained, readable max-widths */
+.max-w-dossier  { max-width: 1280px; margin-inline: auto; }
+.max-w-editorial { max-width: 720px; }
+
+/* Section padding */
+.section-pad { padding-block: var(--space-section); }
+
+/* ─── Typography System ─────────────────────────────────────────────── */
+
+/* Institutional label — gold mono uppercase, the "badge" pattern */
 .label-inst {
-  font-family: var(--font-inter), sans-serif;
-  font-size: 0.6875rem;
-  letter-spacing: 0.38em;
+  font-family:    var(--font-mono), monospace;
+  font-size:      0.58rem;
+  letter-spacing: 0.55em;
   text-transform: uppercase;
-  color: var(--signal-gold);
+  color:          var(--signal-gold);
+  font-weight:    600;
+  opacity:        0.9;
+  display:        block;
 }
 
-/* Rule line — graphite hairline */
-.rule { border: none; border-top: 1px solid var(--graphite); }
+/* Eyebrow variant — slightly larger for section openers */
+.eyebrow {
+  font-family:    var(--font-mono), monospace;
+  font-size:      0.62rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color:          var(--signal-gold);
+  font-weight:    600;
+  display:        block;
+}
 
-/* Mono data display */
-.data { font-family: var(--font-mono), monospace; color: var(--signal-gold); }
+/* Display heading — cinematic large serif (homepage hero only) */
+.display-hero {
+  font-family:    var(--font-cormorant), Georgia, serif;
+  font-weight:    400;
+  line-height:    1.02;
+  letter-spacing: -0.04em;
+  color:          var(--bone);
+  font-size:      clamp(3.5rem, 9vw, 8rem);
+}
 
-/* Long-form editorial prose */
+/* Section heading — used for homepage section H2s */
+.display-section {
+  font-family:    var(--font-cormorant), Georgia, serif;
+  font-weight:    400;
+  line-height:    1.08;
+  letter-spacing: -0.025em;
+  color:          var(--bone);
+  font-size:      clamp(2.5rem, 5vw, 4.5rem);
+}
+
+/* Page-level H1 — inner service pages (audit, blueprint, system) */
+.display-page {
+  font-family:    var(--font-cormorant), Georgia, serif;
+  font-weight:    400;
+  line-height:    1.05;
+  letter-spacing: -0.03em;
+  color:          var(--bone);
+  font-size:      clamp(3rem, 7vw, 6rem);
+}
+
+/* Editorial H1 — diagnostic/form pages (tpi, request, book) */
+.display-editorial {
+  font-family:    var(--font-cormorant), Georgia, serif;
+  font-weight:    400;
+  line-height:    1.1;
+  letter-spacing: -0.025em;
+  color:          var(--bone);
+  font-size:      clamp(2rem, 5vw, 3.5rem);
+}
+
+.display-card {
+  font-family:    var(--font-cormorant), Georgia, serif;
+  font-weight:    400;
+  line-height:    1.15;
+  letter-spacing: -0.015em;
+  color:          var(--bone);
+}
+
+/* Institutional gold rule separator */
+.rule {
+  border:     none;
+  border-top: 1px solid var(--signal-gold);
+  opacity:    0.5;
+  display:    block;
+}
+
+/* Body prose */
 .prose-catalyst {
+  font-family: var(--font-inter), sans-serif;
+  font-size:   1.1rem;
+  line-height: 1.75;
+  color:       var(--muted);
+  max-width:   65ch;
+}
+.prose-catalyst p         { margin-bottom: 1.75rem; }
+.prose-catalyst strong    { color: var(--bone); font-weight: 500; }
+.prose-catalyst em        { color: var(--signal-gold); font-style: normal; font-weight: 500; }
+
+/* Editorial lead text — section intros, page subtitles */
+.prose-lead {
   font-family: var(--font-cormorant), Georgia, serif;
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: #c8c4bc;
-  max-width: 68ch;
-}
-.prose-catalyst h2 {
-  font-size: 2rem;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-  color: var(--bone);
-  font-family: var(--font-cormorant), Georgia, serif;
-}
-.prose-catalyst p { margin-bottom: 1.5rem; }
-.prose-catalyst strong { color: var(--bone); font-weight: 600; }
-.prose-catalyst em { color: var(--signal-gold); font-style: italic; }
-
-/* ─── Form Elements ─────────────────────────────────────────────────── */
-input, textarea, select {
-  /* Prevent iOS zoom on focus */
-  font-size: 16px;
-}
-@media (min-width: 640px) {
-  input, textarea, select {
-    font-size: inherit;
-  }
+  font-size:   1.35rem;
+  line-height: 1.65;
+  color:       var(--muted);
 }
 
-/* ─── Scrollbar ─────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: var(--obsidian); }
-::-webkit-scrollbar-thumb { background: var(--graphite); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--signal-gold); }
+/* ─── Color Utilities ────────────────────────────────────────────────── */
 
-/* ─── Selection ─────────────────────────────────────────────────────── */
-::selection { background: var(--signal-gold); color: var(--obsidian); }
-
-/* ─── Focus ─────────────────────────────────────────────────────────── */
-:focus-visible { outline: 1px solid var(--signal-gold); outline-offset: 3px; }
-
-/* ─── Link base ─────────────────────────────────────────────────────── */
-a { color: inherit; text-decoration: none; }
-
-/* ─── Mobile: tap target minimum ───────────────────────────────────── */
-@media (max-width: 768px) {
-  button, a {
-    min-height: 44px;
-  }
+.text-gradient {
+  background:              linear-gradient(160deg, var(--bone) 0%, rgba(244,241,235,0.65) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip:         text;
 }
 
-/* ─── Reveal animation helper ───────────────────────────────────────── */
+/* Gold gradient — tonal range of Signal Gold #B8935B */
+.text-gold-gradient {
+  background:              linear-gradient(135deg, #D4AE7A 0%, var(--signal-gold) 55%, #8A6D3E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip:         text;
+}
+
+.gold-bar {
+  height:     1px;
+  background: linear-gradient(90deg, transparent, var(--signal-gold), transparent);
+  opacity:    0.4;
+}
+
+/* ─── Glass & Surface ────────────────────────────────────────────────── */
+
+.glass {
+  background:          var(--premium-glass);
+  backdrop-filter:     blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border:              1px solid rgba(255,255,255,0.07);
+  box-shadow:          0 12px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* Subtle elevated card */
+.card-dark {
+  background: var(--obsidian-light);
+  border:     1px solid rgba(255,255,255,0.055);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.card-dark:hover {
+  border-color: rgba(184,147,91,0.28);
+  box-shadow:   0 8px 60px rgba(0,0,0,0.65), 0 0 0 1px rgba(184,147,91,0.1), 0 0 30px rgba(184,147,91,0.06);
+  transform: translateY(-1px);
+}
+
+/* Featured card — animated gold ring */
+.card-featured {
+  background: var(--obsidian-light);
+  border:     1px solid rgba(184,147,91,0.45);
+  box-shadow: 0 0 0 1px rgba(184,147,91,0.12), 0 0 40px rgba(184,147,91,0.08), 0 8px 40px rgba(0,0,0,0.6);
+  animation:  goldRingPulse 4s ease-in-out infinite;
+}
+
+/* ─── Grain Overlay ─────────────────────────────────────────────────── */
+
+.grain { position: relative; }
+.grain::after {
+  content:          "";
+  position:         fixed;
+  inset:            0;
+  width:            100%;
+  height:           100%;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity:          0.042;
+  pointer-events:   none;
+  z-index:          9999;
+  mix-blend-mode:   overlay;
+}
+
+/* ─── Decorative Dividers ────────────────────────────────────────────── */
+
+.divider-rule {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+}
+
+/* ─── CTA Buttons ────────────────────────────────────────────────────── */
+
+/* Used for shimmer effect on primary button */
+.shimmer-trigger { position: relative; overflow: hidden; }
+.shimmer-bar {
+  position:   absolute;
+  inset:      0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  transform:  translateX(-100%);
+}
+.shimmer-trigger:hover .shimmer-bar {
+  animation: shimmer 1.2s ease infinite;
+}
+
+/* Pulsing gold dot — urgency signal */
+.pulse-dot {
+  display:          inline-block;
+  width:            7px;
+  height:           7px;
+  border-radius:    50%;
+  background:       var(--signal-gold);
+  box-shadow:       0 0 0 0 rgba(184, 147, 91, 0.4);
+  animation:        pulseDot 2s ease-out infinite;
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────── */
+
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes pulseDot {
+  0%   { box-shadow: 0 0 0 0 rgba(184,147,91,0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(184,147,91,0); }
+  100% { box-shadow: 0 0 0 0 rgba(184,147,91,0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(8px) scale(0.995); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes counterUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(184,147,91,0.25); }
+  50%       { border-color: rgba(184,147,91,0.5); }
+}
+
+.float-premium { animation: float 7s ease-in-out infinite; }
+
+/* ─── Scroll Reveal ─────────────────────────────────────────────────── */
+
 .reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  opacity:    0;
+  transform:  translateY(32px);
+  transition: opacity 1.1s cubic-bezier(0.2, 1, 0.3, 1),
+              transform 1.1s cubic-bezier(0.2, 1, 0.3, 1);
 }
 .reveal-on-scroll.visible {
-  opacity: 1;
+  opacity:   1;
   transform: translateY(0);
 }
 
-/* ─── Page transition ───────────────────────────────────────────────── */
-main {
-  animation: fadeIn 0.3s ease-out;
+/* ─── Stats / Metrics ────────────────────────────────────────────────── */
+
+.metric-number {
+  font-family:    var(--font-cormorant), Georgia, serif;
+  font-size:      clamp(2.5rem, 5vw, 3.5rem);
+  font-weight:    300;
+  color:          var(--signal-gold);
+  line-height:    1;
+  letter-spacing: -0.02em;
 }
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+
+.metric-label {
+  font-family:    var(--font-mono), monospace;
+  font-size:      0.55rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color:          var(--muted);
+  opacity:        0.85;
+}
+
+/* ─── Trust Badges ───────────────────────────────────────────────────── */
+
+.trust-badge {
+  display:     inline-flex;
+  align-items: center;
+  gap:         0.5rem;
+  font-family: var(--font-mono), monospace;
+  font-size:   0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color:       var(--muted);
+  border:      1px solid rgba(255,255,255,0.07);
+  padding:     0.4rem 0.9rem;
+  border-radius: 2px;
+}
+
+/* ─── Tier Tag ────────────────────────────────────────────────────────── */
+
+.tier-tag {
+  font-family:    var(--font-mono), monospace;
+  font-size:      0.52rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color:          var(--signal-gold);
+  font-weight:    600;
+}
+
+/* ─── Form Elements ─────────────────────────────────────────────────── */
+
+input, textarea, select {
+  background:    rgba(255,255,255,0.04);
+  border:        1px solid rgba(255,255,255,0.1);
+  color:         var(--bone);
+  font-family:   var(--font-inter), sans-serif;
+  border-radius: 0;
+  transition:    border-color 0.3s, box-shadow 0.3s;
+}
+input:focus, textarea:focus {
+  outline:      none;
+  border-color: var(--signal-gold) !important;
+  box-shadow:   0 0 0 3px rgba(184,147,91,0.08);
+}
+input::placeholder, textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.5;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar          { width: 3px; }
+::-webkit-scrollbar-track    { background: var(--obsidian); }
+::-webkit-scrollbar-thumb    { background: #2a2a2a; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--signal-gold); }
+
+/* ─── Selection ──────────────────────────────────────────────────────── */
+
+::selection { background: var(--selection); color: var(--bone); }
+
+/* ─── Page Enter ─────────────────────────────────────────────────────── */
+
+main { animation: pageEnter 0.9s cubic-bezier(0.2, 1, 0.3, 1); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PREMIUM UPGRADE LAYER — Catalyst Global Design System v2
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─── Background Patterns ────────────────────────────────────────────── */
+
+.dot-field {
+  background-image: radial-gradient(rgba(184,147,91,0.14) 1px, transparent 1px);
+  background-size:  30px 30px;
+}
+
+.line-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* ─── Ambient Light / Beam Effects ──────────────────────────────────── */
+
+.beam-tr {
+  background: radial-gradient(ellipse 900px 600px at 90% -10%,
+    rgba(184,147,91,0.13) 0%, transparent 70%);
+}
+
+.beam-bl {
+  background: radial-gradient(ellipse 700px 500px at -5% 110%,
+    rgba(184,147,91,0.07) 0%, transparent 60%);
+}
+
+.beam-center {
+  background: radial-gradient(ellipse 1100px 700px at 50% 60%,
+    rgba(184,147,91,0.09) 0%, transparent 70%);
+}
+
+.beam-top {
+  background: radial-gradient(ellipse 1400px 400px at 50% -5%,
+    rgba(184,147,91,0.11) 0%, transparent 65%);
+}
+
+/* ─── Enhanced Card Styles ───────────────────────────────────────────── */
+
+.card-glow {
+  background:  var(--obsidian-light);
+  border:      1px solid rgba(255,255,255,0.06);
+  box-shadow:  0 4px 60px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.04);
+  transition:  border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+}
+.card-glow:hover {
+  border-color: rgba(184,147,91,0.3);
+  box-shadow:   0 10px 80px rgba(0,0,0,0.8),
+                0 0 40px rgba(184,147,91,0.09),
+                inset 0 1px 0 rgba(255,255,255,0.07);
+  transform: translateY(-3px);
+}
+
+/* ─── Live / Status Badge ────────────────────────────────────────────── */
+
+.live-badge {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             0.65rem;
+  font-family:     var(--font-mono), monospace;
+  font-size:       0.58rem;
+  letter-spacing:  0.28em;
+  text-transform:  uppercase;
+  color:           var(--muted);
+  border:          1px solid rgba(255,255,255,0.09);
+  background:      rgba(255,255,255,0.025);
+  padding:         0.6rem 1.2rem;
+  backdrop-filter: blur(20px);
+}
+
+/* ─── CTA Button Glow ────────────────────────────────────────────────── */
+
+.btn-primary-glow {
+  box-shadow: 0 0 0 1px rgba(184,147,91,0.35), 0 6px 28px rgba(184,147,91,0.25);
+  transition: all 0.35s cubic-bezier(0.2,1,0.3,1);
+}
+.btn-primary-glow:hover {
+  box-shadow: 0 0 0 1px rgba(184,147,91,0.55), 0 10px 48px rgba(184,147,91,0.38);
+  transform:  translateY(-2px);
+}
+
+/* ─── Metric XL (case studies) ───────────────────────────────────────── */
+
+.metric-xl {
+  font-family:    var(--font-cormorant), Georgia, serif;
+  font-weight:    300;
+  line-height:    0.9;
+  letter-spacing: -0.04em;
+  color:          var(--signal-gold);
+}
+
+/* ─── Marquee (trust rail) ───────────────────────────────────────────── */
+
+.marquee-track {
+  display:   flex;
+  animation: marqueeScroll 28s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+/* ─── Pricing top accent line ────────────────────────────────────────── */
+
+.price-top-beam {
+  height:     2px;
+  background: linear-gradient(90deg, transparent, rgba(184,147,91,0.9), transparent);
+}
+
+/* ─── New Keyframes ──────────────────────────────────────────────────── */
+
+@keyframes goldRingPulse {
+  0%, 100% {
+    box-shadow:   0 0 0 1px rgba(184,147,91,0.12), 0 0 30px rgba(184,147,91,0.06), 0 8px 40px rgba(0,0,0,0.6);
+    border-color: rgba(184,147,91,0.4);
+  }
+  50% {
+    box-shadow:   0 0 0 1px rgba(184,147,91,0.22), 0 0 55px rgba(184,147,91,0.14), 0 12px 60px rgba(0,0,0,0.7);
+    border-color: rgba(184,147,91,0.7);
+  }
+}
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes goldTextGlow {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(184,147,91,0.3)); }
+  50%       { filter: drop-shadow(0 0 50px rgba(184,147,91,0.55)); }
+}
+
+.text-glow-gold { animation: goldTextGlow 5s ease-in-out infinite; }
+
+/* ─── Trust Rail — company logo tiles ───────────────────────────────── */
+
+.trust-logo-tile svg {
+  transition: color 0.35s ease, filter 0.35s ease;
+}
+.trust-logo-tile span {
+  transition: color 0.35s ease;
+}
+.trust-logo-tile:hover svg {
+  color:  rgba(184,147,91,0.75) !important;
+  filter: drop-shadow(0 0 8px rgba(184,147,91,0.4));
+}
+.trust-logo-tile:hover span {
+  color: rgba(184,147,91,0.65) !important;
 }

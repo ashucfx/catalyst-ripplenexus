@@ -17,8 +17,7 @@ export default function PrivacyPage() {
           <div className="max-w-2xl">
 
             <p className="label-inst mb-6">Legal</p>
-            <h1 className="font-serif text-bone font-light leading-tight mb-4"
-                style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', letterSpacing: '-0.02em' }}>
+            <h1 className="display-editorial mb-4">
               Privacy Policy
             </h1>
             <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-16">
@@ -28,16 +27,20 @@ export default function PrivacyPage() {
             <div className="flex flex-col gap-12">
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">1. Who we are</h2>
+                <h2 className="display-card text-xl mb-4">1. Who we are</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
-                  Catalyst is operated by Ripple Nexus Institution (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;).
+                  Catalyst is operated by Ripple Nexus (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;).
                   This policy explains how we handle personal information submitted through
-                  www.catalyst.theripplenexus.com and related services.
+                  catalyst.theripplenexus.com and related services.
+                  Ripple Nexus is accessible at{' '}
+                  <a href="https://www.theripplenexus.com" className="text-signal-gold hover:text-bone transition-colors">
+                    www.theripplenexus.com
+                  </a>.
                 </p>
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">2. Information we collect</h2>
+                <h2 className="display-card text-xl mb-4">2. Information we collect</h2>
                 <div className="flex flex-col gap-3">
                   {[
                     { label: 'Contact information', body: 'Name, email address, and professional role — provided when you submit an enquiry or subscribe to the Intelligence Brief.' },
@@ -53,7 +56,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">3. How we use your information</h2>
+                <h2 className="display-card text-xl mb-4">3. How we use your information</h2>
                 <ul className="flex flex-col gap-2">
                   {[
                     'To respond to your enquiry and deliver any requested assessment.',
@@ -75,7 +78,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">4. Third-party services</h2>
+                <h2 className="display-card text-xl mb-4">4. Third-party services</h2>
                 <div className="flex flex-col gap-3">
                   {[
                     { name: 'Resend', purpose: 'Transactional email delivery (enquiry confirmations, TPI score reports, welcome emails). Privacy policy: resend.com/legal/privacy-policy' },
@@ -91,7 +94,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">5. Data retention</h2>
+                <h2 className="display-card text-xl mb-4">5. Data retention</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   Enquiry data is retained for as long as necessary to conduct and follow up
                   on the business relationship. Newsletter subscriber data is retained until
@@ -101,7 +104,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">6. Your rights</h2>
+                <h2 className="display-card text-xl mb-4">6. Your rights</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed mb-3">
                   Depending on your jurisdiction, you may have the right to access, correct,
                   or delete your personal data; to object to or restrict processing; and to
@@ -111,7 +114,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">7. Security</h2>
+                <h2 className="display-card text-xl mb-4">7. Security</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   All data is transmitted over HTTPS. We do not store payment card information.
                   Access to enquiry data is restricted to authorised personnel only.
@@ -119,7 +122,7 @@ export default function PrivacyPage() {
               </section>
 
               <section>
-                <h2 className="font-serif text-bone text-xl font-light mb-4">8. Changes to this policy</h2>
+                <h2 className="display-card text-xl mb-4">8. Changes to this policy</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   We may update this policy from time to time. Material changes will be
                   communicated via the website or by email to active subscribers.
@@ -127,7 +130,7 @@ export default function PrivacyPage() {
               </section>
 
               <section className="border-t border-graphite pt-8">
-                <h2 className="font-serif text-bone text-xl font-light mb-4">Contact</h2>
+                <h2 className="display-card text-xl mb-4">Contact</h2>
                 <p className="font-sans text-muted text-sm leading-relaxed">
                   For privacy enquiries or data requests, email{' '}
                   <a href="mailto:catalyst@theripplenexus.com"

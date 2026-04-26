@@ -111,9 +111,8 @@ export default function IntelligencePage() {
           {/* Header */}
           <div className="mb-20">
             <p className="label-inst mb-6">Catalyst Intelligence</p>
-            <hr className="rule mb-10 w-16 border-signal-gold" style={{ borderColor: '#B8935B' }} />
-            <h1 className="font-serif text-bone font-light leading-tight mb-6"
-                style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', letterSpacing: '-0.025em' }}>
+            <hr className="rule mb-10 w-16" />
+            <h1 className="display-section mb-6">
               Research. Analysis.<br />
               <em className="text-signal-gold not-italic">Institutional thinking.</em>
             </h1>
@@ -146,7 +145,7 @@ export default function IntelligencePage() {
               <article key={article.slug} className="bg-obsidian p-8 flex flex-col gap-5">
                 <div>
                   <p className="label-inst mb-3">{article.cluster}</p>
-                  <h2 className="font-serif text-bone text-2xl font-light leading-snug mb-4">
+                  <h2 className="display-card text-2xl leading-snug mb-4">
                     {article.title}
                   </h2>
                   <p className="font-serif text-muted text-base leading-relaxed">{article.excerpt}</p>
@@ -170,7 +169,7 @@ export default function IntelligencePage() {
               <article key={article.slug} className="bg-obsidian p-8 flex flex-col gap-5">
                 <div>
                   <p className="label-inst mb-3">{article.cluster}</p>
-                  <h2 className="font-serif text-bone text-xl font-light leading-snug mb-4">
+                  <h2 className="display-card text-xl leading-snug mb-4">
                     {article.title}
                   </h2>
                   <p className="font-serif text-muted text-sm leading-relaxed">{article.excerpt}</p>
@@ -193,7 +192,7 @@ export default function IntelligencePage() {
             <div className="flex flex-col md:flex-row gap-8 items-start">
               <div className="flex-1">
                 <p className="label-inst mb-4">White Paper — Forthcoming Q2 2026</p>
-                <h2 className="font-serif text-bone text-3xl font-light mb-4">
+                <h2 className="display-card text-3xl mb-4">
                   India Talent Competitiveness Report 2026
                 </h2>
                 <p className="font-serif text-muted text-lg leading-relaxed">

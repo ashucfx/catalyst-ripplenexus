@@ -3,162 +3,232 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { TPIMeter } from '@/components/ui/TPIMeter'
 import { AuditCheckout } from '@/components/ui/AuditCheckout'
+import { GeoPrice } from '@/components/ui/GeoPrice'
+import { Disclaimer } from '@/components/ui/Disclaimer'
 
 export const metadata: Metadata = {
-  title: 'Market Value Audit — Tier I',
+  title: 'Market Value Audit — AI Positioning Intelligence',
   description:
-    'A 45-minute intelligence session that surfaces your Talent Positioning Index, ATS gap profile, and the exact repositioning moves that will compound your market value.',
+    'Submit your professional profile and receive an AI-generated Talent Positioning Index report in 90 seconds. Salary benchmark, ATS analysis, and a 90-day repositioning roadmap.',
 }
 
 export default function AuditPage() {
   return (
     <>
       <Header />
-      <main className="pt-32 pb-16">
-        <div className="max-w-dossier mx-auto px-6 lg:px-12">
+      <main className="grain">
 
-          {/* Header */}
-          <div className="mb-20">
-            <p className="label-inst mb-6">Tier I — Entry Offer</p>
-            <hr className="rule mb-10 w-16 border-signal-gold" style={{ borderColor: '#B8935B' }} />
-            <h1 className="font-serif text-bone font-light leading-tight mb-6"
-                style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', letterSpacing: '-0.025em' }}>
-              Market Value Audit
+        {/* ── HERO ────────────────────────────────────────────────── */}
+        <section
+          className="relative overflow-hidden pt-44 pb-32"
+          style={{ background: '#050507' }}
+        >
+          {/* Background layers */}
+          <div className="absolute inset-0 dot-field" style={{ opacity: 0.4 }} />
+          <div className="absolute inset-0 beam-tr" />
+
+          {/* Top hairline */}
+          <div
+            className="absolute top-0 inset-x-0 h-px pointer-events-none"
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(184,147,91,0.7), transparent)' }}
+          />
+
+          <div className="max-w-dossier mx-auto px-6 lg:px-12 relative z-10">
+
+            {/* Status */}
+            <div className="live-badge mb-12 inline-flex">
+              <span className="pulse-dot" />
+              AI-Powered · Report in 90 Seconds
+            </div>
+
+            <p className="label-inst mb-6 opacity-70">Tier I Intelligence · Market Value Audit</p>
+            <h1
+              className="display-page mb-10 max-w-3xl"
+              style={{ fontSize: 'clamp(3.5rem, 8vw, 7rem)', lineHeight: 1.02 }}
+            >
+              Know exactly what
+              <br />
+              <em className="text-gold-gradient not-italic">you&apos;re worth.</em>
             </h1>
-            <p className="font-serif text-muted text-xl leading-relaxed max-w-2xl mb-4">
-              Information asymmetry regarding your true market worth is the single most
-              expensive mistake a professional can make. This audit eliminates it.
-            </p>
-            <div className="flex items-baseline gap-4 mt-8">
-              <span className="font-serif text-bone text-4xl">$99</span>
-              <span className="font-serif text-muted text-xl">/ ₹2,999</span>
-              <span className="font-mono text-muted text-xs tracking-widest ml-2">FIXED FEE</span>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
+              <p className="font-serif text-muted leading-relaxed max-w-xl" style={{ fontSize: '1.3rem' }}>
+                Information asymmetry about your true market worth is the most expensive
+                mistake a senior professional can make. This AI diagnostic eliminates it —
+                in 90 seconds.
+              </p>
+              <div className="lg:text-right">
+                <div className="flex items-baseline lg:justify-end gap-4 mb-2">
+                  <GeoPrice product="audit" variant="hero" />
+                </div>
+                <p className="font-mono text-signal-gold text-[0.6rem] tracking-[0.3em] uppercase">
+                  Fixed Fee · AI Report Delivered Instantly
+                </p>
+              </div>
             </div>
           </div>
+        </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-20">
+        <div className="max-w-dossier mx-auto px-6 lg:px-12 py-32">
 
-            {/* What it solves */}
+          {/* ── CORE THESIS ─────────────────────────────────────── */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 mb-40 items-start">
+
             <div>
-              <p className="label-inst mb-6">The Problem It Solves</p>
-              <h2 className="font-serif text-bone text-2xl font-light mb-6">
-                You are pricing yourself wrong.
+              <p className="label-inst mb-8">The Thesis</p>
+              <h2 className="display-card text-3xl leading-tight mb-8">
+                The market is mispricing you because you are sending the wrong signals.
               </h2>
               <div className="prose-catalyst">
                 <p>
-                  Approximately 79% of professionals are operating with salary ceilings that are
-                  10–35% below their actual market rate. They are not underskilled. They are
-                  underpositioned.
+                  Most senior professionals negotiate from an uninformed baseline, anchored to
+                  a salary set years ago. This Audit is a surgical diagnostic that exposes the
+                  Gap — the compounding annual loss that accrues while you remain underpositioned.
                 </p>
                 <p>
-                  The Market Value Audit is a low-friction entry point designed to expose the{' '}
-                  <strong>Cost of Inaction</strong> — the compounding annual loss that accrues
-                  every year you negotiate from an uninformed baseline.
-                </p>
-                <p>
-                  Anchored against the potential <strong>$5,000–$10,000 immediate salary gain</strong>{' '}
-                  from better negotiation in the next role conversation.
+                  We don&apos;t look at your skills. We look at your{' '}
+                  <strong>Market Power.</strong> We identify the exact levers that will move
+                  your Talent Positioning Index from a generic high-performer to a recognised
+                  institutional asset.
                 </p>
               </div>
             </div>
 
-            {/* TPI Demo */}
-            <div className="bg-graphite border border-graphite/50 p-8">
-              <p className="label-inst mb-6">Sample Audit Output</p>
-              <div className="flex flex-col items-center gap-8">
-                <TPIMeter score={67} size={140} />
-                <div className="w-full">
+            {/* Sample output */}
+            <div
+              className="p-10 border border-white/[0.08]"
+              style={{
+                background: 'rgba(10,11,13,0.8)',
+                backdropFilter: 'blur(24px)',
+                boxShadow: '0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05)',
+              }}
+            >
+              <p className="label-inst mb-10">Sample Audit Output</p>
+              <div className="flex flex-col items-center gap-12">
+                <TPIMeter score={67} size={160} />
+                <div className="w-full space-y-5">
                   {[
-                    { label: 'Sector Alignment', value: 'Finance — Mid-Market PE', score: '61/100' },
-                    { label: 'ATS Pass Rate', value: '73% (target: 90%+)', score: 'Gap: High' },
+                    { label: 'Sector Alignment',  value: 'Finance — Mid-Market PE', score: '61/100' },
+                    { label: 'ATS Compatibility', value: '73% — Critical gaps detected', score: 'LOW' },
                     { label: 'Narrative Clarity', value: 'Generalist signals dominant', score: '54/100' },
-                    { label: 'Salary Positioning', value: '₹14.2L vs. ₹18.5L market', score: '-23%' },
+                    { label: 'Salary Variance',   value: '₹14.2L vs. ₹18.5L market', score: '-23%' },
                   ].map((row) => (
-                    <div key={row.label}
-                         className="flex justify-between items-center py-3 border-b border-graphite">
+                    <div key={row.label} className="flex justify-between items-end border-b border-white/[0.07] pb-3">
                       <div>
-                        <p className="font-mono text-muted text-[0.6rem] tracking-widest">{row.label}</p>
-                        <p className="font-sans text-bone text-xs mt-0.5">{row.value}</p>
+                        <p className="font-mono text-muted text-[0.6rem] tracking-widest uppercase mb-1">{row.label}</p>
+                        <p className="font-sans text-bone text-xs">{row.value}</p>
                       </div>
-                      <span className="font-mono text-signal-gold text-xs">{row.score}</span>
+                      <span className="font-mono text-signal-gold text-[0.65rem]">{row.score}</span>
                     </div>
                   ))}
                 </div>
-                <p className="font-sans text-muted text-xs leading-relaxed text-center">
-                  This is an illustrative output. Your actual TPI is calculated from live market
-                  benchmarks and your specific profile data.
-                </p>
               </div>
             </div>
           </div>
 
-          {/* Deliverables */}
-          <div className="mb-20 border-t border-graphite pt-16">
-            <p className="label-inst mb-10">What You Receive</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-graphite">
+          {/* ── DELIVERABLES ────────────────────────────────────── */}
+          <div className="mb-40">
+            <p className="label-inst mb-12">What You Receive</p>
+            <div
+              className="grid grid-cols-1 md:grid-cols-3 gap-px"
+              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.06)' }}
+            >
               {[
                 {
-                  title: '45-min Assessment',
-                  desc: 'A structured intelligence session with a Catalyst Executive Architect. Behavioral psychology-informed. Not a coaching call — a diagnostic.',
+                  title: 'AI Positioning Report',
+                  desc: 'Instant AI-generated analysis of your market position across 5 dimensions. Delivered in 90 seconds — no scheduling, no waiting.',
                 },
                 {
-                  title: 'Talent Positioning Index (TPI)',
-                  desc: 'Your proprietary market score across five dimensions: narrative clarity, signal strength, sector alignment, ATS performance, and salary positioning.',
+                  title: 'Proprietary TPI Score',
+                  desc: 'A data-backed index across Narrative, Signal, Sector, ATS, and Compensation. Benchmarked against your seniority and geography.',
                 },
                 {
                   title: 'ATS Gap Analysis',
-                  desc: 'Every deliverable run through our proprietary ATS Simulator. Mimics Workday, Greenhouse, and Lever. You see exactly what a machine sees.',
+                  desc: 'Your profile run through Workday, Greenhouse, and Lever simulations. We show you exactly what the algorithms see.',
                 },
                 {
-                  title: 'Salary Benchmark Report',
-                  desc: 'Hyper-local compensation data from Ravio, Taggd, and Lightcast. Your current package vs. what your role is paying in the market right now.',
+                  title: 'Live Market Benchmark',
+                  desc: 'Compensation intelligence from live global data. Your current package vs. real-time market demand for your profile.',
                 },
                 {
-                  title: 'Priority Repositioning Map',
-                  desc: 'The three highest-leverage moves you can make in the next 90 days to increase your market value. Sequenced and specific.',
+                  title: '90-Day Roadmap',
+                  desc: 'The three highest-leverage positioning moves you can make in the next 90 days. Specific. Measurable. Strategic.',
                 },
                 {
-                  title: 'Pathway Recommendation',
-                  desc: 'Whether the Positioning Blueprint or Sovereign Executive Suite is the right next step — and why. No upsell pressure. Just the honest answer.',
+                  title: 'Branded PDF Report',
+                  desc: 'Download your full intelligence report as a premium PDF. Share it, reference it, act on it.',
                 },
               ].map((d) => (
-                <div key={d.title} className="bg-obsidian p-8">
-                  <h3 className="font-serif text-bone text-xl font-light mb-4">{d.title}</h3>
+                <div key={d.title} className="card-glow p-10 flex flex-col gap-5">
+                  <h3 className="display-card text-xl">{d.title}</h3>
                   <p className="font-sans text-muted text-sm leading-relaxed">{d.desc}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Transformation */}
-          <div className="mb-20 border-t border-graphite pt-16 flex flex-col md:flex-row gap-12 items-center">
-            <div className="flex-1">
-              <p className="label-inst mb-4">The Transformation</p>
-              <div className="flex items-center gap-4">
-                <p className="font-serif text-muted text-2xl italic">Uncertainty</p>
-                <span className="text-signal-gold text-2xl">→</span>
-                <p className="font-serif text-signal-gold text-2xl">Clarity on Market Value</p>
-              </div>
-            </div>
-            <div className="flex-1 text-right">
-              <p className="font-serif text-bone text-4xl mb-2">$99</p>
-              <p className="font-sans text-muted text-sm">vs. $5,000–$10,000 immediate salary gain</p>
-              <p className="font-mono text-signal-gold text-xs tracking-widest mt-2">50–100× RETURN POTENTIAL</p>
+          {/* ── HOW IT WORKS ─────────────────────────────────────── */}
+          <div className="mb-40">
+            <p className="label-inst mb-12">How It Works</p>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-px border border-white/[0.06]" style={{ background: 'rgba(255,255,255,0.04)' }}>
+              {[
+                { n: '01', title: 'Pay',      desc: 'Fixed fee. No subscriptions, no upsells. $99 USD or ₹2,999 INR.' },
+                { n: '02', title: 'Portal',   desc: 'Receive a private portal link in your inbox immediately after payment.' },
+                { n: '03', title: 'Intake',   desc: 'Complete a 5-minute professional intake — your role, compensation, and goals.' },
+                { n: '04', title: 'Report',   desc: 'Your AI-generated TPI report is ready in 90 seconds. Download the PDF.' },
+              ].map((s) => (
+                <div key={s.n} className="p-10" style={{ background: 'var(--obsidian-light)' }}>
+                  <p className="font-mono text-signal-gold text-[0.6rem] tracking-widest mb-6">{s.n}</p>
+                  <h4 className="display-card text-2xl mb-4">{s.title}</h4>
+                  <p className="font-sans text-muted text-sm leading-relaxed">{s.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* CTA — live checkout */}
-          <div className="border-t border-graphite pt-16">
-            <div className="max-w-xl mx-auto text-center mb-10">
-              <h2 className="font-serif text-bone text-3xl font-light mb-4">
-                Book your Audit now.
-              </h2>
-              <p className="font-serif text-muted text-lg">
-                45 minutes. Your TPI score. A repositioning map that changes the next negotiation.
-              </p>
+          {/* ── CHECKOUT ────────────────────────────────────────── */}
+          <section id="book" className="border-t border-white/[0.07] pt-32">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
+              <div>
+                <p className="label-inst mb-8">Get Your Report</p>
+                <h2 className="display-card text-4xl leading-tight mb-8">
+                  Begin your Audit.{' '}
+                  <br />
+                  <em className="text-signal-gold not-italic">Report in 90 seconds.</em>
+                </h2>
+                <div className="prose-catalyst mb-8">
+                  <p>
+                    Pay once, receive your private portal link immediately. Complete a
+                    5-minute intake and the AI generates your full positioning intelligence
+                    report instantly — no human scheduling required.
+                  </p>
+                  <p className="text-sm italic">
+                    Anchored against a $5,000–$10,000 immediate salary gain.
+                    At <GeoPrice product="audit" variant="cta" />, this is a 50×–100× return on investment.
+                  </p>
+                </div>
+                <Disclaimer variant="compact" className="mb-12" />
+              </div>
+
+              <div
+                className="relative p-12 border border-white/[0.08]"
+                style={{
+                  background: 'rgba(10,11,13,0.8)',
+                  backdropFilter: 'blur(24px)',
+                  boxShadow: '0 20px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05)',
+                }}
+              >
+                <div
+                  className="absolute -top-px left-0 right-0 h-[2px]"
+                  style={{ background: 'linear-gradient(90deg, transparent, rgba(184,147,91,0.8), transparent)' }}
+                />
+                <div className="absolute -top-4 -right-4 bg-signal-gold text-obsidian px-4 py-1 font-mono text-[0.6rem] tracking-widest font-bold uppercase shadow-xl flex items-center gap-1">
+                  Fixed Fee: <GeoPrice product="audit" variant="cta" />
+                </div>
+                <AuditCheckout />
+              </div>
             </div>
-            <AuditCheckout />
-          </div>
+          </section>
 
         </div>
       </main>

@@ -18,11 +18,8 @@ export default function TPIPage() {
 
           <div className="mb-16 max-w-2xl">
             <p className="label-inst mb-6">Free — No commitment required</p>
-            <hr className="rule mb-10 w-16" style={{ borderColor: '#B8935B' }} />
-            <h1
-              className="font-serif text-bone font-light leading-tight mb-6"
-              style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', letterSpacing: '-0.025em' }}
-            >
+            <hr className="rule mb-10 w-16" />
+            <h1 className="display-editorial mb-6">
               How much is the market undervaluing you?
             </h1>
             <p className="font-serif text-muted text-xl leading-relaxed">

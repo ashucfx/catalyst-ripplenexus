@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { PlatformWaitlist } from './PlatformWaitlist'
 import { Button } from './Button'
 
-
 const subscriptionPlans = [
   {
     id: 'ignition',
@@ -15,9 +14,9 @@ const subscriptionPlans = [
     target: 'For professionals who need to pass the machine filter instantly.',
     outcome: 'Bypass ATS algorithms and stop getting auto-rejected.',
     features: [
-      'ATS Stress Testing (See what the algorithm sees)',
+      'ATS Stress Testing (Simulator Mode)',
       'Live Market Value Benchmark',
-      'Baseline Resume Scoring',
+      'Baseline Resume Scoring (Technical)',
     ],
     waitlist: true,
   },
@@ -27,13 +26,13 @@ const subscriptionPlans = [
     priceUSD: '$199',
     priceINR: '₹5,999',
     period: '/month',
-    target: 'For ambitious managers positioning for executive transition.',
-    outcome: 'Total narrative control and data-driven career trajectory.',
+    target: 'For ambitious leaders positioning for executive transition.',
+    outcome: 'Total narrative control and data-driven trajectory.',
     features: [
       'Everything in Ignition, plus:',
-      'Narrative Discretion Engine (Hide your red flags)',
-      'Network Gravity Tracker (Find internal champions)',
-      'Career Pathing Canvas (Map next 3 years)',
+      'Narrative Discretion Engine (Signal Masking)',
+      'Network Gravity Tracker (Gap Mapping)',
+      'Career Pathing Canvas (3-Year Modeling)',
     ],
     featured: true,
     waitlist: true,
@@ -44,78 +43,74 @@ export function PricingSection() {
   const [currency, setCurrency] = useState<'USD' | 'INR'>('USD')
 
   return (
-    <div className="mb-20 pt-16" id="pricing">
-      {/* Header & Toggle */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-        <div>
-          <h2 className="font-serif text-bone text-4xl font-light mb-4">
+    <div className="mb-32 pt-24" id="pricing">
+      {/* ── HEADER ──────────────────────────────────────────────── */}
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-20 gap-12">
+        <div className="max-w-2xl">
+          <p className="label-inst mb-6">Subscription Intelligence</p>
+          <h2 className="display-card text-4xl lg:text-5xl leading-tight mb-6">
             Don&apos;t guess what your career is worth.<br />
-            <span className="text-signal-gold">Engineer it.</span>
+            <em className="text-signal-gold not-italic">Engineer it.</em>
           </h2>
-          <p className="font-sans text-muted text-base max-w-xl">
-            Choose the intelligence tier that matches your career velocity. 
-            The <strong className="text-bone">Market Value Audit</strong> is available for booking right now. 
-            SaaS subscriptions (Ignition &amp; Pro) launch July 2026 — join the waitlist to lock in early pricing.
+          <p className="font-serif text-muted text-lg leading-relaxed">
+            The SaaS platform (Ignition & Pro) launches globally in July 2026.
+            Join the waitlist to secure early-access pricing and primary positioning data.
           </p>
         </div>
         
         {/* Currency Toggle */}
-        <div className="flex items-center bg-obsidian border border-graphite p-1 rounded-sm shrink-0">
+        <div className="flex items-center glass p-1 rounded-sm self-start">
           <button 
             onClick={() => setCurrency('USD')}
-            className={`px-6 py-2 text-sm font-mono tracking-widest transition-colors ${currency === 'USD' ? 'bg-graphite text-signal-gold' : 'text-muted hover:text-bone'}`}
+            className={`px-8 py-3 text-[0.6rem] font-mono tracking-widest transition-all duration-300 ${currency === 'USD' ? 'bg-signal-gold text-obsidian font-bold' : 'text-muted hover:text-bone'}`}
           >
             GLOBAL (USD)
           </button>
           <button 
             onClick={() => setCurrency('INR')}
-            className={`px-6 py-2 text-sm font-mono tracking-widest transition-colors ${currency === 'INR' ? 'bg-graphite text-signal-gold' : 'text-muted hover:text-bone'}`}
+            className={`px-8 py-3 text-[0.6rem] font-mono tracking-widest transition-all duration-300 ${currency === 'INR' ? 'bg-signal-gold text-obsidian font-bold' : 'text-muted hover:text-bone'}`}
           >
             INDIA (INR)
           </button>
         </div>
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center max-w-4xl">
+      {/* ── SUBSCRIPTION GRID ────────────────────────────────────── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-graphite/40 border border-graphite/40 mb-20">
         {subscriptionPlans.map((plan) => (
           <div
             key={plan.id}
-            className={`flex flex-col relative transition-all duration-300 ${
-              plan.featured 
-                ? 'bg-obsidian border border-signal-gold/50 shadow-2xl shadow-signal-gold/5 lg:scale-105 z-10 p-10' 
-                : 'bg-obsidian/40 border border-graphite/40 opacity-90 hover:opacity-100 p-8'
+            className={`flex flex-col bg-obsidian p-12 transition-all duration-500 ${
+              plan.featured ? 'ring-1 ring-signal-gold/50 z-10' : 'opacity-90'
             }`}
           >
             {plan.featured && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-signal-gold text-obsidian font-mono text-[0.65rem] tracking-widest font-bold uppercase">
-                The Core Intelligence
-              </div>
+              <p className="label-inst mb-6">Institutional Intelligence</p>
             )}
             
-            <div className="mb-6">
-              <h3 className="font-serif text-bone text-2xl font-light mb-4">{plan.name}</h3>
-              <div className="flex items-baseline gap-1 mb-2">
-                <span className="font-serif text-bone text-4xl">
+            <div className="mb-10">
+              <h3 className="display-card text-3xl mb-4">{plan.name}</h3>
+              <div className="flex items-baseline gap-2 mb-4">
+                <span className="display-card text-4xl">
                   {currency === 'USD' ? plan.priceUSD : plan.priceINR}
                 </span>
                 <span className="font-serif text-muted text-lg">{plan.period}</span>
               </div>
-              <p className="font-sans text-muted text-sm leading-relaxed min-h-[40px]">
+              <p className="font-sans text-muted text-sm leading-relaxed italic">
                 {plan.target}
               </p>
             </div>
 
-            <div className="bg-graphite/30 p-4 border-l-2 border-signal-gold mb-6">
-              <p className="font-mono text-signal-gold text-[0.6rem] tracking-widest mb-1 uppercase">Outcome</p>
-              <p className="font-sans text-bone text-sm">{plan.outcome}</p>
+            <div className="bg-graphite/20 p-5 border-l-2 border-signal-gold mb-10">
+              <p className="font-mono text-signal-gold text-[0.55rem] tracking-widest mb-1 uppercase">Strategic Outcome</p>
+              <p className="font-serif text-bone text-sm">{plan.outcome}</p>
             </div>
 
-            <ul className="flex flex-col gap-3 flex-1 mb-8">
+            <ul className="flex flex-col gap-4 mb-12 flex-1">
               {plan.features.map((m, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <span className="text-signal-gold text-xs mt-1 shrink-0">◈</span>
-                  <span className="font-sans text-muted text-sm">{m}</span>
+                <li key={i} className="flex items-start gap-4">
+                  <span className="text-signal-gold text-[10px] mt-1 shrink-0">◈</span>
+                  <span className="font-sans text-muted text-sm leading-snug">{m}</span>
                 </li>
               ))}
             </ul>
@@ -127,71 +122,49 @@ export function PricingSection() {
         ))}
       </div>
 
-      {/* One-time engagement callout */}
-      <div className="mt-12 border border-graphite">
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          <div className="p-8 border-b md:border-b-0 md:border-r border-graphite bg-graphite/10">
-            <p className="label-inst mb-2 text-signal-gold">Diagnostic Only</p>
-            <h3 className="font-serif text-bone text-xl font-light mb-4">Market Value Audit</h3>
-            <p className="font-sans text-muted text-sm leading-relaxed mb-8">
-              A 45-minute intelligence session that surfaces your TPI score and salary benchmark. 
-              Ideal for initial clarity.
+      {/* ── ONE-TIME ENGAGEMENTS ─────────────────────────────────── */}
+      <div className="border border-graphite/40 overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+          <div className="p-12 border-b lg:border-b-0 lg:border-r border-graphite/40 bg-graphite/5">
+            <p className="label-inst mb-4 opacity-70">Single Diagnostic</p>
+            <h3 className="display-card text-2xl mb-6">Market Value Audit</h3>
+            <p className="font-serif text-muted text-base leading-relaxed mb-10">
+              A 45-minute intelligence brief surfacing your TPI score and direct salary
+              benchmarking. Available for immediate booking.
             </p>
-            <div className="flex items-center justify-between mt-auto">
-              <span className="font-serif text-bone text-2xl">$99</span>
-              <Button href="/audit" variant="ghost" className="text-[0.6rem]">
+            <div className="flex items-center justify-between">
+              <div className="flex items-baseline gap-2">
+                <span className="display-card text-3xl">$99</span>
+                <span className="font-serif text-muted text-sm italic">/ ₹2,999</span>
+              </div>
+              <Button href="/audit" variant="ghost" className="px-6 py-3">
                 Book Audit →
               </Button>
             </div>
           </div>
           
-          <div className="p-8 bg-signal-gold/5 border-l-4 border-l-signal-gold">
-            <p className="label-inst mb-2 text-signal-gold">Audit + Implementation</p>
-            <h3 className="font-serif text-bone text-xl font-light mb-4">The Momentum Sprint</h3>
-            <p className="font-sans text-muted text-sm leading-relaxed mb-8">
-              Everything in the Audit, plus a custom implementation roadmap and 14 days of 
-              direct Architect access to handle the execution with you.
+          <div className="p-12 bg-signal-gold/5 relative">
+            <div className="absolute top-0 right-0 bg-signal-gold text-obsidian px-4 py-1 font-mono text-[0.5rem] tracking-widest font-bold uppercase">
+              Limited Availability
+            </div>
+            <p className="label-inst mb-4">Hybrid Engagement</p>
+            <h3 className="display-card text-2xl mb-6">Momentum Sprint</h3>
+            <p className="font-serif text-muted text-base leading-relaxed mb-10">
+              Everything in the Audit, plus a custom implementation roadmap and a
+              structured 14-day execution plan for first-mile repositioning.
             </p>
-            <div className="flex items-center justify-between mt-auto">
-              <span className="font-serif text-bone text-2xl">$199</span>
-              <Button href="/request?service=sprint" variant="primary" className="text-[0.6rem]">
+            <div className="flex items-center justify-between">
+              <div className="flex items-baseline gap-2">
+                <span className="display-card text-3xl">$199</span>
+                <span className="font-serif text-muted text-sm italic">/ ₹5,999</span>
+              </div>
+              <Button href="/request?service=sprint" variant="primary" className="px-6 py-3">
                 Start Sprint →
               </Button>
             </div>
           </div>
         </div>
       </div>
-      
-      {/* Trust & FAQ */}
-      <div className="mt-32 border-t border-graphite pt-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-          <div>
-            <p className="label-inst mb-6">FAQ & Execution Logic</p>
-            <h3 className="font-serif text-bone text-2xl font-light mb-8">Why should I choose Pro over Ignition?</h3>
-            <p className="font-sans text-muted text-sm leading-relaxed mb-6">
-              Ignition simply tells you where you are and scores your baseline resume. It shows you if the ATS is rejecting you. 
-            </p>
-            <p className="font-sans text-muted text-sm leading-relaxed">
-              <strong>Catalyst Pro</strong> is the actual intelligence engine. It tells you exactly how to get to the next level, maps your specific network gaps, and hides the career &quot;red flags&quot; preventing your promotion. It is active acceleration versus passive observation.
-            </p>
-          </div>
-          <div className="bg-obsidian border border-graphite p-8">
-            <h3 className="font-serif text-bone text-xl font-light mb-6">Will this work for my industry?</h3>
-            <p className="font-sans text-muted text-sm leading-relaxed mb-6">
-              The engine is calibrated against real-time global labor market data pulling directly from live ATS systems. If your industry hires through digital tracking systems, the Catalyst engine maps the ontology.
-            </p>
-            <h3 className="font-serif text-bone text-xl font-light mb-6">What exactly do I get from the Market Value Audit?</h3>
-            <p className="font-sans text-muted text-sm leading-relaxed mb-6">
-              A focused 45-minute 1:1 video call with a Catalyst expert. You&apos;ll walk away with your TPI score, a full ATS gap analysis, your salary benchmark vs. live market data, and a 3-step action plan. Booked immediately — no waitlist.
-            </p>
-            <h3 className="font-serif text-bone text-xl font-light mb-6 mt-8">When do I get access to the SaaS platform?</h3>
-            <p className="font-sans text-muted text-sm leading-relaxed">
-              The SaaS platform (Ignition &amp; Pro) launches globally in July 2026. Joining the waitlist locks in the early-access pricing shown above forever. If you need immediate positioning help, book the <strong>Market Value Audit</strong> — available now.
-            </p>
-          </div>
-        </div>
-      </div>
-
     </div>
   )
 }

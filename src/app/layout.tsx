@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     'how to increase salary India',
     'professional identity engineering',
   ],
-  authors: [{ name: 'Ripple Nexus Institution' }],
+  authors: [{ name: 'Ripple Nexus' }],
   openGraph: {
     title: 'Catalyst — Get Paid What You\'re Actually Worth',
     description: '79% of senior professionals earn 10–35% below their market rate. Catalyst fixes that. Average client salary uplift: $47,000.',

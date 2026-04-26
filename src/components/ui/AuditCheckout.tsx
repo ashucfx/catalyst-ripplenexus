@@ -28,9 +28,9 @@ export function AuditCheckout() {
 
   if (success) {
     return (
-      <div className="border border-signal-gold/30 bg-graphite/10 p-8 text-center">
+      <div className="border border-signal-gold/30 bg-graphite/10 p-8">
         <p className="label-inst mb-3">Payment received.</p>
-        <p className="font-serif text-bone text-xl font-light">Redirecting you now…</p>
+        <p className="display-card text-xl">Redirecting you now…</p>
       </div>
     )
   }
@@ -62,7 +62,7 @@ export function AuditCheckout() {
       {!ready ? (
         <form onSubmit={handleEmailSubmit} className="flex flex-col gap-4" noValidate>
           <label className="font-mono text-muted text-[0.6rem] tracking-widest">
-            YOUR EMAIL — WHERE WE SEND THE BOOKING CONFIRMATION
+            YOUR EMAIL — WHERE WE SEND YOUR PRIVATE PORTAL LINK
           </label>
           <input
             type="email"
@@ -107,7 +107,7 @@ export function AuditCheckout() {
       )}
 
       <p className="font-mono text-muted text-[0.6rem] tracking-widest text-center mt-6">
-        Secure checkout · 100% refundable if we can&apos;t schedule within 7 days
+        Secure checkout · Portal link delivered to your inbox within minutes
       </p>
     </div>
   )

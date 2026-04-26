@@ -54,9 +54,8 @@ export default function PlatformPage() {
           {/* Header */}
           <div className="mb-20">
             <p className="label-inst mb-6">The Catalyst Intelligence Engine (CIE)</p>
-            <hr className="rule mb-10 w-16 border-signal-gold" style={{ borderColor: '#B8935B' }} />
-            <h1 className="font-serif text-bone font-light leading-tight mb-6"
-                style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', letterSpacing: '-0.025em' }}>
+            <hr className="rule mb-10 w-16" />
+            <h1 className="display-section mb-6">
               From consultancy<br />to platform
             </h1>
             <p className="font-serif text-muted text-xl leading-relaxed max-w-2xl">
@@ -114,7 +113,7 @@ export default function PlatformPage() {
                     <div className="flex-1 h-1.5 bg-graphite relative">
                       <div
                         className="absolute top-0 left-0 h-full bg-graphite"
-                        style={{ width: `${s.demand}%`, background: '#1F2226' }}
+                        style={{ width: `${s.demand}%` }}
                       />
                       <div
                         className="absolute top-0 left-0 h-full bg-signal-gold"
@@ -146,7 +145,7 @@ export default function PlatformPage() {
                     <span className="text-signal-gold text-2xl">{m.icon}</span>
                     <div>
                       <p className="font-mono text-muted text-[0.6rem] tracking-widest">{m.id}</p>
-                      <h3 className="font-serif text-bone text-xl font-light">{m.name}</h3>
+                      <h3 className="display-card text-xl">{m.name}</h3>
                     </div>
                   </div>
                   <p className="font-sans text-muted text-sm leading-relaxed">{m.desc}</p>
@@ -167,7 +166,7 @@ export default function PlatformPage() {
             <div className="flex flex-col md:flex-row gap-8 items-start">
               <div className="flex-1">
                 <p className="label-inst mb-4">B2B Enterprise — Succession Management Intelligence</p>
-                <h2 className="font-serif text-bone text-2xl font-light mb-4">
+                <h2 className="display-card text-2xl mb-4">
                   Selling Readiness Intelligence to organisations
                 </h2>
                 <p className="font-serif text-muted text-lg leading-relaxed">

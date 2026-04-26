@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Button } from './Button'
 
 export function NewsletterForm() {
   const [email,     setEmail]     = useState('')
@@ -20,13 +21,16 @@ export function NewsletterForm() {
       const res = await fetch('/api/newsletter', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ email, honeypot: '' }), // honeypot always empty from real users
+        body:    JSON.stringify({ email, honeypot: '' }),
       })
-      const data = await res.json()
-      if (!res.ok) { setError(data.error ?? 'Something went wrong.'); return }
+      if (!res.ok) {
+        const data = await res.json()
+        setError(data.error ?? 'Something went wrong.')
+        return
+      }
       setSubmitted(true)
     } catch {
-      setError('Network error. Please check your connection.')
+      setError('Network error. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -34,56 +38,53 @@ export function NewsletterForm() {
 
   if (submitted) {
     return (
-      <div className="border border-signal-gold/30 bg-graphite/10 p-8">
-        <p className="label-inst mb-3">You&apos;re in.</p>
-        <p className="font-serif text-bone text-xl font-light mb-2">
-          Welcome email on its way. First brief arrives Thursday.
+      <div className="glass p-10 border border-signal-gold/30">
+        <p className="label-inst mb-4">Verification Sent</p>
+        <p className="display-card text-2xl mb-4">
+          Institutional access confirmed.
         </p>
-        <p className="font-sans text-muted text-sm leading-relaxed">
-          Check your inbox — including spam if you don&apos;t see it within 2 minutes.
+        <p className="font-serif text-muted text-lg leading-relaxed">
+          The first Intelligence Brief arrives this Thursday. Check your inbox to finalize.
         </p>
       </div>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-      {/* Honeypot — hidden from real users, bots fill it */}
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6" noValidate>
       <input
         type="text"
         name="website"
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
-        style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', height: 0 }}
-        onChange={() => {}} // controlled but ignored
+        className="hidden"
+        onChange={() => {}}
       />
-      <div className="flex flex-col sm:flex-row gap-0">
+      <div className="flex flex-col gap-4">
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Your professional email"
+          placeholder="Professional Email Address"
           autoComplete="email"
           disabled={loading}
           required
-          className="flex-1 bg-transparent border border-graphite px-5 py-4 font-sans text-bone text-sm
-                     focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/40
-                     sm:border-r-0 disabled:opacity-50"
+          className="w-full bg-graphite/20 border border-graphite/60 px-6 py-5 font-sans text-bone text-base
+                     focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/40 transition-all duration-300"
         />
-        <button
+        <Button
           type="submit"
+          variant="primary"
           disabled={loading}
-          className="bg-signal-gold text-obsidian px-6 py-4 font-sans text-[0.65rem]
-                     tracking-[0.2em] uppercase hover:bg-bone transition-colors duration-200
-                     whitespace-nowrap cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+          className="w-full justify-center py-6"
         >
-          {loading ? 'Joining…' : 'Join Free →'}
-        </button>
+          {loading ? 'PROCESSING...' : 'JOIN THE BRIEF →'}
+        </Button>
       </div>
       {error && <p className="font-sans text-signal-gold text-xs">{error}</p>}
-      <p className="font-mono text-muted text-[0.6rem] tracking-widest">
-        No spam. Unsubscribe anytime. Your email is never shared or sold.
+      <p className="font-mono text-muted text-[0.55rem] tracking-[0.3em] uppercase opacity-40">
+        High-trust communication · No marketing spam · One-click removal
       </p>
     </form>
   )
