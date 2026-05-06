@@ -3,10 +3,20 @@ import { capturePayPalOrder } from '@/lib/payment/paypal'
 import { resend, FROM, ADMIN_EMAIL } from '@/lib/email/resend'
 import { insertPayment } from '@/lib/db/supabase'
 import { PRICING } from '@/lib/constants/pricing'
-import { createPortal } from '@/lib/db/portals'
+import { createPortalIfNotExists } from '@/lib/db/portals'
 import { auditPortalEmail } from '@/lib/email/templates'
+import { confirmAndNotifyBooking } from '@/lib/booking/confirmAndNotify'
+import { rateLimit } from '@/lib/rateLimit'
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim()
+         || req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+         || 'unknown'
+  const { ok } = await rateLimit(ip, { limit: 10, windowMs: 60 * 60 * 1000 }, 'paypal-capture')
+  if (!ok) return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
+
   try {
     const { orderId, product, email } = await req.json()
     if (!orderId) return NextResponse.json({ error: 'Missing orderId.' }, { status: 400 })
@@ -17,19 +27,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: `Payment not completed: ${result.status}` }, { status: 402 })
     }
 
-    const resolvedEmail = email || result.payer.email
+    const resolvedEmail = (email && EMAIL_RE.test(email)) ? email : result.payer.email
 
-    // Confirm booking if this is a booking payment
     if (product?.startsWith('booking:')) {
       const bookingId = product.replace('booking:', '')
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'}/api/schedule/confirm`, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ bookingId, paymentId: result.captureId, paymentMethod: 'paypal' }),
-      }).catch(e => console.error('[paypal/capture] booking confirm failed:', e))
-    } else if (product === 'audit') {
-      const baseUrl   = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'
-      const token     = await createPortal(resolvedEmail, result.captureId)
+      const state = await confirmAndNotifyBooking(bookingId, result.captureId, 'paypal')
+      if (state === 'collision') {
+        return NextResponse.json({ error: 'Slot taken — admin alerted for refund/reschedule.' }, { status: 409 })
+      }
+      if (state === 'error') {
+        console.error('[paypal/capture] confirmAndNotify error for booking', bookingId)
+      }
+    } else if (product === 'audit' && resolvedEmail && EMAIL_RE.test(resolvedEmail)) {
+      const baseUrl   = process.env.NEXT_PUBLIC_BASE_URL ?? ''
+      const token     = await createPortalIfNotExists(resolvedEmail, result.captureId)
       const portalUrl = `${baseUrl}/portal/${token}`
       const { subject, html } = auditPortalEmail(portalUrl)
       resend.emails.send({ from: FROM, to: resolvedEmail, subject, html })
@@ -41,7 +52,9 @@ export async function POST(req: NextRequest) {
         email:     resolvedEmail,
         product,
         method:    'paypal',
-        amount:    PRICING[product as keyof typeof PRICING]?.usd ? Math.round(PRICING[product as keyof typeof PRICING].usd / 100) : Number(result.amount),
+        amount:    PRICING[product as keyof typeof PRICING]?.usd
+                     ? Math.round(PRICING[product as keyof typeof PRICING].usd / 100)
+                     : Number(result.amount),
         currency:  'USD',
         paymentId: result.captureId,
         orderId,
@@ -49,7 +62,7 @@ export async function POST(req: NextRequest) {
       resend.emails.send({
         from:    FROM,
         to:      ADMIN_EMAIL,
-        subject: `Payment received — ${product} — $${result.amount} — ${result.payer.email}`,
+        subject: `Payment received — ${product} — $${result.amount} — ${resolvedEmail}`,
         html: `<div style="font-family:Arial;background:#0A0B0D;color:#F4F1EB;padding:24px;">
           <p style="color:#B8935B;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;margin:0 0 8px;">PAYMENT CONFIRMED — PAYPAL</p>
           <p style="margin:0 0 4px;">Product: <strong>${product}</strong></p>
