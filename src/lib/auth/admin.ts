@@ -22,7 +22,7 @@ export async function setAdminCookie(secret: string): Promise<boolean> {
     secure:   process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     maxAge:   MAX_AGE,
-    path:     '/admin',
+    path:     '/',
   })
   return true
 }
