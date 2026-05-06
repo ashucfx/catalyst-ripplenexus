@@ -22,10 +22,12 @@ export async function upsertSubscriber({
   email,
   source,
   tags = [],
+  phone,
 }: {
   email:   string
   source?: string
   tags?:   string[]
+  phone?:  string
 }): Promise<{ token: string; status: SubscriberStatus; isNew: boolean } | null> {
   const db = getDb()
   if (!db) return null
@@ -51,7 +53,7 @@ export async function upsertSubscriber({
   const unsubscribe_token = generateToken()
   const { error } = await db
     .from('newsletter_subscribers')
-    .insert({ email, source: source ?? null, tags, status: 'active', unsubscribe_token })
+    .insert({ email, source: source ?? null, tags, status: 'active', unsubscribe_token, phone: phone ?? null })
 
   if (error) {
     if (error.code === '23505') {

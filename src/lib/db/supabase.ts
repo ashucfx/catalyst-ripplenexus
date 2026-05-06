@@ -105,11 +105,11 @@ export async function insertPayment(data: {
   }
 }
 
-export async function insertPlatformWaitlist(email: string, plan?: string) {
+export async function insertPlatformWaitlist(email: string, plan?: string, phone?: string) {
   const db = getDb()
   if (!db) return
   const { error } = await db
     .from('platform_waitlist')
-    .upsert({ email, plan: plan ?? null }, { onConflict: 'email', ignoreDuplicates: true })
+    .upsert({ email, plan: plan ?? null, phone: phone ?? null }, { onConflict: 'email', ignoreDuplicates: true })
   if (error) console.error('[db] platform_waitlist insert:', error.message)
 }

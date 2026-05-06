@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   if (!ok) return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 })
 
   try {
-    const { email, honeypot } = await req.json()
+    const { email, phone, honeypot } = await req.json()
 
     if (honeypot) return NextResponse.json({ success: true })
 
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Valid email required.' }, { status: 400 })
     }
 
-    const result = await upsertSubscriber({ email, source: 'newsletter_form', tags: ['newsletter'] })
+    const result = await upsertSubscriber({ email, source: 'newsletter_form', tags: ['newsletter'], phone: phone || undefined })
 
     // Respect prior opt-out — don't send welcome email to unsubscribed addresses
     if (result && result.status !== 'unsubscribed') {

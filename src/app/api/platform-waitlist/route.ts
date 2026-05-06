@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { resend, FROM, ADMIN_EMAIL } from '@/lib/email/resend'
+import { platformWaitlistEmail } from '@/lib/email/templates'
 import { rateLimit } from '@/lib/rateLimit'
 import { insertPlatformWaitlist } from '@/lib/db/supabase'
 
@@ -9,7 +10,7 @@ export async function POST(req: NextRequest) {
   if (!ok) return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
 
   try {
-    const { email, plan, honeypot } = await req.json()
+    const { email, plan, phone, honeypot } = await req.json()
 
     if (honeypot) return NextResponse.json({ success: true })
 
@@ -17,30 +18,25 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Valid email required.' }, { status: 400 })
     }
 
+    const welcome = platformWaitlistEmail(plan)
+
     await Promise.all([
-      insertPlatformWaitlist(email, plan),
+      insertPlatformWaitlist(email, plan, phone || undefined),
       resend.emails.send({
         from:    FROM,
         to:      email,
-        subject: 'You\'re on the Catalyst Platform waitlist',
-        html: `<div style="font-family:Arial;background:#0A0B0D;color:#F4F1EB;padding:32px;max-width:600px;">
-          <p style="color:#B8935B;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;margin:0 0 16px;">CATALYST PLATFORM</p>
-          <h1 style="font-size:24px;font-weight:300;margin:0 0 16px;color:#F4F1EB;">You&rsquo;re on the list.</h1>
-          <p style="color:#8B8681;font-size:15px;line-height:1.6;margin:0 0 16px;">
-            We&rsquo;ll notify you when the Catalyst Intelligence Platform opens for early access${plan ? ` — ${plan} tier` : ''}.
-            Early access members lock in launch pricing permanently.
-          </p>
-          <p style="color:#8B8681;font-size:15px;line-height:1.6;margin:0;">
-            In the meantime, the free TPI score calculator is live at
-            <a href="${process.env.NEXT_PUBLIC_BASE_URL}/tpi" style="color:#B8935B;">www.catalyst.theripplenexus.com/tpi</a>.
-          </p>
-        </div>`,
+        subject: welcome.subject,
+        html:    welcome.html,
       }),
       resend.emails.send({
         from:    FROM,
         to:      ADMIN_EMAIL,
         subject: `Platform waitlist — ${plan ?? 'unspecified'} — ${email}`,
-        html:    `<p style="font-family:Arial;color:#F4F1EB;background:#0A0B0D;padding:24px;">Waitlist: <strong>${email}</strong> — plan: ${plan ?? '—'}</p>`,
+        html: `<p style="font-family:Arial;color:#F4F1EB;background:#0A0B0D;padding:24px;">
+          Waitlist: <strong>${email}</strong><br/>
+          Plan: ${plan ?? '—'}<br/>
+          Phone: ${phone ?? '—'}
+        </p>`,
       }),
     ])
 

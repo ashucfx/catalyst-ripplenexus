@@ -7,6 +7,7 @@ import { TPIMeter } from '@/components/ui/TPIMeter'
 import { GeoPrice } from '@/components/ui/GeoPrice'
 import { COMPANIES } from '@/components/ui/CompanyLogos'
 import { Disclaimer } from '@/components/ui/Disclaimer'
+import { NewsletterForm } from '@/components/ui/NewsletterForm'
 import Link from 'next/link'
 
 // ─── Data ─────────────────────────────────────────────────────────────
@@ -614,6 +615,64 @@ export default function HomePage() {
 
                 <Button href="/platform" variant="ghost">Join Platform Waitlist →</Button>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════════════════════
+            INTELLIGENCE BRIEF — NEWSLETTER SUBSCRIBE
+        ════════════════════════════════════════════════════════════ */}
+        <section
+          className="px-6 lg:px-12 py-32"
+          style={{ background: '#050507', borderTop: '1px solid rgba(255,255,255,0.05)' }}
+        >
+          <div className="max-w-dossier mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+
+              {/* Left — copy */}
+              <div>
+                <span className="eyebrow mb-8 inline-block">Intelligence Brief</span>
+                <h2
+                  className="display-page mb-8 leading-tight"
+                  style={{ fontSize: 'clamp(2.4rem, 5vw, 4.5rem)' }}
+                >
+                  The market intelligence<br/>
+                  <em className="not-italic text-gold-gradient">serious leaders read.</em>
+                </h2>
+                <p className="font-serif text-muted text-lg leading-relaxed mb-10 max-w-lg">
+                  Every Thursday. Compensation movement, sector heat maps, positioning strategy,
+                  and AI displacement data — delivered to senior professionals across India, UAE,
+                  Singapore, and global markets. Written to inform decisions, not generate clicks.
+                </p>
+                <div className="flex flex-col gap-4">
+                  {[
+                    'Live compensation benchmarks by role, sector, and geography',
+                    'Sector heat maps — where demand is rising and where it is contracting',
+                    'Positioning intelligence to close your market value gap',
+                    'AI displacement analysis for your specific seniority level',
+                  ].map(item => (
+                    <div key={item} className="flex items-start gap-3">
+                      <span className="text-signal-gold text-sm mt-0.5 shrink-0">◈</span>
+                      <p className="font-sans text-muted text-sm leading-relaxed">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right — form */}
+              <div>
+                <div className="border border-graphite/60 p-10 bg-graphite/5">
+                  <p className="label-inst mb-3">Join 3,200+ senior professionals</p>
+                  <h3 className="font-serif text-bone text-2xl mb-2 leading-tight">
+                    Subscribe to the brief.
+                  </h3>
+                  <p className="font-serif text-muted text-sm leading-relaxed mb-8">
+                    One email weekly. No noise. Instant unsubscribe.
+                  </p>
+                  <NewsletterForm />
+                </div>
+              </div>
+
             </div>
           </div>
         </section>

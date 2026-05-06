@@ -29,10 +29,11 @@ Payments are live via Razorpay (India) and PayPal (international). All paid audi
 | Database | Supabase (Postgres) | Service-role client, RLS enforced on sensitive tables |
 | Payments — India | Razorpay | Webhooks + `fee_bearer:customer` |
 | Payments — International | PayPal Orders API v2 | Raw fetch, no SDK |
-| Report generation | Anthropic API | JSON-structured output, `max_tokens:4096` |
+| Report generation | Anthropic API (claude-sonnet-4-6) | JSON-structured TPI report, `max_tokens:4096` |
 | PDF generation | `@react-pdf/renderer` | `renderToBuffer`, streamed as `application/pdf` |
 | Email delivery | Resend | Lazy singleton, skips if key absent |
 | List management | Internal (Supabase + Resend) | Subscriber tagging, campaign tracking, token-based unsubscribe |
+| Excel export | `xlsx` | Admin CRM export — 7-sheet workbook covering all lead tables |
 | Rate limiting | Upstash Redis | Sliding window; in-memory fallback for dev |
 | Geo detection | Vercel `x-vercel-ip-country` header | `/api/geo` endpoint, client-side `GeoPrice` component |
 | Font rendering | Google Fonts — Cormorant, Inter, JetBrains Mono | via `next/font` |
@@ -159,7 +160,7 @@ src/
 │   │   ├── IntakeForm.tsx              # 12-field intake (client component)
 │   │   └── ReportView.tsx              # Report display + PDF download button
 │   ├── admin/
-│   │   └── AdminDashboard.tsx          # Booking management UI
+│   │   └── AdminDashboard.tsx          # 4-tab admin: Bookings, Availability, CRM, Newsletter
 │   ├── booking/
 │   │   └── BookingFlow.tsx             # Calendar + slot picker
 │   └── ui/
@@ -361,6 +362,8 @@ graph TB
 | `/api/schedule/*` | GET/POST | — | none / admin | Supabase bookings |
 | `/api/admin/newsletter/send` | POST | — | admin cookie | Resend batch send, Supabase campaign record |
 | `/api/admin/newsletter/subscribers` | GET | — | admin cookie | Supabase read |
+| `/api/admin/crm` | GET | — | admin cookie | Merged lead view across all 7 tables |
+| `/api/admin/crm/export` | GET | — | admin cookie | Multi-sheet Excel download (xlsx) |
 | `/api/admin/*` | GET/POST | — | admin cookie | Supabase bookings |
 | `/api/cron/reminders` | GET | — | CRON_SECRET | Resend reminders (*/15 min) |
 | `/api/cron/cleanup` | GET | — | CRON_SECRET | DB booking cleanup (*/5 min) |
@@ -472,6 +475,10 @@ RESEND_FROM_EMAIL=catalyst@yourdomain.com
 RESEND_FROM_NAME=Catalyst
 RESEND_ADMIN_EMAIL=you@youremail.com
 
+# ─── ANTHROPIC (AI report generation — required for Market Value Audit)
+# https://console.anthropic.com/account/keys
+ANTHROPIC_API_KEY=sk-ant-api03-...
+
 # ─── SUPABASE
 # Run migrations in supabase/migrations/ in the Supabase SQL editor before first run
 SUPABASE_URL=https://xxxx.supabase.co
@@ -516,11 +523,11 @@ Run migrations in `supabase/migrations/` sequentially in the Supabase SQL editor
 |---|---|
 | `audit_portals` | One row per paid audit — token, email, payment_id (UNIQUE), report JSON, status |
 | `payments` | Payment record per transaction — gateway, amount, currency, idempotency |
-| `newsletter_subscribers` | Subscribers with status, tags, source, and unsubscribe token |
+| `newsletter_subscribers` | Subscribers with status, tags, source, phone, and unsubscribe token |
 | `newsletters` | Campaign send history — subject, segment, sent count, sent timestamp |
 | `tpi_submissions` | TPI quiz results and lead data |
 | `leads` | High-ticket enquiry form submissions |
-| `platform_waitlist` | Platform interest signups |
+| `platform_waitlist` | Platform interest signups with optional phone number |
 | `bookings` | Scheduled meeting records |
 | `meeting_types` | Available meeting types and durations |
 
@@ -546,6 +553,7 @@ Permissions-Policy: camera=(), microphone=(), geolocation=()
 □ Copy .env.local.example → .env.local, fill all real keys
 □ Run supabase/migrations/001_portal_payment_integrity.sql in Supabase SQL editor
 □ Run supabase/migrations/002_newsletter_system.sql in Supabase SQL editor
+□ Run supabase/migrations/003_phone_fields.sql in Supabase SQL editor (adds phone to newsletter_subscribers + platform_waitlist)
 □ Verify sending domain in Resend dashboard
 □ Enable Customer Fee Bearer in Razorpay dashboard (Settings → Payment Methods)
 □ Set RAZORPAY_WEBHOOK_SECRET in Vercel (Razorpay Dashboard → Webhooks → endpoint → Secret)

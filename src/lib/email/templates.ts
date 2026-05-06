@@ -383,43 +383,69 @@ export function tpiScoreEmail(d: TPIEmailData, unsubscribeUrl?: string): { subje
 // ═══════════════════════════════════════════════════════════════════════
 
 export function newsletterWelcomeEmail(unsubscribeUrl?: string): { subject: string; html: string } {
-  const subject = `Welcome to the Intelligence Brief`
+  const subject = `Intelligence Brief — access confirmed`
 
   const html = wrap(`
-    <p style="margin:0 0 24px 0;font-family:Georgia,serif;font-size:28px;
-               color:${C.bone};font-weight:400;letter-spacing:-0.02em;line-height:1.2;">
-      You're in.<br/>
-      <em style="color:${C.gold};">First brief arrives Thursday.</em>
+    <p style="margin:0 0 8px 0;font-family:Arial,sans-serif;font-size:10px;
+               color:${C.gold};letter-spacing:0.3em;text-transform:uppercase;">
+      ACCESS CONFIRMED
     </p>
 
-    <p style="margin:0 0 20px 0;font-family:Georgia,serif;font-size:16px;
-               color:${C.muted};line-height:1.7;">
-      Every Thursday, the Intelligence Brief delivers original market analysis to
-      3,200+ senior professionals — compensation shifts, sector heat maps, AI displacement
-      trends, and positioning strategy.
+    <p style="margin:0 0 28px 0;font-family:Georgia,serif;font-size:30px;
+               color:${C.bone};font-weight:400;letter-spacing:-0.02em;line-height:1.15;">
+      The Intelligence Brief<br/>
+      <em style="color:${C.gold};">is now on record.</em>
     </p>
 
-    <p style="margin:0 0 32px 0;font-family:Georgia,serif;font-size:15px;
-               color:${C.muted};line-height:1.7;">
-      Written for senior professionals. Not job seekers.
+    <p style="margin:0 0 16px 0;font-family:Georgia,serif;font-size:16px;
+               color:${C.muted};line-height:1.75;">
+      Every Thursday, the Catalyst Intelligence Brief reaches senior professionals across
+      India, the UAE, Singapore, and global markets with original analysis you will not
+      find in a LinkedIn feed — compensation movement, sector heat maps, AI displacement
+      curves, and positioning intelligence written for leaders, not job seekers.
     </p>
+
+    <p style="margin:0 0 32px 0;font-family:Georgia,serif;font-size:14px;
+               color:${C.muted};line-height:1.7;font-style:italic;">
+      Not a newsletter. An institutional briefing.
+    </p>
+
+    <table width="100%" cellpadding="0" cellspacing="0"
+           style="border:1px solid ${C.graphite};background-color:${C.graphite};margin-bottom:32px;">
+      <tr>
+        <td style="padding:24px 28px;">
+          <p style="margin:0 0 4px 0;font-family:Arial,sans-serif;font-size:9px;
+                     color:${C.gold};letter-spacing:0.35em;text-transform:uppercase;">
+            YOUR FIRST BRIEF
+          </p>
+          <p style="margin:0 0 6px 0;font-family:Georgia,serif;font-size:17px;
+                     color:${C.bone};font-weight:400;line-height:1.3;">
+            Arrives this Thursday.
+          </p>
+          <p style="margin:0;font-family:Arial,sans-serif;font-size:10px;
+                     color:${C.muted};letter-spacing:0.1em;">
+            Delivered weekly · Never sold · One-click removal
+          </p>
+        </td>
+      </tr>
+    </table>
 
     <table width="100%" cellpadding="0" cellspacing="0"
            style="border:1px solid ${C.graphite};margin-bottom:32px;">
       <tr>
-        <td style="padding:24px;">
-          <p style="margin:0 0 16px 0;font-family:Arial,sans-serif;font-size:10px;
+        <td style="padding:24px 28px;">
+          <p style="margin:0 0 14px 0;font-family:Arial,sans-serif;font-size:10px;
                      color:${C.gold};letter-spacing:0.3em;text-transform:uppercase;">
             WHILE YOU WAIT
           </p>
-          <p style="margin:0 0 12px 0;font-family:Georgia,serif;font-size:14px;
-                     color:${C.bone};line-height:1.5;">
-            Get your free Talent Positioning Index score.
+          <p style="margin:0 0 8px 0;font-family:Georgia,serif;font-size:17px;
+                     color:${C.bone};font-weight:400;line-height:1.35;">
+            Know your market position before Thursday.
           </p>
-          <p style="margin:0 0 16px 0;font-family:Georgia,serif;font-size:13px;
-                     color:${C.muted};line-height:1.6;">
-            Five questions. Five minutes. Tells you exactly where you stand in the market
-            and what the gap is costing you annually.
+          <p style="margin:0 0 20px 0;font-family:Georgia,serif;font-size:13px;
+                     color:${C.muted};line-height:1.65;">
+            Five questions. Instant Talent Positioning Index score. Tells you exactly
+            where you stand and what the gap costs you each year.
           </p>
           ${cta('Get Free TPI Score →', 'https://www.catalyst.theripplenexus.com/tpi')}
         </td>
@@ -427,8 +453,90 @@ export function newsletterWelcomeEmail(unsubscribeUrl?: string): { subject: stri
     </table>
 
     <p style="margin:0;font-family:Georgia,serif;font-size:13px;
-               color:${C.muted};line-height:1.6;font-style:italic;">
-      You can unsubscribe at any time. Your email is never shared.
+               color:${C.muted};line-height:1.65;font-style:italic;">
+      Absolute discretion. Your data is never shared, sold, or used for any purpose
+      outside this brief.
+    </p>
+  `, unsubscribeUrl)
+
+  return { subject, html }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// 4b. PLATFORM WAITLIST — sent when someone joins the platform waitlist
+// ═══════════════════════════════════════════════════════════════════════
+
+export function platformWaitlistEmail(plan?: string, unsubscribeUrl?: string): { subject: string; html: string } {
+  const subject = `Catalyst Platform — early access registered`
+  const planLabel = plan ? ` — ${plan} tier` : ''
+
+  const modules = [
+    ['Skills Ontology Mapper',      'Real-time global demand data — what skills move markets and what they pay.'],
+    ['Narrative Discretion Engine', 'Identifies the signals that lower your value. Shows exactly what to lead with.'],
+    ['Network Gravity Tracker',     'Maps gaps in your professional network. Surfaces the specific firms you need.'],
+    ['Career Pathing Canvas',       'Model different futures and make career decisions from data, not instinct.'],
+  ]
+
+  const html = wrap(`
+    <p style="margin:0 0 8px 0;font-family:Arial,sans-serif;font-size:10px;
+               color:${C.gold};letter-spacing:0.3em;text-transform:uppercase;">
+      EARLY ACCESS REGISTERED${planLabel ? ` · ${plan?.toUpperCase()}` : ''}
+    </p>
+
+    <p style="margin:0 0 28px 0;font-family:Georgia,serif;font-size:30px;
+               color:${C.bone};font-weight:400;letter-spacing:-0.02em;line-height:1.15;">
+      Your position<br/>
+      <em style="color:${C.gold};">is confirmed.</em>
+    </p>
+
+    <p style="margin:0 0 16px 0;font-family:Georgia,serif;font-size:16px;
+               color:${C.muted};line-height:1.75;">
+      You are registered for early access to the Catalyst Intelligence Platform${planLabel}.
+      When we open, early members are notified first and lock in launch pricing permanently —
+      the price never increases for you, regardless of future tier changes.
+    </p>
+
+    <p style="margin:0 0 32px 0;font-family:Georgia,serif;font-size:14px;
+               color:${C.muted};line-height:1.7;font-style:italic;">
+      We build in private. You will not hear noise from us — only the access notification.
+    </p>
+
+    <table width="100%" cellpadding="0" cellspacing="0"
+           style="border:1px solid ${C.graphite};margin-bottom:32px;">
+      <tr>
+        <td style="padding:24px 28px;">
+          <p style="margin:0 0 20px 0;font-family:Arial,sans-serif;font-size:10px;
+                     color:${C.gold};letter-spacing:0.3em;text-transform:uppercase;">
+            WHAT YOU ARE WAITING FOR
+          </p>
+          ${modules.map(([title, desc]) => `
+            <table cellpadding="0" cellspacing="0" style="margin-bottom:16px;width:100%;">
+              <tr>
+                <td style="width:16px;vertical-align:top;padding-top:3px;">
+                  <p style="margin:0;font-family:Arial,sans-serif;font-size:10px;color:${C.gold};">◈</p>
+                </td>
+                <td style="vertical-align:top;padding-left:12px;">
+                  <p style="margin:0 0 2px 0;font-family:Arial,sans-serif;font-size:12px;
+                             color:${C.bone};font-weight:600;letter-spacing:0.05em;">${title}</p>
+                  <p style="margin:0;font-family:Georgia,serif;font-size:13px;
+                             color:${C.muted};line-height:1.55;">${desc}</p>
+                </td>
+              </tr>
+            </table>
+          `).join('')}
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin:0 0 16px 0;font-family:Georgia,serif;font-size:14px;
+               color:${C.muted};line-height:1.65;">
+      In the meantime, your free Talent Positioning Index score is available now.
+    </p>
+    ${cta('Get Free TPI Score →', 'https://www.catalyst.theripplenexus.com/tpi')}
+
+    <p style="margin:24px 0 0 0;font-family:Georgia,serif;font-size:13px;
+               color:${C.muted};line-height:1.65;font-style:italic;">
+      Absolute discretion. Your registration is never shared.
     </p>
   `, unsubscribeUrl)
 
