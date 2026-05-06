@@ -28,15 +28,12 @@ export type RazorpayOrderResult = {
 
 export async function createRazorpayOrder(params: RazorpayOrderParams): Promise<RazorpayOrderResult> {
   const client = getClient()
-  const order  = await client.orders.create({
-    amount:      Math.round(params.amountINR * 100),   // rupees → paise
-    currency:    'INR',
-    receipt:     params.receipt,
-    notes:       params.notes ?? {},
-    // Customer bears Razorpay processing fee — company receives full listed price.
-    // Requires "Customer Fee Bearer" to be enabled in the Razorpay dashboard.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...({ fee_bearer: 'customer' } as any),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const order: any = await client.orders.create({
+    amount:   Math.round(params.amountINR * 100),   // rupees → paise
+    currency: 'INR',
+    receipt:  params.receipt,
+    notes:    params.notes ?? {},
   })
 
   return {
