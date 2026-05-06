@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getDb, insertPayment } from '@/lib/db/supabase'
 import { resend, FROM, ADMIN_EMAIL } from '@/lib/email/resend'
 import { verifyPayPalWebhook } from '@/lib/payment/paypal'
+import { createPortalIfNotExists } from '@/lib/db/portals'
+import { auditPortalEmail } from '@/lib/email/templates'
+import { confirmAndNotifyBooking } from '@/lib/booking/confirmAndNotify'
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,11 +23,11 @@ export async function POST(req: NextRequest) {
     if (event.event_type === 'PAYMENT.CAPTURE.COMPLETED') {
       const resource = event.resource
       const paymentId = resource.id
-      // PayPal capture typically sits under a supplemental order, but sometimes invoice_id is passed
-      // We will rely on custom_id if we have passed the product in it, or invoice_id
-      const invoiceId = resource.invoice_id || resource.custom_id
+      // invoice_id always holds the invoiceId we set at order creation.
+      // custom_id holds the buyer's email (set since fix for webhook recovery).
+      const invoiceId = resource.invoice_id
       const amountUSD = parseFloat(resource.amount.value)
-      
+
       let product = 'audit'
       if (invoiceId && invoiceId.startsWith('booking_')) {
         product = `booking:${invoiceId.replace('booking_', '')}`
@@ -32,7 +35,8 @@ export async function POST(req: NextRequest) {
         product = invoiceId.split('_')[0]
       }
 
-      const email = resource.payer?.email_address ?? 'unknown@example.com'
+      // custom_id stores buyer email (set by createPayPalOrder); payer field is not on Capture resource
+      const email = resource.custom_id || resource.payer?.email_address || 'unknown@example.com'
 
       const db = getDb()
       if (!db) return NextResponse.json({ error: 'DB Unavailable' }, { status: 503 })
@@ -45,17 +49,27 @@ export async function POST(req: NextRequest) {
 
       if (product.startsWith('booking:')) {
         const bookingId = product.replace('booking:', '')
-        
+
         // Final sanity check: make sure booking isn't already confirmed
         const { data: booking } = await db.from('bookings').select('status').eq('id', bookingId).single()
-        
+
         if (booking && (booking.status === 'pending_payment' || booking.status === 'cancelled')) {
-          // Confirm booking via standard API (handles Rescue Protocol collisions natively)
-          await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'}/api/schedule/confirm`, {
-            method:  'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ bookingId, paymentId, paymentMethod: 'paypal' }),
-          }).catch(e => console.error('[webhooks/paypal] booking confirm failed:', e))
+          const result = await confirmAndNotifyBooking(bookingId, paymentId, 'paypal')
+          if (result === 'error') console.error('[webhooks/paypal] confirmAndNotify returned error for booking', bookingId)
+          if (result === 'collision') console.error('[webhooks/paypal] collision detected for booking', bookingId)
+        }
+      } else if (product === 'audit' && email && email !== 'unknown@example.com') {
+        // Backup path: client-side capture may have failed (mobile, browser killed, network drop).
+        // Create portal only if one doesn't already exist for this payment.
+        try {
+          const baseUrl   = process.env.NEXT_PUBLIC_BASE_URL ?? ''
+          const token     = await createPortalIfNotExists(email, paymentId)
+          const portalUrl = `${baseUrl}/portal/${token}`
+          const { subject, html } = auditPortalEmail(portalUrl)
+          resend.emails.send({ from: FROM, to: email, subject, html })
+            .catch(e => console.error('[webhooks/paypal] portal email failed:', e))
+        } catch (e) {
+          console.error('[webhooks/paypal] portal creation failed:', e)
         }
       }
 

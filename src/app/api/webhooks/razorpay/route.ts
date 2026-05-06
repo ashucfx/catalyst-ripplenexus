@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
 import { getDb, insertPayment } from '@/lib/db/supabase'
 import { resend, FROM, ADMIN_EMAIL } from '@/lib/email/resend'
+import { createPortalIfNotExists } from '@/lib/db/portals'
+import { auditPortalEmail } from '@/lib/email/templates'
+import { confirmAndNotifyBooking } from '@/lib/booking/confirmAndNotify'
 
 export async function POST(req: NextRequest) {
   try {
@@ -44,17 +47,27 @@ export async function POST(req: NextRequest) {
 
       if (product.startsWith('booking:')) {
         const bookingId = product.replace('booking:', '')
-        
+
         // Final sanity check: make sure booking isn't already confirmed
         const { data: booking } = await db.from('bookings').select('status').eq('id', bookingId).single()
-        
+
         if (booking && (booking.status === 'pending_payment' || booking.status === 'cancelled')) {
-          // Confirm booking via standard API (handles Rescue Protocol collisions natively)
-          await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'}/api/schedule/confirm`, {
-            method:  'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ bookingId, paymentId, paymentMethod: 'razorpay' }),
-          }).catch(e => console.error('[webhooks/razorpay] booking confirm failed:', e))
+          const result = await confirmAndNotifyBooking(bookingId, paymentId, 'razorpay')
+          if (result === 'error') console.error('[webhooks/razorpay] confirmAndNotify returned error for booking', bookingId)
+          if (result === 'collision') console.error('[webhooks/razorpay] collision detected for booking', bookingId)
+        }
+      } else if (product === 'audit' && email && email !== 'unknown@example.com') {
+        // Backup path: client-side verify may have failed (mobile, browser killed, network drop).
+        // Create portal only if one doesn't already exist for this payment.
+        try {
+          const baseUrl   = process.env.NEXT_PUBLIC_BASE_URL ?? ''
+          const token     = await createPortalIfNotExists(email, paymentId)
+          const portalUrl = `${baseUrl}/portal/${token}`
+          const { subject, html } = auditPortalEmail(portalUrl)
+          resend.emails.send({ from: FROM, to: email, subject, html })
+            .catch(e => console.error('[webhooks/razorpay] portal email failed:', e))
+        } catch (e) {
+          console.error('[webhooks/razorpay] portal creation failed:', e)
         }
       }
 
