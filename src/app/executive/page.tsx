@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/Button'
+import { GeoExecutivePrice } from '@/components/ui/GeoExecutivePrice'
 import { Disclaimer } from '@/components/ui/Disclaimer'
 
 export const metadata: Metadata = {
@@ -30,8 +31,7 @@ export default function ExecutivePage() {
               The risk is not unemployment — it is Reputational Impairment.
             </p>
             <div className="flex items-baseline gap-4 mt-8">
-              <span className="font-serif text-bone text-4xl">$5,000 – $15,000+</span>
-              <span className="font-serif text-muted text-xl">/ ₹5,00,000 – ₹15,00,000+</span>
+              <GeoExecutivePrice className="font-serif text-bone text-4xl" />
             </div>
             <p className="font-mono text-muted text-xs tracking-widest mt-2">
               RISK PREMIUM PRICING · A FRACTION OF A $500,000+ TOTAL COMPENSATION PACKAGE
@@ -162,7 +162,7 @@ export default function ExecutivePage() {
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-serif text-bone text-4xl mb-1">$5,000–$15,000+</p>
+                <p className="font-serif text-bone text-4xl mb-1"><GeoExecutivePrice /></p>
                 <p className="font-sans text-muted text-sm">vs. $500,000+ total compensation package</p>
                 <p className="font-mono text-signal-gold text-xs tracking-widest mt-2">
                   THE SERVICE IS THE INSURANCE POLICY

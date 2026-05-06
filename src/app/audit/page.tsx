@@ -172,7 +172,7 @@ export default function AuditPage() {
             <p className="label-inst mb-12">How It Works</p>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-px border border-white/[0.06]" style={{ background: 'rgba(255,255,255,0.04)' }}>
               {[
-                { n: '01', title: 'Pay',      desc: 'Fixed fee. No subscriptions, no upsells. $99 USD or ₹2,999 INR.' },
+                { n: '01', title: 'Pay',      desc: 'Fixed fee. No subscriptions, no upsells. One payment, instant access.' },
                 { n: '02', title: 'Portal',   desc: 'Receive a private portal link in your inbox immediately after payment.' },
                 { n: '03', title: 'Intake',   desc: 'Complete a 5-minute professional intake — your role, compensation, and goals.' },
                 { n: '04', title: 'Report',   desc: 'Your AI-generated TPI report is ready in 90 seconds. Download the PDF.' },
