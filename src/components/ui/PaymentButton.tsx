@@ -5,13 +5,14 @@ import Script from 'next/script'
 import type { GeoResponse } from '@/lib/geo'
 
 type Props = {
-  product:     string   // 'audit' | 'booking:UUID'
-  email:       string
-  onSuccess:   (data: { method: 'razorpay' | 'paypal'; id: string }) => void
-  onError:     (msg: string) => void
-  disabled?:   boolean
-  labelINR?:   string   // override button label
-  labelUSD?:   string
+  product:      string   // 'audit' | 'booking:UUID'
+  email:        string
+  onSuccess:    (data: { method: 'razorpay' | 'paypal'; id: string }) => void
+  onError:      (msg: string) => void
+  disabled?:    boolean
+  labelINR?:    string   // override button label
+  labelUSD?:    string
+  description?: string  // shown in Razorpay modal; defaults to product name
 }
 
 // Razorpay checkout.js types
@@ -24,7 +25,7 @@ declare global {
   }
 }
 
-export function PaymentButton({ product, email, onSuccess, onError, disabled, labelINR, labelUSD }: Props) {
+export function PaymentButton({ product, email, onSuccess, onError, disabled, labelINR, labelUSD, description }: Props) {
   const [geo,     setGeo]     = useState<GeoResponse | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -52,7 +53,7 @@ export function PaymentButton({ product, email, onSuccess, onError, disabled, la
         currency:     data.currency,
         order_id:     data.orderId,
         name:         'Catalyst',
-        description:  'Market Value Audit',
+        description:  description ?? 'Market Value Audit',
         prefill:      { email },
         theme:        { color: '#B8935B' },
         handler: async (response: {
@@ -97,7 +98,7 @@ export function PaymentButton({ product, email, onSuccess, onError, disabled, la
         const res  = await fetch('/api/payment/paypal/create', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify({ product }),
+          body:    JSON.stringify({ product, email }),
         })
         const data = await res.json()
         if (!res.ok) { onError(data.error ?? 'Could not create order.'); throw new Error() }
@@ -108,7 +109,7 @@ export function PaymentButton({ product, email, onSuccess, onError, disabled, la
         const res  = await fetch('/api/payment/paypal/capture', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify({ orderId: data.orderID, product }),
+          body:    JSON.stringify({ orderId: data.orderID, product, email }),
         })
         const cap = await res.json()
         setLoading(false)

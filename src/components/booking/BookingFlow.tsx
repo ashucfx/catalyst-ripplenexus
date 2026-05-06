@@ -422,6 +422,7 @@ export function BookingFlow({ meetingType }: Props) {
             <PaymentButton
               product={`booking:${bookingId}`}
               email={email}
+              description={meetingType.name}
               onSuccess={handlePaymentSuccess}
               onError={(err) => setBookErr(err)}
               labelINR={`Pay ₹${(priceINR / 100).toFixed(0)} — Confirm Booking →`}

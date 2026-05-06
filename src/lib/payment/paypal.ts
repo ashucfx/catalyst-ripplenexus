@@ -32,6 +32,7 @@ export async function createPayPalOrder(params: {
   amountUSD:   number
   description: string
   invoiceId:   string
+  email?:      string   // stored in custom_id for webhook recovery
 }): Promise<PayPalOrderResult> {
   const token = await getAccessToken()
 
@@ -48,6 +49,7 @@ export async function createPayPalOrder(params: {
         reference_id:  params.invoiceId,
         description:   params.description,
         invoice_id:    params.invoiceId,
+        custom_id:     params.email ?? '',    // stored so webhook can identify the buyer
         amount: {
           currency_code: 'USD',
           value: params.amountUSD.toFixed(2),
@@ -120,7 +122,10 @@ export async function capturePayPalOrder(orderId: string): Promise<{
 export async function verifyPayPalWebhook(req: Request, rawBody: string): Promise<boolean> {
   const token = await getAccessToken()
   const webhookId = process.env.PAYPAL_WEBHOOK_ID
-  if (!webhookId) return false
+  if (!webhookId) {
+    console.error('[paypal/verifyWebhook] PAYPAL_WEBHOOK_ID env var is not set — all webhooks will be rejected')
+    return false
+  }
 
   const res = await fetch(`${BASE}/v1/notifications/verify-webhook-signature`, {
     method: 'POST',
@@ -139,7 +144,10 @@ export async function verifyPayPalWebhook(req: Request, rawBody: string): Promis
     })
   })
 
-  if (!res.ok) return false
+  if (!res.ok) {
+    console.error('[paypal/verifyWebhook] PayPal verification API error:', res.status)
+    return false
+  }
   const data = await res.json()
   return data.verification_status === 'SUCCESS'
 }

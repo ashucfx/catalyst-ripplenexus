@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   if (!ok) return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
 
   try {
-    const { product } = await req.json()
+    const { product, email } = await req.json()
 
     let amountUSD: number
     let description: string
@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
       amountUSD,
       description,
       invoiceId,
+      email,
     })
 
     return NextResponse.json(order)
