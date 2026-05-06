@@ -3,6 +3,7 @@
 
 export const CK_FORMS = { newsletter: '', tpiLeads: '' }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function subscribeToForm(_opts: unknown) {
   return { subscribed: false, reason: 'convertkit_removed' }
 }
