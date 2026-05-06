@@ -85,6 +85,38 @@ export async function createPortal(email: string, paymentId: string): Promise<st
   return token
 }
 
+// Returns existing portal token if one was already created for this payment (idempotent).
+// Safe against concurrent client+webhook races: the DB UNIQUE constraint on payment_id
+// rejects the second insert with 23505; we catch it and re-fetch the winner's token.
+export async function createPortalIfNotExists(email: string, paymentId: string): Promise<string> {
+  const db = getDb()
+  if (!db) throw new Error('Database not configured')
+
+  const { data: existing } = await db
+    .from('audit_portals')
+    .select('token')
+    .eq('payment_id', paymentId)
+    .maybeSingle()
+  if (existing?.token) return existing.token
+
+  try {
+    return await createPortal(email, paymentId)
+  } catch (err: unknown) {
+    // Race: another request inserted between our SELECT and INSERT.
+    // The UNIQUE constraint on payment_id fired (23505). Re-fetch the winner.
+    const isUniqueViolation = err instanceof Error && err.message.includes('23505')
+    if (isUniqueViolation) {
+      const { data: winner } = await db
+        .from('audit_portals')
+        .select('token')
+        .eq('payment_id', paymentId)
+        .single()
+      if (winner?.token) return winner.token
+    }
+    throw err
+  }
+}
+
 export async function getPortal(token: string): Promise<AuditPortal | null> {
   const db = getDb()
   if (!db) return null
