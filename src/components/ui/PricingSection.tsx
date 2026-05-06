@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useGeo } from '@/hooks/useGeo'
 import { PlatformWaitlist } from './PlatformWaitlist'
 import { Button } from './Button'
 
@@ -40,7 +40,9 @@ const subscriptionPlans = [
 ]
 
 export function PricingSection() {
-  const [currency, setCurrency] = useState<'USD' | 'INR'>('USD')
+  const geo = useGeo()
+  const isIndia = geo?.isIndia ?? false
+  const currency: 'USD' | 'INR' = isIndia ? 'INR' : 'USD'
 
   return (
     <div className="mb-32 pt-24" id="pricing">
@@ -57,22 +59,6 @@ export function PricingSection() {
             Join the waitlist to secure early-access pricing and primary positioning data.
           </p>
         </div>
-        
-        {/* Currency Toggle */}
-        <div className="flex items-center glass p-1 rounded-sm self-start">
-          <button 
-            onClick={() => setCurrency('USD')}
-            className={`px-8 py-3 text-[0.6rem] font-mono tracking-widest transition-all duration-300 ${currency === 'USD' ? 'bg-signal-gold text-obsidian font-bold' : 'text-muted hover:text-bone'}`}
-          >
-            GLOBAL (USD)
-          </button>
-          <button 
-            onClick={() => setCurrency('INR')}
-            className={`px-8 py-3 text-[0.6rem] font-mono tracking-widest transition-all duration-300 ${currency === 'INR' ? 'bg-signal-gold text-obsidian font-bold' : 'text-muted hover:text-bone'}`}
-          >
-            INDIA (INR)
-          </button>
-        </div>
       </div>
 
       {/* ── SUBSCRIPTION GRID ────────────────────────────────────── */}
@@ -87,7 +73,7 @@ export function PricingSection() {
             {plan.featured && (
               <p className="label-inst mb-6">Institutional Intelligence</p>
             )}
-            
+
             <div className="mb-10">
               <h3 className="display-card text-3xl mb-4">{plan.name}</h3>
               <div className="flex items-baseline gap-2 mb-4">
@@ -134,15 +120,14 @@ export function PricingSection() {
             </p>
             <div className="flex items-center justify-between">
               <div className="flex items-baseline gap-2">
-                <span className="display-card text-3xl">$99</span>
-                <span className="font-serif text-muted text-sm italic">/ ₹2,999</span>
+                <span className="display-card text-3xl">{isIndia ? '₹2,999' : '$99'}</span>
               </div>
               <Button href="/audit" variant="ghost" className="px-6 py-3">
                 Book Audit →
               </Button>
             </div>
           </div>
-          
+
           <div className="p-12 bg-signal-gold/5 relative">
             <div className="absolute top-0 right-0 bg-signal-gold text-obsidian px-4 py-1 font-mono text-[0.5rem] tracking-widest font-bold uppercase">
               Limited Availability
@@ -155,8 +140,7 @@ export function PricingSection() {
             </p>
             <div className="flex items-center justify-between">
               <div className="flex items-baseline gap-2">
-                <span className="display-card text-3xl">$199</span>
-                <span className="font-serif text-muted text-sm italic">/ ₹5,999</span>
+                <span className="display-card text-3xl">{isIndia ? '₹5,999' : '$199'}</span>
               </div>
               <Button href="/request?service=sprint" variant="primary" className="px-6 py-3">
                 Start Sprint →

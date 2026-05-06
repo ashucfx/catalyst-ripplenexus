@@ -3,9 +3,12 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { PaymentButton } from '@/components/ui/PaymentButton'
+import { useGeo } from '@/hooks/useGeo'
 
 export function AuditCheckout() {
   const router                    = useRouter()
+  const geo                       = useGeo()
+  const isIndia                   = geo?.isIndia ?? false
   const [email,   setEmail]       = useState('')
   const [error,   setError]       = useState('')
   const [success, setSuccess]     = useState(false)
@@ -41,21 +44,21 @@ export function AuditCheckout() {
       {/* Price Clarity Box */}
       <div className="border border-graphite bg-graphite/20 p-5 mb-6">
         <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-3">ELITE AUDIT — PRICING</p>
-        <div className="flex items-center justify-between">
+        {isIndia ? (
           <div>
             <p className="font-mono text-muted text-[0.55rem] tracking-widest">INDIA (INR)</p>
             <p className="font-serif text-bone text-2xl">₹2,999</p>
             <p className="font-mono text-muted text-[0.55rem]">Razorpay · UPI · Cards</p>
           </div>
-          <div className="w-px h-10 bg-graphite" />
-          <div className="text-right">
+        ) : (
+          <div>
             <p className="font-mono text-muted text-[0.55rem] tracking-widest">GLOBAL (USD)</p>
             <p className="font-serif text-bone text-2xl">$99</p>
             <p className="font-mono text-muted text-[0.55rem]">PayPal · Cards</p>
           </div>
-        </div>
+        )}
         <p className="font-mono text-signal-gold text-[0.55rem] tracking-widest mt-3 pt-3 border-t border-graphite">
-          ↳ Your payment method is automatically selected based on your location.
+          ↳ Secure checkout. Portal link delivered to your inbox within minutes.
         </p>
       </div>
 
@@ -112,4 +115,3 @@ export function AuditCheckout() {
     </div>
   )
 }
-
