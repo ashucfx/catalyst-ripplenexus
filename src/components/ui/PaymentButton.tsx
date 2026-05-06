@@ -52,7 +52,7 @@ export function PaymentButton({ product, email, onSuccess, onError, disabled, la
         amount:       data.amount,
         currency:     data.currency,
         order_id:     data.orderId,
-        name:         'Catalyst',
+        name:         'Catalyst by Ripple Nexus',
         description:  description ?? 'Market Value Audit',
         prefill:      { email },
         theme:        { color: '#B8935B' },
