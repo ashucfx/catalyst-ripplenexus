@@ -6,6 +6,7 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/Button'
 import { Disclaimer } from '@/components/ui/Disclaimer'
+import { useGeo } from '@/hooks/useGeo'
 
 const steps = [
   { id: 1, label: 'Profile' },
@@ -75,6 +76,9 @@ const empty: FormData = {
 }
 
 export default function RequestPage() {
+  const geo     = useGeo()
+  const isIndia = geo?.isIndia ?? false
+
   const [step,      setStep]      = useState(1)
   const [form,      setForm]      = useState<FormData>(empty)
   const [submitted, setSubmitted] = useState(false)
@@ -394,7 +398,11 @@ export default function RequestPage() {
                         <div>
                           <p className={`font-sans text-sm ${form.service === s.label ? 'text-bone' : 'text-muted'}`}>
                             {s.label}
-                            {s.price && <span className="font-mono text-signal-gold text-[0.6rem] tracking-wide ml-3">{s.price}</span>}
+                            {s.price && (
+                            <span className="font-mono text-signal-gold text-[0.6rem] tracking-wide ml-3">
+                              {s.label === 'Market Value Audit' ? (isIndia ? '₹5,999' : '$199') : s.price}
+                            </span>
+                          )}
                           </p>
                           <p className="font-sans text-muted text-xs mt-0.5 leading-relaxed">{s.desc}</p>
                         </div>
@@ -471,14 +479,14 @@ export default function RequestPage() {
                 <p className="label-inst mb-4">Service Reference</p>
                 <div className="flex flex-col gap-3">
                   {[
-                    { tier: 'Tier I', name: 'Market Value Audit', price: '$199 / ₹5,999', href: '/audit' },
-                    { tier: 'Tier II', name: 'Positioning Blueprint', price: '$1,500–$3,500', href: '/blueprint' },
-                    { tier: 'Tier III', name: 'Sovereign Executive Suite', price: '$5,000–$15,000+', href: '/executive' },
+                    { tier: 'Tier I',   name: 'Market Value Audit',        priceUSD: '$199',            priceINR: '₹5,999',               href: '/audit'     },
+                    { tier: 'Tier II',  name: 'Positioning Blueprint',      priceUSD: '$1,500–$3,500',   priceINR: '₹9,999–₹14,999',        href: '/blueprint' },
+                    { tier: 'Tier III', name: 'Sovereign Executive Suite',  priceUSD: '$5,000–$15,000+', priceINR: '₹5,00,000–₹15,00,000+', href: '/executive' },
                   ].map((s) => (
                     <a key={s.tier} href={s.href} className="block border-b border-graphite pb-3 last:border-0 last:pb-0 hover:opacity-80 transition-opacity">
                       <p className="font-mono text-muted text-[0.55rem] tracking-widest mb-0.5">{s.tier}</p>
                       <p className="font-serif text-bone text-sm">{s.name}</p>
-                      <p className="font-mono text-signal-gold text-[0.6rem] tracking-wide mt-0.5">{s.price}</p>
+                      <p className="font-mono text-signal-gold text-[0.6rem] tracking-wide mt-0.5">{isIndia ? s.priceINR : s.priceUSD}</p>
                     </a>
                   ))}
                 </div>

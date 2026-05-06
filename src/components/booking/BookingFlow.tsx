@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import type { MeetingType } from '@/lib/db/bookings'
 import { PaymentButton } from '@/components/ui/PaymentButton'
+import { useGeo } from '@/hooks/useGeo'
 
 type Step = 'calendar' | 'slots' | 'details' | 'payment' | 'done'
 
@@ -45,6 +46,9 @@ function formatDateDisplay(isoStr: string, tz: string): string {
 }
 
 export function BookingFlow({ meetingType }: Props) {
+  const geo     = useGeo()
+  const isIndia = geo?.isIndia ?? false
+
   const [step, setStep] = useState<Step>('calendar')
   const [tz,   setTz]   = useState<string>('UTC')
 
@@ -189,7 +193,9 @@ export function BookingFlow({ meetingType }: Props) {
             <div className="flex items-center gap-3">
               <span className="text-signal-gold text-sm">◎</span>
               <span className="font-sans text-muted text-sm">
-                ${(meetingType.price_usd / 100).toFixed(0)} · ₹{(meetingType.price_inr / 100).toFixed(0)}
+                {isIndia
+                  ? `₹${(meetingType.price_inr / 100).toFixed(0)}`
+                  : `$${(meetingType.price_usd / 100).toFixed(0)}`}
               </span>
             </div>
           )}

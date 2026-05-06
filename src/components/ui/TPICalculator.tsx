@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { TPIMeter } from '@/components/ui/TPIMeter'
 import { Button } from '@/components/ui/Button'
 import { GeoPrice } from '@/components/ui/GeoPrice'
+import { useGeo } from '@/hooks/useGeo'
 
 // ─── Types ─────────────────────────────────────────────────────────────
 
@@ -97,6 +98,15 @@ function computeTPI(a: Answers): { score: number; gaps: string[]; message: strin
   return { score, gaps, message }
 }
 
+// Canonical salary band data — internal key kept for scoring, display is geo-conditional
+const salaryBandOptions = [
+  { key: 'Below ₹15L / $18K',    inr: 'Below ₹15L', usd: 'Below $18K'  },
+  { key: '₹15L–30L / $18K–36K',  inr: '₹15L–30L',   usd: '$18K–36K'   },
+  { key: '₹30L–60L / $36K–72K',  inr: '₹30L–60L',   usd: '$36K–72K'   },
+  { key: '₹60L–1Cr / $72K–120K', inr: '₹60L–1Cr',   usd: '$72K–120K'  },
+  { key: '₹1Cr+ / $120K+',       inr: '₹1Cr+',      usd: '$120K+'     },
+]
+
 const steps = [
   {
     id: 'seniority',
@@ -114,7 +124,7 @@ const steps = [
     id: 'salaryBand',
     question: 'Current Compensation (Annual CTC)',
     sub: 'Base + Bonus + Fixed Allowances.',
-    options: ['Below ₹15L / $18K', '₹15L–30L / $18K–36K', '₹30L–60L / $36K–72K', '₹60L–1Cr / $72K–120K', '₹1Cr+ / $120K+'],
+    options: [],  // populated dynamically from salaryBandOptions based on geo
   },
   {
     id: 'lastRaise',
@@ -131,6 +141,9 @@ const steps = [
 ]
 
 export function TPICalculator() {
+  const geo      = useGeo()
+  const isIndia  = geo?.isIndia ?? false
+
   const [currentStep, setCurrentStep] = useState(0)
   const [answers, setAnswers] = useState<Answers>(empty)
   const [emailStep, setEmailStep] = useState(false)
@@ -142,8 +155,18 @@ export function TPICalculator() {
   const totalSteps = steps.length
   const step = steps[currentStep]
 
-  function selectOption(option: string) {
-    const newAnswers = { ...answers, [step.id]: option }
+  // For salary band step, show only geo-appropriate labels but store canonical key for scoring
+  const displayOptions = step.id === 'salaryBand'
+    ? salaryBandOptions.map(b => isIndia ? b.inr : b.usd)
+    : step.options
+
+  function selectOption(displayLabel: string) {
+    let storedValue = displayLabel
+    if (step.id === 'salaryBand') {
+      const band = salaryBandOptions.find(b => b.inr === displayLabel || b.usd === displayLabel)
+      storedValue = band?.key ?? displayLabel
+    }
+    const newAnswers = { ...answers, [step.id]: storedValue }
     setAnswers(newAnswers)
     if (currentStep < totalSteps - 1) {
       setCurrentStep(currentStep + 1)
@@ -297,7 +320,7 @@ export function TPICalculator() {
       <p className="font-serif text-muted text-lg mb-12">{step.sub}</p>
 
       <div className="grid grid-cols-1 gap-3 mb-12">
-        {step.options.map((option) => (
+        {displayOptions.map((option) => (
           <button
             key={option}
             onClick={() => selectOption(option)}
