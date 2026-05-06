@@ -9,7 +9,13 @@ const C = {
 }
 
 // ─── Shared wrapper ────────────────────────────────────────────────────
-function wrap(body: string): string {
+function wrap(body: string, unsubscribeUrl?: string): string {
+  const unsubLine = unsubscribeUrl
+    ? `<p style="margin:8px 0 0 0;font-family:Arial,sans-serif;font-size:10px;color:${C.muted};">
+         <a href="${unsubscribeUrl}" style="color:${C.muted};text-decoration:underline;">Unsubscribe</a>
+       </p>`
+    : ''
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,6 +54,7 @@ function wrap(body: string): string {
               <p style="margin:0;font-family:Arial,sans-serif;font-size:10px;color:${C.muted};letter-spacing:0.1em;text-transform:uppercase;">
                 Catalyst · Ripple Nexus · catalyst.theripplenexus.com
               </p>
+              ${unsubLine}
             </td>
           </tr>
 
@@ -238,7 +245,7 @@ type TPIEmailData = {
   }
 }
 
-export function tpiScoreEmail(d: TPIEmailData): { subject: string; html: string } {
+export function tpiScoreEmail(d: TPIEmailData, unsubscribeUrl?: string): { subject: string; html: string } {
   const subject   = `Your TPI Score: ${d.score}/100`
   const scoreColor = d.score >= 65 ? C.gold : d.score >= 50 ? C.parchment : '#e07070'
 
@@ -366,7 +373,7 @@ export function tpiScoreEmail(d: TPIEmailData): { subject: string; html: string 
                color:${C.muted};line-height:1.6;font-style:italic;">
       All enquiries are handled with absolute discretion.
     </p>
-  `)
+  `, unsubscribeUrl)
 
   return { subject, html }
 }
@@ -375,7 +382,7 @@ export function tpiScoreEmail(d: TPIEmailData): { subject: string; html: string 
 // 4. NEWSLETTER WELCOME — sent when someone subscribes
 // ═══════════════════════════════════════════════════════════════════════
 
-export function newsletterWelcomeEmail(): { subject: string; html: string } {
+export function newsletterWelcomeEmail(unsubscribeUrl?: string): { subject: string; html: string } {
   const subject = `Welcome to the Intelligence Brief`
 
   const html = wrap(`
@@ -423,7 +430,7 @@ export function newsletterWelcomeEmail(): { subject: string; html: string } {
                color:${C.muted};line-height:1.6;font-style:italic;">
       You can unsubscribe at any time. Your email is never shared.
     </p>
-  `)
+  `, unsubscribeUrl)
 
   return { subject, html }
 }

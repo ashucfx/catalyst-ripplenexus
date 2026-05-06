@@ -1,6 +1,6 @@
 # Catalyst — Career Positioning Architecture
 
-> **One-liner:** A Next.js 15 full-stack application for a high-ticket professional services firm. Free TPI score calculator at the top of funnel. Paid AI-generated audit report ($99 / ₹2,999) in the middle. Bespoke Blueprint and Executive Suite engagements at the top.
+> **One-liner:** A Next.js 15 full-stack application for a high-ticket professional services firm. Free TPI score calculator at the top of funnel. Paid positioning intelligence report ($99 / ₹2,999) in the middle. Bespoke Blueprint and Executive Suite engagements at the top.
 
 ---
 
@@ -11,7 +11,7 @@ Catalyst is a conversion-optimised content, lead-capture, and transactional site
 The funnel has three layers:
 
 1. **Free** — TPI score calculator (5-question quiz, email-gated result, triggers lead capture)
-2. **Paid self-serve** — Market Value Audit ($99 / ₹2,999): user pays, receives a private portal link, fills an intake form, gets an AI-generated positioning intelligence report + PDF
+2. **Paid self-serve** — Market Value Audit ($99 / ₹2,999): user pays, receives a private portal link, fills an intake form, gets an automated positioning intelligence report + PDF
 3. **Bespoke** — Blueprint ($349–$499 / ₹9,999–₹14,999) and Executive Suite ($5,000–$15,000+): enquiry via `/request`, fulfilled manually by the team
 
 Payments are live via Razorpay (India) and PayPal (international). All paid audit data persists in Supabase.
@@ -26,18 +26,18 @@ Payments are live via Razorpay (India) and PayPal (international). All paid audi
 | Language | TypeScript 5.x | Strict mode |
 | Styling | Tailwind CSS 3.x | Custom design tokens |
 | UI runtime | React 19 | — |
-| Database | Supabase (Postgres) | Service-role client, RLS bypassed server-side |
+| Database | Supabase (Postgres) | Service-role client, RLS enforced on sensitive tables |
 | Payments — India | Razorpay | Webhooks + `fee_bearer:customer` |
 | Payments — International | PayPal Orders API v2 | Raw fetch, no SDK |
-| AI report generation | Anthropic API (Sonnet) | JSON-structured output, `max_tokens:4096` |
+| Report generation | Anthropic API | JSON-structured output, `max_tokens:4096` |
 | PDF generation | `@react-pdf/renderer` | `renderToBuffer`, streamed as `application/pdf` |
 | Email delivery | Resend | Lazy singleton, skips if key absent |
-| List management | Kit (ConvertKit) | API v4 |
+| List management | Internal (Supabase + Resend) | Subscriber tagging, campaign tracking, token-based unsubscribe |
 | Rate limiting | Upstash Redis | Sliding window; in-memory fallback for dev |
 | Geo detection | Vercel `x-vercel-ip-country` header | `/api/geo` endpoint, client-side `GeoPrice` component |
 | Font rendering | Google Fonts — Cormorant, Inter, JetBrains Mono | via `next/font` |
 | Brand SVGs | `simple-icons` (CC0) + custom marks | Company trust rail |
-| Hosting target | Vercel | `maxDuration=120` on LLM route |
+| Hosting target | Vercel | `maxDuration=120` on report generation route |
 
 ---
 
@@ -55,11 +55,12 @@ Payments are live via Razorpay (India) and PayPal (international). All paid audi
 │  │  /              │   │  /api/tpi               │   │  layout.tsx     │  │
 │  │  /tpi           │   │  /api/request           │   └─────────────────┘  │
 │  │  /request       │   │  /api/platform-waitlist │                        │
-│  │  /audit         │   │                        │                        │
-│  │  /blueprint     │   │  /api/audit/intake      │                        │
-│  │  /executive     │   │  /api/audit/report/[t]  │                        │
-│  │  /portal/[tok]  │   │                        │                        │
-│  │  /book          │   │  /api/payment/razorpay  │                        │
+│  │  /audit         │   │  /api/unsubscribe       │                        │
+│  │  /blueprint     │   │                        │                        │
+│  │  /executive     │   │  /api/audit/intake      │                        │
+│  │  /portal/[tok]  │   │  /api/audit/report/[t]  │                        │
+│  │  /book          │   │                        │                        │
+│  │  /unsubscribe   │   │  /api/payment/razorpay  │                        │
 │  │  /platform      │   │  /api/payment/paypal/*  │                        │
 │  │  /system        │   │  /api/webhooks/razorpay │                        │
 │  │  /intelligence  │   │  /api/webhooks/paypal   │                        │
@@ -74,15 +75,15 @@ Payments are live via Razorpay (India) and PayPal (international). All paid audi
           ┌──────────────────────────┼──────────────────────────┐
           │                          │                          │
    ┌──────▼──────┐          ┌────────▼──────┐         ┌────────▼────────┐
-   │  Supabase   │          │  Resend /     │         │  Razorpay /     │
-   │  (Postgres) │          │  Kit (CK)     │         │  PayPal         │
-   │  portals    │          │  Email + list │         │  Payments       │
+   │  Supabase   │          │  Resend       │         │  Razorpay /     │
+   │  (Postgres) │          │  Email +      │         │  PayPal         │
+   │  portals    │          │  newsletters  │         │  Payments       │
    │  payments   │          └───────────────┘         └─────────────────┘
    │  bookings   │
    │  leads      │          ┌───────────────┐
-   └─────────────┘          │  Anthropic    │
-                            │  Report gen   │
-                            └───────────────┘
+   │  subscribers│          │  Anthropic    │
+   │  newsletters│          │  Report gen   │
+   └─────────────┘          └───────────────┘
 ```
 
 ---
@@ -110,6 +111,7 @@ src/
 │   │   ├── success/                    # Booking confirmed
 │   │   └── cancel/                     # Booking cancelled
 │   ├── request/                        # High-ticket enquiry form
+│   ├── unsubscribe/                    # Unsubscribe confirmation page
 │   ├── platform/                       # SaaS platform — waitlist mode
 │   ├── system/                         # Philosophy / differentiator page
 │   ├── intelligence/                   # Article index + SSG articles
@@ -120,27 +122,34 @@ src/
 │   └── api/
 │       ├── geo/route.ts                # GET — Vercel IP country → {isIndia}
 │       ├── newsletter/route.ts         # POST — subscribe + welcome email
-│       ├── tpi/route.ts                # POST — TPI score email + Kit lead
+│       ├── tpi/route.ts                # POST — TPI score email + subscriber tag
 │       ├── request/route.ts            # POST — admin dossier + user confirm
 │       ├── platform-waitlist/route.ts  # POST — waitlist signup
+│       ├── unsubscribe/route.ts        # GET  — token unsubscribe → redirect
 │       │
 │       ├── audit/
-│       │   ├── intake/route.ts         # POST — validate intake, run AI report (maxDuration=120)
+│       │   ├── intake/route.ts         # POST — validate intake, run report (maxDuration=120)
 │       │   └── report/[token]/route.tsx# GET  — stream PDF of completed report
 │       │
 │       ├── payment/
 │       │   ├── razorpay/route.ts       # POST — create Razorpay order
-│       │   ├── razorpay/verify/route.ts# POST — verify signature, create portal
+│       │   ├── razorpay/verify/route.ts# POST — verify signature, create portal (rate limited)
 │       │   ├── paypal/create/route.ts  # POST — create PayPal order
-│       │   └── paypal/capture/route.ts # POST — capture PayPal order, create portal
+│       │   └── paypal/capture/route.ts # POST — capture PayPal order, create portal (rate limited)
 │       │
 │       ├── webhooks/
-│       │   ├── razorpay/route.ts       # POST — HMAC-verified webhook, idempotent
-│       │   └── paypal/route.ts         # POST — PayPal IPN webhook
+│       │   ├── razorpay/route.ts       # POST — HMAC-verified webhook, idempotent portal creation
+│       │   └── paypal/route.ts         # POST — PayPal IPN webhook, idempotent portal creation
 │       │
 │       ├── schedule/                   # Availability + booking management
-│       ├── admin/                      # Admin auth + booking management
-│       └── cron/                       # Scheduled reminders + cleanup
+│       ├── admin/
+│       │   ├── auth/                   # Admin login
+│       │   ├── bookings/               # Booking list
+│       │   ├── availability/           # Slot management
+│       │   └── newsletter/
+│       │       ├── send/route.ts       # POST — send campaign to active subscribers
+│       │       └── subscribers/route.ts# GET  — subscriber list + campaign history
+│       └── cron/                       # Scheduled reminders (*/15) + cleanup (*/5)
 │
 ├── components/
 │   ├── layout/
@@ -174,21 +183,22 @@ src/
     ├── geo.ts                          # Geo detection helper
     ├── rateLimit.ts                    # Upstash Redis sliding window + in-memory fallback
     ├── auth/
-    │   └── admin.ts                    # Admin bearer token auth
+    │   └── admin.ts                    # Admin cookie auth (8hr session)
+    ├── booking/
+    │   └── confirmAndNotify.ts         # Shared booking confirmation — used by all 4 payment paths
     ├── db/
-    │   ├── supabase.ts                 # Service-role Supabase client + insertPayment
-    │   ├── portals.ts                  # createPortal / getPortal / saveReport
-    │   └── bookings.ts                 # Booking CRUD
+    │   ├── supabase.ts                 # Service-role Supabase client + typed insert helpers
+    │   ├── portals.ts                  # createPortalIfNotExists (idempotent, race-safe)
+    │   ├── bookings.ts                 # Booking CRUD
+    │   └── newsletter.ts               # Subscriber management + campaign tracking
     ├── email/
     │   ├── resend.ts                   # Resend singleton + FROM / ADMIN constants
-    │   ├── convertkit.ts               # Kit form subscribe wrapper
-    │   ├── templates.ts                # Transactional email HTML templates
+    │   ├── convertkit.ts               # No-op stub (ConvertKit removed)
+    │   ├── templates.ts                # Transactional + marketing HTML email templates
     │   └── bookingTemplates.ts         # Booking confirmation email templates
-    ├── llm/
-    │   └── report.ts                   # Anthropic API call — structured JSON report
     ├── payment/
     │   ├── razorpay.ts                 # Order creation with fee_bearer:customer
-    │   └── paypal.ts                   # PayPal Orders API v2 (raw fetch)
+    │   └── paypal.ts                   # PayPal Orders API v2 (raw fetch, email in custom_id)
     ├── pdf/
     │   └── ReportPdf.tsx               # react-pdf report layout
     └── schedule/
@@ -214,61 +224,63 @@ Geo-detection is server-side via Vercel's `x-vercel-ip-country` header. The `Geo
 
 ---
 
-## Audit portal flow
+## Payment and portal flow
 
 ```mermaid
 sequenceDiagram
     participant U as User
     participant P as Payment (Razorpay / PayPal)
-    participant WH as Webhook / Capture
+    participant V as verify / capture route
+    participant WH as Webhook (backup)
     participant DB as Supabase
-    participant LLM as Anthropic API
     participant E as Resend
 
     U->>P: Pay $99 / ₹2,999
-    P-->>WH: payment.captured / order captured
-    WH->>DB: createPortal(email, product, token)
-    WH->>E: send portal link email → user
+    P-->>V: payment.captured / order captured
+    V->>DB: createPortalIfNotExists(email, paymentId)
+    V->>E: portal link email → user
+    WH-->>DB: createPortalIfNotExists (idempotent — no-op if already created)
     U->>U: /portal/[token] — IntakeForm (12 fields)
-    U->>LLM: POST /api/audit/intake
-    LLM-->>DB: saveReport(token, reportJSON)
+    U->>U: POST /api/audit/intake → report generated
+    DB-->>DB: saveReport(token, reportJSON)
     U->>U: ReportView renders with full report
     U->>U: GET /api/audit/report/[token] — download PDF
 ```
 
+Both the client-side verify/capture route **and** the payment gateway webhook attempt portal creation. `createPortalIfNotExists` is idempotent at both application and database level (UNIQUE constraint on `payment_id` + 23505 race handling) — only one portal is ever created per payment.
+
 ---
 
-## Lead capture flow
+## Lead capture and newsletter flow
 
 ```mermaid
 sequenceDiagram
     participant U as User (browser)
     participant API as Next.js API Route
     participant RL as Rate Limiter
+    participant DB as Supabase (newsletter_subscribers)
     participant R as Resend
-    participant CK as Kit/ConvertKit
     participant A as Admin inbox
 
     Note over U,API: Newsletter form submit
     U->>API: POST /api/newsletter {email, honeypot}
     API->>RL: check(ip, limit=3, window=1hr)
     RL-->>API: ok / 429
-    API->>R: welcome email → user
-    API->>CK: subscribe to newsletter form
+    API->>DB: upsertSubscriber(email, tags=[newsletter])
+    API->>R: welcome email with unsubscribe link → user
     API->>A: admin ping — new subscriber
 
     Note over U,API: TPI score submit
     U->>API: POST /api/tpi {email, score, answers, honeypot}
     API->>RL: check(ip, limit=5, window=1hr)
-    API->>R: TPI score email → user (with audit CTA at $99)
-    API->>CK: subscribe + 6 custom fields
+    API->>DB: upsertSubscriber(email, tags=[newsletter, tpi_lead])
+    API->>R: TPI score email with unsubscribe link → user
     API->>A: admin ping — new TPI lead
 
-    Note over U,API: Request form submit
-    U->>API: POST /api/request {name, email, role, ...}
-    API->>RL: check(ip, limit=2, window=1hr)
-    API->>A: full lead dossier (replyTo = client email)
-    API->>R: confirmation email → client
+    Note over U,API: Unsubscribe
+    U->>API: GET /api/unsubscribe?token=...
+    API->>DB: unsubscribeByToken(token)
+    API-->>U: redirect /unsubscribe?success=1
 ```
 
 ---
@@ -333,21 +345,25 @@ graph TB
 | Route | Method | Rate limit | Auth | Side effects |
 |---|---|---|---|---|
 | `/api/geo` | GET | — | none | reads Vercel IP header |
-| `/api/newsletter` | POST | 3/hr/IP | none | Resend × 2, Kit subscribe |
-| `/api/tpi` | POST | 5/hr/IP | none | Resend × 2, Kit subscribe + 6 fields |
+| `/api/newsletter` | POST | 3/hr/IP | none | Supabase upsert, Resend × 2 |
+| `/api/tpi` | POST | 5/hr/IP | none | Supabase upsert + TPI insert, Resend × 2 |
 | `/api/request` | POST | 2/hr/IP | none | Resend × 2 |
 | `/api/platform-waitlist` | POST | 3/hr/IP | none | Supabase insert, Resend |
-| `/api/audit/intake` | POST | 3/hr/IP | portal token | Anthropic LLM, Supabase write, Resend |
+| `/api/unsubscribe` | GET | — | token | Supabase status update → redirect |
+| `/api/audit/intake` | POST | 3/hr/IP | portal token | Anthropic, Supabase write, Resend |
 | `/api/audit/report/[token]` | GET | — | portal token | Supabase read, PDF stream |
 | `/api/payment/razorpay` | POST | — | none | Razorpay order create |
-| `/api/payment/razorpay/verify` | POST | — | none | HMAC verify, Supabase portal + payment |
+| `/api/payment/razorpay/verify` | POST | 10/hr/IP | none | HMAC verify, Supabase portal + payment |
 | `/api/payment/paypal/create` | POST | — | none | PayPal order create |
-| `/api/payment/paypal/capture` | POST | — | none | PayPal capture, Supabase portal + payment |
-| `/api/webhooks/razorpay` | POST | — | HMAC sig | idempotent portal creation |
-| `/api/webhooks/paypal` | POST | — | PayPal verify | idempotent portal creation |
+| `/api/payment/paypal/capture` | POST | 10/hr/IP | none | PayPal capture, Supabase portal + payment |
+| `/api/webhooks/razorpay` | POST | — | HMAC sig | idempotent portal + booking confirmation |
+| `/api/webhooks/paypal` | POST | — | PayPal verify | idempotent portal + booking confirmation |
 | `/api/schedule/*` | GET/POST | — | none / admin | Supabase bookings |
-| `/api/admin/*` | GET/POST | — | Bearer token | Supabase bookings |
-| `/api/cron/*` | GET | — | CRON_SECRET | Resend reminders, DB cleanup |
+| `/api/admin/newsletter/send` | POST | — | admin cookie | Resend batch send, Supabase campaign record |
+| `/api/admin/newsletter/subscribers` | GET | — | admin cookie | Supabase read |
+| `/api/admin/*` | GET/POST | — | admin cookie | Supabase bookings |
+| `/api/cron/reminders` | GET | — | CRON_SECRET | Resend reminders (*/15 min) |
+| `/api/cron/cleanup` | GET | — | CRON_SECRET | DB booking cleanup (*/5 min) |
 
 ---
 
@@ -368,6 +384,22 @@ final score = clamp(raw, 34, 76)
 ```
 
 Clamped to 34–76 intentionally — leaves headroom to motivate the paid Audit. The TPI email sends the score with an audit CTA at $99 / ₹2,999. Email gate fires after Q5; result renders regardless of API outcome.
+
+---
+
+## Newsletter system
+
+The newsletter system is fully internal — no third-party email marketing service.
+
+**Subscriber storage** — `newsletter_subscribers` table in Supabase. Each subscriber has:
+- `status` — `active` | `unsubscribed`
+- `tags` — `TEXT[]` array (`newsletter`, `tpi_lead`, `audit_buyer`)
+- `unsubscribe_token` — unique random 32-byte hex token generated at subscribe time
+- `source` — origin of the subscription (`newsletter_form`, `tpi_calculator`, etc.)
+
+**Unsubscribe** — Every marketing email contains a unique `/api/unsubscribe?token=...` link. The GET handler marks the subscriber unsubscribed and redirects to `/unsubscribe?success=1`. Re-submitting a newsletter or TPI form never silently re-subscribes an opted-out address.
+
+**Campaign send** — `POST /api/admin/newsletter/send` (admin-authenticated). Accepts `subject`, `html`, and optional `segment` (tag filter). Sends in batches of 50 via Resend, appends a per-recipient unsubscribe footer, records the campaign in the `newsletters` table.
 
 ---
 
@@ -421,6 +453,7 @@ Typography:
 | `/blueprint` | RSC | Tier II — Positioning Blueprint |
 | `/executive` | RSC | Tier III — Sovereign Executive Suite |
 | `/request` | Client | High-ticket enquiry form |
+| `/unsubscribe` | RSC | Unsubscribe confirmation |
 | `/platform` | RSC | SaaS platform — waitlist mode |
 | `/system` | RSC | Philosophy / differentiator page |
 | `/intelligence` | RSC | Article index |
@@ -439,13 +472,8 @@ RESEND_FROM_EMAIL=catalyst@yourdomain.com
 RESEND_FROM_NAME=Catalyst
 RESEND_ADMIN_EMAIL=you@youremail.com
 
-# ─── KIT (CONVERTKIT)
-CONVERTKIT_API_KEY=...
-CONVERTKIT_NEWSLETTER_FORM_ID=...
-CONVERTKIT_TPI_FORM_ID=...
-
 # ─── SUPABASE
-# Run supabase/portal_schema.sql in the Supabase SQL editor before first run
+# Run migrations in supabase/migrations/ in the Supabase SQL editor before first run
 SUPABASE_URL=https://xxxx.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=eyJ...
 
@@ -463,6 +491,7 @@ NEXT_PUBLIC_RAZORPAY_KEY_ID=rzp_live_...
 PAYPAL_MODE=live
 PAYPAL_CLIENT_ID=...
 PAYPAL_CLIENT_SECRET=...
+PAYPAL_WEBHOOK_ID=...
 NEXT_PUBLIC_PAYPAL_CLIENT_ID=...
 
 # ─── SITE
@@ -477,19 +506,18 @@ CRON_SECRET=another-long-random-string
 NEXT_PUBLIC_PLAUSIBLE_DOMAIN=catalyst.theripplenexus.com
 ```
 
-The Kit TPI form needs six custom fields created in the Kit dashboard: `tpi_score`, `seniority`, `geography`, `salary_band`, `last_raise`, `sector`.
-
 ---
 
 ## Supabase schema
 
-Run `supabase/portal_schema.sql` in the Supabase SQL editor before first use. Tables:
+Run migrations in `supabase/migrations/` sequentially in the Supabase SQL editor before first use.
 
 | Table | Purpose |
 |---|---|
-| `audit_portals` | One row per paid audit — token, email, product, report JSON, status |
+| `audit_portals` | One row per paid audit — token, email, payment_id (UNIQUE), report JSON, status |
 | `payments` | Payment record per transaction — gateway, amount, currency, idempotency |
-| `newsletter_subscribers` | Waitlist / newsletter signups |
+| `newsletter_subscribers` | Subscribers with status, tags, source, and unsubscribe token |
+| `newsletters` | Campaign send history — subject, segment, sent count, sent timestamp |
 | `tpi_submissions` | TPI quiz results and lead data |
 | `leads` | High-ticket enquiry form submissions |
 | `platform_waitlist` | Platform interest signups |
@@ -516,20 +544,25 @@ Permissions-Policy: camera=(), microphone=(), geolocation=()
 
 ```
 □ Copy .env.local.example → .env.local, fill all real keys
-□ Run supabase/portal_schema.sql in Supabase SQL editor
+□ Run supabase/migrations/001_portal_payment_integrity.sql in Supabase SQL editor
+□ Run supabase/migrations/002_newsletter_system.sql in Supabase SQL editor
 □ Verify sending domain in Resend dashboard
-□ Create two Kit forms; add 6 custom fields to TPI form
 □ Enable Customer Fee Bearer in Razorpay dashboard (Settings → Payment Methods)
+□ Set RAZORPAY_WEBHOOK_SECRET in Vercel (Razorpay Dashboard → Webhooks → endpoint → Secret)
+□ Set PAYPAL_WEBHOOK_ID in Vercel (PayPal Developer → Apps → Webhooks → Webhook ID)
 □ Place public/og-image.png (1200×630px)
 □ Run: npm run build — confirm zero errors
 □ Push to Vercel; set all env vars in project settings
 □ Set NEXT_PUBLIC_BASE_URL to the live domain in Vercel
 □ Test Razorpay payment end-to-end — verify portal email arrives
 □ Test PayPal payment end-to-end — verify portal email arrives
+□ Kill browser mid-payment (simulate UPI kill) — verify webhook creates portal
 □ Submit intake form in portal — verify report generates and PDF downloads
-□ Test TPI calculator — verify score email arrives with correct $99 price
+□ Test TPI calculator — verify score email arrives with unsubscribe link
+□ Test newsletter subscribe — verify welcome email arrives with unsubscribe link
+□ Test unsubscribe link — verify /unsubscribe?success=1 and no re-subscribe
 □ Confirm admin notification emails land in inbox
 □ Test /request form — verify admin dossier + user confirmation
 □ Check /sitemap.xml renders all routes
-□ Verify Razorpay webhook secret is set and signature verification passes
+□ Verify Razorpay webhook signature verification passes in Vercel logs
 ```

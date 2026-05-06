@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { resend, FROM, ADMIN_EMAIL } from '@/lib/email/resend'
-import { subscribeToForm, CK_FORMS } from '@/lib/email/convertkit'
 import { newsletterWelcomeEmail } from '@/lib/email/templates'
+import { upsertSubscriber } from '@/lib/db/newsletter'
 import { rateLimit } from '@/lib/rateLimit'
-import { insertNewsletterSubscriber } from '@/lib/db/supabase'
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? ''
 
 export async function POST(req: NextRequest) {
   const ip     = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
@@ -19,24 +20,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Valid email required.' }, { status: 400 })
     }
 
-    const welcome = newsletterWelcomeEmail()
+    const result = await upsertSubscriber({ email, source: 'newsletter_form', tags: ['newsletter'] })
 
-    const [results] = await Promise.all([
-      Promise.allSettled([
-        subscribeToForm({ formId: CK_FORMS.newsletter, email }),
+    // Respect prior opt-out — don't send welcome email to unsubscribed addresses
+    if (result && result.status !== 'unsubscribed') {
+      const unsubscribeUrl = `${BASE_URL}/api/unsubscribe?token=${result.token}`
+      const welcome        = newsletterWelcomeEmail(unsubscribeUrl)
+
+      await Promise.allSettled([
         resend.emails.send({ from: FROM, to: email, subject: welcome.subject, html: welcome.html }),
         resend.emails.send({
           from: FROM, to: ADMIN_EMAIL,
           subject: `New newsletter subscriber — ${email}`,
-          html: `<p style="font-family:Arial;color:#F4F1EB;background:#0A0B0D;padding:24px;">New subscriber: <strong>${email}</strong></p>`,
+          html: `<p style="font-family:Arial;color:#F4F1EB;background:#0A0B0D;padding:24px;">New subscriber: <strong>${email}</strong>${result.isNew ? '' : ' (returning)'}</p>`,
         }),
-      ]),
-      insertNewsletterSubscriber(email),
-    ])
-
-    results.forEach((r, i) => {
-      if (r.status === 'rejected') console.error(`[newsletter] task ${i} failed:`, r.reason)
-    })
+      ])
+    }
 
     return NextResponse.json({ success: true })
   } catch (err) {

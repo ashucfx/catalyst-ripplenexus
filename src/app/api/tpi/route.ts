@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { resend, FROM, ADMIN_EMAIL } from '@/lib/email/resend'
-import { subscribeToForm, CK_FORMS } from '@/lib/email/convertkit'
 import { tpiScoreEmail } from '@/lib/email/templates'
+import { upsertSubscriber } from '@/lib/db/newsletter'
 import { rateLimit } from '@/lib/rateLimit'
 import { insertTpiSubmission } from '@/lib/db/supabase'
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? ''
 
 export async function POST(req: NextRequest) {
   const ip     = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
@@ -23,38 +25,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid score.' }, { status: 400 })
     }
 
-    const template = tpiScoreEmail({ email, score, gaps, message, annualCost, answers })
-
-    await Promise.all([
-      Promise.allSettled([
-        resend.emails.send({ from: FROM, to: email, subject: template.subject, html: template.html }),
-        subscribeToForm({
-          formId: CK_FORMS.tpiLeads,
-          email,
-          fields: {
-            tpi_score:   String(score),
-            seniority:   answers?.seniority  ?? '',
-            geography:   answers?.geography  ?? '',
-            salary_band: answers?.salaryBand ?? '',
-            last_raise:  answers?.lastRaise  ?? '',
-            sector:      answers?.sector     ?? '',
-          },
-        }),
-        resend.emails.send({
-          from: FROM, to: ADMIN_EMAIL,
-          subject: `New TPI Lead — Score ${score}/100 — ${email}`,
-          html: `<div style="font-family:Arial;background:#0A0B0D;color:#F4F1EB;padding:24px;">
-            <p style="color:#B8935B;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;margin:0 0 8px;">TPI LEAD</p>
-            <p style="font-size:20px;margin:0 0 16px;">Score: <strong style="color:#B8935B;">${score}/100</strong></p>
-            <p style="margin:0 0 4px;">Email: <a href="mailto:${email}" style="color:#B8935B;">${email}</a></p>
-            <p style="margin:0 0 4px;">Seniority: ${answers?.seniority ?? '—'}</p>
-            <p style="margin:0 0 4px;">Geography: ${answers?.geography ?? '—'}</p>
-            <p style="margin:0 0 4px;">Salary band: ${answers?.salaryBand ?? '—'}</p>
-            <p style="margin:0 0 4px;">Last raise: ${answers?.lastRaise ?? '—'}</p>
-            <p style="margin:0;">Sector: ${answers?.sector ?? '—'}</p>
-          </div>`,
-        }),
-      ]),
+    const [subResult] = await Promise.all([
+      upsertSubscriber({ email, source: 'tpi_calculator', tags: ['newsletter', 'tpi_lead'] }),
       insertTpiSubmission({
         email,
         score,
@@ -65,6 +37,28 @@ export async function POST(req: NextRequest) {
         sector:     answers?.sector     ?? '',
         gaps:       gaps ?? [],
         annualCost: annualCost ?? '',
+      }),
+    ])
+
+    // TPI score email is transactional (user requested it) — send regardless of opt-out status
+    const unsubscribeUrl = subResult ? `${BASE_URL}/api/unsubscribe?token=${subResult.token}` : undefined
+    const template       = tpiScoreEmail({ email, score, gaps, message, annualCost, answers }, unsubscribeUrl)
+
+    await Promise.allSettled([
+      resend.emails.send({ from: FROM, to: email, subject: template.subject, html: template.html }),
+      resend.emails.send({
+        from: FROM, to: ADMIN_EMAIL,
+        subject: `New TPI Lead — Score ${score}/100 — ${email}`,
+        html: `<div style="font-family:Arial;background:#0A0B0D;color:#F4F1EB;padding:24px;">
+          <p style="color:#B8935B;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;margin:0 0 8px;">TPI LEAD</p>
+          <p style="font-size:20px;margin:0 0 16px;">Score: <strong style="color:#B8935B;">${score}/100</strong></p>
+          <p style="margin:0 0 4px;">Email: <a href="mailto:${email}" style="color:#B8935B;">${email}</a></p>
+          <p style="margin:0 0 4px;">Seniority: ${answers?.seniority ?? '—'}</p>
+          <p style="margin:0 0 4px;">Geography: ${answers?.geography ?? '—'}</p>
+          <p style="margin:0 0 4px;">Salary band: ${answers?.salaryBand ?? '—'}</p>
+          <p style="margin:0 0 4px;">Last raise: ${answers?.lastRaise ?? '—'}</p>
+          <p style="margin:0;">Sector: ${answers?.sector ?? '—'}</p>
+        </div>`,
       }),
     ])
 
