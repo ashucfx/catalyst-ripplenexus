@@ -3,7 +3,15 @@ import type { IntakeData, ReportData } from '@/lib/db/portals'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
-export async function generateAuditReport(intake: IntakeData): Promise<ReportData> {
+// Claude occasionally wraps output in code fences despite instructions — strip them
+function extractJSON(raw: string): string {
+  return raw
+    .replace(/^```(?:json)?\s*/i, '')
+    .replace(/\s*```$/, '')
+    .trim()
+}
+
+async function callClaude(intake: IntakeData): Promise<string> {
   const prompt = `You are the Catalyst positioning engine — an institutional-grade AI that produces precise, data-driven Market Value Audit reports for senior professionals. Be direct, specific, and ruthlessly honest. Never use platitudes or generic career advice.
 
 PROFESSIONAL INTAKE DATA:
@@ -104,7 +112,26 @@ Return ONLY a raw JSON object — no markdown, no code fences, no explanation. E
     messages:   [{ role: 'user', content: prompt }],
   })
 
-  const text = (message.content[0] as { type: 'text'; text: string }).text.trim()
-  const parsed = JSON.parse(text) as Omit<ReportData, 'generated_at'>
-  return { ...parsed, generated_at: new Date().toISOString() }
+  return (message.content[0] as { type: 'text'; text: string }).text.trim()
+}
+
+export async function generateAuditReport(intake: IntakeData): Promise<ReportData> {
+  let lastError: unknown
+
+  // One retry — handles transient API hiccups without burning the user's patience
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      if (attempt > 0) await new Promise(r => setTimeout(r, 3000))
+
+      const raw    = await callClaude(intake)
+      const json   = extractJSON(raw)
+      const parsed = JSON.parse(json) as Omit<ReportData, 'generated_at'>
+      return { ...parsed, generated_at: new Date().toISOString() }
+    } catch (err) {
+      lastError = err
+      console.error(`[llm/report] attempt ${attempt + 1} failed:`, err instanceof Error ? err.message : String(err))
+    }
+  }
+
+  throw lastError
 }
