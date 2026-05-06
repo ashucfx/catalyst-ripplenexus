@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 
 const SENIORITY_OPTIONS = [
@@ -56,17 +56,55 @@ const EMPTY: FormState = {
   achievements:     '',
 }
 
+const STAGES = [
+  'Analysing your market position…',
+  'Benchmarking compensation against live data…',
+  'Scoring ATS and recruiter-system compatibility…',
+  'Mapping sector demand and positioning gaps…',
+  'Generating your 90-day repositioning roadmap…',
+  'Compiling your intelligence brief…',
+]
+
+// Progress advances to ~92% over 90s — caps just before 100% until API returns
+function calcProgress(elapsed: number): number {
+  return Math.min((elapsed / 90) * 92, 92)
+}
+
 export function IntakeForm({ token }: Props) {
   const router          = useRouter()
   const [form, setForm] = useState<FormState>(EMPTY)
   const [error, setError]     = useState('')
   const [loading, setLoading] = useState(false)
+  const [elapsed,   setElapsed]   = useState(0)
+  const [stageIdx,  setStageIdx]  = useState(0)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   function set(field: keyof FormState) {
     return (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
       setForm(prev => ({ ...prev, [field]: e.target.value }))
     }
   }
+
+  function startTimer() {
+    setElapsed(0)
+    setStageIdx(0)
+    timerRef.current = setInterval(() => {
+      setElapsed(s => {
+        const next = s + 1
+        setStageIdx(Math.min(Math.floor(next / 15), STAGES.length - 1))
+        return next
+      })
+    }, 1000)
+  }
+
+  function stopTimer() {
+    if (timerRef.current) {
+      clearInterval(timerRef.current)
+      timerRef.current = null
+    }
+  }
+
+  useEffect(() => () => stopTimer(), [])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -79,12 +117,13 @@ export function IntakeForm({ token }: Props) {
     ]
     for (const f of required) {
       if (!form[f].trim()) {
-        setError(`Please fill in: ${f.replace(/([A-Z])/g, ' $1').toLowerCase()}`)
+        setError(`Please complete: ${f.replace(/([A-Z])/g, ' $1').toLowerCase()}`)
         return
       }
     }
 
     setLoading(true)
+    startTimer()
     try {
       const res = await fetch('/api/audit/intake', {
         method:  'POST',
@@ -98,8 +137,9 @@ export function IntakeForm({ token }: Props) {
       }
       router.refresh()
     } catch {
-      setError('Network error. Please try again.')
+      setError('Network error. Check your connection and try again.')
     } finally {
+      stopTimer()
       setLoading(false)
     }
   }
@@ -121,21 +161,61 @@ export function IntakeForm({ token }: Props) {
       </p>
 
       {loading ? (
-        <div className="border border-graphite/40 p-16 text-center">
-          <p className="label-inst mb-6 animate-pulse text-signal-gold">Generating your report…</p>
-          <p className="font-serif text-muted text-lg leading-relaxed max-w-sm mx-auto">
-            The Catalyst positioning engine is analysing your data against live market benchmarks.
-            This takes 30–90 seconds.
-          </p>
-          <div className="mt-10 flex justify-center gap-2">
-            {[0,1,2].map(i => (
-              <span
-                key={i}
-                className="w-1.5 h-1.5 rounded-full bg-signal-gold animate-pulse"
-                style={{ animationDelay: `${i * 200}ms` }}
+        <div className="border border-graphite/40 bg-graphite/5 p-12 md:p-16">
+          {/* Header */}
+          <div className="mb-10">
+            <p className="font-mono text-signal-gold text-[0.6rem] tracking-[0.3em] uppercase mb-4">
+              Intelligence Engine Active
+            </p>
+            <h3 className="font-serif text-bone text-2xl mb-2 leading-snug">
+              Generating your report.
+            </h3>
+            <p className="font-serif text-muted text-sm leading-relaxed">
+              Do not close this tab. Your analysis is being compiled against live market benchmarks.
+            </p>
+          </div>
+
+          {/* Progress bar */}
+          <div className="mb-8">
+            <div className="h-px bg-graphite/60 w-full mb-3">
+              <div
+                className="h-px bg-signal-gold transition-all duration-1000 ease-linear"
+                style={{ width: `${calcProgress(elapsed)}%` }}
               />
+            </div>
+            <div className="flex justify-between items-center">
+              <p className="font-mono text-muted text-[0.55rem] tracking-widest">
+                {elapsed < 90 ? `${elapsed}s elapsed` : 'Finalising…'}
+              </p>
+              <p className="font-mono text-muted text-[0.55rem] tracking-widest">
+                {elapsed < 30 ? '~60–80s remaining' : elapsed < 60 ? '~30–50s remaining' : elapsed < 85 ? 'Almost done' : 'Any moment now'}
+              </p>
+            </div>
+          </div>
+
+          {/* Current stage */}
+          <div className="border-l-2 border-signal-gold pl-6 mb-10">
+            <p key={stageIdx} className="font-serif text-bone text-base leading-relaxed">
+              {STAGES[stageIdx]}
+            </p>
+          </div>
+
+          {/* Completed stages */}
+          <div className="space-y-3">
+            {STAGES.slice(0, stageIdx).map((stage, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <span className="text-signal-gold text-[10px] shrink-0">◈</span>
+                <p className="font-mono text-muted text-[0.55rem] tracking-widest line-through opacity-50">{stage}</p>
+              </div>
             ))}
           </div>
+
+          {elapsed >= 90 && (
+            <p className="mt-10 font-sans text-muted text-xs leading-relaxed border border-graphite/40 p-4">
+              Taking a little longer than usual — complex profiles sometimes require additional computation.
+              Your report will appear automatically. Please keep this tab open.
+            </p>
+          )}
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="flex flex-col gap-8" noValidate>
@@ -248,9 +328,20 @@ export function IntakeForm({ token }: Props) {
           </div>
 
           {error && (
-            <p className="font-sans text-signal-gold text-sm border border-signal-gold/30 p-4">
-              {error}
-            </p>
+            <div className="border border-signal-gold/30 bg-signal-gold/5 p-5">
+              <p className="font-mono text-signal-gold text-[0.55rem] tracking-widest uppercase mb-2">
+                Something went wrong
+              </p>
+              <p className="font-sans text-bone text-sm leading-relaxed mb-1">{error}</p>
+              <p className="font-sans text-muted text-xs leading-relaxed">
+                Your form data has been preserved. Correct any issues above and try again.
+                If the problem persists, email us at{' '}
+                <a href="mailto:catalyst@theripplenexus.com" className="text-signal-gold underline">
+                  catalyst@theripplenexus.com
+                </a>{' '}
+                and we will generate your report manually.
+              </p>
+            </div>
           )}
 
           <div className="border-t border-graphite/40 pt-8">
