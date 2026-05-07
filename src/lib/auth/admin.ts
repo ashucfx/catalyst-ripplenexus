@@ -29,7 +29,5 @@ export async function setAdminCookie(secret: string): Promise<boolean> {
 
 export async function clearAdminCookie() {
   const store = await cookies()
-  // Delete at both paths to handle old cookies set with path:/admin
-  store.delete({ name: COOKIE_NAME, path: '/' })
-  store.delete({ name: COOKIE_NAME, path: '/admin' })
+  store.delete(COOKIE_NAME)
 }
