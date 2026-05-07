@@ -8,13 +8,20 @@ const C = {
   parchment:  '#E6DFD1',
 }
 
+const LOGO_URL  = 'https://www.catalyst.theripplenexus.com/logo-email.svg'
+const SITE_URL  = 'https://www.catalyst.theripplenexus.com'
+
 // ─── Shared wrapper ────────────────────────────────────────────────────
 function wrap(body: string, unsubscribeUrl?: string): string {
-  const unsubLine = unsubscribeUrl
-    ? `<p style="margin:8px 0 0 0;font-family:Arial,sans-serif;font-size:10px;color:${C.muted};">
-         <a href="${unsubscribeUrl}" style="color:${C.muted};text-decoration:underline;">Unsubscribe</a>
-       </p>`
+  const unsubBlock = unsubscribeUrl
+    ? `<a href="${unsubscribeUrl}" style="font-family:Arial,sans-serif;font-size:9px;color:${C.muted};text-decoration:underline;letter-spacing:0.12em;text-transform:uppercase;">Unsubscribe</a>`
     : ''
+
+  const footerLinks = [
+    `<a href="${SITE_URL}" style="font-family:Arial,sans-serif;font-size:9px;color:${C.gold};text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;">Visit →</a>`,
+    `<a href="${SITE_URL}/tpi" style="font-family:Arial,sans-serif;font-size:9px;color:${C.gold};text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;">Free TPI →</a>`,
+    unsubBlock,
+  ].filter(Boolean).join(`<span style="font-family:Arial,sans-serif;font-size:9px;color:${C.graphite};padding:0 10px;">·</span>`)
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -29,15 +36,24 @@ function wrap(body: string, unsubscribeUrl?: string): string {
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
 
-          <!-- Header -->
+          <!-- Header with logo -->
           <tr>
-            <td style="padding:0 0 32px 0;border-bottom:1px solid ${C.graphite};">
-              <p style="margin:0;font-family:Georgia,serif;font-size:22px;color:${C.bone};letter-spacing:-0.02em;font-weight:400;">
-                CATALYST
-              </p>
-              <p style="margin:4px 0 0 0;font-family:Arial,sans-serif;font-size:9px;color:${C.gold};letter-spacing:0.3em;text-transform:uppercase;">
-                A RIPPLE NEXUS INSTITUTION
-              </p>
+            <td style="padding:0 0 28px 0;border-bottom:1px solid ${C.graphite};">
+              <table cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td style="vertical-align:middle;padding-right:14px;width:20px;">
+                    <img src="${LOGO_URL}" width="20" height="25" alt="Catalyst"
+                         style="display:block;width:20px;height:25px;border:0;" />
+                  </td>
+                  <td style="vertical-align:middle;">
+                    <p style="margin:0;font-family:Georgia,serif;font-size:20px;color:${C.bone};letter-spacing:-0.01em;font-weight:400;">CATALYST</p>
+                    <p style="margin:2px 0 0;font-family:Arial,sans-serif;font-size:8px;color:${C.gold};letter-spacing:0.35em;text-transform:uppercase;">A RIPPLE NEXUS INSTITUTION</p>
+                  </td>
+                  <td align="right" style="vertical-align:middle;">
+                    <p style="margin:0;font-family:Arial,sans-serif;font-size:9px;color:${C.muted};letter-spacing:0.1em;">catalyst.theripplenexus.com</p>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
 
@@ -50,11 +66,45 @@ function wrap(body: string, unsubscribeUrl?: string): string {
 
           <!-- Footer -->
           <tr>
-            <td style="padding:32px 0 0 0;border-top:1px solid ${C.graphite};">
-              <p style="margin:0;font-family:Arial,sans-serif;font-size:10px;color:${C.muted};letter-spacing:0.1em;text-transform:uppercase;">
-                Catalyst · Ripple Nexus · catalyst.theripplenexus.com
-              </p>
-              ${unsubLine}
+            <td style="padding:0;">
+
+              <!-- Diamond divider -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="border-top:1px solid ${C.graphite};width:45%;"></td>
+                  <td style="text-align:center;padding:0 12px;white-space:nowrap;vertical-align:top;padding-top:-1px;">
+                    <p style="margin:-7px 0 0;font-family:Arial,sans-serif;font-size:12px;color:${C.gold};">◈</p>
+                  </td>
+                  <td style="border-top:1px solid ${C.graphite};width:45%;"></td>
+                </tr>
+              </table>
+
+              <!-- Brand strip -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding:18px 0 10px;text-align:center;">
+                    <p style="margin:0 0 5px;font-family:Arial,sans-serif;font-size:8px;color:${C.muted};letter-spacing:0.3em;text-transform:uppercase;">
+                      CATALYST &nbsp;·&nbsp; RIPPLE NEXUS &nbsp;·&nbsp; INDIA &nbsp;·&nbsp; UAE &nbsp;·&nbsp; GLOBAL
+                    </p>
+                    <p style="margin:0;font-family:Georgia,serif;font-size:12px;color:${C.muted};font-style:italic;">
+                      Intelligence for those who will not settle.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0 18px;text-align:center;">
+                    ${footerLinks}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="border-top:1px solid ${C.graphite};padding:12px 0;text-align:center;">
+                    <p style="margin:0;font-family:Arial,sans-serif;font-size:9px;color:#2a2a2a;letter-spacing:0.05em;">
+                      © 2026 Ripple Nexus. All rights reserved.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
             </td>
           </tr>
 
