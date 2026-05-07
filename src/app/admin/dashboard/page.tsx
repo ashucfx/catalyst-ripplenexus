@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-export default async function AdminPage() {
+export default async function AdminDashboardPage() {
   const [bookings, rules] = await Promise.all([
     getUpcomingBookings(50),
     getAvailabilityRules(),

@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { verifyAdminCookie } from '@/lib/auth/admin'
 import { getDb } from '@/lib/db/supabase'
 
+export type CrmStatus = 'lead' | 'warm' | 'qualified' | 'cold' | 'churned'
+
 export interface CrmLead {
   email:            string
   name:             string | null
@@ -20,6 +22,22 @@ export interface CrmLead {
   waitlist_plan:    string | null
   booking:          boolean
   created_at:       string
+  status:           CrmStatus
+  notes:            string | null
+  manual_override:  boolean
+}
+
+function autoQualify(l: Omit<CrmLead, 'status' | 'notes' | 'manual_override'>): CrmStatus {
+  if (l.paid) return 'qualified'
+  if (l.booking && l.tpi_score !== null && l.tpi_score >= 65) return 'qualified'
+  if (l.sources.length >= 4) return 'qualified'
+  if (l.booking) return 'warm'
+  if (l.waitlist) return 'warm'
+  if (l.tpi_score !== null && l.tpi_score >= 50) return 'warm'
+  if (l.sources.length >= 2) return 'warm'
+  const daysOld = (Date.now() - new Date(l.created_at).getTime()) / 86_400_000
+  if (daysOld > 90) return 'cold'
+  return 'lead'
 }
 
 export async function GET() {
@@ -38,6 +56,7 @@ export async function GET() {
     { data: newsletter },
     { data: waitlist },
     { data: bookings },
+    { data: contacts },
   ] = await Promise.all([
     db.from('leads').select('name, email, created_at').order('created_at', { ascending: false }),
     db.from('tpi_submissions').select('email, score, sector, seniority, created_at').order('created_at', { ascending: false }),
@@ -46,11 +65,18 @@ export async function GET() {
     db.from('newsletter_subscribers').select('email, status, phone, created_at').order('created_at', { ascending: false }),
     db.from('platform_waitlist').select('email, plan, phone, created_at').order('created_at', { ascending: false }),
     db.from('bookings').select('email, name, status, created_at').order('created_at', { ascending: false }),
+    db.from('crm_contacts').select('email, status, notes, manual_override, deleted').order('updated_at', { ascending: false }),
   ])
 
-  const emailMap = new Map<string, CrmLead>()
+  // Index crm_contacts by email
+  const contactMap = new Map<string, { status: CrmStatus; notes: string | null; manual_override: boolean; deleted: boolean }>(
+    (contacts ?? []).map(c => [c.email, { status: c.status, notes: c.notes ?? null, manual_override: c.manual_override, deleted: c.deleted }])
+  )
 
-  function getOrCreate(email: string, name?: string | null, phone?: string | null, created_at?: string): CrmLead {
+  type LeadBase = Omit<CrmLead, 'status' | 'notes' | 'manual_override'>
+  const emailMap = new Map<string, LeadBase>()
+
+  function getOrCreate(email: string, name?: string | null, phone?: string | null, created_at?: string): LeadBase {
     if (!emailMap.has(email)) {
       emailMap.set(email, {
         email,
@@ -120,9 +146,24 @@ export async function GET() {
     l.booking = true
   }
 
-  const crm = Array.from(emailMap.values()).sort(
-    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-  )
+  const crm: CrmLead[] = []
+
+  for (const base of emailMap.values()) {
+    const contact = contactMap.get(base.email)
+
+    // Skip soft-deleted
+    if (contact?.deleted) continue
+
+    const manual_override = contact?.manual_override ?? false
+    const notes           = contact?.notes ?? null
+    const status: CrmStatus = manual_override && contact?.status
+      ? contact.status
+      : autoQualify(base)
+
+    crm.push({ ...base, status, notes, manual_override })
+  }
+
+  crm.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 
   return NextResponse.json({ crm, total: crm.length })
 }
