@@ -5,26 +5,28 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 type CrmStatus = 'lead' | 'warm' | 'qualified' | 'cold' | 'churned'
 
 interface CrmLead {
-  email:            string
-  name:             string | null
-  phone:            string | null
-  sources:          string[]
-  paid:             boolean
-  payment_products: string[]
-  payment_total:    number
-  tpi_score:        number | null
-  tpi_sector:       string | null
-  tpi_seniority:    string | null
-  has_audit_portal: boolean
-  report_ready:     boolean
-  newsletter:       boolean
-  waitlist:         boolean
-  waitlist_plan:    string | null
-  booking:          boolean
-  created_at:       string
-  status:           CrmStatus
-  notes:            string | null
-  manual_override:  boolean
+  email:              string
+  name:               string | null
+  phone:              string | null
+  sources:            string[]
+  paid:               boolean
+  payment_products:   string[]
+  payment_total:      number
+  tpi_score:          number | null
+  tpi_sector:         string | null
+  tpi_seniority:      string | null
+  has_audit_portal:   boolean
+  report_ready:       boolean
+  newsletter:         boolean
+  waitlist:           boolean
+  waitlist_plan:      string | null
+  booking:            boolean
+  created_at:         string
+  status:             CrmStatus
+  notes:              string | null
+  manual_override:    boolean
+  campaigns_received: number
+  last_emailed:       string | null
 }
 
 const STATUS_META: Record<CrmStatus, { label: string; dot: string; text: string; border: string }> = {
@@ -172,17 +174,19 @@ function DetailPanel({
       {/* Data rows */}
       <div className="border border-graphite/50 mb-5 text-[0.6rem]">
         {[
-          ['Sources',  lead.sources.join(', ') || '—'],
-          ['Joined',   formatDate(lead.created_at)],
-          ['Paid',     lead.paid ? `Yes — ${currency(lead.payment_total)}` : 'No'],
-          ['Products', lead.payment_products.join(', ') || '—'],
-          ['TPI Score',lead.tpi_score !== null ? String(lead.tpi_score) : '—'],
-          ['Sector',   lead.tpi_sector ?? '—'],
-          ['Seniority',lead.tpi_seniority ?? '—'],
-          ['Audit',    lead.has_audit_portal ? (lead.report_ready ? 'Report ready' : 'In progress') : 'No'],
-          ['Newsletter',lead.newsletter ? 'Active' : 'No'],
-          ['Waitlist', lead.waitlist ? (lead.waitlist_plan ?? 'Yes') : 'No'],
-          ['Booking',  lead.booking ? 'Yes' : 'No'],
+          ['Sources',    lead.sources.join(', ') || '—'],
+          ['Joined',     formatDate(lead.created_at)],
+          ['Paid',       lead.paid ? `Yes — ${currency(lead.payment_total)}` : 'No'],
+          ['Products',   lead.payment_products.join(', ') || '—'],
+          ['TPI Score',  lead.tpi_score !== null ? String(lead.tpi_score) : '—'],
+          ['Sector',     lead.tpi_sector ?? '—'],
+          ['Seniority',  lead.tpi_seniority ?? '—'],
+          ['Audit',      lead.has_audit_portal ? (lead.report_ready ? 'Report ready' : 'In progress') : 'No'],
+          ['Newsletter', lead.newsletter ? 'Active subscriber' : 'Not subscribed'],
+          ['Waitlist',   lead.waitlist ? (lead.waitlist_plan ?? 'Yes') : 'No'],
+          ['Booking',    lead.booking ? 'Yes' : 'No'],
+          ['Campaigns',  lead.campaigns_received > 0 ? `${lead.campaigns_received} sent` : 'None sent yet'],
+          ['Last email', lead.last_emailed ? formatDate(lead.last_emailed) : 'Never'],
         ].map(([label, value]) => (
           <div key={label} className="flex border-b border-graphite/40 last:border-b-0">
             <span className="font-mono text-muted tracking-widest w-24 shrink-0 px-3 py-2 border-r border-graphite/40">{label}</span>
@@ -265,6 +269,7 @@ export function CRMTab() {
   const [search,        setSearch]        = useState('')
   const [activeFilter,  setActiveFilter]  = useState<FilterId>('all')
   const [selected,      setSelected]      = useState<CrmLead | null>(null)
+  const [checkedEmails, setCheckedEmails] = useState<Set<string>>(new Set())
   const [emailModal,    setEmailModal]    = useState(false)
   const [emailSubject,  setEmailSubject]  = useState('')
   const [emailHtml,     setEmailHtml]     = useState('')
@@ -314,18 +319,46 @@ export function CRMTab() {
     setSelected(prev => prev?.email === email ? null : prev)
   }
 
+  function toggleCheck(email: string, e: React.MouseEvent) {
+    e.stopPropagation()
+    setCheckedEmails(prev => {
+      const next = new Set(prev)
+      if (next.has(email)) { next.delete(email) } else { next.add(email) }
+      return next
+    })
+  }
+
+  function toggleAllVisible(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.checked) {
+      setCheckedEmails(new Set(filtered.map(l => l.email)))
+    } else {
+      setCheckedEmails(new Set())
+    }
+  }
+
+  const allVisibleChecked = filtered.length > 0 && filtered.every(l => checkedEmails.has(l.email))
+  const someChecked = checkedEmails.size > 0
+
   async function sendBulkEmail() {
     if (!emailSubject.trim() || !emailHtml.trim()) return
     setEmailSending(true)
     setEmailResult('')
     try {
+      // If specific rows are checked, send only to those; otherwise send to all active subscribers
+      const targets = someChecked ? Array.from(checkedEmails) : undefined
       const r = await fetch('/api/admin/newsletter/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ subject: emailSubject, html: emailHtml }),
+        body: JSON.stringify({ subject: emailSubject, html: emailHtml, ...(targets ? { targets } : {}) }),
       })
       const d = await r.json()
-      setEmailResult(r.ok ? `Sent to ${d.sent} subscribers.` : (d.error ?? 'Failed.'))
+      if (r.ok) {
+        setEmailResult(`Sent to ${d.sent} of ${d.total} recipients.`)
+        setCheckedEmails(new Set())
+        load()
+      } else {
+        setEmailResult(d.error ?? 'Failed.')
+      }
     } finally { setEmailSending(false) }
   }
 
@@ -366,8 +399,19 @@ export function CRMTab() {
           <span className="font-mono text-muted text-[0.55rem] tracking-widest">
             {filtered.length} of {leads.length}
           </span>
-          <div className="flex gap-2 ml-auto">
-            <button onClick={() => setEmailModal(true)} className={btnGhost}>Email selected →</button>
+          <div className="flex gap-2 ml-auto flex-wrap">
+            {someChecked && (
+              <span className="font-mono text-signal-gold text-[0.55rem] tracking-widest self-center">
+                {checkedEmails.size} selected
+              </span>
+            )}
+            <button
+              onClick={() => setEmailModal(true)}
+              className={btnGhost}
+              title={someChecked ? `Email ${checkedEmails.size} selected leads` : 'Email all active subscribers'}
+            >
+              {someChecked ? `Email ${checkedEmails.size} selected →` : 'Email all active →'}
+            </button>
             <button onClick={() => window.location.href = '/api/admin/crm/export'} className={btnGold}>Export ↓</button>
             <button onClick={load} disabled={loading} className="font-mono text-muted text-[0.55rem] tracking-widest hover:text-bone disabled:opacity-40">
               {loading ? '…' : '↻'}
@@ -380,10 +424,14 @@ export function CRMTab() {
           <p className="font-sans text-muted text-sm py-8">Loading CRM data…</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-left" style={{ minWidth: hasPanel ? '560px' : '800px' }}>
+            <table className="w-full border-collapse text-left" style={{ minWidth: hasPanel ? '560px' : '860px' }}>
               <thead>
                 <tr className="border-b border-graphite">
-                  {['Status', 'Email', 'Name', 'Sources', 'TPI', 'Value', 'Joined'].map(h => (
+                  <th className="pb-3 pr-3 w-6">
+                    <input type="checkbox" checked={allVisibleChecked} onChange={toggleAllVisible}
+                      className="accent-signal-gold w-3 h-3 cursor-pointer" />
+                  </th>
+                  {['Status', 'Email', 'Name', 'Sources', 'TPI', 'Value', 'Emailed', 'Joined'].map(h => (
                     <th key={h} className="pb-3 pr-4 font-mono text-muted text-[0.5rem] tracking-widest whitespace-nowrap">{h.toUpperCase()}</th>
                   ))}
                 </tr>
@@ -392,14 +440,19 @@ export function CRMTab() {
                 {filtered.map(l => {
                   const meta = STATUS_META[l.status]
                   const isSelected = selected?.email === l.email
+                  const isChecked  = checkedEmails.has(l.email)
                   return (
                     <tr
                       key={l.email}
                       onClick={() => setSelected(isSelected ? null : l)}
                       className={`border-b border-graphite/30 cursor-pointer transition-colors ${
-                        isSelected ? 'bg-graphite/30' : 'hover:bg-graphite/10'
+                        isSelected ? 'bg-graphite/30' : isChecked ? 'bg-signal-gold/5' : 'hover:bg-graphite/10'
                       }`}
                     >
+                      <td className="py-3 pr-3" onClick={e => toggleCheck(l.email, e)}>
+                        <input type="checkbox" checked={isChecked} onChange={() => {}}
+                          className="accent-signal-gold w-3 h-3 cursor-pointer pointer-events-none" />
+                      </td>
                       <td className="py-3 pr-4">
                         <span className={`inline-flex items-center gap-1.5 font-mono text-[0.5rem] tracking-widest px-2 py-0.5 border ${meta.border} ${meta.text}`}>
                           <span className={`w-1.5 h-1.5 rounded-full ${meta.dot}`} />
@@ -421,6 +474,11 @@ export function CRMTab() {
                       <td className="py-3 pr-4 font-mono text-muted text-[0.6rem]">{l.tpi_score ?? '—'}</td>
                       <td className="py-3 pr-4 font-mono text-[0.6rem] whitespace-nowrap">
                         {l.paid ? <span className="text-signal-gold">{currency(l.payment_total)}</span> : <span className="text-muted">—</span>}
+                      </td>
+                      <td className="py-3 pr-4 font-mono text-[0.55rem] whitespace-nowrap">
+                        {l.campaigns_received > 0
+                          ? <span className="text-signal-gold/80" title={l.last_emailed ? `Last: ${formatDate(l.last_emailed)}` : ''}>{l.campaigns_received}×</span>
+                          : <span className="text-muted/40">—</span>}
                       </td>
                       <td className="py-3 pr-4 font-mono text-muted text-[0.55rem] whitespace-nowrap">{formatDate(l.created_at)}</td>
                     </tr>
@@ -453,10 +511,14 @@ export function CRMTab() {
       {emailModal && (
         <div className="fixed inset-0 bg-obsidian/90 z-50 flex items-center justify-center p-6">
           <div className="bg-obsidian border border-graphite p-8 max-w-xl w-full">
-            <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-2">SEND EMAIL TO FILTERED LEADS</p>
+            <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-2">
+              {someChecked ? `EMAIL ${checkedEmails.size} SELECTED LEADS` : 'EMAIL ALL ACTIVE SUBSCRIBERS'}
+            </p>
             <p className="font-sans text-muted text-xs mb-6">
-              Sends to <strong className="text-bone">{filtered.length}</strong> contacts matching current filter.
-              Only active newsletter subscribers will receive the email.
+              {someChecked
+                ? <>Sends to <strong className="text-bone">{checkedEmails.size}</strong> selected contacts who are active newsletter subscribers. Non-subscribers in selection are skipped.</>
+                : <>Sends to all active newsletter subscribers. Only those with <code className="text-bone">status = active</code> in the subscriber list receive it.</>
+              }
             </p>
             <div className="flex flex-col gap-4">
               <input

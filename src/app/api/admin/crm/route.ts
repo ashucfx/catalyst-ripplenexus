@@ -5,29 +5,31 @@ import { getDb } from '@/lib/db/supabase'
 export type CrmStatus = 'lead' | 'warm' | 'qualified' | 'cold' | 'churned'
 
 export interface CrmLead {
-  email:            string
-  name:             string | null
-  phone:            string | null
-  sources:          string[]
-  paid:             boolean
-  payment_products: string[]
-  payment_total:    number
-  tpi_score:        number | null
-  tpi_sector:       string | null
-  tpi_seniority:    string | null
-  has_audit_portal: boolean
-  report_ready:     boolean
-  newsletter:       boolean
-  waitlist:         boolean
-  waitlist_plan:    string | null
-  booking:          boolean
-  created_at:       string
-  status:           CrmStatus
-  notes:            string | null
-  manual_override:  boolean
+  email:              string
+  name:               string | null
+  phone:              string | null
+  sources:            string[]
+  paid:               boolean
+  payment_products:   string[]
+  payment_total:      number
+  tpi_score:          number | null
+  tpi_sector:         string | null
+  tpi_seniority:      string | null
+  has_audit_portal:   boolean
+  report_ready:       boolean
+  newsletter:         boolean
+  waitlist:           boolean
+  waitlist_plan:      string | null
+  booking:            boolean
+  created_at:         string
+  status:             CrmStatus
+  notes:              string | null
+  manual_override:    boolean
+  campaigns_received: number
+  last_emailed:       string | null
 }
 
-function autoQualify(l: Omit<CrmLead, 'status' | 'notes' | 'manual_override'>): CrmStatus {
+function autoQualify(l: Omit<CrmLead, 'status' | 'notes' | 'manual_override' | 'campaigns_received' | 'last_emailed'>): CrmStatus {
   if (l.paid) return 'qualified'
   if (l.booking && l.tpi_score !== null && l.tpi_score >= 65) return 'qualified'
   if (l.sources.length >= 4) return 'qualified'
@@ -57,6 +59,7 @@ export async function GET() {
     { data: waitlist },
     { data: bookings },
     { data: contacts },
+    { data: recipients },
   ] = await Promise.all([
     db.from('leads').select('name, email, created_at').order('created_at', { ascending: false }),
     db.from('tpi_submissions').select('email, score, sector, seniority, created_at').order('created_at', { ascending: false }),
@@ -66,6 +69,7 @@ export async function GET() {
     db.from('platform_waitlist').select('email, plan, phone, created_at').order('created_at', { ascending: false }),
     db.from('bookings').select('email, name, status, created_at').order('created_at', { ascending: false }),
     db.from('crm_contacts').select('email, status, notes, manual_override, deleted').order('updated_at', { ascending: false }),
+    db.from('campaign_recipients').select('email, sent_at').order('sent_at', { ascending: false }),
   ])
 
   // Index crm_contacts by email
@@ -73,7 +77,19 @@ export async function GET() {
     (contacts ?? []).map(c => [c.email, { status: c.status, notes: c.notes ?? null, manual_override: c.manual_override, deleted: c.deleted }])
   )
 
-  type LeadBase = Omit<CrmLead, 'status' | 'notes' | 'manual_override'>
+  // Index campaign recipients: email → { count, last_sent_at }
+  const recipientMap = new Map<string, { count: number; last_emailed: string }>()
+  for (const r of recipients ?? []) {
+    const existing = recipientMap.get(r.email)
+    if (!existing) {
+      recipientMap.set(r.email, { count: 1, last_emailed: r.sent_at })
+    } else {
+      existing.count++
+      if (r.sent_at > existing.last_emailed) existing.last_emailed = r.sent_at
+    }
+  }
+
+  type LeadBase = Omit<CrmLead, 'status' | 'notes' | 'manual_override' | 'campaigns_received' | 'last_emailed'>
   const emailMap = new Map<string, LeadBase>()
 
   function getOrCreate(email: string, name?: string | null, phone?: string | null, created_at?: string): LeadBase {
@@ -160,7 +176,12 @@ export async function GET() {
       ? contact.status
       : autoQualify(base)
 
-    crm.push({ ...base, status, notes, manual_override })
+    const rec = recipientMap.get(base.email)
+    crm.push({
+      ...base, status, notes, manual_override,
+      campaigns_received: rec?.count ?? 0,
+      last_emailed:       rec?.last_emailed ?? null,
+    })
   }
 
   crm.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
