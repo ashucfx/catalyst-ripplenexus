@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/Button'
 import { CostDiagram } from '@/components/ui/CostDiagram'
 import { TPIMeter } from '@/components/ui/TPIMeter'
 import { GeoPrice } from '@/components/ui/GeoPrice'
-import { COMPANIES } from '@/components/ui/CompanyLogos'
 import { Disclaimer } from '@/components/ui/Disclaimer'
 import { NewsletterForm } from '@/components/ui/NewsletterForm'
 import Link from 'next/link'
@@ -18,14 +17,14 @@ const selectionPlans = [
     tier: 'I',
     product: 'audit' as const,
     name: 'Market Value Audit',
-    subtitle: 'AI INTELLIGENCE REPORT',
-    anchor: 'Anchored against a $10,000 immediate salary gain.',
-    roi: '100× ROI',
+    subtitle: 'ANALYST-PREPARED REPORT',
+    anchor: '',
+    roi: '',
     deliverables: [
-      'AI-generated Positioning Report — 90 seconds',
+      'Analyst-prepared Positioning Report',
       'Talent Positioning Index (TPI) score',
-      'ATS pass-rate analysis',
-      'Live salary benchmark vs. global market data',
+      'ATS readability review',
+      'Market benchmark for your role and geography',
     ],
     transformation: 'Uncertainty → Market Clarity',
     href: '/audit',
@@ -36,13 +35,13 @@ const selectionPlans = [
     product: 'sprint' as const,
     name: 'Momentum Sprint',
     subtitle: 'AUDIT + 14-DAY EXECUTION',
-    anchor: 'For those who refuse to execute alone.',
-    roi: 'Limited Availability',
+    anchor: 'The diagnosis and the first-mile execution, together.',
+    roi: '',
     deliverables: [
       'Everything in the Market Value Audit',
       'Custom Implementation Roadmap',
       'Structured 14-day execution plan',
-      'LinkedIn headline & about refactoring',
+      'LinkedIn headline & about section rewrite',
     ],
     transformation: 'Clarity → First-mile execution',
     href: '/request?service=sprint',
@@ -54,15 +53,15 @@ const selectionPlans = [
     product: 'blueprint' as const,
     name: 'Positioning Blueprint',
     subtitle: 'FULL-BRAND ARCHITECTURE',
-    anchor: 'Anchored against a $50,000 annual salary increase.',
-    roi: '143× ROI',
+    anchor: '',
+    roi: '',
     deliverables: [
-      'Executive Resume Rewrite (High Authority)',
+      'Executive Resume Rewrite',
       'LinkedIn Full-Brand Identity (Banner, DP)',
       'Narrative Cover Letter Architecture',
       'Sector Heat Map: GCC / PE / SaaS',
-      'ATS Stress-Testing across all platforms',
-      '30-day delivery · human + AI collaboration',
+      'ATS readability review across common platforms',
+      '30-day delivery · prepared by our positioning team',
     ],
     transformation: 'Generalist → Recognized Authority',
     href: '/blueprint',
@@ -70,32 +69,7 @@ const selectionPlans = [
   },
 ]
 
-const caseStudies = [
-  {
-    profile: 'Director → VP, Financial Services',
-    market: 'India → UAE',
-    outcome: 'VP offer within 11 weeks of Blueprint delivery.',
-    metric: '+$47K',
-    metricLabel: 'Salary Uplift',
-    duration: '11 weeks',
-  },
-  {
-    profile: 'Managing Director → Board Candidate',
-    market: 'GCC / Private Equity',
-    outcome: 'Board seat secured within 6 months of Suite engagement.',
-    metric: '6 mo',
-    metricLabel: 'Board Seat',
-    duration: '6 months',
-  },
-  {
-    profile: 'Finance Leader — India → UAE PE',
-    market: 'GCC Private Equity',
-    outcome: 'Catalyst-engineered positioning for GCC PE sector.',
-    metric: '+67%',
-    metricLabel: 'Total Comp',
-    duration: '4 months',
-  },
-]
+// [PLACEHOLDER] Replace with real, consented client outcomes as they are documented
 
 const saasModules = [
   { name: 'Skills Ontology Mapper',     desc: 'Real-time global demand data — what skills are hot, and what they pay.',          icon: '◈' },
@@ -104,11 +78,11 @@ const saasModules = [
   { name: 'Career Pathing Canvas',      desc: 'Model different futures. Make career decisions from data, not instinct.',         icon: '◲' },
 ]
 
-const trustSignals = [
-  { label: 'Placement Rate',    value: '92%'      },
-  { label: 'Avg. Salary Uplift', value: '$47K'    },
-  { label: 'Time-to-Offer',     value: '11 wks'   },
-  { label: 'Global Reach',      value: 'IN·AE·US' },
+const auditAnalysis = [
+  { label: 'Seniority Signal',       desc: 'How your level currently reads' },
+  { label: 'ATS Readability',        desc: 'Where tracking systems see gaps' },
+  { label: 'Market Positioning',     desc: 'Your profile vs. market expectations' },
+  { label: 'Narrative Gaps',         desc: 'What is holding your level down' },
 ]
 
 // ─── Page ─────────────────────────────────────────────────────────────
@@ -177,7 +151,7 @@ export default function HomePage() {
                              px-10 py-5 font-sans text-[0.65rem] font-bold tracking-[0.25em] uppercase
                              btn-primary-glow hover:bg-bone transition-all duration-300"
                 >
-                  Get AI Positioning Report — <GeoPrice product="audit" variant="cta" />
+                  Get your Market Value Audit — <GeoPrice product="audit" variant="cta" />
                   <span className="text-xs">→</span>
                 </Link>
                 <div className="shimmer-bar" />
@@ -196,26 +170,26 @@ export default function HomePage() {
 
             {/* Trust micro-signals */}
             <div className="flex flex-wrap gap-4 mb-24">
-              {['Report ready in 90 seconds', 'Confidential engagement', 'No commitment required'].map((t) => (
+              {['Analyst-prepared report', 'Confidential engagement', 'No commitment required'].map((t) => (
                 <span key={t} className="trust-badge">
                   <span className="text-signal-gold">✓</span> {t}
                 </span>
               ))}
             </div>
 
-            {/* Metrics */}
-            <div className="pt-12 border-t border-white/[0.07] grid grid-cols-2 md:grid-cols-4 gap-10">
-              {trustSignals.map((stat) => (
-                <div key={stat.label} className="group">
-                  <p
-                    className="metric-number mb-2 group-hover:opacity-90 transition-opacity duration-300"
-                    style={{ color: 'var(--signal-gold)' }}
-                  >
-                    {stat.value}
-                  </p>
-                  <p className="metric-label">{stat.label}</p>
-                </div>
-              ))}
+            {/* What the Audit analyzes */}
+            <div className="pt-12 border-t border-white/[0.07]">
+              <p className="font-mono text-muted text-[0.52rem] tracking-[0.3em] uppercase mb-8 opacity-50">What the Audit analyzes</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+                {auditAnalysis.map((item) => (
+                  <div key={item.label} className="group">
+                    <p className="font-mono text-bone text-[0.6rem] tracking-[0.12em] uppercase mb-2 group-hover:text-signal-gold transition-colors">
+                      {item.label}
+                    </p>
+                    <p className="font-sans text-muted text-xs leading-snug">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -226,71 +200,11 @@ export default function HomePage() {
           />
         </section>
 
-        {/* ═══════════════════════════════════════════════════════════
-            TRUST RAIL — COMPANY LOGOS + NAMES MARQUEE
-        ════════════════════════════════════════════════════════════ */}
-        <section
-          className="py-10 overflow-hidden"
-          style={{ background: '#030304', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}
-        >
-          {/* Label row */}
-          <div className="max-w-dossier mx-auto px-6 lg:px-12 mb-8">
-            <div className="flex items-center gap-6">
-              <p className="label-inst shrink-0" style={{ letterSpacing: '0.5em', opacity: 0.35, whiteSpace: 'nowrap' }}>
-                Leaders At
-              </p>
-              <div className="flex-1 gold-bar" />
-            </div>
-          </div>
-
-          {/* Scrolling logo rail */}
-          <div className="overflow-hidden">
-            <div className="marquee-track" style={{ display: 'flex', width: 'max-content', gap: '0' }}>
-              {[...COMPANIES, ...COMPANIES].map(({ name, Icon }, i) => (
-                <div
-                  key={i}
-                  className="trust-logo-tile flex flex-col items-center justify-center cursor-default"
-                  style={{ minWidth: '9rem', padding: '0 2.5rem' }}
-                >
-                  {/* Icon mark */}
-                  <Icon
-                    className="mb-3"
-                    style={{
-                      width:  '22px',
-                      height: '22px',
-                      color:  'rgba(244,241,235,0.22)',
-                    }}
-                  />
-                  {/* Company name */}
-                  <span
-                    className="font-mono text-center whitespace-nowrap transition-colors duration-300"
-                    style={{
-                      fontSize:      '0.52rem',
-                      letterSpacing: '0.28em',
-                      textTransform: 'uppercase',
-                      color:         'rgba(122,122,130,0.65)',
-                    }}
-                  >
-                    {name}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ═══════════════════════════════════════════════════════════
             THE PROBLEM — THE ECONOMIC GAP
         ════════════════════════════════════════════════════════════ */}
         <section className="relative px-6 lg:px-12 py-44 overflow-hidden">
-
-          {/* Giant watermark number */}
-          <div
-            className="absolute right-[-2rem] top-1/2 -translate-y-1/2 select-none pointer-events-none font-serif"
-            style={{ fontSize: 'clamp(16rem, 30vw, 28rem)', lineHeight: 1, color: 'rgba(184,147,91,0.035)', letterSpacing: '-0.06em', fontWeight: 300 }}
-          >
-            79%
-          </div>
 
           <div className="max-w-dossier mx-auto relative grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32 items-center">
 
@@ -312,30 +226,10 @@ export default function HomePage() {
               </p>
               <div className="prose-catalyst mb-12">
                 <p>
-                  Most senior professionals negotiate from an uninformed baseline — anchored to
-                  a salary set years ago. This gap costs mid-career leaders{' '}
-                  <strong>$10K–$50K annually</strong>. Catalyst eliminates this asymmetry using
-                  institutional AI and live market intelligence.
-                </p>
-              </div>
-
-              {/* Stat callout */}
-              <div
-                className="relative overflow-hidden p-8 border-l-2 border-signal-gold mb-10"
-                style={{ background: 'linear-gradient(135deg, rgba(184,147,91,0.07), rgba(184,147,91,0.02))' }}
-              >
-                <div
-                  className="absolute top-0 right-0 w-36 h-36 pointer-events-none"
-                  style={{ background: 'radial-gradient(ellipse at top right, rgba(184,147,91,0.1), transparent)' }}
-                />
-                <p className="font-mono text-signal-gold text-[0.55rem] tracking-widest uppercase mb-3">
-                  79% of Senior Leaders
-                </p>
-                <p className="font-serif text-bone text-xl leading-snug">
-                  earn 10–35% below their actual market rate.
-                </p>
-                <p className="font-mono text-muted text-[0.5rem] tracking-widest mt-4 opacity-60">
-                  Source: Ravio Global Compensation Survey 2024
+                  Most senior professionals negotiate from a baseline set years ago. The gap
+                  between that baseline and their real market position compounds every year
+                  it is left unaddressed. Catalyst removes the asymmetry — not by changing
+                  your experience, but by changing how the market reads it.
                 </p>
               </div>
 
@@ -379,8 +273,7 @@ export default function HomePage() {
                   </em>
                 </h2>
                 <p className="font-serif text-muted text-lg max-w-sm leading-relaxed">
-                  Every engagement is anchored against a provable salary outcome.
-                  This is a capital allocation decision, not an expense.
+                  Choose the depth of engagement that matches your positioning objectives.
                 </p>
               </div>
             </div>
@@ -417,9 +310,11 @@ export default function HomePage() {
                     <span className="tier-tag">
                       Tier {plan.tier}{plan.featured ? ' · Recommended' : ''}
                     </span>
-                    <span className="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-signal-gold/60">
-                      {plan.roi}
-                    </span>
+                    {plan.roi && (
+                      <span className="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-signal-gold/60">
+                        {plan.roi}
+                      </span>
+                    )}
                   </div>
 
                   {/* Name & subtitle */}
@@ -431,7 +326,9 @@ export default function HomePage() {
                   {/* Price */}
                   <div className="pb-10 mb-10 border-b border-white/[0.07]">
                     <GeoPrice product={plan.product} variant="card" />
-                    <p className="font-sans text-muted text-xs leading-relaxed italic mt-2">{plan.anchor}</p>
+                    {plan.anchor && (
+                      <p className="font-sans text-muted text-xs leading-relaxed italic mt-2">{plan.anchor}</p>
+                    )}
                   </div>
 
                   {/* Deliverables */}
@@ -489,16 +386,16 @@ export default function HomePage() {
         </section>
 
         {/* ═══════════════════════════════════════════════════════════
-            CASE STUDIES — VERIFIED OUTCOMES
+            WHAT THE WORK CHANGES
         ════════════════════════════════════════════════════════════ */}
         <section className="px-6 lg:px-12 py-44 max-w-dossier mx-auto">
 
           <div className="mb-20">
-            <span className="eyebrow mb-6">Placement Registry · Verified Outcomes</span>
+            <span className="eyebrow mb-6">What the Work Changes</span>
             <h2 className="display-section max-w-3xl mt-4">
-              What career re-architecture{' '}
+              We rebuild how you are read.{' '}
               <em className="not-italic" style={{ color: 'var(--signal-gold)' }}>
-                actually delivers.
+                What happens next is yours.
               </em>
             </h2>
           </div>
@@ -507,36 +404,31 @@ export default function HomePage() {
             className="grid grid-cols-1 md:grid-cols-3 gap-px"
             style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.06)' }}
           >
-            {caseStudies.map((cs) => (
-              <div key={cs.profile} className="card-glow p-12 flex flex-col">
-                {/* Metric — the only thing that matters */}
-                <div className="mb-10 pb-10 border-b border-white/[0.07]">
-                  <p
-                    className="metric-xl text-glow-gold"
-                    style={{ fontSize: 'clamp(3.5rem, 6vw, 5.5rem)' }}
-                  >
-                    {cs.metric}
-                  </p>
-                  <p className="metric-label mt-3">{cs.metricLabel}</p>
-                </div>
-
-                <p className="font-mono text-signal-gold text-[0.55rem] tracking-widest uppercase mb-5">
-                  {cs.market}
-                </p>
-                <p className="display-card text-xl leading-snug mb-4">{cs.profile}</p>
-                <p className="font-sans text-muted text-sm leading-relaxed flex-1">{cs.outcome}</p>
-                <p className="font-mono text-muted text-[0.52rem] tracking-widest uppercase mt-8 opacity-35">
-                  {cs.duration}
-                </p>
+            {[
+              {
+                label: 'Profile',
+                body: 'A profile that reads at your actual level, not a tier below it.',
+              },
+              {
+                label: 'Narrative',
+                body: 'A narrative a recruiter can place in the six seconds they spend on it.',
+              },
+              {
+                label: 'Presence',
+                body: 'A LinkedIn presence that signals authority instead of activity.',
+              },
+            ].map((item) => (
+              <div key={item.label} className="card-glow p-12 flex flex-col">
+                <p className="font-mono text-signal-gold text-[0.55rem] tracking-widest uppercase mb-8">{item.label}</p>
+                <p className="font-serif text-bone text-xl leading-snug flex-1">{item.body}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-12 flex justify-center">
-            <Button href="/intelligence#case-studies" variant="ghost">
-              View Full Case Archive →
-            </Button>
-          </div>
+          <p className="font-serif text-muted text-base leading-relaxed mt-12 max-w-2xl">
+            Results depend on the market, the employer, and the candidate. Catalyst controls
+            the signal. We do not guarantee outcomes.
+          </p>
         </section>
 
         {/* ═══════════════════════════════════════════════════════════
@@ -592,8 +484,10 @@ export default function HomePage() {
                   </em>
                 </h2>
                 <p className="prose-lead mb-14">
-                  The Catalyst Platform provides ongoing intelligence for those who manage their
-                  career like a portfolio. Data-driven decisions, not gut instinct.
+                  We are building an ongoing intelligence layer for professionals who manage
+                  their career like a portfolio: skills demand mapping, signal tracking, and
+                  network-gap analysis. It is in development. Join the waitlist to get early
+                  access.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-14">
@@ -640,9 +534,9 @@ export default function HomePage() {
                   <em className="not-italic text-gold-gradient">serious leaders read.</em>
                 </h2>
                 <p className="font-serif text-muted text-lg leading-relaxed mb-10 max-w-lg">
-                  Every Thursday. Compensation movement, sector heat maps, positioning strategy,
-                  and AI displacement data — delivered to senior professionals across India, UAE,
-                  Singapore, and global markets. Written to inform decisions, not generate clicks.
+                  Compensation movement, sector heat maps, and positioning strategy across
+                  India, UAE, Singapore, and global markets. Written to inform decisions,
+                  not generate clicks.
                 </p>
                 <div className="flex flex-col gap-4">
                   {[
@@ -662,7 +556,7 @@ export default function HomePage() {
               {/* Right — form */}
               <div>
                 <div className="border border-graphite/60 p-10 bg-graphite/5">
-                  <p className="label-inst mb-3">Join 3,200+ senior professionals</p>
+                  <p className="label-inst mb-3">Market intelligence for senior professionals</p>
                   <h3 className="font-serif text-bone text-2xl mb-2 leading-tight">
                     Subscribe to the brief.
                   </h3>
@@ -707,36 +601,24 @@ export default function HomePage() {
               </em>
             </h2>
 
-            {/* ROI comparison table */}
+            {/* Audit summary card */}
             <div
               className="max-w-md mx-auto mb-16 p-10 border border-white/[0.09] text-left"
               style={{ background: 'rgba(255,255,255,0.02)', backdropFilter: 'blur(20px)' }}
             >
-              <div className="grid grid-cols-2 gap-6">
-                <div className="border-r border-white/[0.07] pr-6">
-                  <p className="font-mono text-muted text-[0.55rem] tracking-widest uppercase mb-3">
-                    Cost of Audit
-                  </p>
-                  <GeoPrice product="audit" variant="inline" className="display-card text-4xl text-bone" />
-                  <p className="font-mono text-signal-gold/60 text-[0.5rem] tracking-widest mt-3">
-                    ONE TIME
-                  </p>
-                </div>
-                <div className="pl-2">
-                  <p className="font-mono text-muted text-[0.55rem] tracking-widest uppercase mb-3">
-                    Cost of Inaction
-                  </p>
-                  <GeoPrice variant="inaction" className="display-card text-4xl text-signal-gold" />
-                  <p className="font-mono text-red-400/60 text-[0.5rem] tracking-widest mt-3">
-                    PER YEAR
-                  </p>
-                </div>
-              </div>
+              <GeoPrice product="audit" variant="card" className="mb-4" />
+              <p className="font-sans text-muted text-sm leading-relaxed">
+                One report. A precise, analyst-prepared picture of how your seniority is
+                currently landing and the three highest-leverage moves to strengthen it.
+              </p>
+              <p className="font-mono text-muted text-[0.52rem] tracking-widest uppercase mt-6 opacity-50">
+                Confidential · No call required · No obligation
+              </p>
             </div>
 
             {/* Trust chips */}
             <div className="flex flex-wrap justify-center gap-4 mb-14">
-              {['Report ready in 90 seconds', 'Immediate AI analysis', 'Confidential & discreet'].map((t) => (
+              {['Analyst-prepared report', 'Confidential & discreet', 'No call required'].map((t) => (
                 <span key={t} className="trust-badge">
                   <span className="text-signal-gold">✓</span> {t}
                 </span>
@@ -753,7 +635,7 @@ export default function HomePage() {
                              px-14 py-6 font-sans text-[0.65rem] font-bold tracking-[0.25em] uppercase
                              btn-primary-glow hover:bg-bone transition-all duration-300"
                 >
-                  Get AI Positioning Report — <GeoPrice product="audit" variant="cta" />
+                  Get your Market Value Audit — <GeoPrice product="audit" variant="cta" />
                   <span>→</span>
                 </Link>
                 <div className="shimmer-bar" />

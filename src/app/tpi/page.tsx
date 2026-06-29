@@ -4,9 +4,9 @@ import { Footer } from '@/components/layout/Footer'
 import { TPICalculator } from '@/components/ui/TPICalculator'
 
 export const metadata: Metadata = {
-  title: 'Free TPI Score — How Much Is the Market Undervaluing You?',
+  title: 'Free TPI Score — How Is the Market Reading You?',
   description:
-    'Get your free Talent Positioning Index score in 5 minutes. Discover exactly how much the market is undervaluing you — and what to do about it.',
+    'A five-question self-assessment. Get a directional Talent Positioning Index score and see where your positioning likely stands.',
 }
 
 export default function TPIPage() {
@@ -20,12 +20,14 @@ export default function TPIPage() {
             <p className="label-inst mb-6">Free — No commitment required</p>
             <hr className="rule mb-10 w-16" />
             <h1 className="display-editorial mb-6">
-              How much is the market undervaluing you?
+              How is the market likely reading you?
             </h1>
             <p className="font-serif text-muted text-xl leading-relaxed">
-              Five questions. Five minutes. Your Talent Positioning Index (TPI) score —
-              a single number that tells you where you stand in the market, and
-              what it is costing you every year to stay there.
+              Five questions, about five minutes. You will get a directional Talent
+              Positioning Index score: a quick read on where your positioning likely
+              stands and where the biggest gap sits. This is a fast self-assessment,
+              not a full audit. For the precise, analyst-prepared version, the Market
+              Value Audit goes deeper.
             </p>
           </div>
 

@@ -35,7 +35,7 @@ export default function BlueprintPage() {
                 <div className="flex items-baseline lg:justify-end gap-4 mb-2">
                   <GeoPrice product="blueprint" variant="hero" />
                 </div>
-                <p className="font-mono text-signal-gold text-[0.6rem] tracking-[0.3em] uppercase">30-Day Delivery · Human + AI Collaboration</p>
+                <p className="font-mono text-signal-gold text-[0.6rem] tracking-[0.3em] uppercase">30-Day Delivery · Prepared by our positioning team</p>
               </div>
             </div>
           </div>
@@ -112,7 +112,7 @@ export default function BlueprintPage() {
                 {
                   id: '06',
                   title: 'ATS Stress-Testing',
-                  desc: 'Every deliverable run through Workday, Greenhouse, and Lever simulations to ensure algorithmic dominance.',
+                  desc: 'Every deliverable reviewed for readability across common ATS platforms to identify and close parsing gaps.',
                 },
               ].map((m) => (
                 <div key={m.id} className="bg-obsidian p-10 flex flex-col gap-6">

@@ -60,7 +60,7 @@ export function NewsletterForm() {
           Intelligence Brief registered.
         </p>
         <p className="font-serif text-muted text-lg leading-relaxed">
-          Your first brief arrives this Thursday. Check your inbox to confirm.
+          Your first brief will arrive soon. Check your inbox to confirm.
         </p>
       </div>
     )

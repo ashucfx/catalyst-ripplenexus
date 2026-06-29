@@ -35,12 +35,12 @@ const differentiators = [
 
 const principles = [
   {
-    title: 'AI has made the document worthless.',
-    body: 'Every candidate now produces a perfect CV. The signal that differentiates you exists above the document level — in your narrative and perceived authority.',
+    title: 'The document is no longer the differentiator.',
+    body: 'Anyone can now produce a polished, keyword-perfect CV. The signal that separates you sits above the document, in your narrative and your perceived authority. That is the layer we rebuild.',
   },
   {
     title: 'Pay gaps are positioning problems.',
-    body: '79% of professionals earn 10–35% below their rate. They are underpositioned, negotiating from uninformed baselines anchored to legacy salaries.',
+    body: 'Most senior professionals negotiate from a baseline anchored to a salary set years ago. The gap between that baseline and their real market position compounds every year it is left unaddressed.',
   },
   {
     title: 'You are priced on your future signal.',

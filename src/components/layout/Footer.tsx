@@ -50,12 +50,12 @@ export function Footer() {
             </Link>
 
             <p className="font-serif text-muted text-base leading-relaxed italic max-w-xs">
-              &ldquo;We do not write resumes. We engineer the future of the professional elite.&rdquo;
+              &ldquo;We do not write resumes. We engineer how the market perceives you.&rdquo;
             </p>
 
             {/* Trust badges */}
             <div className="flex flex-wrap gap-3">
-              {['IN · AE · US', '92% Placement', '$47K Avg Uplift'].map((badge) => (
+              {['IN · AE · US', 'Career Positioning', 'Not Resume Writing'].map((badge) => (
                 <span key={badge} className="trust-badge" style={{ fontSize: '0.5rem' }}>
                   {badge}
                 </span>

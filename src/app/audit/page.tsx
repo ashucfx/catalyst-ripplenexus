@@ -7,9 +7,9 @@ import { GeoPrice } from '@/components/ui/GeoPrice'
 import { Disclaimer } from '@/components/ui/Disclaimer'
 
 export const metadata: Metadata = {
-  title: 'Market Value Audit — AI Positioning Intelligence',
+  title: 'Market Value Audit — Analyst-Prepared Positioning Report',
   description:
-    'Submit your professional profile and receive an AI-generated Talent Positioning Index report in 90 seconds. Salary benchmark, ATS analysis, and a 90-day repositioning roadmap.',
+    'Submit your professional profile and receive an analyst-prepared Talent Positioning Index report. Salary benchmark, ATS analysis, and a 90-day repositioning roadmap.',
 }
 
 export default function AuditPage() {
@@ -36,33 +36,29 @@ export default function AuditPage() {
           <div className="max-w-dossier mx-auto px-6 lg:px-12 relative z-10">
 
             {/* Status */}
-            <div className="live-badge mb-12 inline-flex">
-              <span className="pulse-dot" />
-              AI-Powered · Report in 90 Seconds
-            </div>
-
-            <p className="label-inst mb-6 opacity-70">Tier I Intelligence · Market Value Audit</p>
+            <p className="label-inst mb-6 opacity-70">Tier I · Market Value Audit</p>
             <h1
               className="display-page mb-10 max-w-3xl"
               style={{ fontSize: 'clamp(3.5rem, 8vw, 7rem)', lineHeight: 1.02 }}
             >
-              Know exactly what
+              Know exactly how
               <br />
-              <em className="text-gold-gradient not-italic">you&apos;re worth.</em>
+              <em className="text-gold-gradient not-italic">the market reads you.</em>
             </h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
               <p className="font-serif text-muted leading-relaxed max-w-xl" style={{ fontSize: '1.3rem' }}>
-                Information asymmetry about your true market worth is the most expensive
-                mistake a senior professional can make. This AI diagnostic eliminates it —
-                in 90 seconds.
+                Information asymmetry about your market position is the most expensive
+                blind spot a senior professional carries. The Market Value Audit removes it.
+                A positioning analyst reviews your profile and returns a precise read on
+                how your seniority currently lands, and where it is leaking value.
               </p>
               <div className="lg:text-right">
                 <div className="flex items-baseline lg:justify-end gap-4 mb-2">
                   <GeoPrice product="audit" variant="hero" />
                 </div>
                 <p className="font-mono text-signal-gold text-[0.6rem] tracking-[0.3em] uppercase">
-                  Fixed Fee · AI Report Delivered Instantly
+                  Fixed Fee · Analyst-prepared report
                 </p>
               </div>
             </div>
@@ -103,7 +99,7 @@ export default function AuditPage() {
                 boxShadow: '0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05)',
               }}
             >
-              <p className="label-inst mb-10">Sample Audit Output</p>
+              <p className="label-inst mb-10">Illustrative Sample — Not a real client</p>
               <div className="flex flex-col items-center gap-12">
                 <TPIMeter score={67} size={160} />
                 <div className="w-full space-y-5">
@@ -135,28 +131,28 @@ export default function AuditPage() {
             >
               {[
                 {
-                  title: 'AI Positioning Report',
-                  desc: 'Instant AI-generated analysis of your market position across 5 dimensions. Delivered in 90 seconds — no scheduling, no waiting.',
+                  title: 'Positioning Report',
+                  desc: 'A structured analysis of how your profile reads across five dimensions: narrative, signal, sector fit, ATS readability, and compensation positioning. Prepared and reviewed by a positioning analyst.',
                 },
                 {
-                  title: 'Proprietary TPI Score',
-                  desc: 'A data-backed index across Narrative, Signal, Sector, ATS, and Compensation. Benchmarked against your seniority and geography.',
+                  title: 'Talent Positioning Index Score',
+                  desc: 'Your position scored across the five dimensions and benchmarked against our positioning framework for your seniority and market.',
                 },
                 {
-                  title: 'ATS Gap Analysis',
-                  desc: 'Your profile run through Workday, Greenhouse, and Lever simulations. We show you exactly what the algorithms see.',
+                  title: 'ATS Readability Review',
+                  desc: 'How common ATS platforms are likely to parse your profile, and where the gaps are.',
                 },
                 {
-                  title: 'Live Market Benchmark',
-                  desc: 'Compensation intelligence from live global data. Your current package vs. real-time market demand for your profile.',
+                  title: 'Market Benchmark',
+                  desc: 'Your current positioning set against market expectations for your role, sector, and geography.',
                 },
                 {
                   title: '90-Day Roadmap',
-                  desc: 'The three highest-leverage positioning moves you can make in the next 90 days. Specific. Measurable. Strategic.',
+                  desc: 'The three highest-leverage positioning moves to make next. Specific and prioritised.',
                 },
                 {
-                  title: 'Branded PDF Report',
-                  desc: 'Download your full intelligence report as a premium PDF. Share it, reference it, act on it.',
+                  title: 'PDF Report',
+                  desc: 'Your full report as a downloadable document you can keep, reference, and act on.',
                 },
               ].map((d) => (
                 <div key={d.title} className="card-glow p-10 flex flex-col gap-5">
@@ -175,7 +171,7 @@ export default function AuditPage() {
                 { n: '01', title: 'Pay',      desc: 'Fixed fee. No subscriptions, no upsells. One payment, instant access.' },
                 { n: '02', title: 'Portal',   desc: 'Receive a private portal link in your inbox immediately after payment.' },
                 { n: '03', title: 'Intake',   desc: 'Complete a 5-minute professional intake — your role, compensation, and goals.' },
-                { n: '04', title: 'Report',   desc: 'Your AI-generated TPI report is ready in 90 seconds. Download the PDF.' },
+                { n: '04', title: 'Report',   desc: 'A positioning analyst prepares your report and delivers it within the stated turnaround. No auto-generation. A senior human review.' },
               ].map((s) => (
                 <div key={s.n} className="p-10" style={{ background: 'var(--obsidian-light)' }}>
                   <p className="font-mono text-signal-gold text-[0.6rem] tracking-widest mb-6">{s.n}</p>
@@ -192,19 +188,14 @@ export default function AuditPage() {
               <div>
                 <p className="label-inst mb-8">Get Your Report</p>
                 <h2 className="display-card text-4xl leading-tight mb-8">
-                  Begin your Audit.{' '}
-                  <br />
-                  <em className="text-signal-gold not-italic">Report in 90 seconds.</em>
+                  Begin your Audit.
                 </h2>
                 <div className="prose-catalyst mb-8">
                   <p>
                     Pay once, receive your private portal link immediately. Complete a
-                    5-minute intake and the AI generates your full positioning intelligence
-                    report instantly — no human scheduling required.
-                  </p>
-                  <p className="text-sm italic">
-                    Anchored against a $5,000–$10,000 immediate salary gain.
-                    At <GeoPrice product="audit" variant="cta" />, this is a 50×–100× return on investment.
+                    short professional intake: your role, compensation context, and goals.
+                    A positioning analyst prepares your report and delivers it within the
+                    stated turnaround.
                   </p>
                 </div>
                 <Disclaimer variant="compact" className="mb-12" />
