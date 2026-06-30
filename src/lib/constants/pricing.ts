@@ -1,15 +1,19 @@
 export const PRICING = {
   audit: {
-    usd: 9900,    // $99
-    inr: 299900,  // ₹2,999
+    usd: 9900,    // $99   — fixed fee, all tiers
+    inr: 299900,  // ₹2,999 — fixed fee, all tiers
   },
   sprint: {
-    usd: 19900,   // $199
-    inr: 599900,  // ₹5,999
+    // Career Booster: Resume + LinkedIn + Cover Letter (15% off)
+    // Prices vary by experience tier — these represent the 3–8 yr starting point
+    usd: 14900,   // $149
+    inr: 254800,  // ₹2,548 (from)
   },
   blueprint: {
-    usd: 34900,   // $349
-    inr: 999900,  // ₹9,999
+    // Premium Plus: All 4 services (20% off, Cover Letter complimentary)
+    // Prices vary by experience tier — these represent the 3–8 yr starting point
+    usd: 29900,   // $299
+    inr: 559700,  // ₹5,597 (from)
   },
   executive: {
     usd: 49900,   // $499

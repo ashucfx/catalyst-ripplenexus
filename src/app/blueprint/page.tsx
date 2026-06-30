@@ -7,9 +7,9 @@ import { BlueprintPricingMatrix } from '@/components/ui/BlueprintPricingMatrix'
 import { Disclaimer } from '@/components/ui/Disclaimer'
 
 export const metadata: Metadata = {
-  title: 'Positioning Blueprint — Tier III Architecture',
+  title: 'Services & Pricing — Catalyst by Ripple Nexus',
   description:
-    'A complete re-engineering of the professional persona for those aiming for Director, VP, and Board-level roles.',
+    'Career Booster and Premium Plus packages. Resume rewrite, LinkedIn optimisation, cover letter, and portfolio website. Priced by experience level.',
 }
 
 export default function BlueprintPage() {
@@ -23,19 +23,15 @@ export default function BlueprintPage() {
           <div className="mb-32">
             <p className="label-inst mb-8 opacity-80">Tier III Engagements · Portfolio Architecture</p>
             <h1 className="display-page mb-10">
-              The Positioning Blueprint
+              Services &amp; Pricing
             </h1>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-end">
               <p className="font-serif text-muted text-xl leading-relaxed max-w-xl">
-                A complete re-architecture of your professional persona. From
-                &ldquo;Experienced Generalist&rdquo; to &ldquo;Niche Authority.&rdquo;
-                The mid-career plateau ends here.
+                Every service is priced by experience level. Cover letter is complimentary
+                with any package. Bundle for 15% or 20% off.
               </p>
               <div className="lg:text-right">
-                <div className="flex items-baseline lg:justify-end gap-4 mb-2">
-                  <GeoPrice product="blueprint" variant="hero" />
-                </div>
-                <p className="font-mono text-signal-gold text-[0.6rem] tracking-[0.3em] uppercase">30-Day Delivery · Prepared by our positioning team</p>
+                <p className="font-mono text-signal-gold text-[0.6rem] tracking-[0.3em] uppercase">India · UAE · US · UK · GCC</p>
               </div>
             </div>
           </div>
