@@ -196,21 +196,20 @@ body {
 .card-dark {
   background: var(--obsidian-light);
   border:     1px solid rgba(255,255,255,0.055);
-  box-shadow: 0 2px 20px rgba(0,0,0,0.4);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.35);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 .card-dark:hover {
-  border-color: rgba(184,147,91,0.28);
-  box-shadow:   0 8px 60px rgba(0,0,0,0.65), 0 0 0 1px rgba(184,147,91,0.1), 0 0 30px rgba(184,147,91,0.06);
+  border-color: rgba(255,255,255,0.1);
+  box-shadow:   0 6px 40px rgba(0,0,0,0.55);
   transform: translateY(-1px);
 }
 
-/* Featured card — animated gold ring */
+/* Featured card — restrained gold border, no pulse */
 .card-featured {
   background: var(--obsidian-light);
-  border:     1px solid rgba(184,147,91,0.45);
-  box-shadow: 0 0 0 1px rgba(184,147,91,0.12), 0 0 40px rgba(184,147,91,0.08), 0 8px 40px rgba(0,0,0,0.6);
-  animation:  goldRingPulse 4s ease-in-out infinite;
+  border:     1px solid rgba(184,147,91,0.3);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
 }
 
 /* ─── Grain Overlay ─────────────────────────────────────────────────── */
@@ -409,8 +408,8 @@ main { animation: pageEnter 0.9s cubic-bezier(0.2, 1, 0.3, 1); }
 /* ─── Background Patterns ────────────────────────────────────────────── */
 
 .dot-field {
-  background-image: radial-gradient(rgba(184,147,91,0.14) 1px, transparent 1px);
-  background-size:  30px 30px;
+  background-image: radial-gradient(rgba(184,147,91,0.05) 1px, transparent 1px);
+  background-size:  40px 40px;
 }
 
 .line-grid {
@@ -423,23 +422,23 @@ main { animation: pageEnter 0.9s cubic-bezier(0.2, 1, 0.3, 1); }
 /* ─── Ambient Light / Beam Effects ──────────────────────────────────── */
 
 .beam-tr {
-  background: radial-gradient(ellipse 900px 600px at 90% -10%,
-    rgba(184,147,91,0.13) 0%, transparent 70%);
+  background: radial-gradient(ellipse 1000px 600px at 92% -8%,
+    rgba(184,147,91,0.05) 0%, transparent 65%);
 }
 
 .beam-bl {
   background: radial-gradient(ellipse 700px 500px at -5% 110%,
-    rgba(184,147,91,0.07) 0%, transparent 60%);
+    rgba(184,147,91,0.03) 0%, transparent 55%);
 }
 
 .beam-center {
-  background: radial-gradient(ellipse 1100px 700px at 50% 60%,
-    rgba(184,147,91,0.09) 0%, transparent 70%);
+  background: radial-gradient(ellipse 1200px 700px at 50% 60%,
+    rgba(184,147,91,0.04) 0%, transparent 65%);
 }
 
 .beam-top {
   background: radial-gradient(ellipse 1400px 400px at 50% -5%,
-    rgba(184,147,91,0.11) 0%, transparent 65%);
+    rgba(184,147,91,0.04) 0%, transparent 60%);
 }
 
 /* ─── Enhanced Card Styles ───────────────────────────────────────────── */
@@ -447,15 +446,13 @@ main { animation: pageEnter 0.9s cubic-bezier(0.2, 1, 0.3, 1); }
 .card-glow {
   background:  var(--obsidian-light);
   border:      1px solid rgba(255,255,255,0.06);
-  box-shadow:  0 4px 60px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.04);
+  box-shadow:  0 4px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
   transition:  border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
 }
 .card-glow:hover {
-  border-color: rgba(184,147,91,0.3);
-  box-shadow:   0 10px 80px rgba(0,0,0,0.8),
-                0 0 40px rgba(184,147,91,0.09),
-                inset 0 1px 0 rgba(255,255,255,0.07);
-  transform: translateY(-3px);
+  border-color: rgba(184,147,91,0.2);
+  box-shadow:   0 8px 50px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06);
+  transform: translateY(-2px);
 }
 
 /* ─── Live / Status Badge ────────────────────────────────────────────── */
@@ -478,12 +475,12 @@ main { animation: pageEnter 0.9s cubic-bezier(0.2, 1, 0.3, 1); }
 /* ─── CTA Button Glow ────────────────────────────────────────────────── */
 
 .btn-primary-glow {
-  box-shadow: 0 0 0 1px rgba(184,147,91,0.35), 0 6px 28px rgba(184,147,91,0.25);
-  transition: all 0.35s cubic-bezier(0.2,1,0.3,1);
+  box-shadow: none;
+  transition: all 0.3s cubic-bezier(0.2,1,0.3,1);
 }
 .btn-primary-glow:hover {
-  box-shadow: 0 0 0 1px rgba(184,147,91,0.55), 0 10px 48px rgba(184,147,91,0.38);
-  transform:  translateY(-2px);
+  box-shadow: 0 4px 20px rgba(184,147,91,0.15);
+  transform:  translateY(-1px);
 }
 
 /* ─── Metric XL (case studies) ───────────────────────────────────────── */
@@ -534,7 +531,7 @@ main { animation: pageEnter 0.9s cubic-bezier(0.2, 1, 0.3, 1); }
   50%       { filter: drop-shadow(0 0 50px rgba(184,147,91,0.55)); }
 }
 
-.text-glow-gold { animation: goldTextGlow 5s ease-in-out infinite; }
+.text-glow-gold { opacity: 0.92; }
 
 /* ─── Trust Rail — company logo tiles ───────────────────────────────── */
 

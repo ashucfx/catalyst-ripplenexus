@@ -1,6 +1,7 @@
 'use client'
 
 import { PRICING } from '@/lib/constants/pricing'
+import { INTL_USD } from '@/lib/constants/international-pricing'
 import { useGeo } from '@/hooks/useGeo'
 
 export type GeoPriceProduct = keyof typeof PRICING
@@ -9,7 +10,7 @@ export type GeoPriceProduct = keyof typeof PRICING
 // 'hero'     — audit page hero: big price
 // 'cta'      — inline price string only (for button labels)
 // 'inline'   — same as cta, alias
-// 'inaction' — "cost of inaction" counter-price ($50K+ / ₹40L+)
+// 'inaction' — "cost of inaction" counter-price
 export type GeoPriceVariant = 'card' | 'hero' | 'cta' | 'inline' | 'inaction'
 
 interface GeoPriceProps {
@@ -18,17 +19,24 @@ interface GeoPriceProps {
   className?: string
 }
 
-function fmtUSD(cents: number) {
-  return `$${Math.round(cents / 100)}`
+function fmtUSD(n: number) {
+  return `$${n}`
 }
 
 function fmtINR(paise: number) {
   return `₹${Math.round(paise / 100).toLocaleString('en-IN')}`
 }
 
+// Map PRICING product keys to INTL_USD keys
+const PRODUCT_TO_INTL: Record<GeoPriceProduct, keyof typeof INTL_USD['A']> = {
+  audit:     'audit',
+  sprint:    'careerBooster',
+  blueprint: 'premiumPlus',
+  executive: 'premiumPlus',
+}
+
 export function GeoPrice({ product, variant = 'inline', className }: GeoPriceProps) {
   const geo = useGeo()
-  const isIndia = geo?.isIndia ?? false
 
   if (variant === 'inaction') {
     const label = geo?.isIndia === true ? '₹40L+' : '$50K+'
@@ -37,8 +45,18 @@ export function GeoPrice({ product, variant = 'inline', className }: GeoPricePro
 
   if (!product) return null
 
-  const pricing = PRICING[product]
-  const price = isIndia ? fmtINR(pricing.inr) : fmtUSD(pricing.usd)
+  let price: string
+
+  if (geo?.isIndia) {
+    price = fmtINR(PRICING[product].inr)
+  } else if (geo?.band) {
+    const intlKey = PRODUCT_TO_INTL[product]
+    const usd     = INTL_USD[geo.band][intlKey]
+    price = fmtUSD(usd)
+  } else {
+    // Still loading — show nothing to avoid flash
+    price = ''
+  }
 
   if (variant === 'hero') {
     return (

@@ -31,10 +31,10 @@ export function Header() {
           : 'bg-transparent border-b border-transparent py-0'
       }`}
     >
-      {/* Gold top hairline — always visible */}
+      {/* Subtle top rule */}
       <div
         className="absolute top-0 inset-x-0 h-px pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(184,147,91,0.65) 35%, rgba(184,147,91,0.9) 50%, rgba(184,147,91,0.65) 65%, transparent 100%)' }}
+        style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 40%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.08) 60%, transparent 100%)' }}
       />
       <div className="max-w-dossier mx-auto px-6 lg:px-12">
         <div className={`flex items-center justify-between transition-all duration-500 ${scrolled ? 'h-16' : 'h-20'}`}>

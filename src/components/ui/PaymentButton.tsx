@@ -31,7 +31,7 @@ export function PaymentButton({ product, email, onSuccess, onError, disabled, la
 
   useEffect(() => {
     fetch('/api/geo').then(r => r.json()).then(setGeo).catch(() => {
-      setGeo({ country: 'US', isIndia: false, currency: 'USD', paymentMethod: 'paypal' })
+      setGeo({ country: 'US', isIndia: false, band: 'A', currency: 'USD', paymentMethod: 'paypal' })
     })
   }, [])
 
