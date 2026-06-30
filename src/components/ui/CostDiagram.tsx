@@ -70,10 +70,7 @@ export function CostDiagram() {
           STAGNATION PATH
         </text>
 
-        <text x="783" y="110" fill="#B8935B" fontFamily="monospace" fontSize="7.5" letterSpacing="0.04em">$10K</text>
-        <text x="783" y="122" fill="#B8935B" fontFamily="monospace" fontSize="7.5" letterSpacing="0.04em">–$50K</text>
-        <text x="783" y="134" fill="#B8935B" fontFamily="monospace" fontSize="7.5" letterSpacing="0.04em">ANNUAL</text>
-        <text x="783" y="146" fill="#B8935B" fontFamily="monospace" fontSize="7.5" letterSpacing="0.04em">COST</text>
+        <text x="783" y="122" fill="#B8935B" fontFamily="monospace" fontSize="7.5" letterSpacing="0.04em">GAP</text>
 
         {/* Y axis label */}
         <text
@@ -86,8 +83,7 @@ export function CostDiagram() {
         </text>
       </svg>
       <figcaption className="label-inst mt-4 text-center">
-        The cost of inaction compounds. Every year without repositioning is a year of salary
-        ceiling stagnation.
+        The gap between stagnation and repositioning widens over time.
       </figcaption>
     </figure>
   )

@@ -9,7 +9,7 @@ import { Disclaimer } from '@/components/ui/Disclaimer'
 export const metadata: Metadata = {
   title: 'Market Value Audit — Analyst-Prepared Positioning Report',
   description:
-    'Submit your professional profile and receive an analyst-prepared Talent Positioning Index report. Salary benchmark, ATS analysis, and a 90-day repositioning roadmap.',
+    'Submit your professional profile and receive an analyst-prepared Talent Positioning Index report. ATS readability review, market positioning analysis, and a 90-day roadmap.',
 }
 
 export default function AuditPage() {
@@ -107,7 +107,6 @@ export default function AuditPage() {
                     { label: 'Sector Alignment',  value: 'Finance — Mid-Market PE', score: '61/100' },
                     { label: 'ATS Compatibility', value: '73% — Critical gaps detected', score: 'LOW' },
                     { label: 'Narrative Clarity', value: 'Generalist signals dominant', score: '54/100' },
-                    { label: 'Salary Variance',   value: '₹14.2L vs. ₹18.5L market', score: '-23%' },
                   ].map((row) => (
                     <div key={row.label} className="flex justify-between items-end border-b border-white/[0.07] pb-3">
                       <div>
@@ -149,10 +148,6 @@ export default function AuditPage() {
                 {
                   title: '90-Day Roadmap',
                   desc: 'The three highest-leverage positioning moves to make next. Specific and prioritised.',
-                },
-                {
-                  title: 'PDF Report',
-                  desc: 'Your full report as a downloadable document you can keep, reference, and act on.',
                 },
               ].map((d) => (
                 <div key={d.title} className="card-glow p-10 flex flex-col gap-5">

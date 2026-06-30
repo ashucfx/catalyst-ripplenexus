@@ -462,15 +462,9 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="p-5 border border-white/[0.07]" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                    <p className="tier-tag mb-2">SaaS Access</p>
-                    <p className="display-card text-2xl">$49<span className="text-muted text-sm font-sans">/mo</span></p>
-                  </div>
-                  <div className="p-5 border border-signal-gold/20" style={{ background: 'rgba(184,147,91,0.05)' }}>
-                    <p className="tier-tag mb-2">Current TPI</p>
-                    <p className="display-card text-2xl">67 — <span className="text-signal-gold">Tier 2</span></p>
-                  </div>
+                <div className="p-5 border border-signal-gold/20 text-center" style={{ background: 'rgba(184,147,91,0.04)' }}>
+                  <p className="font-mono text-muted text-[0.55rem] tracking-widest uppercase mb-2">Platform</p>
+                  <p className="font-serif text-bone text-sm">In development — join the waitlist</p>
                 </div>
               </div>
 
