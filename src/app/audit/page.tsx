@@ -131,23 +131,15 @@ export default function AuditPage() {
               {[
                 {
                   title: 'Positioning Report',
-                  desc: 'A structured analysis of how your profile reads across five dimensions: narrative, signal, sector fit, ATS readability, and compensation positioning. Prepared and reviewed by a positioning analyst.',
+                  desc: 'A written analysis of how your profile currently reads: where your seniority signal is strong, where it is diluted, and what the market is likely concluding about your level. Prepared manually by a positioning analyst.',
                 },
                 {
                   title: 'Talent Positioning Index Score',
-                  desc: 'Your position scored across the five dimensions and benchmarked against our positioning framework for your seniority and market.',
+                  desc: 'A single score reflecting the strength of your current positioning across narrative, signal, and market fit. Gives you a baseline to measure improvement against.',
                 },
                 {
-                  title: 'ATS Readability Review',
-                  desc: 'How common ATS platforms are likely to parse your profile, and where the gaps are.',
-                },
-                {
-                  title: 'Market Benchmark',
-                  desc: 'Your current positioning set against market expectations for your role, sector, and geography.',
-                },
-                {
-                  title: '90-Day Roadmap',
-                  desc: 'The three highest-leverage positioning moves to make next. Specific and prioritised.',
+                  title: 'Three Positioning Moves',
+                  desc: 'The three highest-leverage changes to make next, specific to your role, seniority, and target market. Not generic advice. Prioritised by impact.',
                 },
               ].map((d) => (
                 <div key={d.title} className="card-glow p-10 flex flex-col gap-5">

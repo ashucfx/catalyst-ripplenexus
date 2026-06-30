@@ -87,32 +87,17 @@ export default function BlueprintPage() {
                 {
                   id: '01',
                   title: 'Executive Resume Rewrite',
-                  desc: 'A complete structural re-architecture. We don&apos;t summarize your past; we engineer your authority for the next role.',
+                  desc: 'A full rewrite of your resume, structured to signal seniority and authority for the specific role you are targeting. Not a reformatting. A rebuild.',
                 },
                 {
                   id: '02',
-                  title: 'LinkedIn Brand Identity',
-                  desc: 'Complete profile reconstruction. Bespoke Banner and DP strategy designed for institutional credibility.',
+                  title: 'LinkedIn Full Profile',
+                  desc: 'Headline, About, and Experience rewritten for positioning. Banner design and profile photo direction included. Every visible surface rebuilt for how you want to be read.',
                 },
                 {
                   id: '03',
-                  title: 'Narrative Cover Letter',
-                  desc: 'The narrative key to the boardroom. Bridges the gap between your history and the firm&apos;s specific future.',
-                },
-                {
-                  id: '04',
-                  title: 'Market Heat Report',
-                  desc: 'Mapping your TPI against high-growth sectors: GCCs, Private Equity, and SaaS Scaleups.',
-                },
-                {
-                  id: '05',
-                  title: 'Signal Discretion Brief',
-                  desc: 'The definitive guide on what to lead with — and what to strategically omit for maximum leverage.',
-                },
-                {
-                  id: '06',
-                  title: 'ATS Stress-Testing',
-                  desc: 'Every deliverable reviewed for readability across common ATS platforms to identify and close parsing gaps.',
+                  title: 'Cover Letter',
+                  desc: 'A tailored cover letter that bridges your experience to the specific mandate of the role. Not a summary of your CV. A narrative argument for why you are the right hire.',
                 },
               ].map((m) => (
                 <div key={m.id} className="bg-obsidian p-10 flex flex-col gap-6">
