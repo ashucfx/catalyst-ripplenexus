@@ -1,16 +1,12 @@
 'use client'
 
 import { PRICING } from '@/lib/constants/pricing'
-import { INTL_USD } from '@/lib/constants/international-pricing'
+import { INTL_AUDIT_USD, INTL_TIER_PRICES } from '@/lib/constants/international-pricing'
 import { useGeo } from '@/hooks/useGeo'
+import type { Band } from '@/lib/constants/international-pricing'
 
 export type GeoPriceProduct = keyof typeof PRICING
 
-// 'card'     — large serif price
-// 'hero'     — audit page hero: big price
-// 'cta'      — inline price string only (for button labels)
-// 'inline'   — same as cta, alias
-// 'inaction' — "cost of inaction" counter-price
 export type GeoPriceVariant = 'card' | 'hero' | 'cta' | 'inline' | 'inaction'
 
 interface GeoPriceProps {
@@ -19,20 +15,28 @@ interface GeoPriceProps {
   className?: string
 }
 
-function fmtUSD(n: number) {
-  return `$${n}`
-}
-
 function fmtINR(paise: number) {
   return `₹${Math.round(paise / 100).toLocaleString('en-IN')}`
 }
 
-// Map PRICING product keys to INTL_USD keys
-const PRODUCT_TO_INTL: Record<GeoPriceProduct, keyof typeof INTL_USD['A']> = {
-  audit:     'audit',
-  sprint:    'careerBooster',
-  blueprint: 'premiumPlus',
-  executive: 'premiumPlus',
+function getIntlPrice(product: GeoPriceProduct, band: Band): string {
+  switch (product) {
+    case 'audit':
+      return `$${INTL_AUDIT_USD[band]}`
+    case 'sprint': {
+      // Career Booster — show 3-8 yr tier as representative price
+      const t = INTL_TIER_PRICES[band][1]
+      const cb = Math.round((t.resume + t.linkedin) * 0.85)
+      return `from $${cb}`
+    }
+    case 'blueprint':
+    case 'executive': {
+      // Premium Plus — show 3-8 yr tier as representative price
+      const t = INTL_TIER_PRICES[band][1]
+      const pp = Math.round((t.resume + t.linkedin + t.portfolio) * 0.80)
+      return `from $${pp}`
+    }
+  }
 }
 
 export function GeoPrice({ product, variant = 'inline', className }: GeoPriceProps) {
@@ -50,11 +54,9 @@ export function GeoPrice({ product, variant = 'inline', className }: GeoPricePro
   if (geo?.isIndia) {
     price = fmtINR(PRICING[product].inr)
   } else if (geo?.band) {
-    const intlKey = PRODUCT_TO_INTL[product]
-    const usd     = INTL_USD[geo.band][intlKey]
-    price = fmtUSD(usd)
+    price = getIntlPrice(product, geo.band as Band)
   } else {
-    // Still loading — show nothing to avoid flash
+    // Loading — blank to avoid flash
     price = ''
   }
 
@@ -76,6 +78,5 @@ export function GeoPrice({ product, variant = 'inline', className }: GeoPricePro
     )
   }
 
-  // 'cta' | 'inline'
   return <span className={className}>{price}</span>
 }
