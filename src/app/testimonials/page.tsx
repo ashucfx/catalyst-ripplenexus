@@ -16,14 +16,19 @@ export default function TestimonialsPage() {
   const filteredTestimonials = useMemo(() => {
     return TESTIMONIALS_DATA.filter((t) => {
       // Region filter
-      if (selectedRegion !== 'ALL' && t.region !== selectedRegion) {
-        return false
+      if (selectedRegion !== 'ALL') {
+        if (selectedRegion === 'KSA' && !t.location.includes('Saudi Arabia')) return false
+        if (selectedRegion === 'QTR' && !t.location.includes('Qatar')) return false
+        if (selectedRegion === 'UAE' && !t.location.includes('UAE') && !t.location.includes('Dubai') && !t.location.includes('Abu Dhabi')) return false
+        if (selectedRegion === 'IND' && !t.location.includes('India')) return false
+        if (selectedRegion === 'ASEAN' && t.region !== 'ASEAN') return false
+        if (selectedRegion === 'CH_ANZ_GLOBAL' && !t.location.includes('Switzerland') && !t.location.includes('Australia') && !t.location.includes('New Zealand') && !t.location.includes('UK') && !t.location.includes('USA')) return false
       }
       // Package filter
       if (selectedPackage !== 'ALL') {
         if (selectedPackage === 'BOOSTER' && !t.servicePackage.includes('Booster')) return false
-        if (selectedPackage === 'MULTILINGUAL' && !t.servicePackage.includes('Multi-Lingual')) return false
-        if (selectedPackage === 'US_APAC' && !t.servicePackage.includes('US') && !t.servicePackage.includes('UK')) return false
+        if (selectedPackage === 'MULTILINGUAL' && !t.servicePackage.includes('Multi-Lingual') && !t.servicePackage.includes('Dual')) return false
+        if (selectedPackage === 'RELOCATION' && !t.servicePackage.includes('Relocation') && !t.servicePackage.includes('Visa') && !t.servicePackage.includes('Optimization')) return false
       }
       // Search query filter
       if (searchQuery.trim() !== '') {
@@ -51,19 +56,19 @@ export default function TestimonialsPage() {
           ════════════════════════════════════════════════════════════ */}
           <div className="mb-20 text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-signal-gold/30 bg-signal-gold/10 font-mono text-[0.6rem] tracking-[0.25em] uppercase text-signal-gold mb-6">
-              <span>★ Verified Success Stories</span> • <span>ASEAN • APAC • GCC • Global</span>
+              <span>★ Verified Client Success Stories</span> • <span>🇸🇦 KSA • 🇶🇦 QTR • 🇦🇪 UAE • 🇮🇳 IN • 🇲🇾 MY • 🇨🇭 CH</span>
             </div>
 
             <h1
               className="display-page mb-8 text-bone"
               style={{ fontSize: 'clamp(2.5rem, 6vw, 4.8rem)', lineHeight: 1.08 }}
             >
-              Real Career Outcomes.{' '}
+              Real Executive Outcomes.{' '}
               <em className="not-italic text-gold-gradient">Proven Salary Hikes.</em>
             </h1>
 
-            <p className="font-serif text-muted text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto mb-12">
-              Discover how ambitious professionals across Singapore, India, Dubai, Sydney, and global tech hubs transformed their resumes, LinkedIn profiles, and regional positioning to land high-paying offers.
+            <p className="font-serif text-muted text-lg sm:text-xl leading-relaxed max-w-3xl mx-auto mb-12">
+              Browse candidate reviews across Saudi Arabia, Qatar, UAE, India, Malaysia, Switzerland, Australia, and Global markets who re-engineered their CVs, LinkedIn profiles, and executive positioning to land top-tier roles.
             </p>
 
             {/* Metric Highlights Grid */}
@@ -73,12 +78,12 @@ export default function TestimonialsPage() {
                 <p className="font-sans text-xs text-muted">Average Client Rating</p>
               </div>
               <div className="p-6 bg-obsidian/90 text-center">
-                <p className="font-mono text-3xl sm:text-4xl font-bold text-bone mb-1">+38%</p>
+                <p className="font-mono text-3xl sm:text-4xl font-bold text-bone mb-1">+45%</p>
                 <p className="font-sans text-xs text-muted">Average Pay Hike</p>
               </div>
               <div className="p-6 bg-obsidian/90 text-center">
                 <p className="font-mono text-3xl sm:text-4xl font-bold text-signal-gold mb-1">94%</p>
-                <p className="font-sans text-xs text-muted">Recruiter Interview Rate</p>
+                <p className="font-sans text-xs text-muted">Recruiter Response Rate</p>
               </div>
               <div className="p-6 bg-obsidian/90 text-center">
                 <p className="font-mono text-3xl sm:text-4xl font-bold text-bone mb-1">14 Days</p>
@@ -90,7 +95,7 @@ export default function TestimonialsPage() {
           {/* ═══════════════════════════════════════════════════════════
               FILTER & SEARCH BAR
           ════════════════════════════════════════════════════════════ */}
-          <div className="mb-14 p-6 rounded-xl bg-obsidian/80 border border-white/10 backdrop-blur-lg flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="mb-14 p-6 rounded-2xl bg-obsidian/80 border border-white/10 backdrop-blur-lg flex flex-col lg:flex-row items-center justify-between gap-6">
             {/* Search Input */}
             <div className="w-full lg:w-72 relative">
               <input
@@ -112,13 +117,15 @@ export default function TestimonialsPage() {
 
             {/* Region Filter Buttons */}
             <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto justify-center">
-              <span className="font-mono text-[0.55rem] tracking-widest uppercase text-muted mr-2">Region:</span>
+              <span className="font-mono text-[0.55rem] tracking-widest uppercase text-muted mr-1">Filter Market:</span>
               {[
                 { id: 'ALL', label: 'All Markets' },
-                { id: 'ASEAN', label: '🇸🇬 ASEAN' },
-                { id: 'APAC', label: '🇮🇳 🇦🇺 APAC' },
-                { id: 'GCC', label: '🇦🇪 GCC / Middle East' },
-                { id: 'Global', label: '🇺🇸 🇬🇧 Global' },
+                { id: 'KSA', label: '🇸🇦 Saudi Arabia (8)' },
+                { id: 'QTR', label: '🇶🇦 Qatar (5)' },
+                { id: 'UAE', label: '🇦🇪 UAE / Dubai (4)' },
+                { id: 'IND', label: '🇮🇳 India (5)' },
+                { id: 'ASEAN', label: '🇲🇾 🇸🇬 ASEAN (5)' },
+                { id: 'CH_ANZ_GLOBAL', label: '🇨🇭 🇦🇺 🇺🇸 Global (5)' },
               ].map((reg) => (
                 <button
                   key={reg.id}
@@ -142,10 +149,10 @@ export default function TestimonialsPage() {
                 onChange={(e) => setSelectedPackage(e.target.value)}
                 className="bg-white/[0.04] border border-white/15 text-bone text-xs font-mono rounded px-3 py-2 focus:outline-none focus:border-signal-gold/60"
               >
-                <option value="ALL" className="bg-obsidian text-bone">All Service Packages</option>
+                <option value="ALL" className="bg-obsidian text-bone">All Packages</option>
                 <option value="BOOSTER" className="bg-obsidian text-bone">Career Booster Suite</option>
-                <option value="MULTILINGUAL" className="bg-obsidian text-bone">Multi-Lingual Support</option>
-                <option value="US_APAC" className="bg-obsidian text-bone">US / Global Relocation</option>
+                <option value="MULTILINGUAL" className="bg-obsidian text-bone">Bilingual / Multi-Lingual</option>
+                <option value="RELOCATION" className="bg-obsidian text-bone">Relocation / Optimization</option>
               </select>
             </div>
           </div>
@@ -153,7 +160,7 @@ export default function TestimonialsPage() {
           {/* Results Summary */}
           <div className="flex items-center justify-between mb-8 px-2">
             <p className="font-mono text-xs text-muted">
-              Showing <span className="text-bone font-bold">{filteredTestimonials.length}</span> verified candidate reviews
+              Showing <span className="text-bone font-bold">{filteredTestimonials.length}</span> verified executive candidate reviews
             </p>
             {(selectedRegion !== 'ALL' || selectedPackage !== 'ALL' || searchQuery !== '') && (
               <button
@@ -173,7 +180,7 @@ export default function TestimonialsPage() {
               TESTIMONIALS GRID
           ════════════════════════════════════════════════════════════ */}
           {filteredTestimonials.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
               {filteredTestimonials.map((testimonial) => (
                 <TestimonialCard key={testimonial.id} testimonial={testimonial} />
               ))}
@@ -240,7 +247,7 @@ export default function TestimonialsPage() {
                 <ul className="space-y-2 text-xs text-bone/90">
                   <li className="flex items-center gap-2 text-emerald-400 font-medium">✓ Quantified revenue impact ($4.2M net ARR) and scale</li>
                   <li className="flex items-center gap-2 text-emerald-400 font-medium">✓ High-velocity ATS optimized keywords and leadership signals</li>
-                  <li className="flex items-center gap-2 text-emerald-400 font-medium">✓ Custom regional framing for Singapore & APAC markets</li>
+                  <li className="flex items-center gap-2 text-emerald-400 font-medium">✓ Custom regional framing for Singapore &amp; APAC markets</li>
                 </ul>
               </div>
             </div>
@@ -255,7 +262,7 @@ export default function TestimonialsPage() {
               Ready to Upgrade Your Market Value?
             </h2>
             <p className="font-serif text-muted text-lg max-w-xl mx-auto mb-10">
-              Get your Resume rewritten by executive experts, paired with custom LinkedIn banner & DP directions and country-specific optimization.
+              Get your Resume rewritten by executive experts, paired with custom LinkedIn banner &amp; DP directions and country-specific optimization.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
               <Link
