@@ -56,7 +56,7 @@ export default function TestimonialsPage() {
           ════════════════════════════════════════════════════════════ */}
           <div className="mb-20 text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-signal-gold/30 bg-signal-gold/10 font-mono text-[0.6rem] tracking-[0.25em] uppercase text-signal-gold mb-6">
-              <span>★ Verified Client Success Stories</span> • <span>🇸🇦 KSA • 🇶🇦 QTR • 🇦🇪 UAE • 🇮🇳 IN • 🇲🇾 MY • 🇨🇭 CH</span>
+              <span>★ Verified Client Success Stories</span> • <span>🇸🇦 Saudi Arabia • 🇶🇦 Qatar • 🇦🇪 UAE • 🇮🇳 India • 🇲🇾 Malaysia • 🇨🇭 Switzerland</span>
             </div>
 
             <h1
@@ -119,13 +119,13 @@ export default function TestimonialsPage() {
             <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto justify-center">
               <span className="font-mono text-[0.55rem] tracking-widest uppercase text-muted mr-1">Filter Market:</span>
               {[
-                { id: 'ALL', label: 'All Markets' },
-                { id: 'KSA', label: '🇸🇦 Saudi Arabia (8)' },
-                { id: 'QTR', label: '🇶🇦 Qatar (5)' },
-                { id: 'UAE', label: '🇦🇪 UAE / Dubai (4)' },
-                { id: 'IND', label: '🇮🇳 India (5)' },
-                { id: 'ASEAN', label: '🇲🇾 🇸🇬 ASEAN (5)' },
-                { id: 'CH_ANZ_GLOBAL', label: '🇨🇭 🇦🇺 🇺🇸 Global (5)' },
+                { id: 'ALL', label: 'All Markets (48)' },
+                { id: 'KSA', label: '🇸🇦 Saudi Arabia (10)' },
+                { id: 'QTR', label: '🇶🇦 Qatar (8)' },
+                { id: 'UAE', label: '🇦🇪 UAE / Dubai (8)' },
+                { id: 'IND', label: '🇮🇳 India (8)' },
+                { id: 'ASEAN', label: '🇲🇾 🇸🇬 ASEAN (8)' },
+                { id: 'CH_ANZ_GLOBAL', label: '🇨🇭 🇦🇺 🇺🇸 Global (6)' },
               ].map((reg) => (
                 <button
                   key={reg.id}
