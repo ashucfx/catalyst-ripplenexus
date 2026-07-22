@@ -53,9 +53,31 @@ export default function TestimonialsPage() {
           {/* ═══════════════════════════════════════════════════════════
               HERO SECTION
           ════════════════════════════════════════════════════════════ */}
-          <div className="mb-20 text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-signal-gold/30 bg-signal-gold/10 font-mono text-[0.6rem] tracking-[0.25em] uppercase text-signal-gold mb-6">
-              <span>★ Verified Client Success Stories</span> • <span>🇸🇦 Saudi Arabia • 🇶🇦 Qatar • 🇦🇪 UAE • 🇮🇳 India • 🇲🇾 Malaysia • 🇨🇭 Switzerland</span>
+            {/* Live Verified Client Badge & Coverage Bar */}
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-signal-gold/40 bg-signal-gold/10 font-mono text-xs font-semibold text-signal-gold shrink-0">
+                <span>★ Verified Client Success Stories</span>
+              </div>
+
+              {[
+                { flag: '🇸🇦', name: 'Saudi Arabia' },
+                { flag: '🇶🇦', name: 'Qatar' },
+                { flag: '🇦🇪', name: 'UAE / Dubai' },
+                { flag: '🇮🇳', name: 'India' },
+                { flag: '🇲🇾', name: 'Malaysia' },
+                { flag: '🇨🇭', name: 'Switzerland' },
+                { flag: '🇦🇺', name: 'Australia & NZ' },
+                { flag: '🇺🇸', name: 'USA & UK' },
+              ].map((c) => (
+                <span
+                  key={c.name}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-bone font-sans text-xs font-medium hover:border-[#C5A059]/40 transition-all"
+                >
+                  <span className="text-sm">{c.flag}</span>
+                  <span className="hidden sm:inline">{c.name}</span>
+                  <span className="sm:hidden">{c.name.split(' ')[0]}</span>
+                </span>
+              ))}
             </div>
 
             <h1
