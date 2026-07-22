@@ -417,3 +417,35 @@ export function auditPortalEmail(portalUrl: string): { subject: string; html: st
 
   return { subject, html }
 }
+
+// ═══════════════════════════════════════════════════════════════════════
+// 6. PLATFORM WAITLIST EMAIL
+// ═══════════════════════════════════════════════════════════════════════
+
+export function platformWaitlistEmail(plan?: string, unsubscribeUrl?: string): { subject: string; html: string } {
+  const subject = `Catalyst Platform — early access registered`
+  const planLabel = plan ? ` — ${plan} tier` : ''
+
+  const html = wrap(`
+    <p style="margin:0 0 8px 0;font-family:Arial,sans-serif;font-size:10px;
+               color:${C.gold};letter-spacing:0.3em;text-transform:uppercase;">
+      EARLY ACCESS REGISTERED${planLabel ? ` &middot; ${plan?.toUpperCase()}` : ''}
+    </p>
+
+    <p style="margin:0 0 24px 0;font-family:Georgia,serif;font-size:28px;
+               color:${C.bone};font-weight:400;letter-spacing:-0.02em;line-height:1.2;">
+      Your position<br/>
+      <em style="color:${C.gold};">is confirmed.</em>
+    </p>
+
+    <p style="margin:0 0 16px 0;font-family:Georgia,serif;font-size:15px;
+               color:${C.muted};line-height:1.7;">
+      You are registered for early access to the Catalyst Intelligence Platform${planLabel}.
+      When we open, early members are notified first and lock in launch pricing permanently.
+    </p>
+
+    ${cta('Get Free TPI Score →', `${SITE_URL}/tpi`)}
+  `, unsubscribeUrl)
+
+  return { subject, html }
+}
