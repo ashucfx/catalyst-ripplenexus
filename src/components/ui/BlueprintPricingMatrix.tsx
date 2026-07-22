@@ -103,8 +103,8 @@ function PricingTable({
             {/* Career Booster */}
             <tr className="border-b border-graphite/20" style={{ background: 'rgba(255,255,255,0.01)' }}>
               <td className="py-6 px-8">
-                <p className="font-mono text-signal-gold text-[0.58rem] uppercase tracking-wider mb-1">Career Booster</p>
-                <p className="font-sans text-muted text-[0.65rem] leading-snug">Resume + LinkedIn + Cover Letter</p>
+                <p className="font-mono text-signal-gold text-[0.58rem] uppercase tracking-wider mb-1">Career Booster Package</p>
+                <p className="font-sans text-muted text-[0.65rem] leading-snug">Resume + LinkedIn + Banner &amp; DP + Cover Letter</p>
                 <p className="font-mono text-signal-gold/40 text-[0.5rem] tracking-wider mt-1">15% off</p>
               </td>
               {tiers.map(t => (

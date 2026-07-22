@@ -6,10 +6,10 @@ import { InflectionMark } from '@/components/ui/InflectionMark'
 import { GeoPrice } from '@/components/ui/GeoPrice'
 
 const nav = [
-  { label: 'How It Works', href: '/system' },
-  { label: 'Services',     href: '/audit' },
-  { label: 'Platform',     href: '/platform' },
-  { label: 'Intelligence', href: '/intelligence' },
+  { label: 'Career Booster', href: '/blueprint' },
+  { label: 'Testimonials', href: '/testimonials' },
+  { label: 'Market Audit', href: '/audit' },
+  { label: 'Free TPI Score', href: '/tpi' },
 ]
 
 export function Header() {
@@ -78,20 +78,20 @@ export function Header() {
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-6">
             <Link
-              href="/tpi"
+              href="/testimonials"
               className="font-mono text-muted text-[0.58rem] tracking-[0.22em] uppercase
                          hover:text-signal-gold transition-colors duration-250"
             >
-              Free TPI
+              ★ Testimonials
             </Link>
             <Link
-              href="/audit"
+              href="/blueprint"
               id="header-cta"
               className="inline-flex items-center gap-2 bg-signal-gold text-obsidian
                          px-7 py-3 font-sans text-[0.58rem] tracking-[0.22em] uppercase font-bold
                          btn-primary-glow hover:bg-bone transition-all duration-300"
             >
-              Get Report — <GeoPrice product="audit" variant="cta" />
+              Career Booster — <GeoPrice product="sprint" variant="cta" />
               <span className="text-xs">→</span>
             </Link>
           </div>

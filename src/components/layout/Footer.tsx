@@ -4,28 +4,28 @@ import { Disclaimer } from '@/components/ui/Disclaimer'
 
 const links = {
   Services: [
-    { label: 'Market Value Audit',       href: '/audit' },
-    { label: 'Momentum Sprint',          href: '/request?service=sprint' },
-    { label: 'Positioning Blueprint',    href: '/blueprint' },
-    { label: 'Sovereign Executive Suite',href: '/executive' },
+    { label: 'Career Booster Package', href: '/blueprint' },
+    { label: 'Executive Resume Rewrite', href: '/blueprint' },
+    { label: 'LinkedIn Profile & Banner', href: '/blueprint' },
+    { label: 'Market Value Audit', href: '/audit' },
   ],
-  Platform: [
-    { label: 'Catalyst Platform',  href: '/platform' },
-    { label: 'Catalyst Ignition',  href: '/platform#ignition' },
-    { label: 'Catalyst Pro',       href: '/platform#pro' },
-    { label: 'Enterprise',         href: '/platform#enterprise' },
+  Testimonials: [
+    { label: 'Verified Reviews', href: '/testimonials' },
+    { label: 'ASEAN & APAC Stories', href: '/testimonials?region=ASEAN' },
+    { label: 'Dubai & GCC Stories', href: '/testimonials?region=GCC' },
+    { label: 'Global Successes', href: '/testimonials?region=Global' },
   ],
-  Intelligence: [
-    { label: 'The System',          href: '/system' },
-    { label: 'Research & Reports',  href: '/intelligence' },
-    { label: 'Case Studies',        href: '/intelligence#case-studies' },
-    { label: 'Free TPI Score',      href: '/tpi' },
+  Optimization: [
+    { label: 'Country Optimization', href: '/blueprint' },
+    { label: 'Multi-Lingual Support', href: '/blueprint' },
+    { label: 'Free Resume TPI Score', href: '/tpi' },
+    { label: 'Executive Suite', href: '/executive' },
   ],
   Company: [
-    { label: 'Ripple Nexus',        href: 'https://www.theripplenexus.com' },
-    { label: 'Request an Audit',    href: '/request' },
-    { label: 'Privacy Policy',      href: '/privacy' },
-    { label: 'Terms of Service',    href: '/terms' },
+    { label: 'Ripple Nexus', href: 'https://www.theripplenexus.com' },
+    { label: 'Get Started', href: '/blueprint' },
+    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Terms of Service', href: '/terms' },
   ],
 }
 
