@@ -67,20 +67,20 @@ export default function TestimonialsPage() {
             </p>
 
             {/* Metric Highlights Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-2xl bg-obsidian/60 border border-white/10 backdrop-blur-xl">
-              <div className="p-4 border-r border-white/10 last:border-0 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden border border-white/10 backdrop-blur-xl">
+              <div className="p-6 bg-obsidian/90 text-center">
                 <p className="font-mono text-3xl sm:text-4xl font-bold text-signal-gold mb-1">4.98 / 5</p>
                 <p className="font-sans text-xs text-muted">Average Client Rating</p>
               </div>
-              <div className="p-4 border-r border-white/10 last:border-0 text-center">
+              <div className="p-6 bg-obsidian/90 text-center">
                 <p className="font-mono text-3xl sm:text-4xl font-bold text-bone mb-1">+38%</p>
                 <p className="font-sans text-xs text-muted">Average Pay Hike</p>
               </div>
-              <div className="p-4 border-r border-white/10 last:border-0 text-center">
+              <div className="p-6 bg-obsidian/90 text-center">
                 <p className="font-mono text-3xl sm:text-4xl font-bold text-signal-gold mb-1">94%</p>
                 <p className="font-sans text-xs text-muted">Recruiter Interview Rate</p>
               </div>
-              <div className="p-4 text-center">
+              <div className="p-6 bg-obsidian/90 text-center">
                 <p className="font-mono text-3xl sm:text-4xl font-bold text-bone mb-1">14 Days</p>
                 <p className="font-sans text-xs text-muted">Average Time to Interview</p>
               </div>
