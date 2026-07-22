@@ -9,81 +9,108 @@ import { Disclaimer } from '@/components/ui/Disclaimer'
 import { useGeo } from '@/hooks/useGeo'
 
 const steps = [
-  { id: 1, label: 'Profile' },
-  { id: 2, label: 'Objective' },
-  { id: 3, label: 'Service' },
+  { id: 1, label: 'Profile & Contact' },
+  { id: 2, label: 'Career Goals' },
+  { id: 3, label: 'Service & Market' },
 ]
 
 const seniorities = [
-  'Manager (4–8 years)',
-  'Senior Manager / Lead (8–12 years)',
-  'Director (10–15 years)',
-  'VP / Head of (12–18 years)',
-  'C-Suite / MD / Partner',
+  '0–2 years (Early Career)',
+  '3–8 years (Mid Career / Lead)',
+  '9–15 years (Senior Manager / Director)',
+  '15+ years (VP / C-Suite / Executive)',
 ]
 
 const geographies = [
-  'India — Tier 1 (Mumbai, Delhi, Bangalore, Hyderabad)',
-  'India — Other cities',
-  'UAE / GCC',
-  'United Kingdom',
-  'United States',
-  'Singapore / SEA',
-  'Other',
+  'Singapore / ASEAN Hub 🇸🇬',
+  'India — Metro (Bengaluru, Mumbai, Delhi, Hyd) 🇮🇳',
+  'UAE / Dubai / GCC 🇦🇪 🇸🇦',
+  'Australia / New Zealand 🇦🇺',
+  'United States / Remote US 🇺🇸',
+  'United Kingdom / Europe 🇬🇧 🇪🇺',
+  'Other Global Markets',
 ]
 
-const goals = [
-  'Understand my true market value',
-  'Break through a career plateau',
-  'Transition to a new sector or geography',
-  'Secure a board or advisory seat',
-  'Negotiate a higher compensation package',
-  'Position for a C-suite role within 12–24 months',
-  'Reposition after redundancy or a career gap',
+const goalsList = [
+  'Land a high-paying role (+30% to +50% salary hike)',
+  'Complete Resume Rewrite & ATS Keyword Pass',
+  'LinkedIn Profile & Custom Banner Design',
+  'Break through a career plateau to Director / VP level',
+  'Target remote US/Global USD roles',
+  'Cross-border relocation (Singapore, Dubai, UK visa)',
+  'Executive salary & bonus negotiation strategy',
 ]
 
-const timelines = [
-  'Immediate — actively searching now',
-  'Within 3 months',
-  'Within 6 months',
-  '12 months or more — strategic planning',
-]
-
-const services = [
-  { label: 'Market Value Audit', price: '$199 / ₹5,999', desc: 'Start here — 45-min diagnostic, TPI score, salary benchmark.' },
-  { label: 'Positioning Blueprint', price: '$1,500–$3,500', desc: 'Complete identity re-architecture. CV, LinkedIn, narrative strategy.' },
-  { label: 'Sovereign Executive Suite', price: '$5,000–$15,000+', desc: 'White-glove C-suite and board positioning.' },
-  { label: 'Catalyst Pro Platform', price: '$199/month', desc: 'Self-serve SaaS — joining the waitlist.' },
-  { label: 'Not sure yet', price: '', desc: 'We will recommend the right tier after reviewing your profile.' },
+const servicesList = [
+  {
+    slug: 'CAREER_BOOSTER',
+    label: 'Career Booster Package',
+    tag: 'MOST POPULAR',
+    desc: 'Executive Resume Rewrite + LinkedIn Full Profile & Custom Banner Design + Complimentary Cover Letter + Country Optimization.',
+  },
+  {
+    slug: 'AUDIT',
+    label: 'Market Value Audit & Strategy Call',
+    tag: '48-HR TURNAROUND',
+    desc: 'Full resume & market value audit report, TPI score, salary benchmarking, and 45-minute strategic consultation call.',
+  },
+  {
+    slug: 'PREMIUM_PLUS',
+    label: 'Premium Plus Suite',
+    tag: 'FULL WEBSITES',
+    desc: 'Everything in Career Booster + Personal Portfolio Web Showcase + Multi-Lingual CV Adaptation.',
+  },
+  {
+    slug: 'EXECUTIVE',
+    label: 'C-Suite Sovereign Executive Suite',
+    tag: 'BESPOKE',
+    desc: 'White-glove executive branding and confidential board positioning for $250K+ earners.',
+  },
 ]
 
 type FormData = {
-  name:      string
-  email:     string
-  role:      string
+  name: string
+  email: string
+  phone: string
+  countryCode: string
+  countryName: string
+  role: string
   seniority: string
   geography: string
-  goals:     string[]
-  timeline:  string
-  context:   string
-  service:   string
-  referral:  string
+  goals: string[]
+  timeline: string
+  context: string
+  service: string
+  packageSlug: string
+  referral: string
 }
 
-const empty: FormData = {
-  name: '', email: '', role: '', seniority: '', geography: '',
-  goals: [], timeline: '', context: '', service: '', referral: '',
+const emptyForm: FormData = {
+  name: '',
+  email: '',
+  phone: '',
+  countryCode: 'IN',
+  countryName: 'India',
+  role: '',
+  seniority: '',
+  geography: '',
+  goals: [],
+  timeline: 'Immediate — actively applying',
+  context: '',
+  service: 'Career Booster Package',
+  packageSlug: 'CAREER_BOOSTER',
+  referral: '',
 }
 
 export default function RequestPage() {
-  const geo     = useGeo()
+  const geo = useGeo()
   const isIndia = geo?.isIndia ?? false
 
-  const [step,      setStep]      = useState(1)
-  const [form,      setForm]      = useState<FormData>(empty)
+  const [step, setStep] = useState(1)
+  const [form, setForm] = useState<FormData>(emptyForm)
   const [submitted, setSubmitted] = useState(false)
-  const [loading,   setLoading]   = useState(false)
-  const [error,     setError]     = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   function set(field: keyof FormData, value: string) {
     setForm((f) => ({ ...f, [field]: value }))
@@ -98,16 +125,17 @@ export default function RequestPage() {
 
   function validateStep(): boolean {
     if (step === 1) {
-      if (!form.name.trim())     { setError('Please enter your name.'); return false }
+      if (!form.name.trim()) { setError('Please enter your full name.'); return false }
       if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-        setError('Please enter a valid email address.'); return false
+        setError('Please enter a valid business or personal email address.'); return false
       }
-      if (!form.role.trim())     { setError('Please enter your current role.'); return false }
-      if (!form.seniority)       { setError('Please select your seniority level.'); return false }
-      if (!form.geography)       { setError('Please select your primary market.'); return false }
+      if (!form.phone.trim()) { setError('Please enter your phone number with country code.'); return false }
+      if (!form.role.trim()) { setError('Please enter your current or target job title.'); return false }
+      if (!form.seniority) { setError('Please select your experience level.'); return false }
     }
     if (step === 2) {
-      if (form.goals.length === 0) { setError('Please select at least one goal.'); return false }
+      if (!form.geography) { setError('Please select your target market/geography.'); return false }
+      if (form.goals.length === 0) { setError('Please select at least one career objective.'); return false }
     }
     setError('')
     return true
@@ -123,14 +151,18 @@ export default function RequestPage() {
   }
 
   async function submit() {
-    if (!form.service) { setError('Please select a service.'); return }
+    if (!form.packageSlug) { setError('Please select a service package.'); return }
     setError('')
     setLoading(true)
     try {
       const res = await fetch('/api/request', {
-        method:  'POST',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ ...form, honeypot: '' }),
+        body: JSON.stringify({
+          ...form,
+          servicesRequested: [form.service],
+          honeypot: '',
+        }),
       })
       const data = await res.json()
       if (!res.ok) { setError(data.error ?? 'Something went wrong. Please try again.'); return }
@@ -147,54 +179,52 @@ export default function RequestPage() {
     return (
       <>
         <Header />
-        <main className="pt-32 pb-16 min-h-screen">
+        <main className="pt-36 pb-24 grain min-h-screen">
           <div className="max-w-dossier mx-auto px-6 lg:px-12">
-            <div className="max-w-2xl">
-              <p className="label-inst mb-6">Enquiry Received</p>
-              <hr className="rule mb-10 w-16" />
-              <h1 className="display-editorial mb-8">
-                Your enquiry is<br />
-                <em className="text-signal-gold not-italic">in trusted hands.</em>
+            <div className="max-w-2xl mx-auto text-center p-10 rounded-2xl bg-obsidian border border-white/10 shadow-2xl">
+              <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center text-2xl mx-auto mb-6">
+                ✓
+              </div>
+
+              <span className="font-mono text-xs text-signal-gold uppercase tracking-[0.25em] block mb-2">
+                Consultation Request Received
+              </span>
+
+              <h1 className="display-page text-3xl sm:text-4xl text-bone mb-6">
+                Your Career Strategy Request Is Registered.
               </h1>
-              <div className="border border-signal-gold/30 bg-graphite/10 p-8 mb-10">
-                <p className="font-serif text-muted text-lg leading-relaxed mb-3">
-                  A Catalyst Executive Architect will review your profile within{' '}
-                  <span className="text-bone">24 business hours</span> and reach out to schedule
-                  your first conversation.
-                </p>
+
+              <div className="p-6 rounded-xl bg-white/[0.03] border border-white/10 mb-8 text-left space-y-3">
                 <p className="font-serif text-muted text-sm leading-relaxed">
-                  Check your inbox — a confirmation email is on its way to {form.email}.
+                  Our Senior Executive Consultant will review your target role (<strong className="text-bone">{form.role}</strong>) and prepare market benchmarking data before your consultation call.
+                </p>
+                <p className="font-mono text-xs text-emerald-400">
+                  ✓ Lead synced to ClientForge CRM &amp; Leads Flywheel
+                </p>
+                <p className="font-mono text-xs text-muted/80">
+                  A confirmation email has been dispatched to <span className="text-bone font-bold">{form.email}</span>.
                 </p>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-graphite mb-10">
-                {[
-                  { n: '01', label: 'Profile Review', desc: 'Your submission is benchmarked against current market data before the call.' },
-                  { n: '02', label: 'First Conversation', desc: '45 minutes. Diagnostic. You leave with a TPI score and a clear next step.' },
-                  { n: '03', label: 'Pathway Brief', desc: 'A written recommendation on which service fits your situation.' },
-                ].map((item) => (
-                  <div key={item.n} className="bg-obsidian p-6">
-                    <p className="font-mono text-signal-gold text-[0.6rem] tracking-widest mb-2">{item.n}</p>
-                    <h3 className="display-card text-base mb-2">{item.label}</h3>
-                    <p className="font-sans text-muted text-xs leading-relaxed">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="border border-signal-gold/20 bg-graphite/10 p-6 mb-8">
-                <p className="label-inst mb-3">Skip the wait — book directly</p>
-                <p className="font-sans text-muted text-sm mb-4">
-                  If you prefer to schedule immediately, choose a session type and pick a
-                  time that works for your timezone.
+
+              {/* Direct Booking Card */}
+              <div className="p-6 rounded-xl bg-gradient-to-r from-signal-gold/10 via-obsidian to-signal-gold/10 border border-signal-gold/30 mb-8 text-center">
+                <p className="font-mono text-xs text-signal-gold uppercase tracking-wider mb-2 font-bold">
+                  ⚡ Prefer Instant Scheduling?
+                </p>
+                <p className="font-serif text-muted text-sm mb-4">
+                  Pick a direct 1-on-1 consultation slot right now on our live calendar.
                 </p>
                 <Link
                   href="/book"
-                  className="inline-block font-sans text-signal-gold text-[0.7rem] tracking-[0.15em]
-                             uppercase hover:text-bone transition-colors border-b border-signal-gold/40
-                             hover:border-bone pb-0.5"
+                  className="inline-flex justify-center items-center gap-2 bg-signal-gold text-obsidian px-8 py-3.5 rounded font-mono text-xs font-bold uppercase tracking-wider btn-primary-glow hover:bg-bone transition-all"
                 >
-                  Schedule directly →
+                  Schedule Strategy Session Now →
                 </Link>
               </div>
-              <Button href="/" variant="ghost">← Return home</Button>
+
+              <Button href="/" variant="ghost" className="w-full justify-center">
+                ← Return to Home
+              </Button>
             </div>
           </div>
         </main>
@@ -203,298 +233,286 @@ export default function RequestPage() {
     )
   }
 
-  // ── Form ─────────────────────────────────────────────────────────────
+  // ── Form view ────────────────────────────────────────────────────────
   return (
     <>
       <Header />
-      <main className="pt-32 pb-16 min-h-screen">
+      <main className="pt-36 pb-32 grain min-h-screen">
         <div className="max-w-dossier mx-auto px-6 lg:px-12">
-
-          <div className="mb-12">
-            <p className="label-inst mb-6">Confidential Enquiry</p>
-            <hr className="rule mb-10 w-16" />
-            <h1 className="display-editorial mb-4">
-              Begin the conversation.
+          {/* Header */}
+          <div className="mb-16 text-center max-w-3xl mx-auto">
+            <span className="font-mono text-xs tracking-[0.3em] uppercase text-signal-gold block mb-3">
+              Career Booster &amp; Executive Services
+            </span>
+            <h1 className="display-page text-3xl sm:text-5xl text-bone mb-6">
+              Book Your Strategic Consultation
             </h1>
-            <p className="font-serif text-muted text-lg leading-relaxed max-w-xl">
-              Your answers are reviewed by a Catalyst architect before your first call —
-              not processed by an algorithm.
+            <p className="font-serif text-muted text-lg leading-relaxed">
+              Fill out your candidate profile below. Our executive team will review your current positioning, ATS compatibility, and target market opportunities.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
-            <div className="lg:col-span-2">
-
-              {/* Step indicator */}
-              <div className="flex items-center gap-0 mb-10">
-                {steps.map((s, i) => (
-                  <div key={s.id} className="flex items-center">
-                    <div className={`flex items-center gap-2 ${step >= s.id ? 'opacity-100' : 'opacity-30'}`}>
-                      <span className={`font-mono text-[0.6rem] tracking-widest w-6 h-6 flex items-center justify-center border ${
-                        step === s.id ? 'border-signal-gold text-signal-gold'
-                        : step > s.id ? 'border-signal-gold bg-signal-gold text-obsidian'
-                        : 'border-graphite text-muted'
-                      }`}>
-                        {step > s.id ? '✓' : s.id}
-                      </span>
-                      <span className="font-mono text-[0.6rem] tracking-widest text-muted uppercase">{s.label}</span>
-                    </div>
-                    {i < steps.length - 1 && (
-                      <div className={`w-8 h-px mx-3 ${step > s.id ? 'bg-signal-gold/50' : 'bg-graphite'}`} />
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* ── STEP 1: Profile ───────────────────────────────────── */}
-              {step === 1 && (
-                <form
-                  onSubmit={(e) => { e.preventDefault(); next() }}
-                  noValidate
-                  className="flex flex-col gap-5"
+          {/* Stepper progress */}
+          <div className="max-w-xl mx-auto mb-12 flex items-center justify-between relative px-4">
+            <div className="absolute inset-x-8 top-1/2 h-px bg-white/10 -z-10" />
+            {steps.map((s) => (
+              <div key={s.id} className="flex flex-col items-center gap-2 bg-obsidian px-3">
+                <div
+                  className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all ${
+                    step === s.id
+                      ? 'bg-signal-gold text-obsidian shadow-lg'
+                      : step > s.id
+                      ? 'bg-emerald-500 text-obsidian'
+                      : 'bg-white/10 text-muted border border-white/10'
+                  }`}
                 >
-                  {/* Honeypot */}
-                  <input type="text" name="website" tabIndex={-1} autoComplete="off"
-                    aria-hidden="true" style={{ position:'absolute', opacity:0, pointerEvents:'none', height:0 }} />
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="name" className="font-mono text-muted text-[0.6rem] tracking-widest block mb-2">FULL NAME</label>
-                      <input id="name" type="text" value={form.name} onChange={(e) => set('name', e.target.value)}
-                        placeholder="As it appears professionally" autoComplete="name" required
-                        className="w-full bg-transparent border border-graphite px-4 py-3 font-sans text-bone text-sm focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/40" />
-                    </div>
-                    <div>
-                      <label htmlFor="email" className="font-mono text-muted text-[0.6rem] tracking-widest block mb-2">EMAIL ADDRESS</label>
-                      <input id="email" type="email" value={form.email} onChange={(e) => set('email', e.target.value)}
-                        placeholder="Your professional email" autoComplete="email" required
-                        className="w-full bg-transparent border border-graphite px-4 py-3 font-sans text-bone text-sm focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/40" />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="role" className="font-mono text-muted text-[0.6rem] tracking-widest block mb-2">CURRENT ROLE / TITLE</label>
-                    <input id="role" type="text" value={form.role} onChange={(e) => set('role', e.target.value)}
-                      placeholder="e.g. Head of Finance, VP Marketing, Director of Operations"
-                      autoComplete="organization-title"
-                      className="w-full bg-transparent border border-graphite px-4 py-3 font-sans text-bone text-sm focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/40" />
-                  </div>
-
-                  <div>
-                    <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-2">SENIORITY LEVEL</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {seniorities.map((s) => (
-                        <button key={s} type="button" onClick={() => set('seniority', s)}
-                          className={`text-left px-4 py-3 border font-sans text-sm transition-colors ${
-                            form.seniority === s ? 'border-signal-gold text-bone bg-signal-gold/5' : 'border-graphite text-muted hover:border-bone/40 hover:text-bone/70'
-                          }`}>
-                          {s}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-2">PRIMARY MARKET</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {geographies.map((g) => (
-                        <button key={g} type="button" onClick={() => set('geography', g)}
-                          className={`text-left px-4 py-3 border font-sans text-sm transition-colors ${
-                            form.geography === g ? 'border-signal-gold text-bone bg-signal-gold/5' : 'border-graphite text-muted hover:border-bone/40 hover:text-bone/70'
-                          }`}>
-                          {g}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {error && <p className="font-sans text-signal-gold text-sm">{error}</p>}
-                  <div className="pt-4 border-t border-graphite">
-                    <button type="submit"
-                      className="inline-flex items-center gap-3 font-sans text-obsidian bg-signal-gold px-8 py-4 text-[0.7rem] tracking-[0.2em] uppercase hover:bg-bone transition-colors cursor-pointer">
-                      Continue →
-                    </button>
-                  </div>
-                </form>
-              )}
-
-              {/* ── STEP 2: Objective ─────────────────────────────────── */}
-              {step === 2 && (
-                <div className="flex flex-col gap-5">
-                  <div>
-                    <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-3">WHAT ARE YOU TRYING TO ACHIEVE?</p>
-                    <p className="font-sans text-muted text-xs mb-4">Select all that apply.</p>
-                    <div className="flex flex-col gap-2">
-                      {goals.map((g) => (
-                        <button key={g} type="button" onClick={() => toggleGoal(g)}
-                          className={`text-left px-4 py-3 border font-sans text-sm transition-colors flex items-start gap-3 ${
-                            form.goals.includes(g) ? 'border-signal-gold text-bone bg-signal-gold/5' : 'border-graphite text-muted hover:border-bone/40 hover:text-bone/70'
-                          }`}>
-                          <span className={`shrink-0 w-4 h-4 border mt-0.5 flex items-center justify-center text-[0.6rem] ${
-                            form.goals.includes(g) ? 'border-signal-gold text-signal-gold bg-signal-gold/10' : 'border-graphite'
-                          }`}>
-                            {form.goals.includes(g) ? '✓' : ''}
-                          </span>
-                          {g}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-2">TIMELINE</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {timelines.map((t) => (
-                        <button key={t} type="button" onClick={() => set('timeline', t)}
-                          className={`text-left px-4 py-3 border font-sans text-sm transition-colors ${
-                            form.timeline === t ? 'border-signal-gold text-bone bg-signal-gold/5' : 'border-graphite text-muted hover:border-bone/40 hover:text-bone/70'
-                          }`}>
-                          {t}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="context" className="font-mono text-muted text-[0.6rem] tracking-widest block mb-2">
-                      BIGGEST CAREER BOTTLENECK RIGHT NOW <span className="text-muted/50">(optional — but helps us prepare)</span>
-                    </label>
-                    <textarea id="context" value={form.context} onChange={(e) => set('context', e.target.value)}
-                      rows={4} placeholder="Be direct. This is read by a human, not an algorithm."
-                      className="w-full bg-transparent border border-graphite px-4 py-3 font-serif text-bone text-sm leading-relaxed focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/40 resize-none" />
-                  </div>
-
-                  {error && <p className="font-sans text-signal-gold text-sm">{error}</p>}
-                  <div className="flex items-center justify-between pt-4 border-t border-graphite">
-                    <button type="button" onClick={back}
-                      className="font-mono text-muted text-[0.6rem] tracking-widest hover:text-bone transition-colors">
-                      ← BACK
-                    </button>
-                    <button type="button" onClick={next}
-                      className="inline-flex items-center gap-3 font-sans text-obsidian bg-signal-gold px-8 py-4 text-[0.7rem] tracking-[0.2em] uppercase hover:bg-bone transition-colors cursor-pointer">
-                      Continue →
-                    </button>
-                  </div>
+                  {step > s.id ? '✓' : s.id}
                 </div>
-              )}
-
-              {/* ── STEP 3: Service ───────────────────────────────────── */}
-              {step === 3 && (
-                <div className="flex flex-col gap-5">
-                  <p className="font-serif text-muted text-base leading-relaxed max-w-lg">
-                    Select the service you are enquiring about. If you are unsure, choose the last option —
-                    we will recommend the right path after reviewing your profile.
-                  </p>
-
-                  <div className="flex flex-col gap-2">
-                    {services.map((s) => (
-                      <button key={s.label} type="button" onClick={() => set('service', s.label)}
-                        className={`text-left px-5 py-4 border transition-colors flex items-start gap-4 ${
-                          form.service === s.label ? 'border-signal-gold bg-signal-gold/5' : 'border-graphite hover:border-bone/40'
-                        }`}>
-                        <span className={`shrink-0 w-3 h-3 border rounded-full mt-1.5 ${
-                          form.service === s.label ? 'border-signal-gold bg-signal-gold' : 'border-graphite'
-                        }`} />
-                        <div>
-                          <p className={`font-sans text-sm ${form.service === s.label ? 'text-bone' : 'text-muted'}`}>
-                            {s.label}
-                            {s.price && (
-                            <span className="font-mono text-signal-gold text-[0.6rem] tracking-wide ml-3">
-                              {s.label === 'Market Value Audit' ? (isIndia ? '₹5,999' : '$199') : s.price}
-                            </span>
-                          )}
-                          </p>
-                          <p className="font-sans text-muted text-xs mt-0.5 leading-relaxed">{s.desc}</p>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-
-                  <div>
-                    <label htmlFor="referral" className="font-mono text-muted text-[0.6rem] tracking-widest block mb-2">
-                      HOW DID YOU FIND CATALYST? <span className="text-muted/50">(optional)</span>
-                    </label>
-                    <input id="referral" type="text" value={form.referral} onChange={(e) => set('referral', e.target.value)}
-                      placeholder="LinkedIn, colleague referral, Google, article..."
-                      className="w-full bg-transparent border border-graphite px-4 py-3 font-sans text-bone text-sm focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/40" />
-                  </div>
-
-                  <div className="border border-graphite/40 bg-graphite/10 p-5">
-                    <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-2">DISCRETION ASSURANCE</p>
-                    <p className="font-sans text-muted text-xs leading-relaxed">
-                      Your enquiry is reviewed only by the Catalyst architect assigned to your case.
-                      No information is shared with third parties or used for marketing purposes.
-                      See our <a href="/privacy" className="text-signal-gold hover:text-bone underline underline-offset-2">Privacy Policy</a>.
-                    </p>
-                  </div>
-
-                  {error && <p className="font-sans text-signal-gold text-sm">{error}</p>}
-                  <div className="flex items-center justify-between pt-4 border-t border-graphite">
-                    <button type="button" onClick={back}
-                      className="font-mono text-muted text-[0.6rem] tracking-widest hover:text-bone transition-colors">
-                      ← BACK
-                    </button>
-                    <button type="button" onClick={submit} disabled={loading}
-                      className="inline-flex items-center gap-3 font-sans text-obsidian bg-signal-gold px-8 py-4 text-[0.7rem] tracking-[0.2em] uppercase hover:bg-bone transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
-                      {loading ? 'Submitting…' : 'Submit Enquiry →'}
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Sidebar */}
-            <div className="flex flex-col gap-6">
-              <div className="border border-graphite p-6">
-                <p className="label-inst mb-4">What Happens Next</p>
-                <div className="flex flex-col gap-4">
-                  {[
-                    { n: '01', t: 'Profile Review', d: 'Benchmarked against live market data before the call.' },
-                    { n: '02', t: '24-Hour Response', d: 'A Catalyst architect reaches out within one business day.' },
-                    { n: '03', t: 'First Conversation', d: '45 minutes. Diagnostic. You receive a TPI score.' },
-                    { n: '04', t: 'Pathway Brief', d: 'Written recommendation — no pressure to commit.' },
-                  ].map((item) => (
-                    <div key={item.n} className="flex gap-3">
-                      <span className="font-mono text-signal-gold text-[0.6rem] tracking-widest shrink-0 mt-0.5">{item.n}</span>
-                      <div>
-                        <p className="font-sans text-bone text-xs font-medium mb-0.5">{item.t}</p>
-                        <p className="font-sans text-muted text-xs leading-relaxed">{item.d}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <span className={`font-mono text-[0.6rem] tracking-wider uppercase ${step === s.id ? 'text-signal-gold font-bold' : 'text-muted'}`}>
+                  {s.label}
+                </span>
               </div>
-
-              <div className="border border-signal-gold/20 p-6 bg-graphite/5">
-                <p className="font-serif text-muted text-sm leading-relaxed italic mb-3">
-                  &ldquo;79% of senior professionals are earning 10–35% below their market rate.
-                  Not because they lack skill. Because they are underpositioned.&rdquo;
-                </p>
-                <p className="font-mono text-signal-gold text-[0.55rem] tracking-widest">
-                  — CATALYST MARKET INTELLIGENCE, 2026
-                </p>
-              </div>
-
-              <div className="border border-graphite p-6">
-                <p className="label-inst mb-4">Service Reference</p>
-                <div className="flex flex-col gap-3">
-                  {[
-                    { tier: 'Tier I',   name: 'Market Value Audit',        priceUSD: '$199',            priceINR: '₹5,999',               href: '/audit'     },
-                    { tier: 'Tier II',  name: 'Positioning Blueprint',      priceUSD: '$1,500–$3,500',   priceINR: '₹9,999–₹14,999',        href: '/blueprint' },
-                    { tier: 'Tier III', name: 'Sovereign Executive Suite',  priceUSD: '$5,000–$15,000+', priceINR: '₹5,00,000–₹15,00,000+', href: '/executive' },
-                  ].map((s) => (
-                    <a key={s.tier} href={s.href} className="block border-b border-graphite pb-3 last:border-0 last:pb-0 hover:opacity-80 transition-opacity">
-                      <p className="font-mono text-muted text-[0.55rem] tracking-widest mb-0.5">{s.tier}</p>
-                      <p className="font-serif text-bone text-sm">{s.name}</p>
-                      <p className="font-mono text-signal-gold text-[0.6rem] tracking-wide mt-0.5">{isIndia ? s.priceINR : s.priceUSD}</p>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
-          <div className="max-w-dossier mx-auto px-6 lg:px-12 mt-16">
-            <Disclaimer variant="compact" />
+
+          {/* Form Card */}
+          <div className="max-w-2xl mx-auto p-8 sm:p-12 rounded-2xl bg-obsidian border border-white/10 shadow-2xl backdrop-blur-xl">
+            {error && (
+              <div className="p-4 mb-8 rounded-lg bg-red-950/40 border border-red-800/50 text-red-300 font-sans text-xs flex items-center justify-between">
+                <span>⚠️ {error}</span>
+                <button onClick={() => setError('')} className="text-red-400 font-bold ml-2">✕</button>
+              </div>
+            )}
+
+            {/* STEP 1: Profile & Contact */}
+            {step === 1 && (
+              <div className="space-y-6">
+                <h2 className="font-serif text-bone text-xl font-semibold mb-6 border-b border-white/10 pb-4">
+                  Step 1: Your Professional Contact Profile
+                </h2>
+
+                <div>
+                  <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+                    Full Name <span className="text-signal-gold">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Rachel Tan / Arjun Mehta"
+                    value={form.name}
+                    onChange={(e) => set('name', e.target.value)}
+                    className="w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3 text-sm text-bone focus:outline-none focus:border-signal-gold"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+                      Email Address <span className="text-signal-gold">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      placeholder="name@company.com"
+                      value={form.email}
+                      onChange={(e) => set('email', e.target.value)}
+                      className="w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3 text-sm text-bone focus:outline-none focus:border-signal-gold"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+                      Phone Number (WhatsApp) <span className="text-signal-gold">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      placeholder="+65 9123 4567 / +91 98765 43210"
+                      value={form.phone}
+                      onChange={(e) => set('phone', e.target.value)}
+                      className="w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3 text-sm text-bone focus:outline-none focus:border-signal-gold"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+                    Current or Target Job Title <span className="text-signal-gold">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Senior Product Manager / VP of Operations"
+                    value={form.role}
+                    onChange={(e) => set('role', e.target.value)}
+                    className="w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3 text-sm text-bone focus:outline-none focus:border-signal-gold"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+                    Total Work Experience <span className="text-signal-gold">*</span>
+                  </label>
+                  <select
+                    value={form.seniority}
+                    onChange={(e) => set('seniority', e.target.value)}
+                    className="w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3 text-sm text-bone focus:outline-none focus:border-signal-gold"
+                  >
+                    <option value="" className="bg-obsidian">Select experience tier...</option>
+                    {seniorities.map((s) => (
+                      <option key={s} value={s} className="bg-obsidian text-bone">{s}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )}
+
+            {/* STEP 2: Career Goals & Target Market */}
+            {step === 2 && (
+              <div className="space-y-6">
+                <h2 className="font-serif text-bone text-xl font-semibold mb-6 border-b border-white/10 pb-4">
+                  Step 2: Target Market &amp; Key Objectives
+                </h2>
+
+                <div>
+                  <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+                    Primary Target Geography / Market <span className="text-signal-gold">*</span>
+                  </label>
+                  <select
+                    value={form.geography}
+                    onChange={(e) => {
+                      const geoVal = e.target.value
+                      set('geography', geoVal)
+                      if (geoVal.includes('Singapore')) setForm(f => ({ ...f, countryCode: 'SG', countryName: 'Singapore' }))
+                      else if (geoVal.includes('UAE') || geoVal.includes('GCC')) setForm(f => ({ ...f, countryCode: 'AE', countryName: 'United Arab Emirates' }))
+                      else if (geoVal.includes('Australia')) setForm(f => ({ ...f, countryCode: 'AU', countryName: 'Australia' }))
+                      else if (geoVal.includes('United States')) setForm(f => ({ ...f, countryCode: 'US', countryName: 'United States' }))
+                      else if (geoVal.includes('United Kingdom')) setForm(f => ({ ...f, countryCode: 'GB', countryName: 'United Kingdom' }))
+                      else setForm(f => ({ ...f, countryCode: 'IN', countryName: 'India' }))
+                    }}
+                    className="w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3 text-sm text-bone focus:outline-none focus:border-signal-gold"
+                  >
+                    <option value="" className="bg-obsidian">Select target geography...</option>
+                    {geographies.map((g) => (
+                      <option key={g} value={g} className="bg-obsidian text-bone">{g}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-3">
+                    What are your main goals? (Select all that apply) <span className="text-signal-gold">*</span>
+                  </label>
+                  <div className="space-y-2.5">
+                    {goalsList.map((g) => {
+                      const active = form.goals.includes(g)
+                      return (
+                        <button
+                          type="button"
+                          key={g}
+                          onClick={() => toggleGoal(g)}
+                          className={`w-full text-left p-3 rounded-lg border text-xs font-sans transition-all flex items-center justify-between ${
+                            active
+                              ? 'bg-signal-gold/10 border-signal-gold text-bone font-medium'
+                              : 'bg-white/[0.02] border-white/10 text-muted hover:border-white/20'
+                          }`}
+                        >
+                          <span>{g}</span>
+                          <span className={`font-mono text-xs font-bold ${active ? 'text-signal-gold' : 'text-muted/40'}`}>
+                            {active ? '✓' : '+'}
+                          </span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* STEP 3: Service & Timeline */}
+            {step === 3 && (
+              <div className="space-y-6">
+                <h2 className="font-serif text-bone text-xl font-semibold mb-6 border-b border-white/10 pb-4">
+                  Step 3: Preferred Package &amp; Timeline
+                </h2>
+
+                <div>
+                  <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-3">
+                    Select Preferred Package <span className="text-signal-gold">*</span>
+                  </label>
+                  <div className="space-y-3">
+                    {servicesList.map((s) => {
+                      const active = form.packageSlug === s.slug
+                      return (
+                        <div
+                          key={s.slug}
+                          onClick={() => {
+                            set('packageSlug', s.slug)
+                            set('service', s.label)
+                          }}
+                          className={`p-4 rounded-xl border cursor-pointer transition-all ${
+                            active
+                              ? 'bg-obsidian border-2 border-signal-gold shadow-lg'
+                              : 'bg-white/[0.02] border-white/10 hover:border-white/20'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="font-mono text-xs font-bold text-bone">{s.label}</span>
+                            <span className="font-mono text-[0.55rem] uppercase tracking-widest text-signal-gold bg-signal-gold/10 border border-signal-gold/30 px-2 py-0.5 rounded">
+                              {s.tag}
+                            </span>
+                          </div>
+                          <p className="font-sans text-xs text-muted leading-relaxed">{s.desc}</p>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+                    Additional Context or Target Companies (Optional)
+                  </label>
+                  <textarea
+                    rows={3}
+                    placeholder="Tell us about specific companies you are targeting, salary expectations, or any custom details..."
+                    value={form.context}
+                    onChange={(e) => set('context', e.target.value)}
+                    className="w-full bg-white/[0.04] border border-white/15 rounded-lg p-3 text-xs text-bone focus:outline-none focus:border-signal-gold"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Stepper Navigation Buttons */}
+            <div className="flex items-center justify-between pt-8 mt-8 border-t border-white/10">
+              {step > 1 ? (
+                <button
+                  type="button"
+                  onClick={back}
+                  className="px-6 py-3 border border-white/20 text-bone rounded font-mono text-xs uppercase tracking-widest hover:bg-white/[0.04] transition-colors"
+                >
+                  ← Back
+                </button>
+              ) : (
+                <div />
+              )}
+
+              {step < 3 ? (
+                <button
+                  type="button"
+                  onClick={next}
+                  className="px-8 py-3.5 bg-signal-gold text-obsidian font-sans text-xs font-bold tracking-[0.2em] uppercase rounded btn-primary-glow hover:bg-bone transition-all"
+                >
+                  Continue →
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={submit}
+                  disabled={loading}
+                  className="px-10 py-3.5 bg-signal-gold text-obsidian font-sans text-xs font-bold tracking-[0.2em] uppercase rounded btn-primary-glow hover:bg-bone transition-all disabled:opacity-50"
+                >
+                  {loading ? 'Registering Consultation...' : 'Submit Request →'}
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </main>

@@ -2,115 +2,163 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { PaymentButton } from '@/components/ui/PaymentButton'
-import { useGeo } from '@/hooks/useGeo'
+import Link from 'next/link'
 
 export function AuditCheckout() {
-  const router                    = useRouter()
-  const geo                       = useGeo()
-  const isIndia                   = geo?.isIndia ?? false
-  const [email,   setEmail]       = useState('')
-  const [error,   setError]       = useState('')
-  const [success, setSuccess]     = useState(false)
-  const [ready,   setReady]       = useState(false)
+  const router = useRouter()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [role, setRole] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
-  function handleEmailSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (!name.trim()) { setError('Please enter your full name.'); return }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Enter a valid email address.')
+      setError('Please enter a valid email address.')
       return
     }
+    if (!phone.trim()) { setError('Please enter your phone number.'); return }
+
     setError('')
-    setReady(true)
+    setLoading(true)
+
+    try {
+      const res = await fetch('/api/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          role: role.trim() || 'Senior Leader',
+          seniority: '9-15 yrs',
+          geography: 'Global',
+          service: 'Market Value Audit & Consultation',
+          packageSlug: 'AUDIT',
+          servicesRequested: ['Market Value Audit'],
+        }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        setError(data.error || 'Failed to submit request. Please try again.')
+        return
+      }
+
+      setSubmitted(true)
+    } catch {
+      setError('Network error. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
-  function handleSuccess() {
-    setSuccess(true)
-    setTimeout(() => router.push('/audit/success'), 1500)
-  }
-
-  if (success) {
+  if (submitted) {
     return (
-      <div className="border border-signal-gold/30 bg-graphite/10 p-8">
-        <p className="label-inst mb-3">Payment received.</p>
-        <p className="display-card text-xl">Redirecting you now…</p>
+      <div className="max-w-md mx-auto p-8 rounded-2xl bg-obsidian border border-signal-gold/40 text-center shadow-xl">
+        <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center text-xl mx-auto mb-4">
+          ✓
+        </div>
+        <span className="font-mono text-xs text-signal-gold uppercase tracking-widest block mb-2 font-bold">
+          Consultation Request Confirmed
+        </span>
+        <p className="font-serif text-bone text-lg mb-4">
+          Thank you, {name}! Your audit request is registered in our ClientForge CRM.
+        </p>
+        <p className="font-sans text-muted text-xs leading-relaxed mb-6">
+          Our senior analyst will review your background and send your consultation link to <strong className="text-bone">{email}</strong>.
+        </p>
+        <Link
+          href="/book"
+          className="inline-block w-full py-3.5 bg-signal-gold text-obsidian font-mono text-xs uppercase tracking-wider font-bold rounded hover:bg-bone transition-all"
+        >
+          Pick Your Consultation Slot →
+        </Link>
       </div>
     )
   }
 
   return (
-    <div className="max-w-md mx-auto">
-
-      {/* Price Clarity Box */}
-      <div className="border border-graphite bg-graphite/20 p-5 mb-6">
-        <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-3">ELITE AUDIT — PRICING</p>
-        {isIndia ? (
-          <div>
-            <p className="font-mono text-muted text-[0.55rem] tracking-widest">INDIA (INR)</p>
-            <p className="font-serif text-bone text-2xl">₹2,999</p>
-            <p className="font-mono text-muted text-[0.55rem]">Razorpay · UPI · Cards</p>
-          </div>
-        ) : (
-          <div>
-            <p className="font-mono text-muted text-[0.55rem] tracking-widest">GLOBAL (USD)</p>
-            <p className="font-serif text-bone text-2xl">$99</p>
-            <p className="font-mono text-muted text-[0.55rem]">PayPal · Cards</p>
-          </div>
-        )}
-        <p className="font-mono text-signal-gold text-[0.55rem] tracking-widest mt-3 pt-3 border-t border-graphite">
-          ↳ Secure checkout. Portal link delivered to your inbox within minutes.
+    <div className="max-w-md mx-auto p-8 rounded-2xl bg-obsidian border border-white/10 shadow-2xl">
+      <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 mb-6 text-center">
+        <p className="font-mono text-xs text-signal-gold uppercase tracking-wider font-bold mb-1">
+          ANALYST MARKET VALUE AUDIT
+        </p>
+        <p className="font-serif text-bone text-sm">
+          Comprehensive ATS Score • Benchmarking • Strategic Consultation Call
         </p>
       </div>
 
-      {!ready ? (
-        <form onSubmit={handleEmailSubmit} className="flex flex-col gap-4" noValidate>
-          <label className="font-mono text-muted text-[0.6rem] tracking-widest">
-            YOUR EMAIL — WHERE WE SEND YOUR PRIVATE PORTAL LINK
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
+        {error && <p className="font-sans text-red-400 text-xs p-3 rounded bg-red-950/40 border border-red-900/50">{error}</p>}
+
+        <div>
+          <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-1">
+            Full Name <span className="text-signal-gold">*</span>
+          </label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Rachel Tan"
+            className="w-full bg-white/[0.04] border border-white/15 rounded px-4 py-3 text-xs text-bone focus:outline-none focus:border-signal-gold"
+          />
+        </div>
+
+        <div>
+          <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-1">
+            Email Address <span className="text-signal-gold">*</span>
           </label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="your@email.com"
-            autoComplete="email"
-            className="bg-transparent border border-graphite px-5 py-4 font-sans text-bone text-sm
-                       focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/40"
+            placeholder="rachel@company.com"
+            className="w-full bg-white/[0.04] border border-white/15 rounded px-4 py-3 text-xs text-bone focus:outline-none focus:border-signal-gold"
           />
-          {error && <p className="font-sans text-signal-gold text-xs">{error}</p>}
-          <button
-            type="submit"
-            className="bg-signal-gold text-obsidian px-8 py-4 font-sans text-[0.7rem]
-                       tracking-[0.2em] uppercase hover:bg-bone transition-colors duration-200
-                       cursor-pointer"
-          >
-            Continue to Payment →
-          </button>
-        </form>
-      ) : (
-        <div className="flex flex-col gap-4">
-          <div className="border-b border-graphite pb-4 flex items-center justify-between">
-            <p className="font-sans text-muted text-sm">{email}</p>
-            <button
-              onClick={() => setReady(false)}
-              className="font-mono text-muted text-[0.6rem] tracking-widest hover:text-bone transition-colors"
-            >
-              CHANGE
-            </button>
-          </div>
-          <PaymentButton
-            product="audit"
-            email={email}
-            onSuccess={handleSuccess}
-            onError={(msg) => setError(msg)}
-            labelINR="Pay ₹2,999 — Book Market Value Audit →"
-            labelUSD="Pay $99 USD — Book Market Value Audit →"
-          />
-          {error && <p className="font-sans text-signal-gold text-xs text-center">{error}</p>}
         </div>
-      )}
 
-      <p className="font-mono text-muted text-[0.6rem] tracking-widest text-center mt-6">
-        Secure checkout · Portal link delivered to your inbox within minutes
+        <div>
+          <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-1">
+            Phone / WhatsApp <span className="text-signal-gold">*</span>
+          </label>
+          <input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="+65 9123 4567"
+            className="w-full bg-white/[0.04] border border-white/15 rounded px-4 py-3 text-xs text-bone focus:outline-none focus:border-signal-gold"
+          />
+        </div>
+
+        <div>
+          <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-1">
+            Target Position / Role
+          </label>
+          <input
+            type="text"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            placeholder="e.g. Director of Engineering / Lead PM"
+            className="w-full bg-white/[0.04] border border-white/15 rounded px-4 py-3 text-xs text-bone focus:outline-none focus:border-signal-gold"
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="mt-2 w-full bg-signal-gold text-obsidian px-6 py-4 font-sans text-xs font-bold tracking-[0.2em] uppercase rounded hover:bg-bone transition-all cursor-pointer disabled:opacity-50"
+        >
+          {loading ? 'Registering Request...' : 'Request Analyst Audit Consultation →'}
+        </button>
+      </form>
+
+      <p className="font-mono text-muted text-[0.55rem] tracking-widest text-center mt-4 opacity-70">
+        ✓ Confidential • Registered in ClientForge Leads Flywheel • 24-hr response
       </p>
     </div>
   )
