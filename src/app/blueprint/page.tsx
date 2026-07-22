@@ -6,40 +6,175 @@ import { Disclaimer } from '@/components/ui/Disclaimer'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Career Booster Services & Pricing — Catalyst by Ripple Nexus',
+  title: 'Career Booster & Premium Plus Packages — Catalyst by Ripple Nexus',
   description:
-    'Executive Resume Rewrite, LinkedIn Profile & Custom Banner Design, Tailored Cover Letters, Country-Based & Multi-Lingual Optimization for ASEAN, APAC, GCC, and Global markets.',
+    'Executive Resume Rewrite, LinkedIn Profile & Custom Banner Design, Tailored Cover Letters, Personal Web Portfolio Website, Country-Based & Multi-Lingual Optimization.',
 }
 
 export default function BlueprintPage() {
   return (
     <>
       <Header />
-      <main className="pt-40 pb-32 grain">
+      <main className="pt-36 sm:pt-40 pb-28 grain">
         <div className="max-w-dossier mx-auto px-6 lg:px-12">
 
           {/* ── HEADER ──────────────────────────────────────────────── */}
-          <div className="mb-24 text-center max-w-4xl mx-auto">
+          <div className="mb-20 text-center max-w-4xl mx-auto">
             <span className="font-mono text-xs tracking-[0.3em] uppercase text-signal-gold block mb-4">
-              Career Booster Package &amp; Services
+              Executive Packages &amp; Services
             </span>
-            <h1 className="display-page mb-6 text-bone" style={{ fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)' }}>
-              Clear Services.{' '}
-              <em className="not-italic text-gold-gradient">Guaranteed Career ROI.</em>
+            <h1 className="display-page mb-6 text-bone" style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.5rem)' }}>
+              Two Flagship Packages.{' '}
+              <em className="not-italic text-gold-gradient">Guaranteed Executive ROI.</em>
             </h1>
-            <p className="font-serif text-muted text-xl leading-relaxed max-w-2xl mx-auto">
-              Every service is tailored by experience level and target market. Complimentary Cover Letter included with every Career Booster package.
+            <p className="font-serif text-muted text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-6">
+              Tailored by experience tier and target market. Complimentary Cover Letter included with every Career Booster package.
             </p>
-            <div className="mt-6">
-              <span className="font-mono text-signal-gold text-[0.6rem] tracking-[0.3em] uppercase bg-white/[0.03] px-4 py-2 rounded border border-white/10">
-                ASEAN (🇸🇬 🇲🇾 🇮🇩 🇻🇳) • APAC (🇮🇳 🇦🇺) • GCC (🇦🇪 🇸🇦) • GLOBAL (🇺🇸 🇬🇧)
-              </span>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {[
+                '🇸🇦 Saudi Arabia',
+                '🇶🇦 Qatar',
+                '🇦🇪 UAE',
+                '🇮🇳 India',
+                '🇲🇾 Malaysia',
+                '🇨🇭 Switzerland',
+                '🇦🇺 ANZ',
+                '🇺🇸 Global',
+              ].map((flag) => (
+                <span
+                  key={flag}
+                  className="font-mono text-xs text-bone bg-white/[0.04] border border-white/10 px-3 py-1 rounded-full"
+                >
+                  {flag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* ── FLAGSHIP PACKAGES COMPARISON (BOOSTER VS PREMIUM PLUS) ── */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-24 items-stretch">
+            {/* 1. CAREER BOOSTER PACKAGE */}
+            <div
+              id="career-booster"
+              className="p-8 sm:p-10 rounded-2xl bg-obsidian border-2 border-signal-gold/40 shadow-2xl relative flex flex-col justify-between"
+            >
+              <div className="absolute -top-3.5 left-8 bg-signal-gold text-obsidian font-mono text-[0.6rem] tracking-widest uppercase font-bold px-4 py-1 rounded-full whitespace-nowrap">
+                ★ Most Popular Flagship
+              </div>
+
+              <div>
+                <span className="font-mono text-xs text-signal-gold uppercase tracking-wider font-bold block mb-2">
+                  Package 01
+                </span>
+                <h2 className="display-card text-2xl sm:text-3xl text-bone mb-2">
+                  Career Booster Package
+                </h2>
+                <p className="font-mono text-muted text-xs tracking-wider uppercase mb-6">
+                  RESUME · LINKEDIN · BANNER &amp; DP · COVER LETTER
+                </p>
+                <p className="font-serif text-muted text-sm leading-relaxed mb-8">
+                  Engineered for Mid-Career to Senior Leaders seeking higher compensation and recruiter magnet status across GCC, ASEAN, APAC, and Global markets.
+                </p>
+
+                <div className="space-y-3.5 mb-10 border-t border-white/10 pt-6">
+                  {[
+                    'Executive Resume Rewrite (ATS 98%+ pass rate)',
+                    'LinkedIn Full Profile Rewrite (Headline, Bio, Work)',
+                    'Custom High-Resolution LinkedIn Banner Design',
+                    'Display Picture (DP) Formatting Direction Kit',
+                    'Complimentary Custom Strategic Cover Letter',
+                    'Country Optimization (Singapore, Dubai, Sydney, US)',
+                    'Recruiter InMail Outreach DM Templates',
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-2.5">
+                      <span className="text-signal-gold text-xs mt-0.5">✓</span>
+                      <span className="font-sans text-xs text-bone/90 leading-snug">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/request"
+                  className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] font-mono text-xs font-bold tracking-widest uppercase rounded-full text-center shadow-md hover:brightness-110 transition-all whitespace-nowrap"
+                >
+                  Book Strategy Call →
+                </Link>
+                <a
+                  href="https://clientforge.theripplenexus.com/checkout?pkg=CAREER_BOOSTER"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-mono text-xs font-semibold tracking-widest uppercase rounded-full text-center hover:border-signal-gold/50 transition-colors whitespace-nowrap"
+                >
+                  Self-Service Checkout ↗
+                </a>
+              </div>
+            </div>
+
+            {/* 2. PREMIUM PLUS PACKAGE (INCLUDES PORTFOLIO SITE) */}
+            <div
+              id="premium-plus"
+              className="p-8 sm:p-10 rounded-2xl bg-obsidian/90 border-2 border-emerald-500/40 shadow-2xl relative flex flex-col justify-between"
+            >
+              <div className="absolute -top-3.5 left-8 bg-emerald-500 text-obsidian font-mono text-[0.6rem] tracking-widest uppercase font-bold px-4 py-1 rounded-full whitespace-nowrap">
+                👑 C-Suite &amp; Personal Website Included
+              </div>
+
+              <div>
+                <span className="font-mono text-xs text-emerald-400 uppercase tracking-wider font-bold block mb-2">
+                  Package 02
+                </span>
+                <h2 className="display-card text-2xl sm:text-3xl text-bone mb-2">
+                  Premium Plus Package
+                </h2>
+                <p className="font-mono text-muted text-xs tracking-wider uppercase mb-6">
+                  CAREER BOOSTER + PERSONAL WEB PORTFOLIO SHOWCASE
+                </p>
+                <p className="font-serif text-muted text-sm leading-relaxed mb-8">
+                  For Executives, VPs, and C-Suite Leaders who require an immersive custom Web Portfolio Website to showcase major deals, revenue scale, and media presence.
+                </p>
+
+                <div className="space-y-3.5 mb-10 border-t border-white/10 pt-6">
+                  {[
+                    'Everything included in Career Booster Package',
+                    '🌐 Custom Executive Web Portfolio Website',
+                    'Hosted custom domain setup & mobile optimization',
+                    'Multi-Lingual Adaptation (English + 1 Language)',
+                    'Executive Pitch & Media Feature Showcase',
+                    'Salary & Offer Negotiation Playbook',
+                    '1-on-1 Direct Positioning Strategy Session',
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-2.5">
+                      <span className="text-emerald-400 text-xs mt-0.5">✓</span>
+                      <span className="font-sans text-xs text-bone/90 leading-snug">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/request"
+                  className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-emerald-400 to-teal-600 text-obsidian font-mono text-xs font-bold tracking-widest uppercase rounded-full text-center shadow-md hover:brightness-110 transition-all whitespace-nowrap"
+                >
+                  Request Custom Proposal →
+                </Link>
+                <a
+                  href="https://clientforge.theripplenexus.com/checkout?pkg=PREMIUM_PLUS"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-mono text-xs font-semibold tracking-widest uppercase rounded-full text-center hover:border-emerald-400/50 transition-colors whitespace-nowrap"
+                >
+                  Self-Service Checkout ↗
+                </a>
+              </div>
             </div>
           </div>
 
           {/* ── THE PROBLEM & SOLUTION ──────────────────────────────── */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-28 items-start">
-            <div className="p-10 rounded-2xl bg-obsidian border border-white/10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-24 items-start">
+            <div className="p-8 sm:p-10 rounded-2xl bg-obsidian border border-white/10">
               <span className="font-mono text-xs uppercase tracking-widest text-signal-gold block mb-3">
                 The Career Dilemma
               </span>
@@ -56,11 +191,11 @@ export default function BlueprintPage() {
               </div>
             </div>
 
-            <div className="p-10 rounded-2xl bg-obsidian border border-white/10">
+            <div className="p-8 sm:p-10 rounded-2xl bg-obsidian border border-white/10">
               <span className="font-mono text-xs uppercase tracking-widest text-emerald-400 block mb-3">
                 The Catalyst Advantage
               </span>
-              <div className="space-y-6">
+              <div className="space-y-5">
                 {[
                   { title: 'Executive Resume Rewrite', desc: 'Rebuilt for 98%+ ATS keyword pass rates with quantified ROI metrics in Word & PDF formats.' },
                   { title: 'LinkedIn Profile & Custom Banner', desc: 'Recruiter-tuned Headline, story bio, and high-resolution custom LinkedIn Banner design.' },
@@ -75,78 +210,29 @@ export default function BlueprintPage() {
             </div>
           </div>
 
-          {/* ── THE SYSTEM: MODULES ─────────────────────────────────── */}
-          <div className="mb-28">
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <span className="font-mono text-xs tracking-widest uppercase text-signal-gold block mb-2">Service Breakdown</span>
-              <h2 className="display-section text-3xl text-bone">What Is Included In Your Package</h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                {
-                  id: '01',
-                  title: 'Executive Resume Rewrite',
-                  desc: 'A full metric-driven rewrite of your CV structured for your specific target role. Guaranteed ATS compliance, high visual hierarchy, and editable Word & PDF files.',
-                },
-                {
-                  id: '02',
-                  title: 'LinkedIn Profile & Banner',
-                  desc: 'Headline, Bio, and Work history rewritten for max search visibility. Includes custom banner graphic asset and profile display picture (DP) formatting rules.',
-                },
-                {
-                  id: '03',
-                  title: 'Complimentary Cover Letter',
-                  desc: 'A tailored narrative cover letter that bridges your background to your target company. Ideal for high-stakes applications and direct HR outreach.',
-                },
-                {
-                  id: '04',
-                  title: 'Country Market Optimization',
-                  desc: 'Adapted to local recruiter preferences in Singapore, UAE, India, Australia, US, and EU with visa status formatting where applicable.',
-                },
-                {
-                  id: '05',
-                  title: 'Multi-Lingual Support',
-                  desc: 'Dual-language CV translation and adaptation in English, Mandarin Chinese, Japanese, Bahasa, German, French, or Spanish.',
-                },
-                {
-                  id: '06',
-                  title: 'Recruiter DMs & Negotiation',
-                  desc: 'Ready-to-use InMail outreach templates for hiring managers and our comprehensive salary negotiation playbook to maximize your offer.',
-                },
-              ].map((m) => (
-                <div key={m.id} className="bg-obsidian p-8 rounded-xl border border-white/10 flex flex-col gap-4">
-                  <span className="font-mono text-signal-gold text-xs tracking-widest font-bold">{m.id}</span>
-                  <h3 className="display-card text-xl text-bone">{m.title}</h3>
-                  <p className="font-sans text-muted text-xs leading-relaxed">{m.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* ── PRICING MATRIX ──────────────────────────────────────── */}
-          <div className="mb-28">
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <span className="font-mono text-xs tracking-widest uppercase text-signal-gold block mb-2">Transparent Investment</span>
+          <div className="mb-24">
+            <div className="text-center max-w-2xl mx-auto mb-10">
+              <span className="font-mono text-xs tracking-widest uppercase text-signal-gold block mb-2">Scope &amp; Deliverables</span>
               <h2 className="display-section text-3xl text-bone">Choose Your Experience Tier</h2>
             </div>
             <BlueprintPricingMatrix />
           </div>
 
           {/* ── FINAL CTA ───────────────────────────────────────────── */}
-          <div className="border-t border-white/10 pt-20 flex flex-col md:flex-row gap-12 items-center justify-between">
-            <div className="max-w-xl">
-              <h2 className="display-card text-3xl mb-4 text-bone">
+          <div className="border-t border-white/10 pt-16 flex flex-col md:flex-row gap-8 items-center justify-between">
+            <div className="max-w-xl text-center md:text-left">
+              <h2 className="display-card text-2xl sm:text-3xl mb-3 text-bone">
                 Ready to Upgrade Your <em className="text-signal-gold not-italic">Market Value?</em>
               </h2>
-              <p className="font-serif text-muted text-base leading-relaxed">
+              <p className="font-serif text-muted text-sm sm:text-base leading-relaxed">
                 Join over 1,400+ professionals who landed top-tier global offers with our Career Booster package.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
               <Link
                 href="/request"
-                className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-signal-gold to-amber-500 text-obsidian font-sans text-xs font-bold tracking-wider uppercase rounded-full text-center shadow-md hover:brightness-110 transition-all"
+                className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] font-mono text-xs font-bold tracking-widest uppercase rounded-full text-center shadow-md hover:brightness-110 transition-all whitespace-nowrap"
               >
                 Book Strategy Consultation →
               </Link>
@@ -154,14 +240,14 @@ export default function BlueprintPage() {
                 href="https://clientforge.theripplenexus.com/checkout?pkg=CAREER_BOOSTER"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-sans text-xs font-semibold tracking-wider uppercase rounded-full text-center hover:border-signal-gold/40 transition-colors"
+                className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-mono text-xs font-semibold tracking-widest uppercase rounded-full text-center hover:border-signal-gold/40 transition-colors whitespace-nowrap"
               >
                 Self-Service Checkout ↗
               </a>
             </div>
           </div>
 
-          <Disclaimer variant="compact" className="mt-16 pt-8 border-t border-white/[0.05]" />
+          <Disclaimer variant="compact" className="mt-14 pt-8 border-t border-white/[0.05]" />
 
         </div>
       </main>

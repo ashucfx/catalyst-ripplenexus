@@ -25,12 +25,12 @@ export function BlueprintPricingMatrix() {
 
           {/* Action CTAs */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            <Link
-              href="/request"
-              className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-signal-gold via-amber-400 to-yellow-500 text-obsidian font-sans text-xs font-bold tracking-wider uppercase rounded-full text-center shadow-md shadow-signal-gold/15 hover:brightness-110 transition-all"
-            >
-              Book Strategy Consultation →
-            </Link>
+              <Link
+                href="/request"
+                className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-obsidian font-mono text-xs font-bold tracking-widest uppercase rounded-full text-center shadow-md shadow-[#C5A059]/20 hover:brightness-110 transition-all"
+              >
+                Book Strategy Consultation →
+              </Link>
 
             <a
               href="https://clientforge.theripplenexus.com/checkout"

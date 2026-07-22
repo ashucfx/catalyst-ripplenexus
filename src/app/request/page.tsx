@@ -493,7 +493,7 @@ export default function RequestPage() {
                 <button
                   type="button"
                   onClick={next}
-                  className="px-8 py-3.5 bg-signal-gold text-obsidian font-sans text-xs font-bold tracking-[0.2em] uppercase rounded btn-primary-glow hover:bg-bone transition-all"
+                  className="px-7 py-3 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] font-mono text-xs font-bold tracking-widest uppercase rounded-full shadow-md hover:brightness-110 transition-all whitespace-nowrap"
                 >
                   Continue →
                 </button>
@@ -502,9 +502,9 @@ export default function RequestPage() {
                   type="button"
                   onClick={submit}
                   disabled={loading}
-                  className="px-10 py-3.5 bg-signal-gold text-obsidian font-sans text-xs font-bold tracking-[0.2em] uppercase rounded btn-primary-glow hover:bg-bone transition-all disabled:opacity-50"
+                  className="px-8 py-3 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] font-mono text-xs font-bold tracking-widest uppercase rounded-full shadow-md hover:brightness-110 transition-all disabled:opacity-50 whitespace-nowrap"
                 >
-                  {loading ? 'Registering Consultation...' : 'Submit Request →'}
+                  {loading ? 'Registering...' : 'Submit Request →'}
                 </button>
               )}
             </div>

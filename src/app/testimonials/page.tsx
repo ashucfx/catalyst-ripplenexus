@@ -5,7 +5,6 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { TestimonialCard } from '@/components/ui/TestimonialCard'
 import { TESTIMONIALS_DATA } from '@/data/testimonialsData'
-import { GeoPrice } from '@/components/ui/GeoPrice'
 import Link from 'next/link'
 
 export default function TestimonialsPage() {
@@ -267,7 +266,7 @@ export default function TestimonialsPage() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 max-w-xl mx-auto">
               <Link
                 href="/request"
-                className="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-signal-gold to-amber-500 text-obsidian font-sans text-xs font-bold tracking-wider uppercase rounded-full shadow-lg hover:brightness-110 transition-all text-center"
+                className="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-obsidian font-mono text-xs font-bold tracking-widest uppercase rounded-full shadow-md shadow-[#C5A059]/20 hover:brightness-110 transition-all text-center"
               >
                 Book Strategy Consultation →
               </Link>
