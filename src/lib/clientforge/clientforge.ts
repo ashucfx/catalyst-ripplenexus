@@ -52,6 +52,18 @@ export async function syncLeadToClientForge(payload: LeadSyncPayload): Promise<{
       sourceUrl: payload.sourceUrl || 'https://www.catalyst.theripplenexus.com',
     }
 
+    const apiKey = process.env.CLIENTFORGE_API_KEY || process.env.CLIENTFORGE_SECRET_TOKEN || ''
+
+    const requestHeaders: Record<string, string> = {
+      'Content-Type': 'application/json',
+      'User-Agent': 'Catalyst-Website-LeadSync/1.0',
+    }
+
+    if (apiKey) {
+      requestHeaders['x-api-key'] = apiKey
+      requestHeaders['Authorization'] = `Bearer ${apiKey}`
+    }
+
     console.log('[ClientForge Sync] Sending lead payload to:', endpoint, bodyData.email)
 
     const controller = new AbortController()
@@ -59,10 +71,7 @@ export async function syncLeadToClientForge(payload: LeadSyncPayload): Promise<{
 
     const res = await fetch(endpoint, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'User-Agent': 'Catalyst-Website-LeadSync/1.0',
-      },
+      headers: requestHeaders,
       body: JSON.stringify(bodyData),
       signal: controller.signal,
     })

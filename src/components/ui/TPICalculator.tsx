@@ -1,10 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { TPIMeter } from '@/components/ui/TPIMeter'
-import { Button } from '@/components/ui/Button'
-import { GeoPrice } from '@/components/ui/GeoPrice'
-import { useGeo } from '@/hooks/useGeo'
 
 // ─── Types ─────────────────────────────────────────────────────────────
 
@@ -244,13 +242,19 @@ export function TPICalculator() {
             </div>
           </div>
 
-          <div className="mt-12 pt-12 border-t border-graphite/40 flex flex-col sm:flex-row gap-6">
-            <Button href="/request" variant="primary" className="flex-1 justify-center">
-              Book Full Audit — <GeoPrice product="audit" variant="cta" />
-            </Button>
-            <Button href="/blueprint" variant="ghost" className="flex-1 justify-center">
-              View Blueprint
-            </Button>
+          <div className="mt-12 pt-12 border-t border-white/10 flex flex-col sm:flex-row gap-4">
+            <Link
+              href="/request"
+              className="flex-1 px-6 py-3.5 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] font-mono text-xs font-bold tracking-widest uppercase rounded-full text-center shadow-md hover:brightness-110 transition-all whitespace-nowrap"
+            >
+              Book Strategy Call →
+            </Link>
+            <Link
+              href="/blueprint"
+              className="flex-1 px-6 py-3.5 border border-white/20 text-bone font-mono text-xs font-semibold tracking-widest uppercase rounded-full text-center hover:border-signal-gold/40 transition-colors whitespace-nowrap"
+            >
+              View Flagship Packages ↗
+            </Link>
           </div>
         </div>
 
@@ -298,9 +302,13 @@ export function TPICalculator() {
             className="bg-transparent border border-graphite/60 px-6 py-5 font-sans text-bone text-base focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/40"
           />
           {emailError && <p className="font-sans text-signal-gold text-xs">{emailError}</p>}
-          <Button type="submit" variant="primary" className="justify-center py-6" disabled={loading}>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full px-6 py-4 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] font-mono text-xs font-bold tracking-widest uppercase rounded-full text-center shadow-md hover:brightness-110 transition-all disabled:opacity-50 whitespace-nowrap"
+          >
             {loading ? 'CALCULATING...' : 'SHOW MY TPI SCORE →'}
-          </Button>
+          </button>
           <p className="font-mono text-muted text-[0.5rem] tracking-[0.3em] uppercase opacity-40">Privacy Secured · No Marketing Spam</p>
         </form>
       </div>
