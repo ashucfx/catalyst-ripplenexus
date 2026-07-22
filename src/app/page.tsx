@@ -135,55 +135,59 @@ export default function HomePage() {
 
           <div className="relative z-10 max-w-dossier mx-auto px-6 lg:px-12">
             {/* Live Regional Coverage Chip */}
-            <div className="live-badge mb-10 inline-flex items-center gap-2">
-              <span className="pulse-dot" />
-              <span>Career Booster Active • 🇸🇬 Singapore • 🇮🇳 India • 🇦🇪 Dubai / UAE • 🇦🇺 Australia • 🇺🇸 USA • 🇬🇧 UK</span>
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-signal-gold/10 border border-signal-gold/30 backdrop-blur-md mb-8">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              </span>
+              <span className="font-mono text-xs text-signal-gold font-medium tracking-wide">
+                Career Booster Active • 🇸🇦 Saudi Arabia • 🇶🇦 Qatar • 🇦🇪 UAE • 🇮🇳 India • 🇲🇾 Malaysia • 🇨🇭 Switzerland • 🇦🇺 ANZ
+              </span>
             </div>
 
             {/* Main Headline */}
             <h1
-              className="display-hero mb-8 max-w-5xl"
-              style={{ fontSize: 'clamp(2.8rem, 7.5vw, 6.8rem)', lineHeight: 1.05 }}
+              className="display-hero mb-8 max-w-5xl tracking-tight text-bone font-serif font-bold"
+              style={{ fontSize: 'clamp(2.8rem, 6.5vw, 5.8rem)', lineHeight: 1.08 }}
             >
-              Skyrocket Your Career &amp; Land{' '}
-              <em className="text-gold-gradient not-italic text-glow-gold">High-Paying Global Roles.</em>
+              Break Through Career Ceilings &amp; Land{' '}
+              <em className="text-gold-gradient not-italic text-glow-gold">High-Paying Executive Roles.</em>
             </h1>
 
             {/* Clear Subheadline */}
-            <p
-              className="font-serif text-muted leading-relaxed mb-12 max-w-3xl"
-              style={{ fontSize: 'clamp(1.15rem, 2vw, 1.45rem)' }}
-            >
-              Professional <strong className="text-bone font-medium">Executive Resume Rewrites</strong>,{' '}
-              <strong className="text-bone font-medium">LinkedIn Profile &amp; Custom Banner Design</strong>,{' '}
-              <strong className="text-bone font-medium">Tailored Cover Letters</strong>, and{' '}
-              <strong className="text-bone font-medium">Multi-Lingual Country Optimization</strong> across ASEAN, APAC, Middle East &amp; Global markets.
+            <p className="font-sans text-muted/90 leading-relaxed mb-10 max-w-3xl text-base sm:text-lg font-normal">
+              Transform your career narrative with metric-driven <strong className="text-bone font-semibold">Executive Resume Rewrites</strong>,{' '}
+              <strong className="text-bone font-semibold">LinkedIn Profile &amp; Custom Banner Designs</strong>,{' '}
+              <strong className="text-bone font-semibold">Tailored Cover Letters</strong>, and{' '}
+              <strong className="text-bone font-semibold">Multi-Lingual Country Optimization</strong> across GCC, ASEAN, APAC &amp; Global markets.
             </p>
 
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 mb-14">
-              <div className="shimmer-trigger w-full sm:w-auto">
-                <Link
-                  href="/blueprint"
-                  id="hero-cta-primary"
-                  className="w-full sm:w-auto inline-flex justify-center items-center gap-3 bg-signal-gold text-obsidian
-                             px-10 py-5 font-sans text-xs font-bold tracking-[0.22em] uppercase
-                             btn-primary-glow hover:bg-bone transition-all duration-300 rounded"
-                >
-                  Get Career Booster Package — <GeoPrice product="sprint" variant="cta" />
-                  <span className="text-sm">→</span>
-                </Link>
-                <div className="shimmer-bar" />
-              </div>
+            {/* Premium Call-to-Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-14">
+              <Link
+                href="/request"
+                id="hero-cta-primary"
+                className="inline-flex justify-center items-center gap-3 bg-gradient-to-r from-signal-gold via-amber-400 to-yellow-500 text-obsidian px-9 py-4 font-sans text-xs font-bold tracking-wider uppercase rounded-full shadow-xl shadow-signal-gold/20 hover:brightness-110 transition-all duration-300 transform hover:-translate-y-0.5"
+              >
+                <span>Book Strategy Consultation</span>
+                <span className="text-sm font-bold">→</span>
+              </Link>
+
+              <Link
+                href="/blueprint"
+                id="hero-cta-secondary"
+                className="inline-flex justify-center items-center gap-2 text-bone border border-white/20 px-8 py-4 font-sans text-xs font-semibold tracking-wider uppercase rounded-full hover:border-signal-gold/50 hover:bg-white/[0.05] transition-all duration-300"
+              >
+                <span>Explore Packages</span>
+                <span className="text-muted/60 text-xs font-mono">(from $349)</span>
+              </Link>
 
               <Link
                 href="/testimonials"
-                id="hero-cta-secondary"
-                className="w-full sm:w-auto inline-flex justify-center items-center gap-3 text-bone border border-white/20
-                           px-9 py-5 font-sans text-xs tracking-[0.2em] uppercase rounded
-                           hover:border-signal-gold/40 hover:bg-white/[0.04] transition-all duration-300"
+                className="inline-flex justify-center items-center gap-2 text-signal-gold/90 bg-white/[0.03] border border-white/10 px-6 py-4 font-sans text-xs font-semibold tracking-wider uppercase rounded-full hover:bg-white/[0.08] transition-all duration-300"
               >
-                ★ Verified Testimonials (4.98/5)
+                <span>★ 48 Client Reviews</span>
+                <span className="font-mono text-bone text-xs">5.0</span>
               </Link>
             </div>
 
