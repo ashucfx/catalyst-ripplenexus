@@ -5,8 +5,6 @@ import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/Button'
-import { Disclaimer } from '@/components/ui/Disclaimer'
-import { useGeo } from '@/hooks/useGeo'
 
 const steps = [
   { id: 1, label: 'Profile & Contact' },
@@ -103,9 +101,6 @@ const emptyForm: FormData = {
 }
 
 export default function RequestPage() {
-  const geo = useGeo()
-  const isIndia = geo?.isIndia ?? false
-
   const [step, setStep] = useState(1)
   const [form, setForm] = useState<FormData>(emptyForm)
   const [submitted, setSubmitted] = useState(false)
