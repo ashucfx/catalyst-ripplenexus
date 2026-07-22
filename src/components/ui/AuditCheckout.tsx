@@ -57,45 +57,59 @@ export function AuditCheckout() {
 
   if (submitted) {
     return (
-      <div className="max-w-md mx-auto p-8 rounded-2xl bg-obsidian border border-signal-gold/40 text-center shadow-xl">
-        <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center text-xl mx-auto mb-4">
+      <div className="max-w-xl mx-auto p-8 sm:p-10 rounded-2xl bg-obsidian border-2 border-signal-gold/40 text-center shadow-2xl">
+        <div className="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center text-2xl mx-auto mb-4">
           ✓
         </div>
         <span className="font-mono text-xs text-signal-gold uppercase tracking-widest block mb-2 font-bold">
-          Consultation Request Confirmed
+          Analyst Evaluation Request Registered
         </span>
-        <p className="font-serif text-bone text-lg mb-4">
-          Thank you, {name}! Your audit request is registered in our ClientForge CRM.
+        <h3 className="display-card text-2xl text-bone mb-3">
+          Thank you, {name}!
+        </h3>
+        <p className="font-serif text-muted text-sm leading-relaxed mb-6 max-w-md mx-auto">
+          Your request is registered in ClientForge CRM. A senior analyst is reviewing your target role (<strong className="text-bone">{role || 'Senior Leader'}</strong>) and will send your evaluation details to <strong className="text-bone">{email}</strong>.
         </p>
-        <p className="font-sans text-muted text-xs leading-relaxed mb-6">
-          Our senior analyst will review your background and send your consultation link to <strong className="text-bone">{email}</strong>.
-        </p>
-        <Link
-          href="/book"
-          className="inline-block w-full py-3.5 bg-signal-gold text-obsidian font-mono text-xs uppercase tracking-wider font-bold rounded hover:bg-bone transition-all"
-        >
-          Pick Your Consultation Slot →
-        </Link>
+
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Link
+            href="/book"
+            className="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] font-mono text-xs uppercase tracking-widest font-bold rounded-full hover:brightness-110 transition-all text-center shadow-md whitespace-nowrap"
+          >
+            Pick Consultation Slot Now →
+          </Link>
+          <a
+            href="https://clientforge.theripplenexus.com/checkout?pkg=AUDIT"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto px-7 py-3.5 border border-white/20 text-bone font-mono text-xs uppercase tracking-widest font-semibold rounded-full hover:border-signal-gold/40 transition-colors text-center whitespace-nowrap"
+          >
+            Self-Service Checkout ↗
+          </a>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="max-w-md mx-auto p-8 rounded-2xl bg-obsidian border border-white/10 shadow-2xl">
-      <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 mb-6 text-center">
-        <p className="font-mono text-xs text-signal-gold uppercase tracking-wider font-bold mb-1">
-          ANALYST MARKET VALUE AUDIT
-        </p>
-        <p className="font-serif text-bone text-sm">
-          Comprehensive ATS Score • Benchmarking • Strategic Consultation Call
+    <div className="max-w-xl mx-auto p-8 sm:p-10 rounded-2xl bg-obsidian border border-white/15 shadow-2xl backdrop-blur-xl">
+      <div className="p-6 rounded-xl bg-white/[0.03] border border-white/10 mb-8 text-center">
+        <span className="font-mono text-xs text-signal-gold uppercase tracking-widest font-bold block mb-2">
+          📊 Analyst Market Value Audit
+        </span>
+        <h3 className="display-card text-xl text-bone mb-2">
+          Comprehensive ATS Score • Benchmarking • Analyst Strategy Call
+        </h3>
+        <p className="font-serif text-muted text-xs leading-relaxed">
+          Submit your profile details for an analyst-prepared diagnostic report and strategy consultation call.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-        {error && <p className="font-sans text-red-400 text-xs p-3 rounded bg-red-950/40 border border-red-900/50">{error}</p>}
+      <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+        {error && <p className="font-sans text-red-400 text-xs p-3 rounded-lg bg-red-950/40 border border-red-900/50">{error}</p>}
 
         <div>
-          <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-1">
+          <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
             Full Name <span className="text-signal-gold">*</span>
           </label>
           <input
@@ -103,38 +117,40 @@ export function AuditCheckout() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Rachel Tan"
-            className="w-full bg-white/[0.04] border border-white/15 rounded px-4 py-3 text-xs text-bone focus:outline-none focus:border-signal-gold"
+            className="w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3.5 text-xs text-bone focus:outline-none focus:border-signal-gold transition-colors"
           />
         </div>
 
-        <div>
-          <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-1">
-            Email Address <span className="text-signal-gold">*</span>
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="rachel@company.com"
-            className="w-full bg-white/[0.04] border border-white/15 rounded px-4 py-3 text-xs text-bone focus:outline-none focus:border-signal-gold"
-          />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+              Email Address <span className="text-signal-gold">*</span>
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="rachel@company.com"
+              className="w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3.5 text-xs text-bone focus:outline-none focus:border-signal-gold transition-colors"
+            />
+          </div>
+
+          <div>
+            <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+              Phone / WhatsApp <span className="text-signal-gold">*</span>
+            </label>
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="+65 9123 4567"
+              className="w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3.5 text-xs text-bone focus:outline-none focus:border-signal-gold transition-colors"
+            />
+          </div>
         </div>
 
         <div>
-          <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-1">
-            Phone / WhatsApp <span className="text-signal-gold">*</span>
-          </label>
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="+65 9123 4567"
-            className="w-full bg-white/[0.04] border border-white/15 rounded px-4 py-3 text-xs text-bone focus:outline-none focus:border-signal-gold"
-          />
-        </div>
-
-        <div>
-          <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-1">
+          <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
             Target Position / Role
           </label>
           <input
@@ -142,22 +158,30 @@ export function AuditCheckout() {
             value={role}
             onChange={(e) => setRole(e.target.value)}
             placeholder="e.g. Director of Engineering / Lead PM"
-            className="w-full bg-white/[0.04] border border-white/15 rounded px-4 py-3 text-xs text-bone focus:outline-none focus:border-signal-gold"
+            className="w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3.5 text-xs text-bone focus:outline-none focus:border-signal-gold transition-colors"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="mt-2 w-full bg-signal-gold text-obsidian px-6 py-4 font-sans text-xs font-bold tracking-[0.2em] uppercase rounded hover:bg-bone transition-all cursor-pointer disabled:opacity-50"
+          className="mt-4 w-full bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] px-7 py-4 font-mono text-xs font-bold tracking-widest uppercase rounded-full hover:brightness-110 transition-all cursor-pointer shadow-md disabled:opacity-50 whitespace-nowrap"
         >
           {loading ? 'Registering Request...' : 'Request Analyst Audit Consultation →'}
         </button>
       </form>
 
-      <p className="font-mono text-muted text-[0.55rem] tracking-widest text-center mt-4 opacity-70">
-        ✓ Confidential • Registered in ClientForge Leads Flywheel • 24-hr response
-      </p>
+      <div className="mt-6 pt-6 border-t border-white/10 flex flex-wrap items-center justify-center gap-4 text-center">
+        <span className="font-mono text-emerald-400 text-[0.62rem] uppercase tracking-wider">
+          ✓ Confidential
+        </span>
+        <span className="font-mono text-muted text-[0.62rem] uppercase tracking-wider">
+          • ClientForge CRM Synced
+        </span>
+        <span className="font-mono text-signal-gold text-[0.62rem] uppercase tracking-wider">
+          • 24-Hr Analyst Response
+        </span>
+      </div>
     </div>
   )
 }
