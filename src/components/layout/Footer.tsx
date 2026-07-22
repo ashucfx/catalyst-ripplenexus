@@ -55,8 +55,8 @@ export function Footer() {
 
             {/* Trust badges */}
             <div className="flex flex-wrap gap-3">
-              {['IN · AE · US', 'Career Positioning', 'Not Resume Writing'].map((badge) => (
-                <span key={badge} className="trust-badge" style={{ fontSize: '0.5rem' }}>
+              {['🇮🇳 🇦🇪 🇺🇸 🇸🇬 🇦🇺 🇬🇧', 'Career Positioning', 'ATS 98%+ Guarantee'].map((badge) => (
+                <span key={badge} className="trust-badge" style={{ fontSize: '0.55rem' }}>
                   {badge}
                 </span>
               ))}

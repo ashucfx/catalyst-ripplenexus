@@ -137,7 +137,7 @@ export default function HomePage() {
             {/* Live Regional Coverage Chip */}
             <div className="live-badge mb-10 inline-flex items-center gap-2">
               <span className="pulse-dot" />
-              <span>Career Booster Active • 🇸🇬 SG • 🇮🇳 IN • 🇦🇪 UAE • 🇦🇺 AU • 🇺🇸 US • 🇲🇾 MY • 🇮🇩 ID</span>
+              <span>Career Booster Active • 🇸🇬 Singapore • 🇮🇳 India • 🇦🇪 Dubai / UAE • 🇦🇺 Australia • 🇺🇸 USA • 🇬🇧 UK</span>
             </div>
 
             {/* Main Headline */}

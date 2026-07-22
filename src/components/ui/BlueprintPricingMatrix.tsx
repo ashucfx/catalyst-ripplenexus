@@ -149,10 +149,10 @@ function AuditNote({ label }: { label: string }) {
 /* ── Band label ────────────────────────────────────────────────────────── */
 
 const BAND_REGION: Record<Band, string> = {
-  A: 'US · UK · EU · AU · CA · SG — All prices USD',
-  B: 'UAE · Gulf · Japan · Korea · HK — All prices USD',
-  C: 'Latin America · SE Asia · South Africa · Eastern Europe — All prices USD',
-  D: 'South Asia · Africa · Developing markets — All prices USD',
+  A: '🇺🇸 US • 🇬🇧 UK • 🇪🇺 EU • 🇦🇺 AU • 🇨🇦 CA • 🇸🇬 SG — All prices USD',
+  B: '🇦🇪 UAE • 🇸🇦 GCC • 🇯🇵 Japan • 🇰🇷 Korea • 🇭🇰 HK — All prices USD',
+  C: '🇲🇾 SE Asia • 🇧🇷 LatAm • 🇿🇦 South Africa — All prices USD',
+  D: '🇮🇳 South Asia • 🌍 Developing Markets — All prices USD',
 }
 
 /* ── Main export ──────────────────────────────────────────────────────── */
@@ -177,7 +177,7 @@ export function BlueprintPricingMatrix() {
         <PricingTable
           tiers={INR_TIERS}
           fmt={n => `₹${n.toLocaleString('en-IN')}`}
-          regionLabel="India · All prices INR"
+          regionLabel="🇮🇳 India · All prices INR"
         />
         <AuditNote label="₹2,999 — fixed fee" />
       </>
