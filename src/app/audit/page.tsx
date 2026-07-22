@@ -200,8 +200,8 @@ export default function AuditPage() {
                   className="absolute -top-px left-0 right-0 h-[2px]"
                   style={{ background: 'linear-gradient(90deg, transparent, rgba(184,147,91,0.8), transparent)' }}
                 />
-                <div className="absolute -top-4 -right-4 bg-signal-gold text-obsidian px-4 py-1 font-mono text-[0.6rem] tracking-widest font-bold uppercase shadow-xl flex items-center gap-1">
-                  Fixed Fee: <GeoPrice product="audit" variant="cta" />
+                <div className="absolute -top-4 -right-4 bg-signal-gold text-obsidian px-4 py-1.5 font-mono text-[0.6rem] tracking-widest font-bold uppercase shadow-xl flex items-center gap-1 rounded-full">
+                  Confidential Analyst Evaluation
                 </div>
                 <AuditCheckout />
               </div>

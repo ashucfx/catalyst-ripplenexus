@@ -24,10 +24,10 @@ export function BlueprintPricingMatrix() {
           </p>
 
           {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <Link
               href="/request"
-              className="bg-gradient-to-r from-signal-gold via-amber-400 to-yellow-500 text-obsidian px-8 py-4 font-sans text-xs font-bold tracking-wider uppercase rounded-full text-center shadow-lg shadow-signal-gold/15 hover:brightness-110 transition-all"
+              className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-signal-gold via-amber-400 to-yellow-500 text-obsidian font-sans text-xs font-bold tracking-wider uppercase rounded-full text-center shadow-md shadow-signal-gold/15 hover:brightness-110 transition-all"
             >
               Book Strategy Consultation →
             </Link>
@@ -36,18 +36,18 @@ export function BlueprintPricingMatrix() {
               href="https://clientforge.theripplenexus.com/checkout"
               target="_blank"
               rel="noopener noreferrer"
-              className="border border-white/20 text-bone px-7 py-4 font-sans text-xs font-semibold tracking-wider uppercase rounded-full text-center hover:border-signal-gold/40 hover:bg-white/[0.05] transition-all"
+              className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-sans text-xs font-semibold tracking-wider uppercase rounded-full text-center hover:border-signal-gold/40 hover:bg-white/[0.05] transition-all"
             >
-              ClientForge Self-Service Checkout ↗
+              Self-Service Checkout ↗
             </a>
 
             <a
               href="https://clientforge.theripplenexus.com/inquire"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-xs text-muted hover:text-signal-gold tracking-wider uppercase text-center py-2 transition-colors"
+              className="w-full sm:w-auto font-mono text-xs text-muted hover:text-signal-gold tracking-wider uppercase text-center py-2 transition-colors"
             >
-              Submit Enterprise Inquiry ↗
+              Submit Direct Inquiry ↗
             </a>
           </div>
         </div>

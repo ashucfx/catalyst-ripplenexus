@@ -161,11 +161,11 @@ export default function Home() {
             </p>
 
             {/* Premium Call-to-Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-14">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 mb-12 w-full sm:w-auto">
               <Link
                 href="/request"
                 id="hero-cta-primary"
-                className="inline-flex justify-center items-center gap-3 bg-gradient-to-r from-signal-gold via-amber-400 to-yellow-500 text-obsidian px-9 py-4 font-sans text-xs font-bold tracking-wider uppercase rounded-full shadow-xl shadow-signal-gold/20 hover:brightness-110 transition-all duration-300 transform hover:-translate-y-0.5"
+                className="w-full sm:w-auto inline-flex justify-center items-center gap-2.5 bg-gradient-to-r from-signal-gold via-amber-400 to-yellow-500 text-obsidian px-7 py-3.5 font-sans text-xs font-bold tracking-wider uppercase rounded-full shadow-lg shadow-signal-gold/20 hover:brightness-110 transition-all duration-300"
               >
                 <span>Book Strategy Consultation</span>
                 <span className="text-sm font-bold">→</span>
@@ -176,7 +176,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 id="hero-cta-secondary"
-                className="inline-flex justify-center items-center gap-2 text-bone border border-white/20 px-8 py-4 font-sans text-xs font-semibold tracking-wider uppercase rounded-full hover:border-signal-gold/50 hover:bg-white/[0.05] transition-all duration-300"
+                className="w-full sm:w-auto inline-flex justify-center items-center gap-2 text-bone border border-white/20 px-6 py-3.5 font-sans text-xs font-semibold tracking-wider uppercase rounded-full hover:border-signal-gold/50 hover:bg-white/[0.05] transition-all duration-300"
               >
                 <span>Self-Service Checkout</span>
                 <span className="text-muted/60 text-xs font-mono">↗</span>
@@ -184,7 +184,7 @@ export default function Home() {
 
               <Link
                 href="/testimonials"
-                className="inline-flex justify-center items-center gap-2 text-signal-gold/90 bg-white/[0.03] border border-white/10 px-6 py-4 font-sans text-xs font-semibold tracking-wider uppercase rounded-full hover:bg-white/[0.08] transition-all duration-300"
+                className="w-full sm:w-auto inline-flex justify-center items-center gap-2 text-signal-gold/90 bg-white/[0.03] border border-white/10 px-5 py-3.5 font-sans text-xs font-semibold tracking-wider uppercase rounded-full hover:bg-white/[0.08] transition-all duration-300"
               >
                 <span>★ 48 Client Reviews</span>
                 <span className="font-mono text-bone text-xs">5.0</span>
@@ -234,16 +234,16 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════════════
             CLIENTFORGE PORTAL ACCESS (DIRECT SELF-SERVICE & INQUIRY)
         ════════════════════════════════════════════════════════════ */}
-        <section className="px-6 lg:px-12 py-20 bg-gradient-to-b from-black via-obsidian/90 to-black border-t border-white/[0.06]">
-          <div className="max-w-dossier mx-auto p-10 lg:p-14 rounded-2xl bg-black/60 border border-signal-gold/30 backdrop-blur-xl flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-signal-gold/10 border border-signal-gold/30 font-mono text-[0.58rem] tracking-widest uppercase text-signal-gold mb-4">
+        <section className="px-6 lg:px-12 py-16 bg-gradient-to-b from-black via-obsidian/90 to-black border-t border-white/[0.06]">
+          <div className="max-w-dossier mx-auto p-6 sm:p-10 lg:p-12 rounded-2xl bg-black/60 border border-signal-gold/30 backdrop-blur-xl flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div className="max-w-2xl text-center lg:text-left">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-signal-gold/10 border border-signal-gold/30 font-mono text-[0.58rem] tracking-widest uppercase text-signal-gold mb-3">
                 ⚡ ClientForge Portal Integration
               </span>
-              <h2 className="display-card text-2xl lg:text-3xl text-bone mb-3">
+              <h2 className="display-card text-xl sm:text-2xl lg:text-3xl text-bone mb-2">
                 Prefer Self-Service Instant Checkout or Custom Enterprise Proposals?
               </h2>
-              <p className="font-serif text-muted text-sm leading-relaxed">
+              <p className="font-serif text-muted text-xs sm:text-sm leading-relaxed">
                 Book directly on our live ClientForge portal for instant self-service package checkout, or submit custom enterprise requirements directly into our CRM flywheel.
               </p>
             </div>
@@ -253,15 +253,15 @@ export default function Home() {
                 href="https://clientforge.theripplenexus.com/checkout"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3.5 bg-signal-gold text-obsidian font-mono text-xs uppercase tracking-wider font-bold rounded-lg text-center shadow-lg hover:bg-bone transition-all"
+                className="w-full sm:w-auto px-5 py-3 bg-signal-gold text-obsidian font-mono text-xs uppercase tracking-wider font-bold rounded-full text-center shadow-md hover:bg-bone transition-all"
               >
-                Self-Service Checkout Portal ↗
+                Self-Service Checkout ↗
               </a>
               <a
                 href="https://clientforge.theripplenexus.com/inquire"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3.5 border border-white/20 text-bone font-mono text-xs uppercase tracking-wider text-center rounded-lg hover:border-signal-gold/50 transition-all"
+                className="w-full sm:w-auto px-5 py-3 border border-white/20 text-bone font-mono text-xs uppercase tracking-wider text-center rounded-full hover:border-signal-gold/50 transition-all"
               >
                 Submit Direct Inquiry ↗
               </a>
@@ -538,10 +538,10 @@ export default function Home() {
               Transform your resume, LinkedIn profile, custom banner, and cover letter into an irresistible recruiter magnet today.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 max-w-xl mx-auto">
               <Link
                 href="/request"
-                className="bg-signal-gold text-obsidian px-10 py-5 font-sans text-xs font-bold tracking-[0.25em] uppercase rounded btn-primary-glow hover:bg-bone transition-all"
+                className="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-signal-gold via-amber-400 to-yellow-500 text-obsidian font-sans text-xs font-bold tracking-wider uppercase rounded-full shadow-lg shadow-signal-gold/20 hover:brightness-110 transition-all text-center"
               >
                 Book Executive Consultation →
               </Link>
@@ -549,7 +549,7 @@ export default function Home() {
                 href="https://clientforge.theripplenexus.com/checkout"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-white/20 text-bone px-9 py-5 font-sans text-xs tracking-[0.22em] uppercase rounded hover:border-signal-gold/40 transition-colors"
+                className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-sans text-xs font-semibold tracking-wider uppercase rounded-full hover:border-signal-gold/50 hover:bg-white/[0.05] transition-all text-center"
               >
                 Instant Self-Service Portal ↗
               </a>

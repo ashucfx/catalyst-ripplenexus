@@ -256,27 +256,29 @@ export default function TestimonialsPage() {
           {/* ═══════════════════════════════════════════════════════════
               FINAL CTA BANNER
           ════════════════════════════════════════════════════════════ */}
-          <div className="text-center p-12 lg:p-20 rounded-2xl bg-gradient-to-r from-signal-gold/10 via-obsidian to-signal-gold/10 border border-signal-gold/30 relative overflow-hidden">
+          <div className="text-center p-6 sm:p-10 lg:p-14 rounded-2xl bg-gradient-to-r from-signal-gold/10 via-obsidian to-signal-gold/10 border border-signal-gold/30 relative overflow-hidden">
             <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-signal-gold to-transparent" />
-            <h2 className="display-card text-3xl lg:text-5xl text-bone mb-6">
+            <h2 className="display-card text-2xl sm:text-3xl lg:text-4xl text-bone mb-4">
               Ready to Upgrade Your Market Value?
             </h2>
-            <p className="font-serif text-muted text-lg max-w-xl mx-auto mb-10">
+            <p className="font-serif text-muted text-sm sm:text-base max-w-xl mx-auto mb-8">
               Get your Resume rewritten by executive experts, paired with custom LinkedIn banner &amp; DP directions and country-specific optimization.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 max-w-xl mx-auto">
               <Link
-                href="/blueprint"
-                className="bg-signal-gold text-obsidian px-10 py-5 font-sans text-xs font-bold tracking-[0.25em] uppercase rounded btn-primary-glow hover:bg-bone transition-all"
+                href="/request"
+                className="w-full sm:w-auto px-7 py-3.5 bg-gradient-to-r from-signal-gold to-amber-500 text-obsidian font-sans text-xs font-bold tracking-wider uppercase rounded-full shadow-lg hover:brightness-110 transition-all text-center"
               >
-                View Career Booster Pricing — <GeoPrice product="sprint" variant="cta" /> →
+                Book Strategy Consultation →
               </Link>
-              <Link
-                href="/audit"
-                className="border border-white/20 text-bone px-8 py-5 font-sans text-xs tracking-[0.22em] uppercase rounded hover:border-signal-gold/40 transition-colors"
+              <a
+                href="https://clientforge.theripplenexus.com/checkout"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-sans text-xs font-semibold tracking-wider uppercase rounded-full hover:border-signal-gold/40 transition-colors text-center"
               >
-                Get Market Value Audit →
-              </Link>
+                Self-Service Checkout ↗
+              </a>
             </div>
           </div>
         </div>

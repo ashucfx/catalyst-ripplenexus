@@ -143,10 +143,10 @@ export default function BlueprintPage() {
                 Join over 1,400+ professionals who landed top-tier global offers with our Career Booster package.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
               <Link
                 href="/request"
-                className="bg-signal-gold text-obsidian px-8 py-4 font-sans text-xs font-bold tracking-widest uppercase rounded text-center btn-primary-glow hover:bg-bone transition-all"
+                className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-signal-gold to-amber-500 text-obsidian font-sans text-xs font-bold tracking-wider uppercase rounded-full text-center shadow-md hover:brightness-110 transition-all"
               >
                 Book Strategy Consultation →
               </Link>
@@ -154,7 +154,7 @@ export default function BlueprintPage() {
                 href="https://clientforge.theripplenexus.com/checkout?pkg=CAREER_BOOSTER"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-white/20 text-bone px-8 py-4 font-sans text-xs tracking-widest uppercase rounded text-center hover:border-signal-gold/40 transition-colors"
+                className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-sans text-xs font-semibold tracking-wider uppercase rounded-full text-center hover:border-signal-gold/40 transition-colors"
               >
                 Self-Service Checkout ↗
               </a>
