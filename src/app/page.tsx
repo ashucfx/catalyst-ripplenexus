@@ -139,7 +139,7 @@ export default function Home() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                 </span>
-                <span>Career Booster Active</span>
+                <span>Executive Talent Pipeline Live</span>
               </div>
 
               {[
@@ -380,9 +380,10 @@ export default function Home() {
             <div className="text-center pt-6">
               <Link
                 href="/testimonials"
-                className="inline-flex items-center gap-3 border border-signal-gold/40 text-signal-gold px-8 py-3.5 font-mono text-xs tracking-widest uppercase rounded-full hover:bg-signal-gold hover:text-obsidian transition-all duration-300 font-bold whitespace-nowrap"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-signal-gold/40 text-signal-gold px-6 py-3 font-mono text-xs tracking-wider uppercase rounded-full hover:bg-signal-gold hover:text-obsidian transition-all duration-300 font-bold text-center"
               >
-                Explore Full Testimonials Hub (48 Reviews) →
+                <span className="hidden sm:inline">Explore Full Testimonials Hub (48 Reviews) →</span>
+                <span className="sm:hidden">Explore 48 Reviews Hub →</span>
               </Link>
             </div>
           </div>

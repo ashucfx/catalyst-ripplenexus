@@ -118,24 +118,25 @@ export default function TestimonialsPage() {
             <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto justify-center">
               <span className="font-mono text-[0.55rem] tracking-widest uppercase text-muted mr-1">Filter Market:</span>
               {[
-                { id: 'ALL', label: 'All Markets (48)' },
-                { id: 'KSA', label: '🇸🇦 Saudi Arabia (10)' },
-                { id: 'QTR', label: '🇶🇦 Qatar (8)' },
-                { id: 'UAE', label: '🇦🇪 UAE / Dubai (8)' },
-                { id: 'IND', label: '🇮🇳 India (8)' },
-                { id: 'ASEAN', label: '🇲🇾 🇸🇬 ASEAN (8)' },
-                { id: 'CH_ANZ_GLOBAL', label: '🇨🇭 🇦🇺 🇺🇸 Global (6)' },
+                { id: 'ALL', full: 'All Markets (48)', short: 'All (48)' },
+                { id: 'KSA', full: '🇸🇦 Saudi Arabia (10)', short: '🇸🇦 KSA (10)' },
+                { id: 'QTR', full: '🇶🇦 Qatar (8)', short: '🇶🇦 QTR (8)' },
+                { id: 'UAE', full: '🇦🇪 UAE / Dubai (8)', short: '🇦🇪 UAE (8)' },
+                { id: 'IND', full: '🇮🇳 India (8)', short: '🇮🇳 IN (8)' },
+                { id: 'ASEAN', full: '🇲🇾 🇸🇬 ASEAN (8)', short: '🇲🇾 ASEAN (8)' },
+                { id: 'CH_ANZ_GLOBAL', full: '🇨🇭 🇦🇺 🇺🇸 Global (6)', short: '🌐 Global (6)' },
               ].map((reg) => (
                 <button
                   key={reg.id}
                   onClick={() => setSelectedRegion(reg.id)}
-                  className={`px-3 py-1.5 rounded text-xs font-mono tracking-wider transition-all duration-200 ${
+                  className={`px-3 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all duration-200 ${
                     selectedRegion === reg.id
                       ? 'bg-signal-gold text-obsidian font-bold shadow-md'
-                      : 'bg-white/[0.03] text-muted hover:text-bone hover:bg-white/[0.08] border border-white/10'
+                      : 'bg-white/[0.04] text-muted hover:text-bone hover:bg-white/[0.08] border border-white/10'
                   }`}
                 >
-                  {reg.label}
+                  <span className="hidden sm:inline">{reg.full}</span>
+                  <span className="sm:hidden">{reg.short}</span>
                 </button>
               ))}
             </div>

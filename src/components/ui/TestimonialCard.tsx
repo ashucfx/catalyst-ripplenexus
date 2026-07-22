@@ -74,10 +74,10 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
 
         {/* Outcome & Package Pills Row */}
         <div className="flex flex-wrap items-center justify-between gap-2 mb-5 pb-4 border-b border-white/[0.07]">
-          <span className="font-mono text-[0.62rem] font-bold tracking-wider uppercase px-3 py-1 rounded-full border text-signal-gold border-signal-gold/40 bg-signal-gold/10">
+          <span className="font-mono text-[0.65rem] font-bold tracking-wider uppercase px-3 py-1 rounded-full border text-emerald-400 border-emerald-500/40 bg-emerald-500/10 shrink-0">
             {testimonial.salaryIncrease}
           </span>
-          <span className="font-mono text-[0.58rem] tracking-wider uppercase text-muted/80 bg-white/[0.03] px-2.5 py-1 rounded border border-white/[0.06]">
+          <span className="font-mono text-[0.58rem] tracking-wider uppercase text-muted bg-white/[0.04] px-2.5 py-1 rounded-md border border-white/10 max-w-full truncate">
             {testimonial.servicePackage}
           </span>
         </div>

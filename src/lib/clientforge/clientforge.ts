@@ -20,7 +20,7 @@ export interface LeadSyncPayload {
 
 export async function syncLeadToClientForge(payload: LeadSyncPayload): Promise<{ success: boolean; data?: unknown; error?: string }> {
   try {
-    const clientForgeBaseUrl = process.env.CLIENTFORGE_URL || process.env.NEXT_PUBLIC_CLIENTFORGE_URL || 'http://localhost:3000'
+    const clientForgeBaseUrl = process.env.CLIENTFORGE_URL || process.env.NEXT_PUBLIC_CLIENTFORGE_URL || 'https://clientforge.theripplenexus.com'
     const endpoint = `${clientForgeBaseUrl.replace(/\/$/, '')}/api/public/inquire/submit`
 
     // Normalize experience level for ClientForge schema (JUNIOR, MID, SENIOR, EXECUTIVE)
