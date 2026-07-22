@@ -130,20 +130,10 @@ export function Footer() {
                   <span className="text-muted/60 text-[10px]">↗</span>
                 </a>
               </li>
-              <li>
-                <a
-                  href="https://clientforge.theripplenexus.com/login"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted hover:text-bone transition-colors inline-flex items-center gap-1"
-                >
-                  <span>Client &amp; Executive Portal Login</span>
-                  <span className="text-muted/60 text-[10px]">↗</span>
-                </a>
-              </li>
               <li className="pt-2 border-t border-white/[0.06]">
-                <Link href="/request" className="text-signal-gold font-medium hover:underline">
-                  Book 1-on-1 Strategy Call →
+                <Link href="/request" className="text-signal-gold font-medium hover:underline inline-flex items-center gap-1">
+                  <span>Book 1-on-1 Strategy Call</span>
+                  <span>→</span>
                 </Link>
               </li>
             </ul>
@@ -201,12 +191,9 @@ export function Footer() {
         </div>
 
         {/* Bottom Base */}
-        <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="pt-8 border-t border-white/[0.06] flex items-center justify-between">
           <p className="font-mono text-xs text-muted/60">
             © {new Date().getFullYear()} RIPPLE NEXUS. ALL RIGHTS RESERVED.
-          </p>
-          <p className="font-mono text-xs text-muted/60">
-            CATALYST CAREER BOOSTER &amp; EXECUTIVE PORTFOLIO SUITE
           </p>
         </div>
       </div>
