@@ -50,9 +50,7 @@ export default function TestimonialsPage() {
 
       <main className="pt-36 pb-32 grain min-h-screen">
         <div className="max-w-dossier mx-auto px-6 lg:px-12">
-          {/* ═══════════════════════════════════════════════════════════
-              HERO SECTION
-          ════════════════════════════════════════════════════════════ */}
+          <div className="mb-20 text-center max-w-4xl mx-auto">
             {/* Live Verified Client Badge & Coverage Bar */}
             <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
               <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-signal-gold/40 bg-signal-gold/10 font-mono text-xs font-semibold text-signal-gold shrink-0">

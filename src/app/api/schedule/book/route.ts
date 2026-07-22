@@ -5,9 +5,10 @@ import { createBooking, getMeetingType, getAvailabilityRules, getBookingsForDate
 import { generateSlots } from '@/lib/schedule/slots'
 import { resend } from '@/lib/email/resend'
 import { bookingConfirmationClient, bookingConfirmationAdmin } from '@/lib/email/bookingTemplates'
+import { syncLeadToClientForge } from '@/lib/clientforge/clientforge'
 
-const FROM    = `${process.env.RESEND_FROM_NAME ?? 'Catalyst'} <${process.env.RESEND_FROM_EMAIL ?? 'catalyst@theripplenexus.com'}>`
-const ADMIN   = process.env.RESEND_ADMIN_EMAIL ?? ''
+const FROM  = `${process.env.RESEND_FROM_NAME ?? 'Catalyst'} <${process.env.RESEND_FROM_EMAIL ?? 'catalyst@theripplenexus.com'}>`
+const ADMIN = process.env.RESEND_ADMIN_EMAIL || 'catalyst@theripplenexus.com'
 
 export async function POST(req: NextRequest) {
   const hdr = await headers()
@@ -101,7 +102,7 @@ export async function POST(req: NextRequest) {
 
   if (!booking) return NextResponse.json({ error: 'Failed to create booking.' }, { status: 500 })
 
-  // Send confirmation emails for free meetings immediately
+  // Send confirmation emails & sync to ClientForge CRM
   if (!isPaid && booking.cancel_token) {
     const clientTpl = bookingConfirmationClient({
       name,
@@ -127,8 +128,20 @@ export async function POST(req: NextRequest) {
     })
 
     await Promise.allSettled([
-      resend.emails.send({ from: FROM, to: email,  ...clientTpl }),
-      ADMIN && resend.emails.send({ from: FROM, to: ADMIN, ...adminTpl }),
+      resend.emails.send({ from: FROM, to: email, ...clientTpl }),
+      resend.emails.send({ from: FROM, to: ADMIN, ...adminTpl }),
+      syncLeadToClientForge({
+        name,
+        email,
+        phone: '+10000000000',
+        countryCode: 'IN',
+        countryName: 'India',
+        experienceLevel: 'EXECUTIVE',
+        services: [meetingType.name],
+        packageSlug: 'CAREER_BOOSTER',
+        targetRole: 'Scheduled Strategy Session',
+        requirementNotes: `[BOOKED CALL] Slot: ${slot.startISO} (${timezone}). Company: ${body.company || 'N/A'}. Message: ${body.message || ''}`,
+      }),
     ])
   }
 
