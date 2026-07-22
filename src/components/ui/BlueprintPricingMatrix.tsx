@@ -1,201 +1,120 @@
 'use client'
 
-import { useGeo } from '@/hooks/useGeo'
-import { INTL_TIER_PRICES, INTL_AUDIT_USD } from '@/lib/constants/international-pricing'
-import type { Band, IntlTier } from '@/lib/constants/international-pricing'
-
-/* ── India: INR per-service prices ────────────────────────────────────── */
-
-const INR_TIERS = [
-  { label: '0–2 yrs',  resume:  999, linkedin:  499, portfolio:  2499 },
-  { label: '3–8 yrs',  resume: 1999, linkedin:  999, portfolio:  3999 },
-  { label: '9–15 yrs', resume: 3499, linkedin: 1999, portfolio: 12999 },
-  { label: '15+ yrs',  resume: 4999, linkedin: 2999, portfolio: 19999 },
-]
-
-/* ── Shared computation ────────────────────────────────────────────────── */
-
-function booster(resume: number, linkedin: number) {
-  return Math.round((resume + linkedin) * 0.85)
-}
-
-function premium(resume: number, linkedin: number, portfolio: number) {
-  return Math.round((resume + linkedin + portfolio) * 0.80)
-}
-
-/* ── Shared table shell ─────────────────────────────────────────────────── */
-
-interface PriceRow {
-  label: string
-  resume: number
-  linkedin: number
-  portfolio: number
-}
-
-function PricingTable({
-  tiers,
-  fmt,
-  regionLabel,
-}: {
-  tiers: PriceRow[]
-  fmt: (n: number) => string
-  regionLabel?: string
-}) {
-  return (
-    <div className="border border-graphite/40">
-      {regionLabel && (
-        <div className="py-3 px-8 border-b border-graphite/30 flex items-center gap-3" style={{ background: 'rgba(10,11,13,0.8)' }}>
-          <span className="font-mono text-signal-gold/60 text-[0.5rem] tracking-[0.25em] uppercase">{regionLabel}</span>
-        </div>
-      )}
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse min-w-[700px]">
-          <thead>
-            <tr className="border-b border-graphite/40 bg-obsidian">
-              <th className="text-left font-mono text-muted text-[0.55rem] tracking-widest py-5 px-8 w-48">SERVICE</th>
-              {tiers.map(t => (
-                <th key={t.label} className="text-right font-mono text-muted text-[0.55rem] tracking-widest py-5 px-6">{t.label}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {/* Resume */}
-            <tr className="border-b border-graphite/20 bg-obsidian hover:bg-graphite/10 transition-colors">
-              <td className="font-mono text-bone text-[0.58rem] py-5 px-8 uppercase tracking-wider">Resume Rewrite</td>
-              {tiers.map(t => (
-                <td key={t.label} className="text-right font-serif text-bone text-sm py-5 px-6">{fmt(t.resume)}</td>
-              ))}
-            </tr>
-
-            {/* LinkedIn */}
-            <tr className="border-b border-graphite/20 bg-obsidian hover:bg-graphite/10 transition-colors">
-              <td className="font-mono text-bone text-[0.58rem] py-5 px-8 uppercase tracking-wider">LinkedIn Optimisation</td>
-              {tiers.map(t => (
-                <td key={t.label} className="text-right font-serif text-bone text-sm py-5 px-6">{fmt(t.linkedin)}</td>
-              ))}
-            </tr>
-
-            {/* Cover Letter — always complimentary */}
-            <tr className="border-b border-graphite/20 bg-obsidian hover:bg-graphite/10 transition-colors">
-              <td className="font-mono text-bone text-[0.58rem] py-5 px-8 uppercase tracking-wider">Cover Letter</td>
-              {tiers.map(t => (
-                <td key={t.label} className="text-right py-5 px-6">
-                  <span className="font-mono text-signal-gold text-[0.6rem] tracking-widest">Complimentary</span>
-                </td>
-              ))}
-            </tr>
-
-            {/* Portfolio */}
-            <tr className="border-b border-graphite/20 bg-obsidian hover:bg-graphite/10 transition-colors">
-              <td className="font-mono text-bone text-[0.58rem] py-5 px-8 uppercase tracking-wider">Portfolio Website</td>
-              {tiers.map(t => (
-                <td key={t.label} className="text-right font-serif text-bone text-sm py-5 px-6">{fmt(t.portfolio)}</td>
-              ))}
-            </tr>
-
-            {/* Bundle separator */}
-            <tr>
-              <td colSpan={5} className="py-3 px-8" style={{ background: 'rgba(184,147,91,0.04)', borderTop: '1px solid rgba(184,147,91,0.12)', borderBottom: '1px solid rgba(184,147,91,0.12)' }}>
-                <span className="font-mono text-signal-gold/50 text-[0.5rem] tracking-[0.3em] uppercase">Bundle Pricing · Cover letter complimentary with every package</span>
-              </td>
-            </tr>
-
-            {/* Career Booster */}
-            <tr className="border-b border-graphite/20" style={{ background: 'rgba(255,255,255,0.01)' }}>
-              <td className="py-6 px-8">
-                <p className="font-mono text-signal-gold text-[0.58rem] uppercase tracking-wider mb-1">Career Booster Package</p>
-                <p className="font-sans text-muted text-[0.65rem] leading-snug">Resume + LinkedIn + Banner &amp; DP + Cover Letter</p>
-                <p className="font-mono text-signal-gold/40 text-[0.5rem] tracking-wider mt-1">15% off</p>
-              </td>
-              {tiers.map(t => (
-                <td key={t.label} className="text-right py-6 px-6">
-                  <p className="font-serif text-signal-gold text-base">{fmt(booster(t.resume, t.linkedin))}</p>
-                </td>
-              ))}
-            </tr>
-
-            {/* Premium Plus */}
-            <tr style={{ background: 'rgba(184,147,91,0.03)' }}>
-              <td className="py-6 px-8">
-                <p className="font-mono text-signal-gold text-[0.58rem] uppercase tracking-wider mb-1">Premium Plus</p>
-                <p className="font-sans text-muted text-[0.65rem] leading-snug">All 4 services · Cover Letter included</p>
-                <p className="font-mono text-signal-gold/40 text-[0.5rem] tracking-wider mt-1">20% off</p>
-              </td>
-              {tiers.map(t => (
-                <td key={t.label} className="text-right py-6 px-6">
-                  <p className="font-serif text-signal-gold text-base">{fmt(premium(t.resume, t.linkedin, t.portfolio))}</p>
-                </td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )
-}
-
-/* ── Audit price row (standalone, fixed per band) ──────────────────────── */
-
-function AuditNote({ label }: { label: string }) {
-  return (
-    <div className="mt-3 flex items-baseline gap-3 py-4 px-8 border border-graphite/30" style={{ background: 'rgba(10,11,13,0.7)' }}>
-      <span className="font-mono text-muted text-[0.55rem] tracking-widest uppercase">Market Value Audit</span>
-      <span className="font-mono text-signal-gold text-[0.55rem] tracking-widest">— Fixed fee</span>
-      <span className="font-serif text-signal-gold text-base ml-auto">{label}</span>
-    </div>
-  )
-}
-
-/* ── Band label ────────────────────────────────────────────────────────── */
-
-const BAND_REGION: Record<Band, string> = {
-  A: '🇺🇸 US • 🇬🇧 UK • 🇪🇺 EU • 🇦🇺 AU • 🇨🇦 CA • 🇸🇬 SG — All prices USD',
-  B: '🇦🇪 UAE • 🇸🇦 GCC • 🇯🇵 Japan • 🇰🇷 Korea • 🇭🇰 HK — All prices USD',
-  C: '🇲🇾 SE Asia • 🇧🇷 LatAm • 🇿🇦 South Africa — All prices USD',
-  D: '🇮🇳 South Asia • 🌍 Developing Markets — All prices USD',
-}
-
-/* ── Main export ──────────────────────────────────────────────────────── */
+import Link from 'next/link'
 
 export function BlueprintPricingMatrix() {
-  const geo = useGeo()
+  return (
+    <div className="space-y-8">
+      {/* ── Consultation Scope Header Card ────────────────────────────── */}
+      <div
+        className="p-8 lg:p-12 rounded-2xl border border-signal-gold/30 backdrop-blur-xl relative overflow-hidden"
+        style={{ background: 'rgba(12, 13, 16, 0.85)' }}
+      >
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-signal-gold to-transparent" />
 
-  if (!geo) {
-    return (
-      <div className="border border-graphite/40 p-12 bg-obsidian">
-        <div className="animate-pulse space-y-3">
-          <div className="h-3 w-32 bg-graphite/40 rounded" />
-          <div className="h-3 w-56 bg-graphite/20 rounded" />
+        <div className="max-w-3xl">
+          <span className="font-mono text-xs text-signal-gold tracking-[0.25em] uppercase font-bold block mb-3">
+            Bespoke Executive Scope &amp; Consultation
+          </span>
+          <h3 className="font-serif text-bone text-2xl lg:text-3xl font-bold mb-4">
+            Bespoke Executive Positioning for Senior Leaders &amp; Executives
+          </h3>
+          <p className="font-serif text-muted text-base leading-relaxed mb-8">
+            Every candidate&apos;s career trajectory is unique. We evaluate your target experience tier (Mid-Career 3–8 yrs, Senior 9–15 yrs, C-Suite 15+ yrs) and market region (ASEAN, GCC, APAC, Global) during a 1-on-1 Strategy Consultation to deliver customized positioning.
+          </p>
+
+          {/* Action CTAs */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <Link
+              href="/request"
+              className="bg-gradient-to-r from-signal-gold via-amber-400 to-yellow-500 text-obsidian px-8 py-4 font-sans text-xs font-bold tracking-wider uppercase rounded-full text-center shadow-lg shadow-signal-gold/15 hover:brightness-110 transition-all"
+            >
+              Book Strategy Consultation →
+            </Link>
+
+            <a
+              href="https://clientforge.theripplenexus.com/checkout"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-white/20 text-bone px-7 py-4 font-sans text-xs font-semibold tracking-wider uppercase rounded-full text-center hover:border-signal-gold/40 hover:bg-white/[0.05] transition-all"
+            >
+              ClientForge Self-Service Checkout ↗
+            </a>
+
+            <a
+              href="https://clientforge.theripplenexus.com/inquire"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs text-muted hover:text-signal-gold tracking-wider uppercase text-center py-2 transition-colors"
+            >
+              Submit Enterprise Inquiry ↗
+            </a>
+          </div>
         </div>
       </div>
-    )
-  }
 
-  if (geo.isIndia) {
-    return (
-      <>
-        <PricingTable
-          tiers={INR_TIERS}
-          fmt={n => `₹${n.toLocaleString('en-IN')}`}
-          regionLabel="🇮🇳 India · All prices INR"
-        />
-        <AuditNote label="₹2,999 — fixed fee" />
-      </>
-    )
-  }
+      {/* ── Feature Comparison Matrix Table ───────────────────────────── */}
+      <div className="border border-white/10 rounded-2xl overflow-hidden bg-obsidian/70">
+        <div className="py-4 px-8 border-b border-white/10 bg-black/80 flex items-center justify-between">
+          <span className="font-mono text-signal-gold text-xs tracking-widest uppercase font-bold">
+            Executive Deliverables &amp; Inclusions
+          </span>
+          <span className="font-mono text-[0.6rem] text-muted uppercase tracking-wider">
+            All Markets: 🇸🇦 🇶🇦 🇦🇪 🇮🇳 🇲🇾 🇨🇭 🇦🇺 🇺🇸
+          </span>
+        </div>
 
-  const band   = geo.band as Band
-  const tiers  = INTL_TIER_PRICES[band] as IntlTier[]
-  const audit  = INTL_AUDIT_USD[band]
-
-  return (
-    <>
-      <PricingTable
-        tiers={tiers}
-        fmt={n => `$${n.toLocaleString('en-US')}`}
-        regionLabel={BAND_REGION[band]}
-      />
-      <AuditNote label={`$${audit} — fixed fee`} />
-    </>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse min-w-[700px]">
+            <thead>
+              <tr className="border-b border-white/10 bg-black/40">
+                <th className="text-left font-mono text-muted text-xs tracking-widest py-4 px-8 w-64">FEATURE / DELIVERABLE</th>
+                <th className="text-center font-mono text-muted text-xs tracking-widest py-4 px-6">MID-CAREER (3–8 YRS)</th>
+                <th className="text-center font-mono text-signal-gold text-xs tracking-widest py-4 px-6 font-bold">SENIOR LEADERSHIP (9–15 YRS)</th>
+                <th className="text-center font-mono text-muted text-xs tracking-widest py-4 px-6">C-SUITE &amp; EXECUTIVE (15+ YRS)</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.06] text-xs">
+              <tr className="hover:bg-white/[0.02]">
+                <td className="font-mono text-bone py-4 px-8 uppercase font-semibold">Executive Resume Rewrite</td>
+                <td className="text-center text-emerald-400 font-mono">✓ ATS 98%+ Pass</td>
+                <td className="text-center text-emerald-400 font-mono font-bold">✓ Metric-Driven Dossier</td>
+                <td className="text-center text-emerald-400 font-mono font-bold">✓ C-Suite Executive Dossier</td>
+              </tr>
+              <tr className="hover:bg-white/[0.02]">
+                <td className="font-mono text-bone py-4 px-8 uppercase font-semibold">LinkedIn Profile Overhaul</td>
+                <td className="text-center text-emerald-400 font-mono">✓ Full Rewrite</td>
+                <td className="text-center text-emerald-400 font-mono font-bold">✓ Full Rewrite + SEO Bio</td>
+                <td className="text-center text-emerald-400 font-mono font-bold">✓ Thought Leadership Brand</td>
+              </tr>
+              <tr className="hover:bg-white/[0.02]">
+                <td className="font-mono text-bone py-4 px-8 uppercase font-semibold">LinkedIn Banner &amp; DP Kit</td>
+                <td className="text-center text-emerald-400 font-mono">✓ Custom Banner</td>
+                <td className="text-center text-emerald-400 font-mono font-bold">✓ Custom Banner &amp; DP Kit</td>
+                <td className="text-center text-emerald-400 font-mono font-bold">✓ Executive Studio Asset Pack</td>
+              </tr>
+              <tr className="hover:bg-white/[0.02]">
+                <td className="font-mono text-bone py-4 px-8 uppercase font-semibold">Tailored Cover Letter</td>
+                <td className="text-center text-signal-gold font-mono">Complimentary</td>
+                <td className="text-center text-signal-gold font-mono font-bold">Complimentary</td>
+                <td className="text-center text-signal-gold font-mono font-bold">Complimentary Executive Pitch</td>
+              </tr>
+              <tr className="hover:bg-white/[0.02]">
+                <td className="font-mono text-bone py-4 px-8 uppercase font-semibold">Country Market Optimization</td>
+                <td className="text-center text-muted font-mono">ASEAN / APAC</td>
+                <td className="text-center text-bone font-mono font-semibold">GCC / ASEAN / APAC / US / EU</td>
+                <td className="text-center text-bone font-mono font-bold">Global Multi-Country Norms</td>
+              </tr>
+              <tr className="hover:bg-white/[0.02]">
+                <td className="font-mono text-bone py-4 px-8 uppercase font-semibold">Multi-Lingual Adaptation</td>
+                <td className="text-center text-muted font-mono">Optional Add-on</td>
+                <td className="text-center text-emerald-400 font-mono">✓ Dual-Language Pack</td>
+                <td className="text-center text-emerald-400 font-mono font-bold">✓ Full Multi-Lingual Suite</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   )
 }

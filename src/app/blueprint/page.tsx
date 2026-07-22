@@ -145,15 +145,20 @@ export default function BlueprintPage() {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-              <Button href="/request?service=sprint" variant="primary" className="w-full sm:w-auto justify-center">
-                Get Career Booster Package →
-              </Button>
               <Link
-                href="/testimonials"
-                className="border border-white/20 text-bone px-6 py-3 font-sans text-xs tracking-widest uppercase rounded text-center hover:border-signal-gold/40 transition-colors"
+                href="/request"
+                className="bg-signal-gold text-obsidian px-8 py-4 font-sans text-xs font-bold tracking-widest uppercase rounded text-center btn-primary-glow hover:bg-bone transition-all"
               >
-                Read Testimonials
+                Book Strategy Consultation →
               </Link>
+              <a
+                href="https://clientforge.theripplenexus.com/checkout?pkg=CAREER_BOOSTER"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-white/20 text-bone px-8 py-4 font-sans text-xs tracking-widest uppercase rounded text-center hover:border-signal-gold/40 transition-colors"
+              >
+                Self-Service Checkout ↗
+              </a>
             </div>
           </div>
 
