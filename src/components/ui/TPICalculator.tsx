@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { TPIMeter } from '@/components/ui/TPIMeter'
+import { useGeo } from '@/hooks/useGeo'
 
 // ─── Types ─────────────────────────────────────────────────────────────
 

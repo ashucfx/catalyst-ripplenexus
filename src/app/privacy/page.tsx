@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy',
-  description: 'How Catalyst collects, uses, and protects your personal information.',
+  title: 'Privacy Policy — Catalyst by Ripple Nexus',
+  description: 'How Catalyst collects, uses, and protects your executive data, resume information, and privacy.',
   robots: { index: false, follow: false },
 }
 
@@ -12,136 +13,138 @@ export default function PrivacyPage() {
   return (
     <>
       <Header />
-      <main className="pt-32 pb-16">
+      <main className="pt-36 sm:pt-40 pb-28 grain min-h-screen">
         <div className="max-w-dossier mx-auto px-6 lg:px-12">
-          <div className="max-w-2xl">
 
-            <p className="label-inst mb-6">Legal</p>
-            <h1 className="display-editorial mb-4">
-              Privacy Policy
+          {/* ── HEADER ──────────────────────────────────────────────── */}
+          <div className="mb-16 max-w-3xl">
+            <span className="font-mono text-xs tracking-[0.3em] uppercase text-signal-gold block mb-4">
+              Executive Data Protection &amp; Discretion
+            </span>
+            <h1
+              className="display-page mb-4 text-bone"
+              style={{ fontSize: 'clamp(2.4rem, 5vw, 4rem)', lineHeight: 1.1 }}
+            >
+              Privacy <em className="not-italic text-gold-gradient">Policy.</em>
             </h1>
-            <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-16">
-              LAST UPDATED: APRIL 2025
+            <p className="font-mono text-muted text-xs tracking-widest uppercase mb-8">
+              LAST REVISED: APRIL 2026 · CATALYST BY RIPPLE NEXUS
             </p>
+          </div>
 
-            <div className="flex flex-col gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            {/* Quick Navigation Sidebar */}
+            <div className="lg:col-span-4 p-6 rounded-2xl bg-obsidian border border-white/10 sticky top-32 hidden lg:block">
+              <span className="font-mono text-xs font-bold text-signal-gold uppercase tracking-widest block mb-4">
+                Data Protection Summary
+              </span>
+              <nav className="space-y-2.5 font-sans text-xs text-muted">
+                {[
+                  '1. Data Controller Entity',
+                  '2. Information We Collect',
+                  '3. Purposes of Processing',
+                  '4. Sub-Processors & Infrastructure',
+                  '5. Data Retention SLA',
+                  '6. Your Executive Privacy Rights',
+                  '7. Security Controls',
+                  '8. Data Protection Officer',
+                ].map((item) => (
+                  <div key={item} className="hover:text-bone transition-colors py-1 border-b border-white/[0.05] last:border-0">
+                    {item}
+                  </div>
+                ))}
+              </nav>
+            </div>
 
-              <section>
-                <h2 className="display-card text-xl mb-4">1. Who we are</h2>
-                <p className="font-sans text-muted text-sm leading-relaxed">
-                  Catalyst is operated by Ripple Nexus (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;).
-                  This policy explains how we handle personal information submitted through
-                  catalyst.theripplenexus.com and related services.
-                  Ripple Nexus is accessible at{' '}
-                  <a href="https://www.theripplenexus.com" className="text-signal-gold hover:text-bone transition-colors">
-                    www.theripplenexus.com
-                  </a>.
+            {/* Privacy Policy Body */}
+            <div className="lg:col-span-8 space-y-8">
+              <div className="p-8 sm:p-10 rounded-2xl bg-obsidian border border-white/10 shadow-lg">
+                <h2 className="display-card text-xl sm:text-2xl text-bone mb-4">1. Data Controller Entity</h2>
+                <p className="font-serif text-muted text-sm sm:text-base leading-relaxed">
+                  Catalyst is operated by Ripple Nexus (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;). This Privacy Policy governs how we handle executive profile submissions, consultation forms, and candidate data submitted through catalyst.theripplenexus.com and ClientForge CRM.
                 </p>
-              </section>
+              </div>
 
-              <section>
-                <h2 className="display-card text-xl mb-4">2. Information we collect</h2>
-                <div className="flex flex-col gap-3">
+              <div className="p-8 sm:p-10 rounded-2xl bg-obsidian border border-white/10 shadow-lg">
+                <h2 className="display-card text-xl sm:text-2xl text-bone mb-6">2. Information We Collect</h2>
+                <div className="space-y-4">
                   {[
-                    { label: 'Contact information', body: 'Name, email address, and professional role — provided when you submit an enquiry or subscribe to the Intelligence Brief.' },
-                    { label: 'Self-reported professional data', body: 'Seniority level, geography, salary band, sector, and career context — provided when you use the TPI calculator or the Request form. This information is used solely to produce your assessment and personalise our outreach.' },
-                    { label: 'Usage data', body: 'Standard server logs including IP address, browser type, and pages visited — collected automatically for security and performance monitoring. We do not currently operate advertising tracking pixels.' },
+                    {
+                      label: 'Executive Contact Details',
+                      body: 'Full name, email address, phone number, and professional role provided during consultation intake or calculator submissions.',
+                    },
+                    {
+                      label: 'Professional Profile & Compensation Data',
+                      body: 'Seniority tier, target geographies, current salary band, sector experience, and career goals. Used strictly to compute your TPI diagnostic score and personalize your strategy session.',
+                    },
+                    {
+                      label: 'Technical Security Logs',
+                      body: 'Standard server access logs (IP address, user agent) collected solely for rate limiting, DDoS mitigation, and system health monitoring.',
+                    },
                   ].map((item) => (
-                    <div key={item.label} className="border-l border-signal-gold/30 pl-4">
-                      <p className="font-sans text-bone text-sm font-medium mb-1">{item.label}</p>
-                      <p className="font-sans text-muted text-sm leading-relaxed">{item.body}</p>
+                    <div key={item.label} className="border-l-2 border-signal-gold/60 pl-4 py-1">
+                      <p className="font-mono text-bone text-xs font-bold uppercase tracking-wider mb-1">{item.label}</p>
+                      <p className="font-sans text-muted text-xs sm:text-sm leading-relaxed">{item.body}</p>
                     </div>
                   ))}
                 </div>
-              </section>
+              </div>
 
-              <section>
-                <h2 className="display-card text-xl mb-4">3. How we use your information</h2>
-                <ul className="flex flex-col gap-2">
-                  {[
-                    'To respond to your enquiry and deliver any requested assessment.',
-                    'To send the Intelligence Brief newsletter (only if you subscribed).',
-                    'To send your TPI score report to the email address you provided.',
-                    'To notify our team of new enquiries so we can follow up.',
-                    'To prevent spam and abuse via rate limiting and honeypot techniques.',
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3">
-                      <span className="text-signal-gold text-xs mt-1 shrink-0">—</span>
-                      <span className="font-sans text-muted text-sm leading-relaxed">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="font-sans text-muted text-sm leading-relaxed mt-4">
-                  We do not sell, rent, or share your personal information with third parties
-                  for their marketing purposes.
+              <div className="p-8 sm:p-10 rounded-2xl bg-obsidian border border-white/10 shadow-lg">
+                <h2 className="display-card text-xl sm:text-2xl text-bone mb-4">3. Zero Third-Party Monetization</h2>
+                <p className="font-serif text-muted text-sm sm:text-base leading-relaxed mb-4">
+                  We maintain an absolute zero-monetization policy regarding client data. Your resume, compensation metrics, and personal details are <strong className="text-bone">never sold, rented, or shared with third-party advertisers or recruitment brokers</strong>.
                 </p>
-              </section>
+              </div>
 
-              <section>
-                <h2 className="display-card text-xl mb-4">4. Third-party services</h2>
-                <div className="flex flex-col gap-3">
+              <div className="p-8 sm:p-10 rounded-2xl bg-obsidian border border-white/10 shadow-lg">
+                <h2 className="display-card text-xl sm:text-2xl text-bone mb-6">4. Trusted Technical Sub-Processors</h2>
+                <div className="space-y-4">
                   {[
-                    { name: 'Resend', purpose: 'Transactional email delivery (enquiry confirmations, TPI score reports, welcome emails). Privacy policy: resend.com/legal/privacy-policy' },
-                    { name: 'Kit (ConvertKit)', purpose: 'Newsletter subscriber list management. You may unsubscribe at any time via the link in any email. Privacy policy: kit.com/privacy' },
-                    { name: 'Vercel', purpose: 'Website hosting and infrastructure. Privacy policy: vercel.com/legal/privacy-policy' },
+                    { name: 'Resend Inc.', purpose: 'Encrypted transactional email delivery (consultation confirmations and score reports).' },
+                    { name: 'ClientForge CRM', purpose: 'Secure client intake and calendar scheduling sync endpoint.' },
+                    { name: 'Vercel Inc.', purpose: 'Global edge infrastructure hosting and SSL encryption.' },
                   ].map((svc) => (
-                    <div key={svc.name} className="border-l border-graphite pl-4">
-                      <p className="font-sans text-bone text-sm font-medium mb-1">{svc.name}</p>
-                      <p className="font-sans text-muted text-sm leading-relaxed">{svc.purpose}</p>
+                    <div key={svc.name} className="border-b border-white/[0.07] pb-3 last:border-0 last:pb-0">
+                      <p className="font-mono text-bone text-xs font-bold uppercase tracking-wider mb-1">{svc.name}</p>
+                      <p className="font-sans text-muted text-xs leading-relaxed">{svc.purpose}</p>
                     </div>
                   ))}
                 </div>
-              </section>
+              </div>
 
-              <section>
-                <h2 className="display-card text-xl mb-4">5. Data retention</h2>
-                <p className="font-sans text-muted text-sm leading-relaxed">
-                  Enquiry data is retained for as long as necessary to conduct and follow up
-                  on the business relationship. Newsletter subscriber data is retained until
-                  you unsubscribe. You may request deletion of your data at any time by
-                  emailing us directly.
+              <div className="p-8 sm:p-10 rounded-2xl bg-obsidian border border-white/10 shadow-lg">
+                <h2 className="display-card text-xl sm:text-2xl text-bone mb-4">5. Your Privacy &amp; Data Erasure Rights</h2>
+                <p className="font-serif text-muted text-sm sm:text-base leading-relaxed">
+                  Under global privacy standards (GDPR, CCPA, and DPDP Act India), you retain full rights to request access to your submitted data, request corrections, or request immediate permanent deletion of your profile from our systems at any time.
                 </p>
-              </section>
+              </div>
 
-              <section>
-                <h2 className="display-card text-xl mb-4">6. Your rights</h2>
-                <p className="font-sans text-muted text-sm leading-relaxed mb-3">
-                  Depending on your jurisdiction, you may have the right to access, correct,
-                  or delete your personal data; to object to or restrict processing; and to
-                  data portability. To exercise any of these rights, contact us at the email
-                  below. We will respond within 30 days.
+              {/* Contact Card */}
+              <div className="p-8 sm:p-10 rounded-2xl bg-gradient-to-r from-signal-gold/10 via-obsidian to-signal-gold/10 border border-signal-gold/30">
+                <h2 className="display-card text-2xl text-bone mb-3">Data Protection Officer</h2>
+                <p className="font-serif text-muted text-sm leading-relaxed mb-6">
+                  To exercise your data privacy rights or request profile deletion, email our Data Protection Officer directly.
                 </p>
-              </section>
-
-              <section>
-                <h2 className="display-card text-xl mb-4">7. Security</h2>
-                <p className="font-sans text-muted text-sm leading-relaxed">
-                  All data is transmitted over HTTPS. We do not store payment card information.
-                  Access to enquiry data is restricted to authorised personnel only.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="display-card text-xl mb-4">8. Changes to this policy</h2>
-                <p className="font-sans text-muted text-sm leading-relaxed">
-                  We may update this policy from time to time. Material changes will be
-                  communicated via the website or by email to active subscribers.
-                </p>
-              </section>
-
-              <section className="border-t border-graphite pt-8">
-                <h2 className="display-card text-xl mb-4">Contact</h2>
-                <p className="font-sans text-muted text-sm leading-relaxed">
-                  For privacy enquiries or data requests, email{' '}
-                  <a href="mailto:catalyst@theripplenexus.com"
-                     className="text-signal-gold hover:text-bone transition-colors">
-                    catalyst@theripplenexus.com
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                  <a
+                    href="mailto:catalyst@theripplenexus.com"
+                    className="px-6 py-3 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] font-mono text-xs font-bold tracking-widest uppercase rounded-full text-center hover:brightness-110 transition-all whitespace-nowrap"
+                  >
+                    Email DPO →
                   </a>
-                </p>
-              </section>
+                  <Link
+                    href="/"
+                    className="px-6 py-3 border border-white/20 text-bone font-mono text-xs font-semibold tracking-widest uppercase rounded-full text-center hover:border-signal-gold/50 transition-colors whitespace-nowrap"
+                  >
+                    ← Return to Home
+                  </Link>
+                </div>
+              </div>
 
             </div>
           </div>
+
         </div>
       </main>
       <Footer />
