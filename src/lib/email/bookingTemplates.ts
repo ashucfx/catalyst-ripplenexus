@@ -2,6 +2,7 @@ import { formatDisplay, formatTimeDisplay } from '../schedule/timezone'
 import { generateGoogleCalendarUrl, generateGoogleMeetLink } from '../schedule/ics'
 
 interface BookingEmailData {
+  bookingId?:    string
   name:          string
   email:         string
   meetingName:   string
