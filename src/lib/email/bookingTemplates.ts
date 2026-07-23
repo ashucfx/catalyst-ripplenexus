@@ -77,8 +77,6 @@ export function bookingConfirmationClient(data: BookingEmailData & { bookingId?:
 </html>`,
   }
 }
-  }
-}
 
 export function bookingConfirmationAdmin(data: BookingEmailData & { company?: string; message?: string }): { subject: string; html: string } {
   const dateStr = formatDisplay(data.startsAt, 'Asia/Kolkata')
