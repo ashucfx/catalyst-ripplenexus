@@ -214,6 +214,18 @@ export function BookingFlow({ meetingType }: Props) {
                 <span className="font-mono text-xs text-signal-gold font-bold">{tz}</span>
               </div>
             </div>
+
+            {meetingIsPaid && (
+              <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
+                <span className="text-signal-gold text-base">💳</span>
+                <div>
+                  <span className="font-mono text-[0.6rem] text-muted uppercase tracking-wider block">Session Fee</span>
+                  <span className="font-mono text-xs text-signal-gold font-bold">
+                    {isIndia ? `₹${(meetingType.price_inr / 100).toFixed(0)}` : `$${(meetingType.price_usd / 100).toFixed(0)} USD`}
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
