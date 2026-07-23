@@ -194,7 +194,7 @@ export default function RequestPage() {
                   Our Senior Executive Consultant will review your target role (<strong className="text-bone">{form.role}</strong>) and prepare market benchmarking data before your consultation call.
                 </p>
                 <p className="font-mono text-xs text-emerald-400">
-                  ✓ Lead synced to ClientForge CRM &amp; Leads Flywheel
+                  ✓ Confidential Request Registered — Senior Consultant Assigned
                 </p>
                 <p className="font-mono text-xs text-muted/80">
                   A confirmation email has been dispatched to <span className="text-bone font-bold">{form.email}</span>.

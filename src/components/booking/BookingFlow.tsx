@@ -19,7 +19,7 @@ interface Slot {
   available:    boolean
 }
 
-const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+const DAYS = ['SUN','MON','TUE','WED','THU','FRI','SAT']
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December']
 
 function getUserTimezone(): string {
@@ -116,9 +116,9 @@ export function BookingFlow({ meetingType }: Props) {
   async function handleSubmitDetails(e: React.FormEvent) {
     e.preventDefault()
     setFormErr('')
-    if (!name.trim()) { setFormErr('Name is required.'); return }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setFormErr('Valid email required.'); return }
-    if (!selectedSlot) { setFormErr('No slot selected.'); return }
+    if (!name.trim()) { setFormErr('Full name is required.'); return }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setFormErr('Valid email address is required.'); return }
+    if (!selectedSlot) { setFormErr('No time slot selected.'); return }
 
     setSubmitting(true)
     setBookErr('')
@@ -173,254 +173,324 @@ export function BookingFlow({ meetingType }: Props) {
   const meetingIsPaid = meetingType.price_usd > 0
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
+    <div className="rounded-2xl bg-obsidian border border-white/15 shadow-2xl overflow-hidden backdrop-blur-xl grid grid-cols-1 lg:grid-cols-12">
 
-      {/* Left: session info */}
-      <div className="bg-graphite p-8 border-r border-graphite lg:border-b-0 border-b">
-        <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-4">SESSION</p>
-        <h2 className="display-card text-2xl mb-2">{meetingType.name}</h2>
-        <p className="font-sans text-muted text-sm leading-relaxed mb-6">{meetingType.description}</p>
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-3">
-            <span className="text-signal-gold text-sm">◷</span>
-            <span className="font-sans text-muted text-sm">{meetingType.duration_min} minutes</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="text-signal-gold text-sm">◈</span>
-            <span className="font-sans text-muted text-sm">Video call</span>
-          </div>
-          {meetingIsPaid && (
-            <div className="flex items-center gap-3">
-              <span className="text-signal-gold text-sm">◎</span>
-              <span className="font-sans text-muted text-sm">
-                {isIndia
-                  ? `₹${(meetingType.price_inr / 100).toFixed(0)}`
-                  : `$${(meetingType.price_usd / 100).toFixed(0)}`}
-              </span>
+      {/* ── LEFT SIDEBAR: SESSION SUMMARY ──────────────────────────── */}
+      <div className="lg:col-span-5 p-8 sm:p-10 bg-white/[0.02] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-between">
+        <div>
+          <span className="font-mono text-[0.65rem] text-signal-gold border border-signal-gold/30 bg-signal-gold/10 px-3 py-1 rounded-full uppercase tracking-widest font-bold inline-block mb-4">
+            {meetingIsPaid ? 'Executive Strategy Session' : 'Complimentary Consultation'}
+          </span>
+
+          <h2 className="display-card text-2xl sm:text-3xl text-bone mb-3">
+            {meetingType.name}
+          </h2>
+
+          <p className="font-serif text-muted text-xs sm:text-sm leading-relaxed mb-8">
+            {meetingType.description}
+          </p>
+
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
+              <span className="text-signal-gold text-base">⏱</span>
+              <div>
+                <span className="font-mono text-[0.6rem] text-muted uppercase tracking-wider block">Duration</span>
+                <span className="font-mono text-xs text-bone font-bold">{meetingType.duration_min} Minutes</span>
+              </div>
             </div>
-          )}
-          {!meetingIsPaid && (
-            <div className="flex items-center gap-3">
-              <span className="text-signal-gold text-sm">◎</span>
-              <span className="font-sans text-signal-gold text-sm">Free</span>
+
+            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
+              <span className="text-signal-gold text-base">📹</span>
+              <div>
+                <span className="font-mono text-[0.6rem] text-muted uppercase tracking-wider block">Location Format</span>
+                <span className="font-mono text-xs text-bone font-bold">Google Meet (Auto-generated Link)</span>
+              </div>
             </div>
-          )}
+
+            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
+              <span className="text-signal-gold text-base">🌐</span>
+              <div>
+                <span className="font-mono text-[0.6rem] text-muted uppercase tracking-wider block">Detected Timezone</span>
+                <span className="font-mono text-xs text-signal-gold font-bold">{tz}</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {selectedDate && (
-          <div className="mt-8 pt-6 border-t border-graphite/50">
-            <p className="font-mono text-muted text-[0.55rem] tracking-widest mb-2">SELECTED DATE</p>
-            <p className="font-sans text-bone text-sm">{formatDateDisplay(selectedDate, tz)}</p>
-          </div>
-        )}
-        {selectedSlot && (
-          <div className="mt-4">
-            <p className="font-mono text-muted text-[0.55rem] tracking-widest mb-2">SELECTED TIME</p>
-            <p className="font-sans text-bone text-sm">
-              {formatSlotTime(selectedSlot.startISO, tz)} → {formatSlotTime(selectedSlot.endISO, tz)}
-            </p>
-            <p className="font-mono text-muted text-[0.55rem] mt-1">{tz}</p>
+        {/* Selected Slot Indicator */}
+        {(selectedDate || selectedSlot) && (
+          <div className="mt-8 pt-6 border-t border-white/10">
+            <span className="font-mono text-[0.6rem] text-signal-gold uppercase tracking-widest block mb-2 font-bold">
+              SELECTED SLOT SUMMARY
+            </span>
+            {selectedDate && (
+              <p className="font-sans text-bone text-xs font-semibold mb-1">
+                📅 {formatDateDisplay(selectedDate, tz)}
+              </p>
+            )}
+            {selectedSlot && (
+              <p className="font-mono text-signal-gold text-xs font-bold">
+                ⏰ {formatSlotTime(selectedSlot.startISO, tz)} → {formatSlotTime(selectedSlot.endISO, tz)}
+              </p>
+            )}
           </div>
         )}
       </div>
 
-      {/* Right: flow */}
-      <div className="lg:col-span-2 bg-obsidian p-8">
+      {/* ── RIGHT MAIN PANEL: INTERACTIVE FLOW ──────────────────────── */}
+      <div className="lg:col-span-7 p-8 sm:p-10">
 
-        {/* Step: Calendar */}
-        {(step === 'calendar' || step === 'slots') && !selectedSlot && (
-          <>
-            {step === 'calendar' && (
-              <>
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="display-card text-xl">
-                    {MONTHS[month - 1]} {year}
-                  </h3>
-                  <div className="flex gap-2">
-                    <button onClick={prevMonth} disabled={isPrevDisabled}
-                      className="font-mono text-muted text-lg px-2 hover:text-bone disabled:opacity-30 disabled:cursor-not-allowed">
-                      ‹
-                    </button>
-                    <button onClick={nextMonth}
-                      className="font-mono text-muted text-lg px-2 hover:text-bone">
-                      ›
-                    </button>
-                  </div>
-                </div>
+        {/* ── STEP 1: CALENDAR DAY SELECTION ──────────────────────── */}
+        {step === 'calendar' && (
+          <div>
+            <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/10">
+              <div>
+                <span className="font-mono text-[0.65rem] text-signal-gold uppercase tracking-widest block font-bold mb-1">
+                  STEP 1 OF 3
+                </span>
+                <h3 className="display-card text-xl text-bone">
+                  Select a Consultation Date
+                </h3>
+              </div>
 
-                <div className="grid grid-cols-7 gap-1 mb-2">
-                  {DAYS.map(d => (
-                    <div key={d} className="text-center font-mono text-muted text-[0.55rem] tracking-widest py-1">{d}</div>
-                  ))}
-                </div>
-
-                {loadingDays && (
-                  <div className="text-center py-12">
-                    <p className="font-mono text-muted text-[0.6rem] tracking-widest">Loading availability…</p>
-                  </div>
-                )}
-
-                {!loadingDays && (
-                  <div className="grid grid-cols-7 gap-1">
-                    {Array.from({ length: firstDayOfWeek }).map((_, i) => (
-                      <div key={`empty-${i}`} />
-                    ))}
-                    {Array.from({ length: daysInMonth }).map((_, i) => {
-                      const day     = i + 1
-                      const dateStr = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`
-                      const isAvail = availableDays.includes(dateStr)
-                      const isPast  = new Date(dateStr) < today
-
-                      return (
-                        <button
-                          key={dateStr}
-                          onClick={() => isAvail && handleDateSelect(dateStr)}
-                          disabled={!isAvail || isPast}
-                          className={`
-                            aspect-square flex items-center justify-center text-sm font-sans transition-colors
-                            ${isAvail && !isPast
-                              ? 'text-bone hover:bg-signal-gold hover:text-obsidian cursor-pointer border border-graphite hover:border-signal-gold'
-                              : 'text-muted/30 cursor-default'
-                            }
-                          `}
-                        >
-                          {day}
-                        </button>
-                      )
-                    })}
-                  </div>
-                )}
-
-                <p className="font-mono text-muted text-[0.55rem] tracking-widest mt-6">
-                  Timezone detected: {tz} · All times shown in your local time
-                </p>
-              </>
-            )}
-
-            {step === 'slots' && (
-              <>
-                <div className="flex items-center gap-4 mb-6">
-                  <button onClick={() => { setStep('calendar'); setSelectedDate(''); setSlots([]) }}
-                    className="font-mono text-muted text-[0.6rem] tracking-widest hover:text-bone">
-                    ← Back
-                  </button>
-                  <h3 className="display-card text-xl">
-                    {selectedDate ? formatDateDisplay(selectedDate, tz) : ''}
-                  </h3>
-                </div>
-
-                {loadingSlots && (
-                  <p className="font-mono text-muted text-[0.6rem] tracking-widest">Loading slots…</p>
-                )}
-
-                {!loadingSlots && slots.length === 0 && (
-                  <div className="py-8">
-                    <p className="font-sans text-muted text-sm">No available slots on this date.</p>
-                    <button onClick={() => { setStep('calendar'); setSelectedDate(''); }}
-                      className="font-mono text-signal-gold text-[0.6rem] tracking-widest mt-4 hover:text-bone">
-                      Choose another date →
-                    </button>
-                  </div>
-                )}
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {slots.filter(s => s.available).map(slot => (
-                    <button
-                      key={slot.startISO}
-                      onClick={() => handleSlotSelect(slot)}
-                      className="border border-graphite p-3 text-center font-sans text-bone text-sm
-                                 hover:border-signal-gold hover:bg-signal-gold/10 transition-colors cursor-pointer"
-                    >
-                      {formatSlotTime(slot.startISO, tz)}
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
-          </>
-        )}
-
-        {/* Step: Details form */}
-        {step === 'details' && (
-          <>
-            <div className="flex items-center gap-4 mb-8">
-              <button onClick={() => { setStep('slots'); setSelectedSlot(null) }}
-                className="font-mono text-muted text-[0.6rem] tracking-widest hover:text-bone">
-                ← Back
-              </button>
-              <h3 className="display-card text-xl">Your details</h3>
+              {/* Month Switcher Controls */}
+              <div className="flex items-center gap-2 bg-white/[0.04] border border-white/15 rounded-full px-3 py-1">
+                <button
+                  onClick={prevMonth}
+                  disabled={isPrevDisabled}
+                  className="font-mono text-bone hover:text-signal-gold disabled:opacity-30 disabled:cursor-not-allowed transition-colors text-sm px-1"
+                >
+                  ‹
+                </button>
+                <span className="font-mono text-xs text-bone font-bold px-2">
+                  {MONTHS[month - 1]} {year}
+                </span>
+                <button
+                  onClick={nextMonth}
+                  className="font-mono text-bone hover:text-signal-gold transition-colors text-sm px-1"
+                >
+                  ›
+                </button>
+              </div>
             </div>
 
-            <form onSubmit={handleSubmitDetails} className="flex flex-col gap-5" noValidate>
-              <div className="flex flex-col gap-1">
-                <label className="font-mono text-muted text-[0.55rem] tracking-widest">FULL NAME *</label>
-                <input
-                  type="text" value={name} onChange={e => setName(e.target.value)}
-                  placeholder="Priya Sharma"
-                  className="bg-transparent border border-graphite px-4 py-3 font-sans text-bone text-sm
-                             focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/30"
-                />
-              </div>
-              <div className="flex flex-col gap-1">
-                <label className="font-mono text-muted text-[0.55rem] tracking-widest">EMAIL ADDRESS *</label>
-                <input
-                  type="email" value={email} onChange={e => setEmail(e.target.value)}
-                  placeholder="priya@company.com"
-                  className="bg-transparent border border-graphite px-4 py-3 font-sans text-bone text-sm
-                             focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/30"
-                />
-              </div>
-              <div className="flex flex-col gap-1">
-                <label className="font-mono text-muted text-[0.55rem] tracking-widest">COMPANY / ORGANISATION</label>
-                <input
-                  type="text" value={company} onChange={e => setCompany(e.target.value)}
-                  placeholder="Optional"
-                  className="bg-transparent border border-graphite px-4 py-3 font-sans text-bone text-sm
-                             focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/30"
-                />
-              </div>
-              <div className="flex flex-col gap-1">
-                <label className="font-mono text-muted text-[0.55rem] tracking-widest">ANYTHING WE SHOULD KNOW</label>
-                <textarea
-                  value={message} onChange={e => setMessage(e.target.value)}
-                  rows={3}
-                  placeholder="Current role, target move, biggest challenge…"
-                  className="bg-transparent border border-graphite px-4 py-3 font-sans text-bone text-sm
-                             focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/30 resize-none"
-                />
-              </div>
+            {/* Days Header */}
+            <div className="grid grid-cols-7 gap-2 mb-3 text-center">
+              {DAYS.map(d => (
+                <span key={d} className="font-mono text-[0.6rem] text-muted uppercase tracking-widest font-bold">
+                  {d}
+                </span>
+              ))}
+            </div>
 
-              {formErr && <p className="font-sans text-signal-gold text-xs">{formErr}</p>}
-              {bookErr && <p className="font-sans text-signal-gold text-xs">{bookErr}</p>}
+            {loadingDays && (
+              <div className="py-16 text-center">
+                <p className="font-mono text-xs text-signal-gold uppercase tracking-widest animate-pulse font-bold">
+                  Fetching Available Calendar Slots...
+                </p>
+              </div>
+            )}
 
-              <button
-                type="submit" disabled={submitting}
-                className="bg-signal-gold text-obsidian px-8 py-4 font-sans text-[0.65rem] tracking-[0.2em]
-                           uppercase hover:bg-bone transition-colors duration-200 cursor-pointer
-                           disabled:opacity-60 disabled:cursor-not-allowed mt-2"
-              >
-                {submitting ? 'Processing…' : meetingIsPaid ? 'Continue to payment →' : 'Confirm booking →'}
-              </button>
-            </form>
-          </>
+            {!loadingDays && (
+              <div className="grid grid-cols-7 gap-2">
+                {Array.from({ length: firstDayOfWeek }).map((_, i) => (
+                  <div key={`empty-${i}`} />
+                ))}
+                {Array.from({ length: daysInMonth }).map((_, i) => {
+                  const day     = i + 1
+                  const dateStr = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`
+                  const isAvail = availableDays.includes(dateStr)
+                  const isPast  = new Date(dateStr) < today
+
+                  return (
+                    <button
+                      key={dateStr}
+                      onClick={() => isAvail && handleDateSelect(dateStr)}
+                      disabled={!isAvail || isPast}
+                      className={`
+                        aspect-square rounded-xl flex items-center justify-center font-mono text-xs font-bold transition-all duration-200
+                        ${isAvail && !isPast
+                          ? 'bg-white/[0.05] border border-white/15 text-bone hover:border-signal-gold hover:bg-signal-gold hover:text-obsidian shadow-md cursor-pointer'
+                          : 'bg-transparent text-muted/20 cursor-default border border-transparent'
+                        }
+                      `}
+                    >
+                      {day}
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+
+            <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+              <span className="font-mono text-[0.65rem] text-muted uppercase tracking-wider">
+                ● Gold Dates Indicate Verified Analyst Availability
+              </span>
+              <span className="font-mono text-[0.65rem] text-signal-gold uppercase font-bold">
+                TZ: {tz}
+              </span>
+            </div>
+          </div>
         )}
 
-        {/* Step: Payment */}
+        {/* ── STEP 2: SLOT SELECTION ──────────────────────────────── */}
+        {step === 'slots' && (
+          <div>
+            <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/10">
+              <div>
+                <button
+                  onClick={() => { setStep('calendar'); setSelectedDate(''); setSlots([]) }}
+                  className="font-mono text-xs text-signal-gold hover:text-bone uppercase tracking-wider block mb-2 transition-colors font-bold"
+                >
+                  ← Back to Calendar
+                </button>
+                <h3 className="display-card text-xl text-bone">
+                  {selectedDate ? formatDateDisplay(selectedDate, tz) : 'Available Slots'}
+                </h3>
+              </div>
+            </div>
+
+            {loadingSlots && (
+              <div className="py-16 text-center">
+                <p className="font-mono text-xs text-signal-gold uppercase tracking-widest animate-pulse font-bold">
+                  Loading Available Time Slots...
+                </p>
+              </div>
+            )}
+
+            {!loadingSlots && slots.length === 0 && (
+              <div className="py-12 text-center rounded-xl bg-white/[0.02] border border-white/10 p-6">
+                <p className="font-serif text-muted text-sm mb-4">No remaining slots for this date.</p>
+                <button
+                  onClick={() => { setStep('calendar'); setSelectedDate(''); }}
+                  className="px-6 py-2.5 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] font-mono text-xs font-bold uppercase tracking-widest rounded-full"
+                >
+                  Choose Another Date →
+                </button>
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {slots.filter(s => s.available).map(slot => (
+                <button
+                  key={slot.startISO}
+                  onClick={() => handleSlotSelect(slot)}
+                  className="p-4 rounded-xl border border-white/15 bg-white/[0.04] text-center font-mono text-xs font-bold text-bone hover:border-signal-gold hover:bg-signal-gold/10 hover:text-signal-gold transition-all shadow-md cursor-pointer"
+                >
+                  {formatSlotTime(slot.startISO, tz)}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── STEP 3: CANDIDATE DETAILS FORM ───────────────────────── */}
+        {step === 'details' && (
+          <div>
+            <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/10">
+              <div>
+                <button
+                  onClick={() => { setStep('slots'); setSelectedSlot(null) }}
+                  className="font-mono text-xs text-signal-gold hover:text-bone uppercase tracking-wider block mb-2 transition-colors font-bold"
+                >
+                  ← Back to Slots
+                </button>
+                <h3 className="display-card text-xl text-bone">
+                  Candidate Contact Information
+                </h3>
+              </div>
+            </div>
+
+            <form onSubmit={handleSubmitDetails} className="space-y-5" noValidate>
+              {formErr && <p className="font-sans text-red-400 text-xs p-3 rounded-lg bg-red-950/40 border border-red-900/50">{formErr}</p>}
+              {bookErr && <p className="font-sans text-red-400 text-xs p-3 rounded-lg bg-red-950/40 border border-red-900/50">{bookErr}</p>}
+
+              <div>
+                <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+                  Full Name <span className="text-signal-gold">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  placeholder="Rachel Tan / Arjun Mehta"
+                  className="w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3.5 text-xs text-bone focus:outline-none focus:border-signal-gold transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+                  Email Address <span className="text-signal-gold">*</span>
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="rachel@company.com"
+                  className="w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3.5 text-xs text-bone focus:outline-none focus:border-signal-gold transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+                  Current Company or Organization (Optional)
+                </label>
+                <input
+                  type="text"
+                  value={company}
+                  onChange={e => setCompany(e.target.value)}
+                  placeholder="e.g. Grab / Deloitte / Tech Firm"
+                  className="w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3.5 text-xs text-bone focus:outline-none focus:border-signal-gold transition-colors"
+                />
+              </div>
+
+              <div>
+                <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+                  Target Role / Brief Notes
+                </label>
+                <textarea
+                  value={message}
+                  onChange={e => setMessage(e.target.value)}
+                  rows={3}
+                  placeholder="e.g. Targeting VP of Product role in Singapore; current salary $180k..."
+                  className="w-full bg-white/[0.04] border border-white/15 rounded-lg p-3.5 text-xs text-bone focus:outline-none focus:border-signal-gold transition-colors resize-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={submitting}
+                className="w-full bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] px-7 py-4 font-mono text-xs font-bold tracking-widest uppercase rounded-full hover:brightness-110 transition-all cursor-pointer shadow-md disabled:opacity-50 whitespace-nowrap"
+              >
+                {submitting ? 'Confirming Reservation...' : meetingIsPaid ? 'Continue to Payment →' : 'Confirm Strategy Session →'}
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* ── STEP 4: PAYMENT (IF APPLICABLE) ────────────────────── */}
         {step === 'payment' && (
-          <>
-            <div className="mb-8">
-              <h3 className="display-card text-xl mb-2">Complete payment</h3>
-              <p className="font-sans text-muted text-sm">
-                Your slot is reserved for 15 minutes. Complete payment to confirm your booking.
+          <div>
+            <div className="mb-6">
+              <span className="font-mono text-xs text-signal-gold uppercase tracking-widest font-bold block mb-1">
+                FINAL STEP
+              </span>
+              <h3 className="display-card text-xl text-bone mb-2">
+                Confirm Strategy Session Payment
+              </h3>
+              <p className="font-serif text-muted text-xs leading-relaxed">
+                Your slot is reserved for 15 minutes while payment processes.
               </p>
             </div>
 
-            <div className="border border-graphite p-6 mb-6">
-              <p className="font-mono text-muted text-[0.55rem] tracking-widest mb-1">BOOKING SUMMARY</p>
-              <p className="font-sans text-bone text-sm">{meetingType.name}</p>
+            <div className="p-6 rounded-xl bg-white/[0.03] border border-white/10 mb-6">
+              <span className="font-mono text-[0.6rem] text-signal-gold uppercase tracking-wider font-bold block mb-1">
+                RESERVATION CONFIRMATION
+              </span>
+              <p className="font-sans text-bone text-sm font-semibold">{meetingType.name}</p>
               {selectedSlot && (
-                <p className="font-sans text-muted text-sm mt-1">
-                  {formatSlotTime(selectedSlot.startISO, tz)} · {formatDateDisplay(selectedDate, tz)}
+                <p className="font-mono text-muted text-xs mt-1">
+                  📅 {formatDateDisplay(selectedDate, tz)} · ⏰ {formatSlotTime(selectedSlot.startISO, tz)}
                 </p>
               )}
             </div>
@@ -435,8 +505,8 @@ export function BookingFlow({ meetingType }: Props) {
               labelUSD={`Cards · PayPal — $${(priceUSD / 100).toFixed(0)} USD`}
             />
 
-            {bookErr && <p className="font-sans text-signal-gold text-xs mt-4">{bookErr}</p>}
-          </>
+            {bookErr && <p className="font-sans text-red-400 text-xs mt-4 p-3 rounded bg-red-950/40 border border-red-900/50">{bookErr}</p>}
+          </div>
         )}
 
       </div>
