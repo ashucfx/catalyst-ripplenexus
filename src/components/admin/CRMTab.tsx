@@ -376,17 +376,25 @@ export function CRMTab() {
             ClientForge Leads Flywheel &amp; Deal Pipeline
           </h3>
           <p className="font-serif text-muted text-xs">
-            All website inquiries, TPI scores, and booked strategy sessions auto-sync to ClientForge. No API key needed.
+            Every lead, booking, TPI score, and inquiry is automatically logged. Export your entire database as a multi-sheet XLSX Excel file to upload to ClientForge anytime.
           </p>
         </div>
-        <a
-          href="https://clientforge.theripplenexus.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-6 py-3 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] font-mono text-xs font-bold uppercase tracking-widest rounded-full hover:brightness-110 transition-all shrink-0 shadow-md"
-        >
-          Open ClientForge CRM ↗
-        </a>
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={() => window.location.href = '/api/admin/crm/export'}
+            className="px-6 py-3 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] font-mono text-xs font-bold uppercase tracking-widest rounded-full hover:brightness-110 transition-all shrink-0 shadow-md cursor-pointer"
+          >
+            📊 Download XLSX Spreadsheet ↓
+          </button>
+          <a
+            href="https://clientforge.theripplenexus.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 border border-white/20 text-bone hover:border-signal-gold/40 font-mono text-xs font-semibold uppercase tracking-widest rounded-full transition-all shrink-0"
+          >
+            ClientForge Portal ↗
+          </a>
+        </div>
       </div>
 
       <div className="flex gap-0 min-h-0">
