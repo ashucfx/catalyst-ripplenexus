@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { InflectionMark } from '@/components/ui/InflectionMark'
+import Link from 'next/link'
 import { CRMTab } from '@/components/admin/CRMTab'
 import { NewsletterTab } from '@/components/admin/NewsletterTab'
 
@@ -47,8 +47,8 @@ function formatTime(isoStr: string, tz: string): string {
   }).format(new Date(isoStr))
 }
 
-const inputCls = 'bg-transparent border border-graphite px-4 py-2.5 font-sans text-bone text-sm focus:outline-none focus:border-signal-gold/60 placeholder:text-muted/30'
-const btnGold  = 'bg-signal-gold text-obsidian px-5 py-2.5 font-sans text-[0.65rem] tracking-[0.2em] uppercase hover:bg-bone transition-colors cursor-pointer disabled:opacity-60'
+const inputCls = 'w-full bg-white/[0.04] border border-white/15 rounded-lg px-4 py-3 text-xs text-bone focus:outline-none focus:border-signal-gold transition-colors placeholder:text-muted/30'
+const btnGold  = 'bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] px-6 py-3 font-mono text-xs font-bold tracking-widest uppercase rounded-full hover:brightness-110 transition-all cursor-pointer shadow-md whitespace-nowrap'
 
 // ── Main Component ─────────────────────────────────────────────────────────────
 
@@ -112,57 +112,78 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
   const TABS = [
     { id: 'bookings',     label: 'Bookings' },
     { id: 'availability', label: 'Availability' },
-    { id: 'crm',          label: 'CRM' },
+    { id: 'crm',          label: 'CRM Leads' },
     { id: 'newsletter',   label: 'Newsletter' },
   ] as const
 
   return (
-    <div className="min-h-screen bg-obsidian">
-      {/* Top bar */}
-      <div className="border-b border-graphite px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <InflectionMark size="sm" />
-          <p className="label-inst">Admin Dashboard</p>
+    <div className="min-h-screen bg-obsidian grain">
+      {/* Top Header Bar */}
+      <header className="border-b border-white/10 bg-obsidian/90 sticky top-0 z-50 backdrop-blur-xl px-6 lg:px-12 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-3.5 h-3.5 bg-signal-gold rotate-45 rounded-sm" />
+          <span className="font-serif font-bold text-bone tracking-wider text-base">CATALYST</span>
+          <span className="font-mono text-[0.6rem] text-signal-gold border border-signal-gold/30 px-2 py-0.5 rounded-full uppercase tracking-widest font-semibold">
+            CONTROL CENTER
+          </span>
         </div>
-        <div className="flex items-center gap-6">
-          <p className="font-mono text-muted text-[0.55rem] tracking-widest">{adminTZ}</p>
-          <button onClick={logout} className="font-mono text-muted text-[0.55rem] tracking-widest hover:text-bone">
-            Sign out
+        <div className="flex items-center gap-4">
+          <span className="font-mono text-[0.65rem] text-muted uppercase tracking-wider hidden sm:inline-block">
+            TZ: {adminTZ}
+          </span>
+          <Link href="/" className="font-mono text-[0.65rem] text-muted hover:text-bone uppercase tracking-wider hidden sm:inline-block">
+            Website ↗
+          </Link>
+          <button
+            onClick={logout}
+            className="font-mono text-[0.65rem] text-red-400 hover:text-red-300 border border-red-900/40 bg-red-950/20 px-3 py-1.5 rounded-full uppercase tracking-wider transition-colors"
+          >
+            Sign Out
           </button>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-7xl mx-auto px-8 py-10">
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 py-10">
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-graphite mb-10">
+        {/* Executive Stats Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
           {[
-            { label: 'Upcoming bookings', value: bookings.length },
-            { label: 'Confirmed',         value: confirmed },
-            { label: 'Pending payment',   value: pending },
-            { label: 'Admin TZ',          value: adminTZ.split('/')[1] ?? adminTZ },
+            { label: 'Upcoming Bookings', value: bookings.length },
+            { label: 'Confirmed Calls',   value: confirmed },
+            { label: 'Pending Payment',   value: pending },
+            { label: 'Timezone Standard', value: adminTZ.split('/')[1] ?? adminTZ },
           ].map(s => (
-            <div key={s.label} className="bg-obsidian p-6">
-              <p className="font-mono text-muted text-[0.55rem] tracking-widest mb-2">{s.label.toUpperCase()}</p>
-              <p className="display-card text-2xl">{s.value}</p>
+            <div key={s.label} className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 shadow-lg">
+              <span className="font-mono text-xs text-signal-gold uppercase tracking-widest block mb-2 font-bold">
+                {s.label}
+              </span>
+              <p className="display-card text-3xl text-bone">{s.value}</p>
             </div>
           ))}
         </div>
 
-        {/* Tabs */}
-        <div className="flex gap-0 border-b border-graphite mb-8 overflow-x-auto">
-          {TABS.map(t => (
-            <button
-              key={t.id}
-              onClick={() => setTab(t.id)}
-              className={`font-mono text-[0.6rem] tracking-widest px-6 py-3 border-b-2 transition-colors whitespace-nowrap
-                ${tab === t.id ? 'border-signal-gold text-bone' : 'border-transparent text-muted hover:text-bone'}`}
-            >
-              {t.label}
-            </button>
-          ))}
+        {/* Tab Navigation */}
+        <div className="flex items-center justify-between border-b border-white/10 mb-8 overflow-x-auto">
+          <div className="flex gap-2">
+            {TABS.map(t => (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className={`font-mono text-xs uppercase tracking-widest px-5 py-3 border-b-2 font-bold transition-all whitespace-nowrap cursor-pointer ${
+                  tab === t.id
+                    ? 'border-signal-gold text-signal-gold bg-signal-gold/5'
+                    : 'border-transparent text-muted hover:text-bone'
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
           {tab === 'bookings' && (
-            <button onClick={refreshBookings} className="ml-auto font-mono text-muted text-[0.55rem] tracking-widest px-4 hover:text-bone shrink-0">
+            <button
+              onClick={refreshBookings}
+              className="font-mono text-xs text-signal-gold hover:text-bone px-4 py-2 border border-white/10 rounded-full transition-colors cursor-pointer shrink-0"
+            >
               Refresh ↻
             </button>
           )}
@@ -170,68 +191,101 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
 
         {/* ── BOOKINGS TAB ── */}
         {tab === 'bookings' && (
-          <>
+          <div className="space-y-4">
             {bookings.length === 0 && (
-              <p className="font-sans text-muted text-sm py-8">No upcoming bookings.</p>
+              <div className="p-12 text-center rounded-2xl bg-white/[0.02] border border-white/10">
+                <p className="font-serif text-muted text-base">No upcoming strategy call bookings recorded.</p>
+              </div>
             )}
-            <div className="flex flex-col gap-2">
-              {bookings.map(b => (
-                <div key={b.id} className="bg-graphite border border-graphite/60 p-6 grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <div>
-                    <p className="font-sans text-bone text-sm font-medium">{b.name}</p>
-                    <p className="font-sans text-muted text-xs">{b.email}</p>
-                    {b.company && <p className="font-sans text-muted text-xs">{b.company}</p>}
-                  </div>
-                  <div>
-                    <p className="font-mono text-muted text-[0.55rem] tracking-widest mb-1">SESSION</p>
-                    <p className="font-sans text-bone text-sm">{b.meeting_types?.name}</p>
-                    <p className="font-sans text-muted text-xs">{b.meeting_types?.duration_min} min</p>
-                  </div>
-                  <div>
-                    <p className="font-mono text-muted text-[0.55rem] tracking-widest mb-1">TIME (IST)</p>
-                    <p className="font-sans text-bone text-sm">{formatTime(b.starts_at, adminTZ)}</p>
-                    <p className="font-sans text-muted text-xs">Client TZ: {b.timezone}</p>
-                  </div>
-                  <div className="flex items-start justify-end">
-                    <span className={`font-mono text-[0.55rem] tracking-widest px-2 py-1 border ${
-                      b.status === 'confirmed'       ? 'border-signal-gold/30 text-signal-gold bg-signal-gold/5' :
-                      b.status === 'pending_payment' ? 'border-muted/30 text-muted' :
-                      'border-graphite text-muted'
-                    }`}>
-                      {b.status.replace('_', ' ').toUpperCase()}
-                    </span>
-                  </div>
+            {bookings.map(b => (
+              <div
+                key={b.id}
+                className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-signal-gold/30 transition-all grid grid-cols-1 md:grid-cols-4 gap-6 items-center"
+              >
+                <div>
+                  <span className="font-mono text-[0.65rem] text-signal-gold uppercase tracking-wider block mb-1 font-bold">
+                    CANDIDATE
+                  </span>
+                  <p className="font-sans text-bone text-base font-semibold">{b.name}</p>
+                  <p className="font-sans text-muted text-xs">{b.email}</p>
+                  {b.company && <p className="font-sans text-muted text-xs font-mono">{b.company}</p>}
                 </div>
-              ))}
-            </div>
-          </>
+                <div>
+                  <span className="font-mono text-[0.65rem] text-muted uppercase tracking-wider block mb-1 font-bold">
+                    SESSION TYPE
+                  </span>
+                  <p className="font-sans text-bone text-sm font-medium">{b.meeting_types?.name}</p>
+                  <p className="font-sans text-muted text-xs font-mono">{b.meeting_types?.duration_min} minutes</p>
+                </div>
+                <div>
+                  <span className="font-mono text-[0.65rem] text-muted uppercase tracking-wider block mb-1 font-bold">
+                    DATE & TIME (IST)
+                  </span>
+                  <p className="font-sans text-bone text-sm font-mono">{formatTime(b.starts_at, adminTZ)}</p>
+                  <p className="font-sans text-muted text-xs font-mono">TZ: {b.timezone}</p>
+                </div>
+                <div className="flex md:justify-end">
+                  <span className={`font-mono text-xs uppercase tracking-widest px-3 py-1.5 rounded-full border font-bold ${
+                    b.status === 'confirmed'
+                      ? 'border-emerald-500/40 text-emerald-400 bg-emerald-500/10'
+                      : b.status === 'pending_payment'
+                      ? 'border-amber-500/40 text-amber-400 bg-amber-500/10'
+                      : 'border-white/20 text-muted'
+                  }`}>
+                    {b.status.replace('_', ' ')}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
 
         {/* ── AVAILABILITY TAB ── */}
         {tab === 'availability' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-6">WEEKLY AVAILABILITY ({adminTZ})</p>
-              <div className="flex flex-col gap-3">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="p-8 rounded-2xl bg-white/[0.02] border border-white/10">
+              <span className="font-mono text-xs text-signal-gold uppercase tracking-widest block mb-6 font-bold">
+                WEEKLY AVAILABILITY WINDOWS ({adminTZ})
+              </span>
+              <div className="space-y-3">
                 {Array.from({ length: 7 }).map((_, dow) => {
                   const rule   = rules.find(r => r.day_of_week === dow)
                   const active = !!rule?.is_active
                   return (
-                    <div key={dow} className={`border p-4 flex items-center gap-4 transition-colors ${active ? 'border-graphite' : 'border-graphite/30 opacity-50'}`}>
-                      <button
-                        onClick={() => toggleDay(dow)}
-                        className={`w-4 h-4 border-2 flex-shrink-0 transition-colors ${active ? 'bg-signal-gold border-signal-gold' : 'border-graphite'}`}
-                      />
-                      <span className="font-mono text-bone text-[0.7rem] w-12">{DAYS_FULL[dow]}</span>
+                    <div
+                      key={dow}
+                      className={`p-4 rounded-xl border flex items-center justify-between transition-all ${
+                        active
+                          ? 'border-white/15 bg-white/[0.03]'
+                          : 'border-white/5 bg-transparent opacity-40'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          checked={active}
+                          onChange={() => toggleDay(dow)}
+                          className="w-4 h-4 accent-[#D4AF37] cursor-pointer"
+                        />
+                        <span className="font-mono text-bone text-xs font-bold w-24">
+                          {DAYS_FULL[dow]}
+                        </span>
+                      </div>
                       {active && rule && (
-                        <div className="flex items-center gap-2 ml-auto">
-                          <input type="time" value={rule.start_time}
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="time"
+                            value={rule.start_time}
                             onChange={e => updateTime(dow, 'start_time', e.target.value)}
-                            className="bg-transparent border border-graphite px-2 py-1 font-mono text-bone text-xs focus:outline-none" />
+                            className="bg-white/[0.04] border border-white/15 rounded px-3 py-1 font-mono text-bone text-xs focus:outline-none focus:border-signal-gold"
+                          />
                           <span className="font-mono text-muted text-xs">—</span>
-                          <input type="time" value={rule.end_time}
+                          <input
+                            type="time"
+                            value={rule.end_time}
                             onChange={e => updateTime(dow, 'end_time', e.target.value)}
-                            className="bg-transparent border border-graphite px-2 py-1 font-mono text-bone text-xs focus:outline-none" />
+                            className="bg-white/[0.04] border border-white/15 rounded px-3 py-1 font-mono text-bone text-xs focus:outline-none focus:border-signal-gold"
+                          />
                         </div>
                       )}
                     </div>
@@ -240,22 +294,42 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
               </div>
             </div>
 
-            <div>
-              <p className="font-mono text-muted text-[0.6rem] tracking-widest mb-6">BLOCK A DATE</p>
-              <div className="flex flex-col gap-3">
-                <input
-                  type="date" value={blockedDate}
-                  onChange={e => setBlockedDate(e.target.value)}
-                  className={inputCls}
-                />
-                <input
-                  type="text" value={blockedNote}
-                  onChange={e => setBlockedNote(e.target.value)}
-                  placeholder="Reason (optional)"
-                  className={inputCls}
-                />
-                <button onClick={addBlock} className={btnGold}>Block date →</button>
-                {blockMsg && <p className="font-sans text-muted text-xs">{blockMsg}</p>}
+            <div className="p-8 rounded-2xl bg-white/[0.02] border border-white/10">
+              <span className="font-mono text-xs text-signal-gold uppercase tracking-widest block mb-6 font-bold">
+                BLACKOUT / BLOCK SPECIFIC DATE
+              </span>
+              <div className="space-y-4">
+                <div>
+                  <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+                    SELECT DATE
+                  </label>
+                  <input
+                    type="date"
+                    value={blockedDate}
+                    onChange={e => setBlockedDate(e.target.value)}
+                    className={inputCls}
+                  />
+                </div>
+                <div>
+                  <label className="block font-mono text-xs text-muted uppercase tracking-wider mb-2">
+                    REASON (OPTIONAL)
+                  </label>
+                  <input
+                    type="text"
+                    value={blockedNote}
+                    onChange={e => setBlockedNote(e.target.value)}
+                    placeholder="Public Holiday / Personal Outing"
+                    className={inputCls}
+                  />
+                </div>
+                <button onClick={addBlock} className={btnGold}>
+                  Block Selected Date →
+                </button>
+                {blockMsg && (
+                  <p className="font-sans text-emerald-400 text-xs p-3 rounded-lg bg-emerald-950/40 border border-emerald-900/50">
+                    {blockMsg}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -267,7 +341,7 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
         {/* ── NEWSLETTER TAB ── */}
         {tab === 'newsletter' && <NewsletterTab />}
 
-      </div>
+      </main>
     </div>
   )
 }
