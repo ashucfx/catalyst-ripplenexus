@@ -365,10 +365,33 @@ export function CRMTab() {
   const hasPanel = !!selected
 
   return (
-    <div className="flex gap-0 min-h-0">
+    <div className="flex flex-col gap-6">
+      {/* ClientForge CRM Live Link Banner */}
+      <div className="p-6 rounded-2xl bg-gradient-to-r from-signal-gold/10 via-obsidian to-obsidian border border-signal-gold/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <span className="font-mono text-[0.65rem] text-signal-gold uppercase tracking-widest font-bold block mb-1">
+            ⚡ LIVE CRM HUB · CLIENTFORGE
+          </span>
+          <h3 className="display-card text-lg text-bone">
+            ClientForge Leads Flywheel &amp; Deal Pipeline
+          </h3>
+          <p className="font-serif text-muted text-xs">
+            All website inquiries, TPI scores, and booked strategy sessions auto-sync to ClientForge. No API key needed.
+          </p>
+        </div>
+        <a
+          href="https://clientforge.theripplenexus.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-6 py-3 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] font-mono text-xs font-bold uppercase tracking-widest rounded-full hover:brightness-110 transition-all shrink-0 shadow-md"
+        >
+          Open ClientForge CRM ↗
+        </a>
+      </div>
 
-      {/* ── Left: table ── */}
-      <div className={`flex flex-col min-w-0 transition-all ${hasPanel ? 'w-[60%]' : 'w-full'}`}>
+      <div className="flex gap-0 min-h-0">
+        {/* ── Left: table ── */}
+        <div className={`flex flex-col min-w-0 transition-all ${hasPanel ? 'w-[60%]' : 'w-full'}`}>
 
         {/* Status filter tabs */}
         <div className="flex gap-0 border-b border-graphite mb-4 overflow-x-auto">
