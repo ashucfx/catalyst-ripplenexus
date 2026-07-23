@@ -20,6 +20,9 @@ function formatDateToIcs(date: Date): string {
 }
 
 export function generateGoogleMeetLink(bookingId: string): string {
+  const configuredUrl = process.env.GOOGLE_MEET_URL || process.env.NEXT_PUBLIC_GOOGLE_MEET_URL
+  if (configuredUrl) return configuredUrl
+
   const cleanId = bookingId.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()
   const p1 = cleanId.slice(0, 3) || 'cat'
   const p2 = cleanId.slice(3, 7) || 'tpa1'

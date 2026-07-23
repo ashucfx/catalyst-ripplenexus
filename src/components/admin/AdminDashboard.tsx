@@ -4,7 +4,6 @@ import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { CRMTab } from '@/components/admin/CRMTab'
-import { NewsletterTab } from '@/components/admin/NewsletterTab'
 
 const DAYS_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 
@@ -56,7 +55,7 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
   const router = useRouter()
   const [bookings,    setBookings]   = useState<Booking[]>(initialBookings)
   const [rules,       setRules]      = useState<Rule[]>(initialRules)
-  const [tab,         setTab]        = useState<'bookings' | 'availability' | 'crm' | 'newsletter'>('bookings')
+  const [tab,         setTab]        = useState<'bookings' | 'availability' | 'crm'>('bookings')
   const [blockedDate, setBlockedDate] = useState('')
   const [blockedNote, setBlockedNote] = useState('')
   const [blockMsg,    setBlockMsg]    = useState('')
@@ -112,8 +111,7 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
   const TABS = [
     { id: 'bookings',     label: 'Bookings' },
     { id: 'availability', label: 'Availability' },
-    { id: 'crm',          label: 'CRM Leads' },
-    { id: 'newsletter',   label: 'Newsletter' },
+    { id: 'crm',          label: 'CRM Leads & Export' },
   ] as const
 
   return (
@@ -337,9 +335,6 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
 
         {/* ── CRM TAB ── */}
         {tab === 'crm' && <CRMTab />}
-
-        {/* ── NEWSLETTER TAB ── */}
-        {tab === 'newsletter' && <NewsletterTab />}
 
       </main>
     </div>
