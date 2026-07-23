@@ -6,6 +6,7 @@ import { generateSlots } from '@/lib/schedule/slots'
 import { resend } from '@/lib/email/resend'
 import { bookingConfirmationClient, bookingConfirmationAdmin } from '@/lib/email/bookingTemplates'
 import { syncLeadToClientForge } from '@/lib/clientforge/clientforge'
+import { generateGoogleMeetLink, generateIcsEvent } from '@/lib/schedule/ics'
 
 const FROM  = `${process.env.RESEND_FROM_NAME ?? 'Catalyst'} <${process.env.RESEND_FROM_EMAIL ?? 'catalyst@theripplenexus.com'}>`
 const ADMIN = process.env.RESEND_ADMIN_EMAIL || 'catalyst@theripplenexus.com'
@@ -104,6 +105,25 @@ export async function POST(req: NextRequest) {
 
   // Send confirmation emails & sync to ClientForge CRM
   if (!isPaid && booking.cancel_token) {
+    const meetingLink = generateGoogleMeetLink(booking.id)
+    const icsContent  = generateIcsEvent({
+      id:          booking.id,
+      title:       `Catalyst Session: ${meetingType.name}`,
+      description: body.message ? `Client Note: ${body.message}` : '1-on-1 Executive Strategy Consultation with Catalyst.',
+      startsAt:    start,
+      durationMin: meetingType.duration_min,
+      clientName:  name,
+      clientEmail: email,
+      meetingLink,
+      organizerEmail: ADMIN,
+    })
+
+    const icsAttachment = {
+      filename:    'invite.ics',
+      content:     Buffer.from(icsContent),
+      contentType: 'text/calendar; method=REQUEST; charset=UTF-8',
+    }
+
     const clientTpl = bookingConfirmationClient({
       name,
       email,
@@ -113,7 +133,10 @@ export async function POST(req: NextRequest) {
       timezone,
       cancelToken:   booking.cancel_token,
       meetingTypeId,
+      meetingLink,
+      bookingId:     booking.id,
     })
+
     const adminTpl = bookingConfirmationAdmin({
       name,
       email,
@@ -125,22 +148,33 @@ export async function POST(req: NextRequest) {
       timezone,
       cancelToken:   booking.cancel_token,
       meetingTypeId,
+      meetingLink,
     })
 
     await Promise.allSettled([
-      resend.emails.send({ from: FROM, to: email, ...clientTpl }),
-      resend.emails.send({ from: FROM, to: ADMIN, ...adminTpl }),
+      resend.emails.send({
+        from:        FROM,
+        to:          email,
+        ...clientTpl,
+        attachments: [icsAttachment],
+      }),
+      resend.emails.send({
+        from:        FROM,
+        to:          ADMIN,
+        ...adminTpl,
+        attachments: [icsAttachment],
+      }),
       syncLeadToClientForge({
         name,
         email,
-        phone: '+10000000000',
-        countryCode: 'IN',
-        countryName: 'India',
-        experienceLevel: 'EXECUTIVE',
-        services: [meetingType.name],
-        packageSlug: 'CAREER_BOOSTER',
-        targetRole: 'Scheduled Strategy Session',
-        requirementNotes: `[BOOKED CALL] Slot: ${slot.startISO} (${timezone}). Company: ${body.company || 'N/A'}. Message: ${body.message || ''}`,
+        phone:            '+10000000000',
+        countryCode:      'IN',
+        countryName:      'India',
+        experienceLevel:  'EXECUTIVE',
+        services:         [meetingType.name],
+        packageSlug:      'CAREER_BOOSTER',
+        targetRole:       'Scheduled Strategy Session',
+        requirementNotes: `[BOOKED CALL] Meet: ${meetingLink} | Slot: ${slot.startISO} (${timezone}). Company: ${body.company || 'N/A'}. Note: ${body.message || ''}`,
       }),
     ])
   }

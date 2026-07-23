@@ -18,9 +18,10 @@ function cancelLink(token: string): string {
   return `${BASE}/book/cancel?token=${token}`
 }
 
-export function bookingConfirmationClient(data: BookingEmailData): { subject: string; html: string } {
+export function bookingConfirmationClient(data: BookingEmailData & { bookingId?: string }): { subject: string; html: string } {
   const dateStr = formatDisplay(data.startsAt, data.timezone)
   const timeStr = formatTimeDisplay(data.startsAt, data.timezone)
+  const meetUrl = data.meetingLink || 'https://meet.google.com/catalyst-strategy'
 
   return {
     subject: `Your ${data.meetingName} is confirmed — Catalyst`,
@@ -29,40 +30,53 @@ export function bookingConfirmationClient(data: BookingEmailData): { subject: st
 <html lang="en">
 <head><meta charset="utf-8"><style>
   body { font-family: -apple-system, sans-serif; background:#0A0B0D; color:#F4F1EB; margin:0; padding:40px 20px; }
-  .card { max-width:520px; margin:0 auto; background:#13161A; border:1px solid #1F2226; padding:40px; }
+  .card { max-width:560px; margin:0 auto; background:#13161A; border:1px solid #1F2226; padding:40px; border-radius:12px; }
   h1 { font-size:24px; font-weight:300; margin:0 0 8px; color:#F4F1EB; }
-  .label { font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#6B7280; margin-bottom:24px; }
-  .detail { background:#0A0B0D; border:1px solid #1F2226; padding:20px; margin:24px 0; }
+  .label { font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#C5A059; margin-bottom:24px; font-weight:bold; }
+  .detail { background:#0A0B0D; border:1px solid #1F2226; padding:24px; margin:24px 0; border-radius:8px; }
   .detail p { margin:6px 0; font-size:14px; color:#9CA3AF; }
   .detail strong { color:#F4F1EB; }
-  .btn { display:inline-block; background:#B8935B; color:#0A0B0D; padding:12px 28px; text-decoration:none; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; margin:24px 0; }
+  .btn-meet { display:inline-block; background:linear-gradient(135deg, #D4AF37 0%, #C5A059 100%); color:#0A0B0D; padding:14px 28px; text-decoration:none; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; font-weight:bold; border-radius:24px; margin:12px 6px 12px 0; }
   .cancel { font-size:12px; color:#4B5563; margin-top:32px; }
   .cancel a { color:#6B7280; }
   hr { border:none; border-top:1px solid #1F2226; margin:32px 0; }
 </style></head>
 <body>
 <div class="card">
-  <p class="label">Catalyst — Booking Confirmed</p>
-  <h1>Your session is set.</h1>
-  <div class="detail">
-    <p><strong>${data.meetingName}</strong></p>
-    <p>${dateStr}</p>
-    <p><strong>${timeStr}</strong> · ${data.durationMin} minutes</p>
-    <p>Timezone: ${data.timezone}</p>
-    <p style="margin-top:16px;"><strong>Meeting Link:</strong> <a href="${data.meetingLink || 'https://meet.google.com/catalyst-strategy'}" style="color:#B8935B;text-decoration:none;">${data.meetingLink || 'https://meet.google.com/catalyst-strategy'}</a></p>
+  <div style="margin-bottom:20px;">
+    <span style="display:inline-block;width:12px;height:12px;background:#C5A059;transform:rotate(45deg);margin-right:8px;"></span>
+    <span style="font-size:16px;font-weight:bold;color:#F4F1EB;letter-spacing:0.1em;">CATALYST</span>
   </div>
-  <p style="font-size:14px;color:#9CA3AF;line-height:1.6;">
-    You will receive a calendar invite shortly. We review your LinkedIn and career context before every session — please have recent compensation data on hand.
+  <p class="label">Booking Confirmed · Calendar Invitation Attached</p>
+  <h1>Your executive strategy session is set.</h1>
+  <div class="detail">
+    <p style="font-size:16px;color:#C5A059;font-weight:bold;margin-bottom:12px;">${data.meetingName}</p>
+    <p>📅 <strong>Date:</strong> ${dateStr}</p>
+    <p>⏰ <strong>Time:</strong> ${timeStr} (${data.durationMin} minutes)</p>
+    <p>🌐 <strong>Timezone:</strong> ${data.timezone}</p>
+    <p style="margin-top:16px;padding-top:16px;border-top:1px solid #1F2226;">
+      🎥 <strong>Google Meet Room:</strong><br/>
+      <a href="${meetUrl}" style="color:#D4AF37;word-break:break-all;font-size:15px;font-weight:bold;text-decoration:underline;">${meetUrl}</a>
+    </p>
+  </div>
+
+  <div style="margin:24px 0;">
+    <a href="${meetUrl}" class="btn-meet">🎥 Join Google Meet →</a>
+  </div>
+
+  <p style="font-size:13px;color:#9CA3AF;line-height:1.6;">
+    An interactive <strong>.ics Calendar Invite</strong> is attached to this email. You can open it to automatically sync this call into Google Calendar, Apple Calendar, or Outlook.
   </p>
   <hr>
   <p class="cancel">
-    Need to reschedule?
-    <a href="${cancelLink(data.cancelToken)}">Cancel this booking</a>
-    and rebook at a time that works — at least 24 hours before the session.
+    Need to reschedule or cancel?
+    <a href="${cancelLink(data.cancelToken)}">Click here to manage your booking</a>
   </p>
 </div>
 </body>
 </html>`,
+  }
+}
   }
 }
 
