@@ -1,4 +1,5 @@
 import { formatDisplay, formatTimeDisplay } from '../schedule/timezone'
+import { generateGoogleCalendarUrl, generateGoogleMeetLink } from '../schedule/ics'
 
 interface BookingEmailData {
   name:          string
@@ -21,58 +22,117 @@ function cancelLink(token: string): string {
 export function bookingConfirmationClient(data: BookingEmailData & { bookingId?: string }): { subject: string; html: string } {
   const dateStr = formatDisplay(data.startsAt, data.timezone)
   const timeStr = formatTimeDisplay(data.startsAt, data.timezone)
-  const meetUrl = data.meetingLink || 'https://meet.google.com/catalyst-strategy'
+  const meetUrl = data.meetingLink || generateGoogleMeetLink(data.bookingId || data.meetingTypeId)
+  
+  const gcalUrl = generateGoogleCalendarUrl({
+    id: data.bookingId || 'booking',
+    title: `${data.meetingName} — Catalyst Strategy Session`,
+    startsAt: data.startsAt,
+    durationMin: data.durationMin,
+    clientName: data.name,
+    clientEmail: data.email,
+    meetingLink: meetUrl,
+  })
 
   return {
-    subject: `Your ${data.meetingName} is confirmed — Catalyst`,
+    subject: `Your ${data.meetingName} is Confirmed — Catalyst by Ripple Nexus`,
     html: `
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><style>
-  body { font-family: -apple-system, sans-serif; background:#0A0B0D; color:#F4F1EB; margin:0; padding:40px 20px; }
-  .card { max-width:560px; margin:0 auto; background:#13161A; border:1px solid #1F2226; padding:40px; border-radius:12px; }
-  h1 { font-size:24px; font-weight:300; margin:0 0 8px; color:#F4F1EB; }
-  .label { font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:#C5A059; margin-bottom:24px; font-weight:bold; }
-  .detail { background:#0A0B0D; border:1px solid #1F2226; padding:24px; margin:24px 0; border-radius:8px; }
-  .detail p { margin:6px 0; font-size:14px; color:#9CA3AF; }
-  .detail strong { color:#F4F1EB; }
-  .btn-meet { display:inline-block; background:linear-gradient(135deg, #D4AF37 0%, #C5A059 100%); color:#0A0B0D; padding:14px 28px; text-decoration:none; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; font-weight:bold; border-radius:24px; margin:12px 6px 12px 0; }
-  .cancel { font-size:12px; color:#4B5563; margin-top:32px; }
-  .cancel a { color:#6B7280; }
-  hr { border:none; border-top:1px solid #1F2226; margin:32px 0; }
-</style></head>
-<body>
-<div class="card">
-  <div style="margin-bottom:20px;">
-    <span style="display:inline-block;width:12px;height:12px;background:#C5A059;transform:rotate(45deg);margin-right:8px;"></span>
-    <span style="font-size:16px;font-weight:bold;color:#F4F1EB;letter-spacing:0.1em;">CATALYST</span>
-  </div>
-  <p class="label">Booking Confirmed · Calendar Invitation Attached</p>
-  <h1>Your executive strategy session is set.</h1>
-  <div class="detail">
-    <p style="font-size:16px;color:#C5A059;font-weight:bold;margin-bottom:12px;">${data.meetingName}</p>
-    <p>📅 <strong>Date:</strong> ${dateStr}</p>
-    <p>⏰ <strong>Time:</strong> ${timeStr} (${data.durationMin} minutes)</p>
-    <p>🌐 <strong>Timezone:</strong> ${data.timezone}</p>
-    <p style="margin-top:16px;padding-top:16px;border-top:1px solid #1F2226;">
-      🎥 <strong>Google Meet Room:</strong><br/>
-      <a href="${meetUrl}" style="color:#D4AF37;word-break:break-all;font-size:15px;font-weight:bold;text-decoration:underline;">${meetUrl}</a>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Confirmed — Catalyst</title>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0A0B0D; color: #F4F1EB; margin: 0; padding: 40px 16px;">
+  <div style="max-width: 580px; margin: 0 auto; background-color: #111317; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 36px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+    
+    <!-- Brand Header with Gold Emblem -->
+    <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; margin-bottom: 28px;">
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="vertical-align: middle;">
+            <span style="font-size: 20px; color: #D4AF37; margin-right: 8px;">❖</span>
+            <span style="font-family: Georgia, serif; font-size: 22px; font-weight: bold; color: #F4F1EB; letter-spacing: 0.05em;">CATALYST</span>
+            <span style="display: block; font-family: Arial, sans-serif; font-size: 8px; color: #8C8C96; letter-spacing: 0.35em; text-transform: uppercase; margin-top: 3px;">BY RIPPLE NEXUS</span>
+          </td>
+          <td align="right" style="vertical-align: middle;">
+            <span style="font-family: Arial, sans-serif; font-size: 9px; color: #D4AF37; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid rgba(212,175,55,0.3); background-color: rgba(212,175,55,0.1); padding: 4px 10px; border-radius: 20px; font-weight: bold;">
+              CONFIRMED
+            </span>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <h1 style="font-family: Georgia, serif; font-size: 24px; font-weight: normal; margin: 0 0 12px 0; color: #F4F1EB; line-height: 1.3;">
+      Your strategy session is locked in, ${data.name.split(' ')[0]}.
+    </h1>
+    <p style="font-size: 14px; color: #9CA3AF; margin: 0 0 24px 0; line-height: 1.6;">
+      An interactive <strong>.ics calendar invite</strong> is attached to this email. You can also use the buttons below to open your meeting room or add it directly to Google Calendar.
     </p>
-  </div>
 
-  <div style="margin:24px 0;">
-    <a href="${meetUrl}" class="btn-meet">🎥 Join Google Meet →</a>
-  </div>
+    <!-- Session Details Box -->
+    <div style="background-color: #0A0B0D; border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; padding: 24px; margin-bottom: 28px;">
+      <p style="font-family: Georgia, serif; font-size: 18px; color: #D4AF37; font-weight: bold; margin: 0 0 16px 0;">
+        ${data.meetingName}
+      </p>
+      
+      <table width="100%" cellpadding="0" cellspacing="0" style="font-size: 14px; color: #9CA3AF; line-height: 1.8;">
+        <tr>
+          <td style="padding: 4px 0; width: 110px; color: #8C8C96; font-family: Arial, sans-serif; font-size: 11px; text-transform: uppercase; tracking: 0.1em;">Date & Time:</td>
+          <td style="padding: 4px 0; color: #F4F1EB; font-weight: bold;">${dateStr}</td>
+        </tr>
+        <tr>
+          <td style="padding: 4px 0; color: #8C8C96; font-family: Arial, sans-serif; font-size: 11px; text-transform: uppercase;">Session Time:</td>
+          <td style="padding: 4px 0; color: #D4AF37; font-weight: bold;">${timeStr} (${data.durationMin} Minutes)</td>
+        </tr>
+        <tr>
+          <td style="padding: 4px 0; color: #8C8C96; font-family: Arial, sans-serif; font-size: 11px; text-transform: uppercase;">Timezone:</td>
+          <td style="padding: 4px 0; color: #F4F1EB;">${data.timezone}</td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 0 4px 0; color: #8C8C96; font-family: Arial, sans-serif; font-size: 11px; text-transform: uppercase; vertical-align: top;">Video Link:</td>
+          <td style="padding: 12px 0 4px 0; vertical-align: top;">
+            <a href="${meetUrl}" style="color: #D4AF37; font-weight: bold; text-decoration: underline; word-break: break-all;">${meetUrl}</a>
+          </td>
+        </tr>
+      </table>
+    </div>
 
-  <p style="font-size:13px;color:#9CA3AF;line-height:1.6;">
-    An interactive <strong>.ics Calendar Invite</strong> is attached to this email. You can open it to automatically sync this call into Google Calendar, Apple Calendar, or Outlook.
-  </p>
-  <hr>
-  <p class="cancel">
-    Need to reschedule or cancel?
-    <a href="${cancelLink(data.cancelToken)}">Click here to manage your booking</a>
-  </p>
-</div>
+    <!-- Action Buttons: Google Meet + Add to Google Calendar -->
+    <div style="margin-bottom: 32px; text-align: center;">
+      <a href="${meetUrl}" style="display: inline-block; background: linear-gradient(135deg, #D4AF37 0%, #C5A059 100%); color: #0A0B0D; padding: 14px 24px; text-decoration: none; font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: bold; border-radius: 30px; margin: 6px; box-shadow: 0 4px 12px rgba(212,175,55,0.3);">
+        🎥 Join Google Meet Video Call →
+      </a>
+      <a href="${gcalUrl}" target="_blank" style="display: inline-block; background-color: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.2); color: #F4F1EB; padding: 14px 24px; text-decoration: none; font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: bold; border-radius: 30px; margin: 6px;">
+        📅 Add to Google Calendar ↗
+      </a>
+    </div>
+
+    <!-- Prep Instructions -->
+    <div style="background-color: rgba(255,255,255,0.02); border-left: 2px solid #D4AF37; padding: 16px; margin-bottom: 28px;">
+      <p style="font-family: Arial, sans-serif; font-size: 10px; color: #D4AF37; text-transform: uppercase; letter-spacing: 0.15em; font-weight: bold; margin: 0 0 6px 0;">
+        EXECUTIVE CONSULTATION BRIEF
+      </p>
+      <p style="font-size: 13px; color: #9CA3AF; margin: 0; line-height: 1.6;">
+        Our senior team will review your target position and compensation history prior to the call. Please join promptly at your scheduled time.
+      </p>
+    </div>
+
+    <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 28px 0;">
+
+    <div style="font-size: 12px; color: #6B7280; text-align: center;">
+      <p style="margin: 0 0 8px 0;">
+        Need to reschedule or adjust your time?
+        <a href="${cancelLink(data.cancelToken)}" style="color: #9CA3AF; text-decoration: underline;">Manage Booking</a>
+      </p>
+      <p style="margin: 0; font-size: 11px; color: #4B5563;">
+        © Catalyst by Ripple Nexus. All rights reserved. Executive confidentiality guaranteed.
+      </p>
+    </div>
+
+  </div>
 </body>
 </html>`,
   }
@@ -81,69 +141,104 @@ export function bookingConfirmationClient(data: BookingEmailData & { bookingId?:
 export function bookingConfirmationAdmin(data: BookingEmailData & { company?: string; message?: string }): { subject: string; html: string } {
   const dateStr = formatDisplay(data.startsAt, 'Asia/Kolkata')
   const timeStr = formatTimeDisplay(data.startsAt, 'Asia/Kolkata')
+  const meetUrl = data.meetingLink || generateGoogleMeetLink(data.bookingId || data.meetingTypeId)
+  
+  const gcalUrl = generateGoogleCalendarUrl({
+    id: data.bookingId || 'booking',
+    title: `[Strategy Call] ${data.name} — Catalyst`,
+    startsAt: data.startsAt,
+    durationMin: data.durationMin,
+    clientName: data.name,
+    clientEmail: data.email,
+    meetingLink: meetUrl,
+  })
 
   return {
-    subject: `[New Booking] ${data.meetingName} — ${data.name}`,
+    subject: `[New Strategy Call] ${data.meetingName} — ${data.name}`,
     html: `
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><style>
-  body{font-family:monospace;background:#0A0B0D;color:#F4F1EB;padding:40px 20px;}
-  .card{max-width:480px;margin:0 auto;background:#13161A;border:1px solid #1F2226;padding:32px;}
-  h2{font-size:18px;margin:0 0 24px;color:#B8935B;}
-  p{margin:6px 0;font-size:13px;color:#9CA3AF;}
-  strong{color:#F4F1EB;}
-</style></head>
-<body><div class="card">
-  <h2>New Booking — ${data.meetingName}</h2>
-  <p><strong>Name:</strong> ${data.name}</p>
-  <p><strong>Email:</strong> ${data.email}</p>
-  ${data.company ? `<p><strong>Company:</strong> ${data.company}</p>` : ''}
-  ${data.message ? `<p><strong>Note:</strong> ${data.message}</p>` : ''}
-  <p style="margin-top:16px"><strong>Date (IST):</strong> ${dateStr}</p>
-  <p><strong>Time (IST):</strong> ${timeStr}</p>
-  <p><strong>Client TZ:</strong> ${data.timezone}</p>
-  <p><strong>Duration:</strong> ${data.durationMin} min</p>
-  <p><strong>Meeting Link:</strong> <a href="${data.meetingLink || 'https://meet.google.com/catalyst-strategy'}" style="color:#B8935B;">${data.meetingLink || 'https://meet.google.com/catalyst-strategy'}</a></p>
-</div></body></html>`,
+<html lang="en">
+<head><meta charset="utf-8"></head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: #0A0B0D; color: #F4F1EB; padding: 40px 16px;">
+  <div style="max-width: 520px; margin: 0 auto; background-color: #111317; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 32px;">
+    
+    <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; margin-bottom: 24px;">
+      <span style="font-size: 18px; color: #D4AF37;">❖</span>
+      <span style="font-family: Georgia, serif; font-size: 18px; font-weight: bold; color: #F4F1EB;">CATALYST ADMIN CONTROL</span>
+    </div>
+
+    <h2 style="font-family: Georgia, serif; font-size: 20px; color: #D4AF37; margin: 0 0 16px 0;">
+      New Strategy Booking: ${data.meetingName}
+    </h2>
+
+    <table width="100%" cellpadding="0" cellspacing="0" style="font-size: 13px; color: #9CA3AF; line-height: 1.8; margin-bottom: 24px;">
+      <tr><td style="color: #8C8C96; width: 120px;">Candidate Name:</td><td style="color: #F4F1EB; font-weight: bold;">${data.name}</td></tr>
+      <tr><td style="color: #8C8C96;">Candidate Email:</td><td style="color: #D4AF37;">${data.email}</td></tr>
+      ${data.company ? `<tr><td style="color: #8C8C96;">Company:</td><td style="color: #F4F1EB;">${data.company}</td></tr>` : ''}
+      ${data.message ? `<tr><td style="color: #8C8C96;">Notes / Target:</td><td style="color: #F4F1EB;">${data.message}</td></tr>` : ''}
+      <tr><td style="color: #8C8C96;">Date (IST):</td><td style="color: #F4F1EB; font-weight: bold;">${dateStr}</td></tr>
+      <tr><td style="color: #8C8C96;">Time (IST):</td><td style="color: #D4AF37; font-weight: bold;">${timeStr} (${data.durationMin} Min)</td></tr>
+      <tr><td style="color: #8C8C96;">Client Timezone:</td><td style="color: #F4F1EB;">${data.timezone}</td></tr>
+      <tr><td style="color: #8C8C96; vertical-align: top; padding-top: 8px;">Google Meet:</td><td style="padding-top: 8px;"><a href="${meetUrl}" style="color: #D4AF37; font-weight: bold;">${meetUrl}</a></td></tr>
+    </table>
+
+    <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+      <a href="${gcalUrl}" target="_blank" style="display: inline-block; background-color: #D4AF37; color: #0A0B0D; padding: 12px 20px; font-family: Arial, sans-serif; font-size: 11px; font-weight: bold; text-transform: uppercase; tracking: 0.1em; border-radius: 20px; text-decoration: none;">
+        📅 Add to Admin Google Calendar ↗
+      </a>
+    </div>
+
+  </div>
+</body>
+</html>`,
   }
 }
 
 export function bookingReminder(data: BookingEmailData, leadTimeLabel: string): { subject: string; html: string } {
   const dateStr = formatDisplay(data.startsAt, data.timezone)
   const timeStr = formatTimeDisplay(data.startsAt, data.timezone)
+  const meetUrl = data.meetingLink || generateGoogleMeetLink(data.bookingId || data.meetingTypeId)
 
   return {
     subject: `Reminder: Your ${data.meetingName} is in ${leadTimeLabel} — Catalyst`,
     html: `
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><style>
-  body{font-family:-apple-system,sans-serif;background:#0A0B0D;color:#F4F1EB;margin:0;padding:40px 20px;}
-  .card{max-width:520px;margin:0 auto;background:#13161A;border:1px solid #1F2226;padding:40px;}
-  h1{font-size:22px;font-weight:300;margin:0 0 8px;}
-  .label{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#6B7280;margin-bottom:24px;}
-  .detail{background:#0A0B0D;border:1px solid #1F2226;padding:20px;margin:24px 0;}
-  .detail p{margin:6px 0;font-size:14px;color:#9CA3AF;}
-  .detail strong{color:#F4F1EB;}
-  .cancel{font-size:12px;color:#4B5563;margin-top:32px;}
-  .cancel a{color:#6B7280;}
-</style></head>
-<body>
-<div class="card">
-  <p class="label">Catalyst — Session Reminder</p>
-  <h1>Your session is in ${leadTimeLabel}.</h1>
-  <div class="detail">
-    <p><strong>${data.meetingName}</strong></p>
-    <p>${dateStr}</p>
-    <p><strong>${timeStr}</strong> · ${data.durationMin} minutes</p>
-    <p>Timezone: ${data.timezone}</p>
-    <p style="margin-top:16px;"><strong>Meeting Link:</strong> <a href="${data.meetingLink || 'https://meet.google.com/catalyst-strategy'}" style="color:#B8935B;text-decoration:none;">${data.meetingLink || 'https://meet.google.com/catalyst-strategy'}</a></p>
+<head><meta charset="utf-8"></head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: #0A0B0D; color: #F4F1EB; margin: 0; padding: 40px 16px;">
+  <div style="max-width: 540px; margin: 0 auto; background-color: #111317; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 36px;">
+    
+    <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; margin-bottom: 24px;">
+      <span style="font-size: 18px; color: #D4AF37;">❖</span>
+      <span style="font-family: Georgia, serif; font-size: 20px; font-weight: bold; color: #F4F1EB;">CATALYST</span>
+    </div>
+
+    <p style="font-family: Arial, sans-serif; font-size: 10px; color: #D4AF37; letter-spacing: 0.2em; text-transform: uppercase; font-weight: bold; margin: 0 0 8px 0;">
+      SESSION REMINDER · IN ${leadTimeLabel.toUpperCase()}
+    </p>
+
+    <h1 style="font-family: Georgia, serif; font-size: 22px; color: #F4F1EB; margin: 0 0 16px 0;">
+      Your strategy call is starting soon.
+    </h1>
+
+    <div style="background-color: #0A0B0D; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+      <p style="font-family: Georgia, serif; font-size: 16px; color: #D4AF37; font-weight: bold; margin: 0 0 8px 0;">${data.meetingName}</p>
+      <p style="font-size: 13px; color: #9CA3AF; margin: 4px 0;">📅 ${dateStr}</p>
+      <p style="font-size: 13px; color: #F4F1EB; font-weight: bold; margin: 4px 0;">⏰ ${timeStr} (${data.durationMin} Minutes)</p>
+      <p style="font-size: 13px; color: #8C8C96; margin: 4px 0;">Timezone: ${data.timezone}</p>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 24px;">
+      <a href="${meetUrl}" style="display: inline-block; background: linear-gradient(135deg, #D4AF37 0%, #C5A059 100%); color: #0A0B0D; padding: 14px 28px; font-family: Arial, sans-serif; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.15em; border-radius: 30px; text-decoration: none;">
+        🎥 Join Google Meet Call Now →
+      </a>
+    </div>
+
+    <p style="font-size: 12px; color: #6B7280; text-align: center; margin: 0;">
+      <a href="${cancelLink(data.cancelToken)}" style="color: #8C8C96;">Need to cancel or reschedule?</a>
+    </p>
+
   </div>
-  <p style="font-size:14px;color:#9CA3AF;line-height:1.6;">
-    Have your compensation data and career history ready. We will begin reviewing your profile before we meet.
-  </p>
-  <p class="cancel"><a href="${cancelLink(data.cancelToken)}">Need to cancel?</a></p>
-</div>
 </body>
 </html>`,
   }
@@ -151,20 +246,21 @@ export function bookingReminder(data: BookingEmailData, leadTimeLabel: string): 
 
 export function bookingCancelledClient(name: string, meetingName: string): { subject: string; html: string } {
   return {
-    subject: `Booking cancelled — ${meetingName}`,
+    subject: `Booking Cancelled — ${meetingName}`,
     html: `
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><style>
-  body{font-family:-apple-system,sans-serif;background:#0A0B0D;color:#F4F1EB;margin:0;padding:40px 20px;}
-  .card{max-width:520px;margin:0 auto;background:#13161A;border:1px solid #1F2226;padding:40px;}
-  h1{font-size:22px;font-weight:300;margin:0 0 24px;}
-  p{font-size:14px;color:#9CA3AF;line-height:1.6;}
-  a{color:#B8935B;}
-</style></head>
-<body><div class="card">
-  <h1>Booking cancelled.</h1>
-  <p>Hi ${name} — your ${meetingName} has been cancelled.</p>
-  <p>Ready to rebook? <a href="${BASE}/book">Choose a new time →</a></p>
-</div></body></html>`,
+<html lang="en">
+<head><meta charset="utf-8"></head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: #0A0B0D; color: #F4F1EB; margin: 0; padding: 40px 16px;">
+  <div style="max-width: 500px; margin: 0 auto; background-color: #111317; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 36px; text-align: center;">
+    <span style="font-size: 24px; color: #D4AF37;">❖</span>
+    <h1 style="font-family: Georgia, serif; font-size: 22px; color: #F4F1EB; margin: 16px 0 12px 0;">Booking Cancelled</h1>
+    <p style="font-size: 14px; color: #9CA3AF; margin-bottom: 24px;">Hi ${name} — your reservation for <strong>${meetingName}</strong> has been cancelled.</p>
+    <a href="${BASE}/book" style="display: inline-block; background-color: #D4AF37; color: #0A0B0D; padding: 12px 24px; font-family: Arial, sans-serif; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.15em; border-radius: 24px; text-decoration: none;">
+      Schedule a New Session →
+    </a>
+  </div>
+</body>
+</html>`,
   }
 }

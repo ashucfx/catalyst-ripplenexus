@@ -20,7 +20,6 @@ function wrap(body: string, unsubscribeUrl?: string): string {
 
   const footerLinks = [
     `<a href="${SITE_URL}" style="font-family:Arial,sans-serif;font-size:9px;color:${C.gold};text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;">Catalyst Web →</a>`,
-    `<a href="${CLIENTFORGE_URL}/checkout" style="font-family:Arial,sans-serif;font-size:9px;color:${C.gold};text-decoration:none;letter-spacing:0.15em;text-transform:uppercase;">ClientForge Portal →</a>`,
     unsubBlock,
   ].filter(Boolean).join(`<span style="font-family:Arial,sans-serif;font-size:9px;color:${C.graphite};padding:0 10px;">·</span>`)
 
@@ -37,21 +36,20 @@ function wrap(body: string, unsubscribeUrl?: string): string {
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#0d0e12;border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;padding:32px;">
 
-          <!-- Header with Brand Mark -->
+          <!-- Header with Universal Gold Emblem -->
           <tr>
             <td style="padding:0 0 24px 0;border-bottom:1px solid ${C.graphite};">
               <table cellpadding="0" cellspacing="0" width="100%">
                 <tr>
-                  <td style="vertical-align:middle;width:24px;padding-right:12px;">
-                    <!-- Reliable Brand Icon -->
-                    <img src="${SITE_URL}/logo-email.svg" width="24" height="24" alt="Catalyst" style="display:block;" />
+                  <td style="vertical-align:middle;width:28px;padding-right:8px;">
+                    <span style="font-size:22px;color:${C.gold};">❖</span>
                   </td>
                   <td style="vertical-align:middle;">
                     <p style="margin:0;font-family:Georgia,serif;font-size:22px;color:${C.bone};letter-spacing:-0.01em;font-weight:700;">CATALYST</p>
                     <p style="margin:2px 0 0;font-family:Arial,sans-serif;font-size:8px;color:${C.muted};letter-spacing:0.35em;text-transform:uppercase;">BY RIPPLE NEXUS</p>
                   </td>
                   <td align="right" style="vertical-align:middle;">
-                    <p style="margin:0;font-family:Arial,sans-serif;font-size:9px;color:${C.gold};letter-spacing:0.1em;text-transform:uppercase;font-weight:600;">Executive Portal</p>
+                    <p style="margin:0;font-family:Arial,sans-serif;font-size:9px;color:${C.gold};letter-spacing:0.1em;text-transform:uppercase;font-weight:600;">Executive Services</p>
                   </td>
                 </tr>
               </table>

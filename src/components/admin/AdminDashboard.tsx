@@ -105,6 +105,16 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
     else         setBlockMsg('Failed to block date.')
   }
 
+  async function deleteBooking(id: string) {
+    if (!confirm('Are you sure you want to cancel and remove this booking?')) return
+    const res = await fetch(`/api/admin/bookings?id=${id}`, { method: 'DELETE' })
+    if (res.ok) {
+      setBookings(prev => prev.filter(b => b.id !== id))
+    } else {
+      alert('Failed to delete booking.')
+    }
+  }
+
   const confirmed = bookings.filter(b => b.status === 'confirmed').length
   const pending   = bookings.filter(b => b.status === 'pending_payment').length
 
@@ -222,7 +232,7 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
                   <p className="font-sans text-bone text-sm font-mono">{formatTime(b.starts_at, adminTZ)}</p>
                   <p className="font-sans text-muted text-xs font-mono">TZ: {b.timezone}</p>
                 </div>
-                <div className="flex md:justify-end">
+                <div className="flex flex-wrap md:justify-end items-center gap-3">
                   <span className={`font-mono text-xs uppercase tracking-widest px-3 py-1.5 rounded-full border font-bold ${
                     b.status === 'confirmed'
                       ? 'border-emerald-500/40 text-emerald-400 bg-emerald-500/10'
@@ -232,6 +242,12 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
                   }`}>
                     {b.status.replace('_', ' ')}
                   </span>
+                  <button
+                    onClick={() => deleteBooking(b.id)}
+                    className="font-mono text-xs text-red-400 hover:text-red-300 border border-red-900/40 bg-red-950/20 px-3.5 py-1.5 rounded-full uppercase tracking-wider transition-colors cursor-pointer"
+                  >
+                    Delete ✕
+                  </button>
                 </div>
               </div>
             ))}
