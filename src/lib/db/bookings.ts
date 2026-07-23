@@ -297,3 +297,13 @@ export async function removeBlockedDate(date: string) {
   const { error } = await db.from('blocked_dates').delete().eq('blocked_date', date)
   return !error
 }
+
+export async function cancelBookingById(id: string): Promise<boolean> {
+  const db = getDb()
+  if (!db) return false
+  const { error } = await db
+    .from('bookings')
+    .update({ status: 'cancelled', cancelled_at: new Date().toISOString(), cancel_reason: 'admin_cancelled' })
+    .eq('id', id)
+  return !error
+}

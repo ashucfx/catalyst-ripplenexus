@@ -10,7 +10,6 @@ const C = {
 }
 
 const SITE_URL  = 'https://www.catalyst.theripplenexus.com'
-const CLIENTFORGE_URL = 'https://clientforge.theripplenexus.com'
 
 // ─── Shared wrapper ────────────────────────────────────────────────────
 function wrap(body: string, unsubscribeUrl?: string): string {
@@ -29,20 +28,32 @@ function wrap(body: string, unsubscribeUrl?: string): string {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Catalyst by Ripple Nexus</title>
+  <style>
+    @media only screen and (max-width: 600px) {
+      .email-wrapper { padding: 16px 8px !important; }
+      .email-card { padding: 20px 16px !important; border-radius: 8px !important; }
+      .email-title { font-size: 20px !important; }
+      .email-btn { display: block !important; width: 100% !important; margin: 8px 0 !important; text-align: center !important; }
+    }
+  </style>
 </head>
 <body style="margin:0;padding:0;background-color:${C.obsidian};font-family:Georgia,'Times New Roman',serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:${C.obsidian};padding:40px 16px;">
+  <table width="100%" cellpadding="0" cellspacing="0" class="email-wrapper" style="background-color:${C.obsidian};padding:40px 16px;">
     <tr>
       <td align="center">
-        <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#0d0e12;border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;padding:32px;">
+        <table width="600" cellpadding="0" cellspacing="0" class="email-card" style="max-width:600px;width:100%;background-color:#0d0e12;border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;padding:32px;">
 
-          <!-- Header with Universal Gold Emblem -->
+          <!-- Header with Official Repo Inflection Logo -->
           <tr>
             <td style="padding:0 0 24px 0;border-bottom:1px solid ${C.graphite};">
               <table cellpadding="0" cellspacing="0" width="100%">
                 <tr>
-                  <td style="vertical-align:middle;width:28px;padding-right:8px;">
-                    <span style="font-size:22px;color:${C.gold};">❖</span>
+                  <td style="vertical-align:middle;width:24px;padding-right:10px;">
+                    <svg width="22" height="28" viewBox="0 0 96 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+                      <polygon points="0,120 22,120 96,0 74,0" fill="#F4F1EB"/>
+                      <polygon points="96,0 74,0 50,38 72,38" fill="#C5A059"/>
+                      <circle cx="85" cy="12" r="2.5" fill="#050505"/>
+                    </svg>
                   </td>
                   <td style="vertical-align:middle;">
                     <p style="margin:0;font-family:Georgia,serif;font-size:22px;color:${C.bone};letter-spacing:-0.01em;font-weight:700;">CATALYST</p>
