@@ -43,8 +43,8 @@ function wrap(body: string, unsubscribeUrl?: string): string {
               <table cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                   <td style="vertical-align:middle;width:24px;padding-right:12px;">
-                    <!-- Reliable Inline Brand Icon -->
-                    <div style="width:16px;height:16px;background-color:${C.gold};transform:rotate(45deg);border-radius:2px;"></div>
+                    <!-- Reliable Brand Icon -->
+                    <img src="${SITE_URL}/logo-email.svg" width="24" height="24" alt="Catalyst" style="display:block;" />
                   </td>
                   <td style="vertical-align:middle;">
                     <p style="margin:0;font-family:Georgia,serif;font-size:22px;color:${C.bone};letter-spacing:-0.01em;font-weight:700;">CATALYST</p>

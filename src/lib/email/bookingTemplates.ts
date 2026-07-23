@@ -9,6 +9,7 @@ interface BookingEmailData {
   timezone:      string
   cancelToken:   string
   meetingTypeId: string
+  meetingLink?:  string
 }
 
 const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://www.catalyst.theripplenexus.com'
@@ -48,6 +49,7 @@ export function bookingConfirmationClient(data: BookingEmailData): { subject: st
     <p>${dateStr}</p>
     <p><strong>${timeStr}</strong> · ${data.durationMin} minutes</p>
     <p>Timezone: ${data.timezone}</p>
+    <p style="margin-top:16px;"><strong>Meeting Link:</strong> <a href="${data.meetingLink || 'https://meet.google.com/catalyst-strategy'}" style="color:#B8935B;text-decoration:none;">${data.meetingLink || 'https://meet.google.com/catalyst-strategy'}</a></p>
   </div>
   <p style="font-size:14px;color:#9CA3AF;line-height:1.6;">
     You will receive a calendar invite shortly. We review your LinkedIn and career context before every session — please have recent compensation data on hand.
@@ -89,6 +91,7 @@ export function bookingConfirmationAdmin(data: BookingEmailData & { company?: st
   <p><strong>Time (IST):</strong> ${timeStr}</p>
   <p><strong>Client TZ:</strong> ${data.timezone}</p>
   <p><strong>Duration:</strong> ${data.durationMin} min</p>
+  <p><strong>Meeting Link:</strong> <a href="${data.meetingLink || 'https://meet.google.com/catalyst-strategy'}" style="color:#B8935B;">${data.meetingLink || 'https://meet.google.com/catalyst-strategy'}</a></p>
 </div></body></html>`,
   }
 }
@@ -122,6 +125,7 @@ export function bookingReminder(data: BookingEmailData, leadTimeLabel: string): 
     <p>${dateStr}</p>
     <p><strong>${timeStr}</strong> · ${data.durationMin} minutes</p>
     <p>Timezone: ${data.timezone}</p>
+    <p style="margin-top:16px;"><strong>Meeting Link:</strong> <a href="${data.meetingLink || 'https://meet.google.com/catalyst-strategy'}" style="color:#B8935B;text-decoration:none;">${data.meetingLink || 'https://meet.google.com/catalyst-strategy'}</a></p>
   </div>
   <p style="font-size:14px;color:#9CA3AF;line-height:1.6;">
     Have your compensation data and career history ready. We will begin reviewing your profile before we meet.
