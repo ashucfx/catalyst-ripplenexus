@@ -569,6 +569,7 @@ export function CRMTab() {
           </div>
         </div>
       )}
+      </div>
     </div>
   )
 }
