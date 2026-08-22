@@ -43,7 +43,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-amber-600 to-yellow-800',
     initials: 'MS',
-    avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&q=80&avatar=ph1',
+    avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-ph-2',
@@ -64,7 +64,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-blue-600 to-indigo-800',
     initials: 'PM',
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80&avatar=ph2',
+    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-ph-3',
@@ -85,7 +85,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-pink-600 to-rose-800',
     initials: 'JD',
-    avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=256&q=80&avatar=ph3',
+    avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=256&q=80',
   },
 
   // ───────────────────────────────────────────────────────────────────
@@ -110,7 +110,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-pink-500 to-rose-700',
     initials: 'FA',
-    avatarUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=256&q=80&avatar=my1',
+    avatarUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-my-2',
@@ -131,7 +131,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-blue-600 to-cyan-700',
     initials: 'LW',
-    avatarUrl: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=256&q=80&avatar=my2',
+    avatarUrl: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-my-3',
@@ -152,7 +152,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-emerald-700 to-teal-900',
     initials: 'AR',
-    avatarUrl: 'https://images.unsplash.com/photo-1528892952291-009c663ce843?auto=format&fit=crop&w=256&q=80&avatar=my3',
+    avatarUrl: 'https://images.unsplash.com/photo-1528892952291-009c663ce843?auto=format&fit=crop&w=256&q=80',
   },
 
   // ───────────────────────────────────────────────────────────────────
@@ -177,7 +177,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-emerald-700 to-teal-900',
     initials: 'SN',
-    avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=256&q=80&avatar=za1',
+    avatarUrl: 'https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-za-2',
@@ -198,7 +198,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-amber-700 to-orange-950',
     initials: 'JM',
-    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80&avatar=za2',
+    avatarUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-za-3',
@@ -219,7 +219,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-cyan-700 to-blue-900',
     initials: 'TR',
-    avatarUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=256&q=80&avatar=za3',
+    avatarUrl: 'https://images.unsplash.com/photo-1573497019236-17f8177b81e8?auto=format&fit=crop&w=256&q=80',
   },
 
   // ───────────────────────────────────────────────────────────────────
@@ -244,7 +244,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-emerald-800 to-teal-950',
     initials: 'KH',
-    avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&q=80&avatar=ir1',
+    avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-ir-2',
@@ -265,7 +265,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-purple-700 to-indigo-900',
     initials: 'NR',
-    avatarUrl: 'https://images.unsplash.com/photo-1573497019236-17f8177b81e8?auto=format&fit=crop&w=256&q=80&avatar=ir2',
+    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-ir-3',
@@ -286,7 +286,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-amber-800 to-orange-950',
     initials: 'AM',
-    avatarUrl: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=256&q=80&avatar=ir3',
+    avatarUrl: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=256&q=80',
   },
 
   // ───────────────────────────────────────────────────────────────────
@@ -311,7 +311,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-blue-700 to-indigo-900',
     initials: 'MP',
-    avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=256&q=80&avatar=kr1',
+    avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-kr-2',
@@ -332,7 +332,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-rose-600 to-pink-800',
     initials: 'JK',
-    avatarUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=256&q=80&avatar=kr2',
+    avatarUrl: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-kr-3',
@@ -353,11 +353,11 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-cyan-700 to-blue-900',
     initials: 'SL',
-    avatarUrl: 'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=256&q=80&avatar=kr3',
+    avatarUrl: 'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=256&q=80',
   },
 
   // ───────────────────────────────────────────────────────────────────
-  // 🇦🇺 🇳🇿 AUSTRALIA & NEW ZEALAND (4 UNIQUE PROFILES — ASX-50, MINING & TECH)
+  // 🇦🇺 🇳ℤ AUSTRALIA & NEW ZEALAND (4 UNIQUE PROFILES — ASX-50, MINING & TECH)
   // ───────────────────────────────────────────────────────────────────
   {
     id: 't-5',
@@ -378,7 +378,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-rose-500 to-red-700',
     initials: 'JC',
-    avatarUrl: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=256&q=80&avatar=au1',
+    avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-anz-2',
@@ -399,7 +399,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-blue-600 to-indigo-800',
     initials: 'LO',
-    avatarUrl: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=256&q=80&avatar=au2',
+    avatarUrl: 'https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-anz-3',
@@ -420,7 +420,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-teal-600 to-emerald-800',
     initials: 'CT',
-    avatarUrl: 'https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&w=256&q=80&avatar=nz1',
+    avatarUrl: 'https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-anz-4',
@@ -441,7 +441,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-cyan-700 to-blue-900',
     initials: 'DZ',
-    avatarUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=80&avatar=au3',
+    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80',
   },
 
   // ───────────────────────────────────────────────────────────────────
@@ -466,7 +466,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-emerald-700 to-teal-900',
     initials: 'KG',
-    avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=256&q=80&avatar=ksa1',
+    avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-ksa-2',
@@ -487,7 +487,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-teal-600 to-emerald-800',
     initials: 'ND',
-    avatarUrl: 'https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?auto=format&fit=crop&w=256&q=80&avatar=ksa2',
+    avatarUrl: 'https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-ksa-3',
@@ -508,7 +508,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-green-700 to-emerald-900',
     initials: 'SO',
-    avatarUrl: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&w=256&q=80&avatar=ksa3',
+    avatarUrl: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&w=256&q=80',
   },
 
   // ───────────────────────────────────────────────────────────────────
@@ -533,7 +533,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-emerald-600 to-teal-700',
     initials: 'TA',
-    avatarUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=256&q=80&avatar=uae1',
+    avatarUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-uae-2',
@@ -554,7 +554,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-teal-600 to-emerald-800',
     initials: 'ZH',
-    avatarUrl: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=256&q=80&avatar=uae2',
+    avatarUrl: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-uae-3',
@@ -575,11 +575,11 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-indigo-600 to-blue-800',
     initials: 'RM',
-    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80&avatar=uae3',
+    avatarUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=256&q=80',
   },
 
   // ───────────────────────────────────────────────────────────────────
-  // 🇶🇦 QATAR, 🇰🇼 KUWAIT, 🇴🇲 OMAN, 🇧🇭 BAHRAIN (GCC REVIEWS)
+  // 🇶🇦 QATAR, 🇰🇼 KUWAIT, 🇴🇲 OMAN (GCC REVIEWS)
   // ───────────────────────────────────────────────────────────────────
   {
     id: 't-qtr-1',
@@ -600,7 +600,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-rose-700 to-red-950',
     initials: 'HA',
-    avatarUrl: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=256&q=80&avatar=qtr1',
+    avatarUrl: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-kw-1',
@@ -621,7 +621,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-amber-600 to-orange-800',
     initials: 'FS',
-    avatarUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=256&q=80&avatar=kw1',
+    avatarUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-om-1',
@@ -642,7 +642,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-emerald-600 to-green-800',
     initials: 'SB',
-    avatarUrl: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=256&q=80&avatar=om1',
+    avatarUrl: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=256&q=80',
   },
 
   // ───────────────────────────────────────────────────────────────────
@@ -667,7 +667,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-blue-600 to-indigo-700',
     initials: 'AM',
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&q=80&avatar=ind1',
+    avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-ind-2',
@@ -688,7 +688,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-rose-600 to-pink-800',
     initials: 'PS',
-    avatarUrl: 'https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&w=256&q=80&avatar=ind2',
+    avatarUrl: 'https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-ind-3',
@@ -709,11 +709,11 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-emerald-600 to-green-800',
     initials: 'DN',
-    avatarUrl: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=256&q=80&avatar=ind3',
+    avatarUrl: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=256&q=80',
   },
 
   // ───────────────────────────────────────────────────────────────────
-  // 🇨🇭 SWITZERLAND & EUROPE (4 UNIQUE PROFILES)
+  // 🇨🇭 SWITZERLAND & GERMANY (2 UNIQUE PROFILES)
   // ───────────────────────────────────────────────────────────────────
   {
     id: 't-ch-1',
@@ -734,7 +734,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-red-600 to-red-800',
     initials: 'MO',
-    avatarUrl: 'https://images.unsplash.com/photo-1573496799515-eebbb63814f2?auto=format&fit=crop&w=256&q=80&avatar=ch1',
+    avatarUrl: 'https://images.unsplash.com/photo-1573496799515-eebbb63814f2?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-de-1',
@@ -755,11 +755,11 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-blue-800 to-indigo-950',
     initials: 'SW',
-    avatarUrl: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=256&q=80&avatar=de1',
+    avatarUrl: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=256&q=80',
   },
 
   // ───────────────────────────────────────────────────────────────────
-  // 🇺🇸 🇬🇧 🇨🇦 AMERICAS & GLOBAL (3 UNIQUE PROFILES)
+  // 🇺🇸 🇬🇧 AMERICAS & GLOBAL (3 UNIQUE PROFILES)
   // ───────────────────────────────────────────────────────────────────
   {
     id: 't-uk-1',
@@ -780,7 +780,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-cyan-600 to-blue-800',
     initials: 'KD',
-    avatarUrl: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=256&q=80&avatar=uk1',
+    avatarUrl: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-us-1',
@@ -801,7 +801,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-emerald-500 to-green-700',
     initials: 'SJ',
-    avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=256&q=80&avatar=us1',
+    avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-us-2',
@@ -822,6 +822,6 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-blue-800 to-indigo-950',
     initials: 'MV',
-    avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&q=80&avatar=us2',
+    avatarUrl: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=256&q=80',
   },
 ]
