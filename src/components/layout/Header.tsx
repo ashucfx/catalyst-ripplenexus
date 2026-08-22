@@ -125,34 +125,35 @@ export function Header() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-obsidian/95 backdrop-blur-xl border-b border-white/10 shadow-2xl py-0'
-          : 'bg-gradient-to-b from-black/90 via-black/50 to-transparent border-b border-white/[0.05] py-0'
+          : 'bg-gradient-to-b from-black/95 via-black/60 to-transparent border-b border-white/[0.05] py-0'
       }`}
     >
-      {/* Subtle top gold hairline */}
+      {/* Top gold hairline */}
       <div
         className="absolute top-0 inset-x-0 h-px pointer-events-none"
         style={{
-          background: 'linear-gradient(90deg, transparent 0%, rgba(197,160,89,0.6) 40%, rgba(197,160,89,0.9) 50%, rgba(197,160,89,0.6) 60%, transparent 100%)',
+          background: 'linear-gradient(90deg, transparent 0%, rgba(197,160,89,0.7) 40%, rgba(197,160,89,0.95) 50%, rgba(197,160,89,0.7) 60%, transparent 100%)',
         }}
       />
-      <div className="max-w-dossier mx-auto px-6 lg:px-12">
-        <div className={`flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-16' : 'h-20'}`}>
+
+      <div className="max-w-dossier mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
+        <div className={`flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-16 sm:h-18' : 'h-20 sm:h-22'}`}>
 
           {/* Brand mark */}
-          <Link href="/" className="flex items-center gap-3 group shrink-0" aria-label="Catalyst Home">
+          <Link href="/" className="flex items-center gap-3.5 group shrink-0" aria-label="Catalyst Home">
             <InflectionMark size="sm" />
             <div className="flex flex-col leading-none">
-              <span className="font-serif text-bone tracking-tight text-xl font-bold text-gradient">
+              <span className="font-serif text-bone tracking-tight text-xl sm:text-2xl font-bold text-gradient">
                 CATALYST
               </span>
-              <span className="font-mono text-[0.52rem] tracking-[0.3em] uppercase text-muted/70 mt-0.5">
+              <span className="font-mono text-[0.52rem] sm:text-[0.55rem] tracking-[0.3em] uppercase text-muted/80 mt-0.5">
                 BY RIPPLE NEXUS
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-7" aria-label="Main navigation">
+          {/* Desktop Breathable & Responsive Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-2 xl:gap-4" aria-label="Main navigation">
             {/* Packages Dropdown */}
             <div
               className="relative py-2"
@@ -161,7 +162,7 @@ export function Header() {
             >
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="font-sans text-xs text-bone font-semibold tracking-wide hover:text-signal-gold transition-colors duration-200 flex items-center gap-2 py-1 focus:outline-none"
+                className="font-sans text-xs xl:text-sm text-bone font-semibold tracking-wide hover:text-signal-gold transition-colors duration-200 flex items-center gap-2 px-3.5 py-2 rounded-xl hover:bg-white/[0.05] border border-transparent hover:border-white/10 focus:outline-none"
                 aria-expanded={dropdownOpen}
               >
                 <BrandIcon type="rocket" className="w-4 h-4 text-[#D4AF37]" />
@@ -169,17 +170,17 @@ export function Header() {
                 <span className={`text-[9px] text-signal-gold transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`}>▼</span>
               </button>
 
-              {/* Dropdown Menu Box */}
+              {/* Glassmorphic Dropdown Menu Box */}
               {dropdownOpen && (
-                <div className="absolute top-full left-0 w-84 bg-obsidian/95 border border-white/15 backdrop-blur-2xl rounded-2xl shadow-2xl p-3.5 mt-1 space-y-2 z-50">
+                <div className="absolute top-full left-0 w-96 bg-obsidian/95 border border-white/20 backdrop-blur-2xl rounded-2xl shadow-2xl shadow-black/90 p-4 mt-1.5 space-y-2 z-50">
                   {packageItems.map((pkg) => (
                     <Link
                       key={pkg.id}
                       href={pkg.href}
                       onClick={() => setDropdownOpen(false)}
-                      className="group flex items-start gap-3 p-3 rounded-xl hover:bg-white/[0.06] border border-transparent hover:border-white/10 transition-all"
+                      className="group flex items-start gap-3.5 p-3 rounded-xl hover:bg-white/[0.07] border border-transparent hover:border-white/10 transition-all"
                     >
-                      <div className={`p-2 rounded-lg border ${pkg.iconBg} ${pkg.iconColor} shrink-0 mt-0.5`}>
+                      <div className={`p-2.5 rounded-xl border ${pkg.iconBg} ${pkg.iconColor} shrink-0 mt-0.5 shadow-sm`}>
                         <BrandIcon type={pkg.iconType} className="w-4 h-4" />
                       </div>
 
@@ -204,37 +205,34 @@ export function Header() {
 
             <Link
               href="/testimonials"
-              className="font-sans text-xs text-muted/90 font-medium tracking-wide hover:text-bone transition-colors duration-200 relative group py-1 flex items-center gap-1.5"
+              className="font-sans text-xs xl:text-sm text-muted/90 hover:text-bone font-medium tracking-wide transition-colors duration-200 px-3.5 py-2 rounded-xl hover:bg-white/[0.05] border border-transparent hover:border-white/10 flex items-center gap-2"
             >
               <BrandIcon type="star" className="w-3.5 h-3.5 text-[#D4AF37]" />
               <span>Testimonials</span>
-              <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-[#C5A059] group-hover:w-full transition-all duration-300 rounded-full" />
             </Link>
 
             <Link
               href="/audit"
-              className="font-sans text-xs text-muted/90 font-medium tracking-wide hover:text-bone transition-colors duration-200 relative group py-1 flex items-center gap-1.5"
+              className="font-sans text-xs xl:text-sm text-muted/90 hover:text-bone font-medium tracking-wide transition-colors duration-200 px-3.5 py-2 rounded-xl hover:bg-white/[0.05] border border-transparent hover:border-white/10 flex items-center gap-2"
             >
               <BrandIcon type="audit" className="w-3.5 h-3.5 text-emerald-400" />
               <span>Market Audit</span>
-              <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-[#C5A059] group-hover:w-full transition-all duration-300 rounded-full" />
             </Link>
 
             <Link
               href="/tpi"
-              className="font-sans text-xs text-muted/90 font-medium tracking-wide hover:text-bone transition-colors duration-200 relative group py-1 flex items-center gap-1.5"
+              className="font-sans text-xs xl:text-sm text-muted/90 hover:text-bone font-medium tracking-wide transition-colors duration-200 px-3.5 py-2 rounded-xl hover:bg-white/[0.05] border border-transparent hover:border-white/10 flex items-center gap-2"
             >
               <BrandIcon type="tpi" className="w-3.5 h-3.5 text-amber-400" />
               <span>Free TPI Score</span>
-              <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-[#C5A059] group-hover:w-full transition-all duration-300 rounded-full" />
             </Link>
           </nav>
 
-          {/* Desktop CTAs */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* Desktop CTAs (Breathable & High-Impact) */}
+          <div className="hidden md:flex items-center gap-3.5 xl:gap-5">
             <Link
               href="/testimonials"
-              className="font-mono text-xs text-muted hover:text-signal-gold transition-colors duration-200 px-3 py-1.5 rounded whitespace-nowrap flex items-center gap-1.5 bg-white/[0.03] border border-white/10"
+              className="font-mono text-xs text-bone hover:text-signal-gold transition-all duration-200 px-3.5 py-2 rounded-full whitespace-nowrap flex items-center gap-2 bg-white/[0.04] border border-white/15 hover:border-signal-gold/40 shadow-sm"
             >
               <BrandIcon type="star" className="w-3.5 h-3.5 text-[#D4AF37]" />
               <span>{TESTIMONIALS_DATA.length} Verified Reviews (5.0)</span>
@@ -242,7 +240,7 @@ export function Header() {
             <Link
               href="/request"
               id="header-cta"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-obsidian px-5 py-2.5 rounded-full font-mono text-xs font-bold tracking-widest uppercase shadow-md shadow-[#C5A059]/20 hover:brightness-110 transition-all duration-300 shrink-0 whitespace-nowrap"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] px-6 py-2.5 sm:py-3 rounded-full font-mono text-xs font-bold tracking-widest uppercase shadow-lg shadow-[#C5A059]/25 hover:brightness-110 hover:shadow-[#C5A059]/40 transition-all duration-300 shrink-0 whitespace-nowrap"
             >
               <span>Book Strategy Call</span>
               <span className="text-sm font-bold">→</span>
@@ -263,7 +261,7 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu — High Impact Overlay */}
+      {/* Mobile Menu — High Impact Glassmorphic Overlay */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
           open ? 'max-h-[90vh] opacity-100' : 'max-h-0 opacity-0'
@@ -354,7 +352,7 @@ export function Header() {
           <div className="pt-3 border-t border-white/[0.08] flex flex-col gap-2.5">
             <Link
               href="/request"
-              className="bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-obsidian px-6 py-3.5 rounded-full font-mono text-xs uppercase tracking-widest text-center font-bold shadow-lg shadow-[#C5A059]/20 hover:brightness-110 transition-all whitespace-nowrap flex items-center justify-center gap-2"
+              className="bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] px-6 py-3.5 rounded-full font-mono text-xs uppercase tracking-widest text-center font-bold shadow-lg shadow-[#C5A059]/20 hover:brightness-110 transition-all whitespace-nowrap flex items-center justify-center gap-2"
               onClick={() => setOpen(false)}
             >
               <span>Book Strategy Consultation</span>

@@ -131,7 +131,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     verified: true,
     avatarColor: 'from-blue-600 to-cyan-700',
     initials: 'LW',
-    avatarUrl: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=256&q=80',
+    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&q=80',
   },
   {
     id: 't-my-3',
