@@ -63,31 +63,31 @@ function BrandIcon({ type, className = 'w-4 h-4' }: { type: string; className?: 
   switch (type) {
     case 'rocket':
       return (
-        <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <svg className={`${className} shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.24A4.5 4.5 0 003.75 18a.75.75 0 00.75.75c1.077 0 2.073-.418 2.818-1.102l1.644-1.643" />
         </svg>
       )
     case 'crown':
       return (
-        <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <svg className={`${className} shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M3 18h18v-2a1 1 0 00-1-1H4a1 1 0 00-1 1v2zm0-4l3-8 4 4 2-5 2 5 4-4 3 8H3z" />
         </svg>
       )
     case 'audit':
       return (
-        <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <svg className={`${className} shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
         </svg>
       )
     case 'tpi':
       return (
-        <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <svg className={`${className} shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.504-1.125-1.125-1.125h-6.75c-.621 0-1.125.504-1.125 1.125v3.375m9 0h-9m4.5-14.25a4.5 4.5 0 00-4.5 4.5v1.5a4.5 4.5 0 009 0v-1.5a4.5 4.5 0 00-4.5-4.5zM3.75 6.75h2.25m12 0h2.25" />
         </svg>
       )
     case 'star':
       return (
-        <svg className={`${className} fill-current`} viewBox="0 0 20 20">
+        <svg className={`${className} fill-current shrink-0`} viewBox="0 0 20 20">
           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
         </svg>
       )
@@ -136,24 +136,24 @@ export function Header() {
         }}
       />
 
-      <div className="max-w-dossier mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
-        <div className={`flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-16 sm:h-18' : 'h-20 sm:h-22'}`}>
+      <div className="max-w-dossier mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div className={`flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-16' : 'h-20'}`}>
 
           {/* Brand mark */}
-          <Link href="/" className="flex items-center gap-3.5 group shrink-0" aria-label="Catalyst Home">
+          <Link href="/" className="flex items-center gap-3 group shrink-0" aria-label="Catalyst Home">
             <InflectionMark size="sm" />
             <div className="flex flex-col leading-none">
-              <span className="font-serif text-bone tracking-tight text-xl sm:text-2xl font-bold text-gradient">
+              <span className="font-serif text-bone tracking-tight text-lg sm:text-xl font-bold text-gradient whitespace-nowrap">
                 CATALYST
               </span>
-              <span className="font-mono text-[0.52rem] sm:text-[0.55rem] tracking-[0.3em] uppercase text-muted/80 mt-0.5">
+              <span className="font-mono text-[0.48rem] sm:text-[0.52rem] tracking-[0.3em] uppercase text-muted/80 mt-0.5 whitespace-nowrap">
                 BY RIPPLE NEXUS
               </span>
             </div>
           </Link>
 
-          {/* Desktop Breathable & Responsive Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-2 xl:gap-4" aria-label="Main navigation">
+          {/* Desktop Navigation Links — Strictly Non-Breaking */}
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-3" aria-label="Main navigation">
             {/* Packages Dropdown */}
             <div
               className="relative py-2"
@@ -162,11 +162,11 @@ export function Header() {
             >
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="font-sans text-xs xl:text-sm text-bone font-semibold tracking-wide hover:text-signal-gold transition-colors duration-200 flex items-center gap-2 px-3.5 py-2 rounded-xl hover:bg-white/[0.05] border border-transparent hover:border-white/10 focus:outline-none"
+                className="font-sans text-xs xl:text-sm text-bone font-semibold tracking-wide hover:text-signal-gold transition-colors duration-200 flex items-center gap-1.5 px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-xl hover:bg-white/[0.05] border border-transparent hover:border-white/10 focus:outline-none whitespace-nowrap"
                 aria-expanded={dropdownOpen}
               >
                 <BrandIcon type="rocket" className="w-4 h-4 text-[#D4AF37]" />
-                <span>Packages &amp; Services</span>
+                <span className="whitespace-nowrap">Packages &amp; Services</span>
                 <span className={`text-[9px] text-signal-gold transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`}>▼</span>
               </button>
 
@@ -205,51 +205,53 @@ export function Header() {
 
             <Link
               href="/testimonials"
-              className="font-sans text-xs xl:text-sm text-muted/90 hover:text-bone font-medium tracking-wide transition-colors duration-200 px-3.5 py-2 rounded-xl hover:bg-white/[0.05] border border-transparent hover:border-white/10 flex items-center gap-2"
+              className="font-sans text-xs xl:text-sm text-muted/90 hover:text-bone font-medium tracking-wide transition-colors duration-200 px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-xl hover:bg-white/[0.05] border border-transparent hover:border-white/10 flex items-center gap-1.5 whitespace-nowrap"
             >
               <BrandIcon type="star" className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span>Testimonials</span>
+              <span className="whitespace-nowrap">Testimonials</span>
             </Link>
 
             <Link
               href="/audit"
-              className="font-sans text-xs xl:text-sm text-muted/90 hover:text-bone font-medium tracking-wide transition-colors duration-200 px-3.5 py-2 rounded-xl hover:bg-white/[0.05] border border-transparent hover:border-white/10 flex items-center gap-2"
+              className="font-sans text-xs xl:text-sm text-muted/90 hover:text-bone font-medium tracking-wide transition-colors duration-200 px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-xl hover:bg-white/[0.05] border border-transparent hover:border-white/10 flex items-center gap-1.5 whitespace-nowrap"
             >
               <BrandIcon type="audit" className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Market Audit</span>
+              <span className="whitespace-nowrap">Market Audit</span>
             </Link>
 
             <Link
               href="/tpi"
-              className="font-sans text-xs xl:text-sm text-muted/90 hover:text-bone font-medium tracking-wide transition-colors duration-200 px-3.5 py-2 rounded-xl hover:bg-white/[0.05] border border-transparent hover:border-white/10 flex items-center gap-2"
+              className="font-sans text-xs xl:text-sm text-muted/90 hover:text-bone font-medium tracking-wide transition-colors duration-200 px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-xl hover:bg-white/[0.05] border border-transparent hover:border-white/10 flex items-center gap-1.5 whitespace-nowrap"
             >
               <BrandIcon type="tpi" className="w-3.5 h-3.5 text-amber-400" />
-              <span>Free TPI Score</span>
+              <span className="whitespace-nowrap">Free TPI Score</span>
             </Link>
           </nav>
 
-          {/* Desktop CTAs (Breathable & High-Impact) */}
-          <div className="hidden md:flex items-center gap-3.5 xl:gap-5">
+          {/* Desktop CTAs */}
+          <div className="hidden md:flex items-center gap-3 xl:gap-4 shrink-0">
+            {/* Show Review Pill on XL Screens where space allows */}
             <Link
               href="/testimonials"
-              className="font-mono text-xs text-bone hover:text-signal-gold transition-all duration-200 px-3.5 py-2 rounded-full whitespace-nowrap flex items-center gap-2 bg-white/[0.04] border border-white/15 hover:border-signal-gold/40 shadow-sm"
+              className="hidden xl:flex items-center gap-2 font-mono text-xs text-bone hover:text-signal-gold transition-all duration-200 px-3.5 py-2 rounded-full whitespace-nowrap bg-white/[0.04] border border-white/15 hover:border-signal-gold/40 shadow-sm shrink-0"
             >
               <BrandIcon type="star" className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span>{TESTIMONIALS_DATA.length} Verified Reviews (5.0)</span>
+              <span className="whitespace-nowrap">{TESTIMONIALS_DATA.length} Verified Reviews (5.0)</span>
             </Link>
+
             <Link
               href="/request"
               id="header-cta"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] px-6 py-2.5 sm:py-3 rounded-full font-mono text-xs font-bold tracking-widest uppercase shadow-lg shadow-[#C5A059]/25 hover:brightness-110 hover:shadow-[#C5A059]/40 transition-all duration-300 shrink-0 whitespace-nowrap"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] px-5 py-2.5 xl:px-6 xl:py-2.5 rounded-full font-mono text-xs font-bold tracking-widest uppercase shadow-lg shadow-[#C5A059]/25 hover:brightness-110 hover:shadow-[#C5A059]/40 transition-all duration-300 shrink-0 whitespace-nowrap"
             >
-              <span>Book Strategy Call</span>
-              <span className="text-sm font-bold">→</span>
+              <span className="whitespace-nowrap">Book Strategy Call</span>
+              <span className="text-sm font-bold shrink-0">→</span>
             </Link>
           </div>
 
           {/* Mobile hamburger button */}
           <button
-            className="md:hidden flex flex-col justify-center items-center gap-1.5 w-10 h-10 p-2 rounded-xl bg-white/[0.06] border border-white/15 hover:border-signal-gold/40 transition-all"
+            className="lg:hidden flex flex-col justify-center items-center gap-1.5 w-10 h-10 p-2 rounded-xl bg-white/[0.06] border border-white/15 hover:border-signal-gold/40 transition-all shrink-0 ml-2"
             onClick={() => setOpen(!open)}
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
@@ -263,7 +265,7 @@ export function Header() {
 
       {/* Mobile Menu — High Impact Glassmorphic Overlay */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
           open ? 'max-h-[90vh] opacity-100' : 'max-h-0 opacity-0'
         }`}
         style={{
