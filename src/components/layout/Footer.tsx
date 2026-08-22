@@ -146,28 +146,43 @@ export function Footer() {
             </p>
             <ul className="flex flex-col gap-2.5 text-xs text-muted">
               <li>
-                <Link href="/testimonials?region=KSA" className="hover:text-bone transition-colors">
-                  🇸🇦 Saudi Arabia (10 Reviews)
+                <Link href="/testimonials?region=PH" className="hover:text-bone transition-colors">
+                  🇵🇭 Philippines BPO &amp; Tech Leadership
                 </Link>
               </li>
               <li>
-                <Link href="/testimonials?region=QTR" className="hover:text-bone transition-colors">
-                  🇶🇦 Qatar Energy &amp; FinTech (8)
+                <Link href="/testimonials?region=MY_SG" className="hover:text-bone transition-colors">
+                  🇲🇾 🇸🇬 Malaysia &amp; Singapore Tech Hubs
                 </Link>
               </li>
               <li>
-                <Link href="/testimonials?region=UAE" className="hover:text-bone transition-colors">
-                  🇦🇪 Dubai &amp; Abu Dhabi (8)
+                <Link href="/testimonials?region=ZA" className="hover:text-bone transition-colors">
+                  🇿🇦 South Africa Mining &amp; FinTech
                 </Link>
               </li>
               <li>
-                <Link href="/testimonials?region=IND" className="hover:text-bone transition-colors">
-                  🇮🇳 India Tech, PE &amp; EV (8)
+                <Link href="/testimonials?region=IR_ME" className="hover:text-bone transition-colors">
+                  🇮🇷 Tehran Petrochemical &amp; Tech Systems
                 </Link>
               </li>
               <li>
-                <Link href="/testimonials?region=ASEAN" className="hover:text-bone transition-colors">
-                  🇲🇾 🇸🇬 Malaysia &amp; Singapore (8)
+                <Link href="/testimonials?region=KR_APAC" className="hover:text-bone transition-colors">
+                  🇰🇷 South Korea Semiconductor &amp; AI
+                </Link>
+              </li>
+              <li>
+                <Link href="/testimonials?region=AU_NZ" className="hover:text-bone transition-colors">
+                  🇦🇺 Australia &amp; NZ ASX-50 Hubs
+                </Link>
+              </li>
+              <li>
+                <Link href="/testimonials?region=GCC" className="hover:text-bone transition-colors">
+                  🇸🇦 🇦🇪 🇶🇦 Saudi, Dubai &amp; Qatar Giga-Projects
+                </Link>
+              </li>
+              <li>
+                <Link href="/testimonials?region=EUR_US" className="hover:text-bone transition-colors">
+                  🇨🇭 🇬🇧 🇺🇸 Swiss Banking, UK &amp; US Markets
                 </Link>
               </li>
               <li className="pt-2 border-t border-white/[0.06]">

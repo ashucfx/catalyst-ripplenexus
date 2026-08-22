@@ -46,14 +46,18 @@ export default async function BookPage() {
             {/* Regional Badges */}
             <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
               {[
-                '🇸🇦 Saudi Arabia',
-                '🇶🇦 Qatar',
-                '🇦🇪 UAE / Dubai',
-                '🇮🇳 India',
+                '🇵🇭 Philippines',
                 '🇲🇾 Malaysia',
+                '🇿🇦 South Africa',
+                '🇮🇷 Tehran',
+                '🇰🇷 South Korea',
+                '🇦🇺 Australia',
+                '🇸🇦 Saudi Arabia',
+                '🇦🇪 UAE / Dubai',
+                '🇶🇦 Qatar',
+                '🇮🇳 India',
                 '🇨🇭 Switzerland',
-                '🇦🇺 ANZ',
-                '🇺🇸 Global',
+                '🇺🇸 Global / US',
               ].map((flag) => (
                 <span
                   key={flag}

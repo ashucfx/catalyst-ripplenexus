@@ -72,28 +72,40 @@ const selectionPlans = [
 
 const regionalData = [
   {
-    region: 'ASEAN (Singapore, Malaysia, Indonesia, Vietnam)',
-    flag: '🇸🇬 🇲🇾 🇮🇩 🇻🇳',
-    desc: 'Focused on cross-border leadership, Employment Pass (EP) eligibility, regional scale, and concise 2-page metric-driven formatting.',
-    highlights: ['ATS keywords tuned for Singapore FinTech & Tech hubs', 'Visa & relocation signaling', 'Regional growth metrics framing'],
+    region: 'ASEAN & SE Asia (Philippines, Malaysia, Singapore, Indonesia, Vietnam, Thailand)',
+    flag: '🇵🇭 🇲🇾 🇸🇬 🇮🇩 🇻🇳 🇹🇭',
+    desc: 'Specialized executive positioning for Manila BPO leadership, Penang semiconductor hubs, Singapore regional HQs, KL finance, and Jakarta e-commerce growth.',
+    highlights: ['Manila shared services & BPO C-suite metrics framing', 'Singapore EP visa & cross-border relocation signaling', 'Penang & KL semiconductor / Islamic finance metrics'],
   },
   {
-    region: 'GCC / Middle East (Dubai, Abu Dhabi, Saudi Arabia)',
-    flag: '🇦🇪 🇸🇦 🇶🇦',
-    desc: 'Emphasizes tax-free compensation readiness, sovereign project management, and Arabic/English dual presentation options.',
-    highlights: ['Dubai & Riyadh recruiter standards', 'Bilingual English/Arabic options available', 'Mega-project & enterprise scale storytelling'],
+    region: 'Middle East & GCC (Saudi Arabia, UAE, Qatar, Tehran, Kuwait, Oman, Bahrain)',
+    flag: '🇸🇦 🇦🇪 🇶🇦 🇮🇷 🇰🇼 🇴🇲 🇧🇭',
+    desc: 'Tailored for Vision 2030 giga-projects, DIFC/ADGM sovereign funds, North Field gas infrastructure, Tehran petrochemical refineries, and tax-free executive packages.',
+    highlights: ['Riyadh & Dubai recruiter compliance standards', 'Dual English/Arabic bilingual CV & executive dossier options', 'Mega-project $1B+ infrastructure & energy storytelling'],
   },
   {
-    region: 'APAC (India, Australia, Hong Kong)',
-    flag: '🇮🇳 🇦🇺 🇭🇰',
-    desc: 'Bridges massive engineering/operations scale to international recruiter expectations with high-impact outcome metrics.',
-    highlights: ['Translating high-volume scale to global standards', 'Australian 2-3 page tailored templates', 'FAANG & Unicorn ATS compliance'],
+    region: 'Africa & Emerging Markets (South Africa, Nigeria, Kenya)',
+    flag: '🇿🇦 🇳🇬 🇰🇪',
+    desc: 'Framed for Sandton mining houses, Cape Town FinTech gateways, renewable energy IPP solar projects, and pan-African transaction processing scale.',
+    highlights: ['Mining ESG sustainability & safety governance', 'African FinTech 100M+ daily transaction concurrency metrics', 'IPP renewable power project funding & grid integration'],
   },
   {
-    region: 'Global / Western (USA, UK, Canada, EU)',
-    flag: '🇺🇸 🇬🇧 🇨🇦 🇪🇺',
-    desc: 'Strict 1-2 page executive formatting, zero fluff, aggressive achievement bullets, and high-converting recruiter DMs.',
-    highlights: ['US 1-Page / 2-Page hard formats', 'UK Tier-2 sponsorship positioning', 'Remote USD dollar impact storytelling'],
+    region: 'East Asia & APAC (Korea, Japan, Australia, India, Hong Kong)',
+    flag: '🇰🇷 🇯🇵 🇦🇺 🇮🇳 🇭🇰',
+    desc: 'Translates massive engineering scale, HBM AI chip architecture, ASX-50 board governance, and FAANG/Unicorn tech rigor into top global offers.',
+    highlights: ['Seoul HBM AI semiconductor & robotics framing', 'ASX-50 2-page hard executive standards in Sydney/Melbourne', 'FAANG & Indian Unicorn scaling to US remote packages'],
+  },
+  {
+    region: 'Europe & UK (Switzerland, UK, Germany, Netherlands, France)',
+    flag: '🇨🇭 🇬🇧 🇩🇪 🇳🇱 🇫🇷',
+    desc: 'Strict Swiss 2-page brief brevity, UK Tier-2 sponsorship compliance, German DIN automotive engineering standards, and Amsterdam FinTech norms.',
+    highlights: ['Zurich private banking risk model governance', 'German automotive OEM software P&L metrics', 'UK Tier-2 visa sponsorship optimized formatting'],
+  },
+  {
+    region: 'Americas & Global (USA, Canada, Remote USD/EUR Roles)',
+    flag: '🇺🇸 🇨🇦 🌐',
+    desc: 'High-converting US 1-2 page hard executive formats, zero fluff, ROI-centered bullet metrics, and aggressive salary negotiation playbooks.',
+    highlights: ['US CISO & CFO board-level governance framing', 'Silicon Valley & NYC executive recruiter DMs', 'Remote USD dollar impact & equity negotiation playbooks'],
   },
 ]
 
@@ -143,14 +155,21 @@ export default function Home() {
               </div>
 
               {[
-                { flag: '🇸🇦', name: 'Saudi Arabia' },
-                { flag: '🇶🇦', name: 'Qatar' },
-                { flag: '🇦🇪', name: 'UAE / Dubai' },
-                { flag: '🇮🇳', name: 'India' },
+                { flag: '🇵🇭', name: 'Philippines' },
                 { flag: '🇲🇾', name: 'Malaysia' },
-                { flag: '🇨🇭', name: 'Switzerland' },
+                { flag: '🇿🇦', name: 'South Africa' },
+                { flag: '🇮🇷', name: 'Tehran (Iran)' },
+                { flag: '🇰🇷', name: 'South Korea' },
                 { flag: '🇦🇺', name: 'Australia & NZ' },
-                { flag: '🇺🇸', name: 'USA & UK' },
+                { flag: '🇸🇦', name: 'Saudi Arabia' },
+                { flag: '🇦🇪', name: 'UAE / Dubai' },
+                { flag: '🇶🇦', name: 'Qatar' },
+                { flag: '🇰🇼', name: 'Kuwait & GCC' },
+                { flag: '🇮🇳', name: 'India' },
+                { flag: '🇸🇬', name: 'Singapore' },
+                { flag: '🇨🇭', name: 'Switzerland' },
+                { flag: '🇬🇧', name: 'UK & EU' },
+                { flag: '🇺🇸', name: 'USA & Canada' },
               ].map((c) => (
                 <span
                   key={c.name}
@@ -176,7 +195,7 @@ export default function Home() {
               Transform your career narrative with metric-driven <strong className="text-bone font-semibold">Executive Resume Rewrites</strong>,{' '}
               <strong className="text-bone font-semibold">LinkedIn Profile &amp; Custom Banner Designs</strong>,{' '}
               <strong className="text-bone font-semibold">Tailored Cover Letters</strong>, and{' '}
-              <strong className="text-bone font-semibold">Multi-Lingual Country Optimization</strong> across GCC, ASEAN, APAC &amp; Global markets.
+              <strong className="text-bone font-semibold">Multi-Lingual Country Optimization</strong> across Philippines, Malaysia, South Africa, Tehran, South Korea, Australia, GCC, ASEAN &amp; Global markets.
             </p>
 
             {/* Premium Call-to-Action Buttons */}
@@ -205,7 +224,7 @@ export default function Home() {
                 href="/testimonials"
                 className="w-full sm:w-auto inline-flex justify-center items-center gap-2 text-signal-gold bg-white/[0.03] border border-white/10 px-5 py-3.5 font-mono text-xs font-semibold tracking-widest uppercase rounded-full hover:bg-white/[0.08] transition-all duration-300 whitespace-nowrap"
               >
-                <span>★ 48 Client Reviews</span>
+                <span>★ {TESTIMONIALS_DATA.length} Verified Reviews</span>
                 <span className="font-mono text-bone text-xs">5.0</span>
               </Link>
             </div>
@@ -382,8 +401,8 @@ export default function Home() {
                 href="/testimonials"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-signal-gold/40 text-signal-gold px-6 py-3 font-mono text-xs tracking-wider uppercase rounded-full hover:bg-signal-gold hover:text-obsidian transition-all duration-300 font-bold text-center"
               >
-                <span className="hidden sm:inline">Explore Full Testimonials Hub (48 Reviews) →</span>
-                <span className="sm:hidden">Explore 48 Reviews Hub →</span>
+                <span className="hidden sm:inline">Explore Full Testimonials Hub ({TESTIMONIALS_DATA.length} Verified Reviews) →</span>
+                <span className="sm:hidden">Explore {TESTIMONIALS_DATA.length} Reviews Hub →</span>
               </Link>
             </div>
           </div>

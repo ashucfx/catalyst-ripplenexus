@@ -16,18 +16,21 @@ export default function TestimonialsPage() {
     return TESTIMONIALS_DATA.filter((t) => {
       // Region filter
       if (selectedRegion !== 'ALL') {
-        if (selectedRegion === 'KSA' && !t.location.includes('Saudi Arabia')) return false
-        if (selectedRegion === 'QTR' && !t.location.includes('Qatar')) return false
-        if (selectedRegion === 'UAE' && !t.location.includes('UAE') && !t.location.includes('Dubai') && !t.location.includes('Abu Dhabi')) return false
+        if (selectedRegion === 'PH' && !t.location.includes('Philippines')) return false
+        if (selectedRegion === 'MY_SG' && !t.location.includes('Malaysia') && !t.location.includes('Singapore')) return false
+        if (selectedRegion === 'ZA' && !t.location.includes('South Africa')) return false
+        if (selectedRegion === 'IR_ME' && !t.location.includes('Iran') && !t.location.includes('Tehran')) return false
+        if (selectedRegion === 'KR_APAC' && !t.location.includes('Korea') && !t.location.includes('Seoul') && !t.location.includes('Japan')) return false
+        if (selectedRegion === 'AU_NZ' && !t.location.includes('Australia') && !t.location.includes('New Zealand')) return false
+        if (selectedRegion === 'GCC' && !t.location.includes('Saudi Arabia') && !t.location.includes('UAE') && !t.location.includes('Dubai') && !t.location.includes('Qatar') && !t.location.includes('Kuwait') && !t.location.includes('Oman') && !t.location.includes('Abu Dhabi')) return false
         if (selectedRegion === 'IND' && !t.location.includes('India')) return false
-        if (selectedRegion === 'ASEAN' && t.region !== 'ASEAN') return false
-        if (selectedRegion === 'CH_ANZ_GLOBAL' && !t.location.includes('Switzerland') && !t.location.includes('Australia') && !t.location.includes('New Zealand') && !t.location.includes('UK') && !t.location.includes('USA')) return false
+        if (selectedRegion === 'EUR_US' && !t.location.includes('Switzerland') && !t.location.includes('Germany') && !t.location.includes('UK') && !t.location.includes('USA') && !t.location.includes('London')) return false
       }
       // Package filter
       if (selectedPackage !== 'ALL') {
         if (selectedPackage === 'BOOSTER' && !t.servicePackage.includes('Booster')) return false
-        if (selectedPackage === 'MULTILINGUAL' && !t.servicePackage.includes('Multi-Lingual') && !t.servicePackage.includes('Dual')) return false
-        if (selectedPackage === 'RELOCATION' && !t.servicePackage.includes('Relocation') && !t.servicePackage.includes('Visa') && !t.servicePackage.includes('Optimization')) return false
+        if (selectedPackage === 'MULTILINGUAL' && !t.servicePackage.includes('Multi-Lingual') && !t.servicePackage.includes('Dual') && !t.servicePackage.includes('Bilingual')) return false
+        if (selectedPackage === 'RELOCATION' && !t.servicePackage.includes('Relocation') && !t.servicePackage.includes('Visa') && !t.servicePackage.includes('Optimization') && !t.servicePackage.includes('Suite')) return false
       }
       // Search query filter
       if (searchQuery.trim() !== '') {
@@ -58,13 +61,17 @@ export default function TestimonialsPage() {
               </div>
 
               {[
-                { flag: '🇸🇦', name: 'Saudi Arabia' },
-                { flag: '🇶🇦', name: 'Qatar' },
-                { flag: '🇦🇪', name: 'UAE / Dubai' },
-                { flag: '🇮🇳', name: 'India' },
+                { flag: '🇵🇭', name: 'Philippines' },
                 { flag: '🇲🇾', name: 'Malaysia' },
-                { flag: '🇨🇭', name: 'Switzerland' },
+                { flag: '🇿🇦', name: 'South Africa' },
+                { flag: '🇮🇷', name: 'Tehran (Iran)' },
+                { flag: '🇰🇷', name: 'South Korea' },
                 { flag: '🇦🇺', name: 'Australia & NZ' },
+                { flag: '🇸🇦', name: 'Saudi Arabia' },
+                { flag: '🇦🇪', name: 'UAE / Dubai' },
+                { flag: '🇶🇦', name: 'Qatar' },
+                { flag: '🇮🇳', name: 'India' },
+                { flag: '🇨🇭', name: 'Switzerland' },
                 { flag: '🇺🇸', name: 'USA & UK' },
               ].map((c) => (
                 <span
@@ -87,7 +94,7 @@ export default function TestimonialsPage() {
             </h1>
 
             <p className="font-serif text-muted text-lg sm:text-xl leading-relaxed max-w-3xl mx-auto mb-12">
-              Browse candidate reviews across Saudi Arabia, Qatar, UAE, India, Malaysia, Switzerland, Australia, and Global markets who re-engineered their CVs, LinkedIn profiles, and executive positioning to land top-tier roles.
+              Browse candidate reviews across Philippines, Malaysia, South Africa, Tehran, South Korea, Australia, Saudi Arabia, Qatar, UAE, India, Switzerland, UK, USA, and Global markets who re-engineered their CVs, LinkedIn profiles, and executive positioning to land top-tier roles.
             </p>
 
             {/* Metric Highlights Grid */}
@@ -97,7 +104,7 @@ export default function TestimonialsPage() {
                 <p className="font-sans text-xs text-muted">Average Client Rating</p>
               </div>
               <div className="p-6 bg-obsidian/90 text-center">
-                <p className="font-mono text-3xl sm:text-4xl font-bold text-bone mb-1">+45%</p>
+                <p className="font-mono text-3xl sm:text-4xl font-bold text-bone mb-1">+46%</p>
                 <p className="font-sans text-xs text-muted">Average Pay Hike</p>
               </div>
               <div className="p-6 bg-obsidian/90 text-center">
@@ -138,13 +145,16 @@ export default function TestimonialsPage() {
             <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto justify-center">
               <span className="font-mono text-[0.55rem] tracking-widest uppercase text-muted mr-1">Filter Market:</span>
               {[
-                { id: 'ALL', full: 'All Markets (48)', short: 'All (48)' },
-                { id: 'KSA', full: '🇸🇦 Saudi Arabia (10)', short: '🇸🇦 KSA (10)' },
-                { id: 'QTR', full: '🇶🇦 Qatar (8)', short: '🇶🇦 QTR (8)' },
-                { id: 'UAE', full: '🇦🇪 UAE / Dubai (8)', short: '🇦🇪 UAE (8)' },
-                { id: 'IND', full: '🇮🇳 India (8)', short: '🇮🇳 IN (8)' },
-                { id: 'ASEAN', full: '🇲🇾 🇸🇬 ASEAN (8)', short: '🇲🇾 ASEAN (8)' },
-                { id: 'CH_ANZ_GLOBAL', full: '🇨🇭 🇦🇺 🇺🇸 Global (6)', short: '🌐 Global (6)' },
+                { id: 'ALL', full: `All Markets (${TESTIMONIALS_DATA.length})`, short: `All (${TESTIMONIALS_DATA.length})` },
+                { id: 'PH', full: '🇵🇭 Philippines', short: '🇵🇭 PH' },
+                { id: 'MY_SG', full: '🇲🇾 🇸🇬 Malaysia & SG', short: '🇲🇾 MY' },
+                { id: 'ZA', full: '🇿🇦 South Africa', short: '🇿🇦 ZA' },
+                { id: 'IR_ME', full: '🇮🇷 Tehran & ME', short: '🇮🇷 IR' },
+                { id: 'KR_APAC', full: '🇰🇷 Korea & E.Asia', short: '🇰🇷 KR' },
+                { id: 'AU_NZ', full: '🇦🇺 Australia & NZ', short: '🇦🇺 AU' },
+                { id: 'GCC', full: '🇸🇦 🇦🇪 🇶🇦 GCC', short: '🇸🇦 GCC' },
+                { id: 'IND', full: '🇮🇳 India', short: '🇮🇳 IN' },
+                { id: 'EUR_US', full: '🇨🇭 🇬🇧 🇺🇸 EU & US', short: '🌐 EU/US' },
               ].map((reg) => (
                 <button
                   key={reg.id}
