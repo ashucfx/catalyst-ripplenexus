@@ -3,11 +3,27 @@ import { getPortal, saveReport } from '@/lib/db/portals'
 import type { IntakeData } from '@/lib/db/portals'
 import { generateAuditReport } from '@/lib/llm/report'
 import { resend, FROM, ADMIN_EMAIL } from '@/lib/email/resend'
+import { rateLimit } from '@/lib/rateLimit'
 
 export const maxDuration = 120
 
 export async function POST(req: NextRequest) {
   try {
+    const forwarded = req.headers.get('x-forwarded-for')
+    const ip = forwarded ? forwarded.split(',')[0].trim() : '127.0.0.1'
+
+    const { ok: allowed } = await rateLimit(
+      ip,
+      { limit: 5, windowMs: 60 * 60 * 1000 },
+      'audit-intake',
+    )
+    if (!allowed) {
+      return NextResponse.json(
+        { error: 'Rate limit exceeded. Please wait before submitting again.' },
+        { status: 429 },
+      )
+    }
+
     const body = await req.json() as { token: string } & IntakeData
 
     const { token, ...intake } = body
