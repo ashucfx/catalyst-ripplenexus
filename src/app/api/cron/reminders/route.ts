@@ -2,13 +2,15 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPendingReminders, markReminderSent } from '@/lib/db/bookings'
 import { resend } from '@/lib/email/resend'
 import { bookingReminder } from '@/lib/email/bookingTemplates'
+import { timingSafeEqualStrings } from '@/lib/auth/token'
 
 const FROM = `${process.env.RESEND_FROM_NAME ?? 'Catalyst'} <${process.env.RESEND_FROM_EMAIL ?? 'catalyst@theripplenexus.com'}>`
 
 export async function GET(req: NextRequest) {
-  // Vercel cron — validate authorization header
-  const auth = req.headers.get('authorization')
-  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
+  // Vercel cron — validate authorization header securely
+  const auth = req.headers.get('authorization') ?? ''
+  const cronSecret = process.env.CRON_SECRET
+  if (!cronSecret || !timingSafeEqualStrings(auth, `Bearer ${cronSecret}`)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
