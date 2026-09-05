@@ -10,9 +10,32 @@ export async function POST(req: NextRequest) {
   if (!ok) return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
 
   try {
-    const { product, email } = await req.json()
+    const { product, email, currency, amount: explicitAmount } = await req.json()
 
-    // booking:UUID — look up price from DB
+    // Determine if this is an international card order (non-INR) or the standard India flow
+    const isIntl = currency && currency.toUpperCase() !== 'INR'
+
+    // ── International card order ─────────────────────────────────────────────
+    // When currency is provided (e.g. GBP, USD, EUR), use the caller-supplied amount.
+    // Razorpay international card requires account to have international payments enabled.
+    if (isIntl) {
+      if (!explicitAmount || typeof explicitAmount !== 'number' || explicitAmount <= 0) {
+        return NextResponse.json({ error: 'Amount required for international orders.' }, { status: 400 })
+      }
+      const receipt = product?.startsWith('booking:')
+        ? `booking_${product.replace('booking:', '')}`
+        : `${product ?? 'order'}_${Date.now()}`
+
+      const order = await createRazorpayOrder({
+        amount:   explicitAmount,
+        currency: currency.toUpperCase(),
+        receipt,
+        notes: { email: email ?? '', product: product ?? '' },
+      })
+      return NextResponse.json(order)
+    }
+
+    // ── Standard India flow (INR) — unchanged ────────────────────────────────
     let amountINR: number
     let receipt: string
 
@@ -29,6 +52,9 @@ export async function POST(req: NextRequest) {
       if (!booking) return NextResponse.json({ error: 'Booking not found.' }, { status: 404 })
       amountINR = Math.round(((booking.meeting_types as unknown as { price_inr: number }).price_inr) / 100)
       receipt   = `booking_${bookingId}`
+    } else if (explicitAmount && typeof explicitAmount === 'number' && explicitAmount > 0) {
+      amountINR = Math.round(explicitAmount)
+      receipt   = `${product ?? 'package'}_${Date.now()}`
     } else {
       amountINR = Math.round((PRICING[product as keyof typeof PRICING]?.inr || 0) / 100)
       if (!amountINR) return NextResponse.json({ error: 'Invalid product.' }, { status: 400 })
@@ -36,7 +62,7 @@ export async function POST(req: NextRequest) {
     }
 
     const order = await createRazorpayOrder({
-      amountINR,
+      amount: amountINR,
       receipt,
       notes: { email: email ?? '', product },
     })
