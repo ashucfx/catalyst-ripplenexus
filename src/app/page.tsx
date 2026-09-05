@@ -26,7 +26,7 @@ const selectionPlans = [
     href: '/audit',
     ctaPrimary: 'Request Market Audit →',
     ctaSecondary: 'Direct Self-Service',
-    checkoutUrl: 'https://clientforge.theripplenexus.com/inquire?service=AUDIT',
+    checkoutUrl: '/checkout?pkg=AUDIT',
   },
   {
     tier: 'II',
@@ -45,7 +45,7 @@ const selectionPlans = [
     href: '/request',
     ctaPrimary: 'Book Strategy Call →',
     ctaSecondary: 'Self-Service Checkout',
-    checkoutUrl: 'https://clientforge.theripplenexus.com/checkout?pkg=CAREER_BOOSTER',
+    checkoutUrl: '/checkout?pkg=CAREER_BOOSTER',
     featured: true,
   },
   {
@@ -61,10 +61,10 @@ const selectionPlans = [
       'Salary & Offer Negotiation Playbook',
       '1-on-1 Executive Pitch Guidance',
     ],
-    href: 'https://clientforge.theripplenexus.com/inquire?pkg=PREMIUM_PLUS',
+    href: '/request?pkg=PREMIUM_PLUS',
     ctaPrimary: 'Request Custom Proposal →',
     ctaSecondary: 'Self-Service Checkout',
-    checkoutUrl: 'https://clientforge.theripplenexus.com/checkout?pkg=PREMIUM_PLUS',
+    checkoutUrl: '/checkout?pkg=PREMIUM_PLUS',
   },
 ]
 
@@ -209,16 +209,14 @@ export default function Home() {
                 <span className="text-sm font-bold">→</span>
               </Link>
 
-              <a
-                href="https://clientforge.theripplenexus.com/checkout?pkg=CAREER_BOOSTER"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/checkout?pkg=CAREER_BOOSTER"
                 id="hero-cta-secondary"
                 className="w-full sm:w-auto inline-flex justify-center items-center gap-2 text-bone border border-white/20 px-6 py-3.5 font-mono text-xs font-semibold tracking-widest uppercase rounded-full hover:border-[#C5A059]/60 hover:bg-white/[0.05] transition-all duration-300 whitespace-nowrap"
               >
                 <span>Self-Service Checkout</span>
-                <span className="text-muted/60 text-xs font-mono">↗</span>
-              </a>
+                <span className="text-signal-gold text-xs font-mono">→</span>
+              </Link>
 
               <Link
                 href="/testimonials"
@@ -287,22 +285,18 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-stretch gap-3 w-full lg:w-auto shrink-0">
-              <a
-                href="https://clientforge.theripplenexus.com/checkout"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/checkout"
                 className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#9B7844] text-[#0A0B0D] font-mono text-xs uppercase tracking-widest font-bold rounded-full text-center shadow-md hover:brightness-110 transition-all whitespace-nowrap"
               >
-                Self-Service Checkout ↗
-              </a>
-              <a
-                href="https://clientforge.theripplenexus.com/inquire"
-                target="_blank"
-                rel="noopener noreferrer"
+                Self-Service Checkout →
+              </Link>
+              <Link
+                href="/request"
                 className="w-full sm:w-auto px-6 py-3 border border-white/20 text-bone font-mono text-xs uppercase tracking-widest text-center rounded-full hover:border-signal-gold/50 transition-all whitespace-nowrap"
               >
-                Submit Direct Inquiry ↗
-              </a>
+                Submit Direct Inquiry →
+              </Link>
             </div>
           </div>
         </section>
@@ -584,14 +578,12 @@ export default function Home() {
               >
                 Book Executive Consultation →
               </Link>
-              <a
-                href="https://clientforge.theripplenexus.com/checkout"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/checkout"
                 className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-mono text-xs font-semibold tracking-widest uppercase rounded-full hover:border-signal-gold/50 hover:bg-white/[0.05] transition-all text-center whitespace-nowrap"
               >
-                Instant Self-Service Portal ↗
-              </a>
+                Instant Self-Service Portal →
+              </Link>
             </div>
           </div>
         </section>
