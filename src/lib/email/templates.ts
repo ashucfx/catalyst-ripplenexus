@@ -458,3 +458,141 @@ export function platformWaitlistEmail(plan?: string, unsubscribeUrl?: string): {
 
   return { subject, html }
 }
+
+// ═══════════════════════════════════════════════════════════════════════
+// 7. BANK TRANSFER CONFIRMATION
+//    Sent when a client requests bank transfer instructions.
+//    Contains only static bank details + reference — NO payment buttons.
+//    Designed to be safe, professional, and unambiguous.
+// ═══════════════════════════════════════════════════════════════════════
+
+type BankTransferEmailParams = {
+  recipientEmail:        string
+  ref:                   string    // e.g. RN-20260823-A4K2M9
+  amount:                number
+  currency:              string
+  formattedAmount:       string    // e.g. "£500.00 GBP"
+  rail:                  string    // e.g. "FPS"
+  clientLabel:           string    // e.g. "UK Bank Transfer"
+  accountName:           string
+  bankName?:             string
+  accountNumber?:        string
+  iban?:                 string
+  sortCode?:             string
+  routingNumber?:        string
+  swiftBic?:             string
+  referenceInstructions?: string
+  additionalNotes?:      string
+}
+
+export function bankTransferConfirmationEmail(p: BankTransferEmailParams): { subject: string; html: string } {
+  const subject = `Payment Instructions — ${p.ref} — ${p.formattedAmount}`
+
+  // Build bank detail rows — only include fields that have values
+  const detailRows = [
+    p.accountName                        && row('Account Name',    p.accountName),
+    p.bankName                           && row('Bank',            p.bankName),
+    p.accountNumber                      && row('Account Number',  p.accountNumber),
+    p.iban                               && row('IBAN',            p.iban),
+    p.sortCode                           && row('Sort Code',       p.sortCode),
+    p.routingNumber                      && row('Routing Number',  p.routingNumber),
+    p.swiftBic                           && row('SWIFT / BIC',     p.swiftBic),
+                                            row('Currency',        p.currency.toUpperCase()),
+                                            row('Amount Due',      `<strong style="color:${C.gold};font-size:18px;">${p.formattedAmount}</strong>`),
+                                            row('Transfer Method', p.rail),
+  ].filter(Boolean).join('')
+
+  const html = wrap(`
+    <p style="margin:0 0 8px 0;font-family:Arial,sans-serif;font-size:10px;
+               color:${C.gold};letter-spacing:0.3em;text-transform:uppercase;">
+      ${p.clientLabel.toUpperCase()} · PAYMENT INSTRUCTIONS
+    </p>
+
+    <p style="margin:0 0 24px 0;font-family:Georgia,serif;font-size:26px;
+               color:${C.bone};font-weight:400;letter-spacing:-0.02em;line-height:1.2;">
+      Your bank transfer<br/>
+      <em style="color:${C.gold};">details are ready.</em>
+    </p>
+
+    <!-- Reference Box — most important element -->
+    <table width="100%" cellpadding="0" cellspacing="0"
+           style="background-color:#16181f;border:2px solid ${C.gold};border-radius:8px;margin-bottom:28px;">
+      <tr>
+        <td style="padding:20px 24px;text-align:center;">
+          <p style="margin:0 0 6px;font-family:Arial,sans-serif;font-size:10px;
+                     color:${C.muted};letter-spacing:0.25em;text-transform:uppercase;">
+            ⚠️ PAYMENT REFERENCE — REQUIRED
+          </p>
+          <p style="margin:0;font-family:'Courier New',monospace;font-size:24px;
+                     color:${C.gold};letter-spacing:0.12em;font-weight:700;">
+            ${p.ref}
+          </p>
+          <p style="margin:8px 0 0;font-family:Arial,sans-serif;font-size:11px;color:${C.muted};">
+            You MUST include this exact reference when making the transfer.<br/>
+            Without it, we cannot match your payment to your order.
+          </p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Bank Account Details -->
+    <p style="margin:0 0 12px 0;font-family:Arial,sans-serif;font-size:10px;
+               color:${C.gold};letter-spacing:0.25em;text-transform:uppercase;">
+      RECEIVING ACCOUNT DETAILS
+    </p>
+
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+      ${detailRows}
+    </table>
+
+    ${p.referenceInstructions ? `
+      <table width="100%" cellpadding="0" cellspacing="0"
+             style="background-color:${C.graphite};margin-bottom:24px;">
+        <tr>
+          <td style="padding:16px 20px;">
+            <p style="margin:0 0 4px;font-family:Arial,sans-serif;font-size:10px;
+                       color:${C.muted};letter-spacing:0.2em;text-transform:uppercase;">
+              REFERENCE INSTRUCTIONS
+            </p>
+            <p style="margin:0;font-family:Georgia,serif;font-size:14px;
+                       color:${C.bone};line-height:1.6;">
+              ${p.referenceInstructions}
+            </p>
+          </td>
+        </tr>
+      </table>
+    ` : ''}
+
+    ${p.additionalNotes ? `
+      <p style="margin:0 0 8px 0;font-family:Georgia,serif;font-size:13px;
+                 color:${C.muted};line-height:1.6;font-style:italic;">
+        Note: ${p.additionalNotes}
+      </p>
+    ` : ''}
+
+    <div style="margin:32px 0 0;padding-top:24px;border-top:1px solid ${C.graphite};text-align:center;">
+      <p style="margin:0 0 12px;font-family:Arial,sans-serif;font-size:10px;color:${C.gold};letter-spacing:0.2em;text-transform:uppercase;">
+        STEP 2: CONFIRM YOUR TRANSFER
+      </p>
+      <p style="margin:0 0 16px;font-family:Georgia,serif;font-size:14px;color:${C.bone};line-height:1.5;">
+        Once you have initiated the transfer from your bank, please let us know so we can match it to your order instantly.
+      </p>
+      <a href="${SITE_URL}/payment/confirm?ref=${p.ref}"
+         style="display:inline-block;background:transparent;color:${C.gold};
+                border:1px solid ${C.gold};padding:10px 24px;font-family:Arial,sans-serif;font-size:10px;
+                letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;
+                font-weight:700;border-radius:24px;">
+        Notify us it's sent →
+      </a>
+    </div>
+
+    <p style="margin:32px 0 0;font-family:Georgia,serif;font-size:13px;
+               color:${C.muted};line-height:1.6;">
+      If you have any questions, reply to this email quoting reference
+      <strong style="color:${C.bone};">${p.ref}</strong>.
+    </p>
+  `)
+
+  return { subject, html }
+}
+
