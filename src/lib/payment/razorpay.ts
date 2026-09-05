@@ -14,24 +14,31 @@ function getClient(): Razorpay {
 }
 
 export type RazorpayOrderParams = {
-  amountINR: number   // in rupees — we convert to paise internally
+  amount:    number   // in major currency units (rupees for INR, dollars for USD, etc.)
   receipt:   string   // unique receipt ID (e.g. "audit_<timestamp>")
+  currency?: string   // defaults to 'INR' for backward-compatibility
   notes?:    Record<string, string>
+  /** @deprecated use amount instead */
+  amountINR?: number
 }
 
 export type RazorpayOrderResult = {
   orderId:  string
-  amount:   number    // paise
-  currency: 'INR'
+  amount:   number    // in smallest currency unit (paise for INR, cents for USD, etc.)
+  currency: string
   keyId:    string
 }
 
 export async function createRazorpayOrder(params: RazorpayOrderParams): Promise<RazorpayOrderResult> {
-  const client = getClient()
+  const client   = getClient()
+  // Support legacy amountINR callers — prefer amount if both provided
+  const unitAmount = params.amount ?? params.amountINR ?? 0
+  const currency   = params.currency ?? 'INR'
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const order: any = await client.orders.create({
-    amount:   Math.round(params.amountINR * 100),   // rupees → paise
-    currency: 'INR',
+    amount:   Math.round(unitAmount * 100),   // major unit → smallest unit (paise/cents/pence)
+    currency,
     receipt:  params.receipt,
     notes:    params.notes ?? {},
   })
@@ -39,7 +46,7 @@ export async function createRazorpayOrder(params: RazorpayOrderParams): Promise<
   return {
     orderId:  order.id,
     amount:   order.amount as number,
-    currency: 'INR',
+    currency: order.currency as string,
     keyId:    process.env.RAZORPAY_KEY_ID!,
   }
 }
