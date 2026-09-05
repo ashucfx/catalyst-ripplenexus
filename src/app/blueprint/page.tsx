@@ -101,14 +101,12 @@ export default function BlueprintPage() {
                 >
                   Book Strategy Call →
                 </Link>
-                <a
-                  href="https://clientforge.theripplenexus.com/checkout?pkg=CAREER_BOOSTER"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/checkout?pkg=CAREER_BOOSTER"
                   className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-mono text-xs font-semibold tracking-widest uppercase rounded-full text-center hover:border-signal-gold/50 transition-colors whitespace-nowrap"
                 >
-                  Self-Service Checkout ↗
-                </a>
+                  Self-Service Checkout →
+                </Link>
               </div>
             </div>
 
@@ -160,14 +158,12 @@ export default function BlueprintPage() {
                 >
                   Request Custom Proposal →
                 </Link>
-                <a
-                  href="https://clientforge.theripplenexus.com/checkout?pkg=PREMIUM_PLUS"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/checkout?pkg=PREMIUM_PLUS"
                   className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-mono text-xs font-semibold tracking-widest uppercase rounded-full text-center hover:border-emerald-400/50 transition-colors whitespace-nowrap"
                 >
-                  Self-Service Checkout ↗
-                </a>
+                  Self-Service Checkout →
+                </Link>
               </div>
             </div>
           </div>
@@ -236,14 +232,12 @@ export default function BlueprintPage() {
               >
                 Book Strategy Consultation →
               </Link>
-              <a
-                href="https://clientforge.theripplenexus.com/checkout?pkg=CAREER_BOOSTER"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/checkout?pkg=CAREER_BOOSTER"
                 className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-mono text-xs font-semibold tracking-widest uppercase rounded-full text-center hover:border-signal-gold/40 transition-colors whitespace-nowrap"
               >
-                Self-Service Checkout ↗
-              </a>
+                Self-Service Checkout →
+              </Link>
             </div>
           </div>
 
