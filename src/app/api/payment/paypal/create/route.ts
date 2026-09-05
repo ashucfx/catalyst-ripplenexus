@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   if (!ok) return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
 
   try {
-    const { product, email } = await req.json()
+    const { product, email, amount: explicitAmount, description: customDesc } = await req.json()
 
     let amountUSD: number
     let description: string
@@ -34,6 +34,10 @@ export async function POST(req: NextRequest) {
       amountUSD = Math.round(((booking.meeting_types as unknown as { price_usd: number }).price_usd) / 100)
       description = (booking.meeting_types as unknown as { name: string }).name
       invoiceId = `booking_${bookingId}`
+    } else if (explicitAmount && typeof explicitAmount === 'number' && explicitAmount > 0) {
+      amountUSD = Math.round(explicitAmount)
+      description = customDesc ?? (DESCRIPTIONS[product] ?? product)
+      invoiceId = `${product ?? 'package'}_${Date.now()}`
     } else {
       amountUSD = Math.round((PRICING[product as keyof typeof PRICING]?.usd || 0) / 100)
       if (!amountUSD) return NextResponse.json({ error: 'Invalid product.' }, { status: 400 })
