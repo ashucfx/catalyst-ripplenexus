@@ -143,26 +143,22 @@ export function Footer() {
             </p>
             <ul className="flex flex-col gap-2.5 text-xs">
               <li>
-                <a
-                  href="https://clientforge.theripplenexus.com/checkout"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/checkout"
                   className="font-medium text-bone hover:text-signal-gold transition-colors inline-flex items-center gap-1"
                 >
                   <span>Self-Service Checkout</span>
-                  <span className="text-signal-gold text-[10px]">↗</span>
-                </a>
+                  <span className="text-signal-gold text-[10px]">→</span>
+                </Link>
               </li>
               <li>
-                <a
-                  href="https://clientforge.theripplenexus.com/inquire"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/request"
                   className="text-muted hover:text-bone transition-colors inline-flex items-center gap-1"
                 >
                   <span>Submit Enterprise Inquiry</span>
-                  <span className="text-muted/60 text-[10px]">↗</span>
-                </a>
+                  <span className="text-muted/60 text-[10px]">→</span>
+                </Link>
               </li>
               <li className="pt-2 border-t border-white/[0.06]">
                 <Link href="/request" className="text-signal-gold font-medium hover:underline inline-flex items-center gap-1">
