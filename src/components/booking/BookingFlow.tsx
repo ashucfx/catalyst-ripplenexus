@@ -78,6 +78,7 @@ export function BookingFlow({ meetingType }: Props) {
   const [priceINR,   setPriceINR]   = useState(0)
   const [submitting,  setSubmitting]  = useState(false)
   const [bookErr,     setBookErr]     = useState('')
+  const [bankRef,     setBankRef]     = useState<string | null>(null)
 
   useEffect(() => { setTz(getUserTimezone()) }, [])
 
@@ -151,7 +152,11 @@ export function BookingFlow({ meetingType }: Props) {
     setSubmitting(false)
   }
 
-  async function handlePaymentSuccess() {
+  async function handlePaymentSuccess(data?: { method?: string; id?: string }) {
+    if (data?.method === 'bank_transfer') {
+      setBankRef(data.id ?? '')
+      return
+    }
     window.location.href = '/book/success'
   }
 
@@ -507,6 +512,24 @@ export function BookingFlow({ meetingType }: Props) {
               )}
             </div>
 
+            {bankRef && (
+              <div className="mb-6 p-5 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-bold">✓</span>
+                  <span className="font-mono text-xs text-emerald-400 font-bold uppercase tracking-wider">
+                    Meeting Slot Reserved for 72 Hours
+                  </span>
+                </div>
+                <p className="font-sans text-xs text-bone/90 leading-relaxed mb-2">
+                  Your appointment slot is held under reference <strong className="font-mono text-signal-gold">{bankRef}</strong>. 
+                  Transfer instructions have also been emailed to <strong className="text-bone">{email}</strong>.
+                </p>
+                <p className="font-mono text-[0.65rem] text-muted">
+                  After initiating your transfer, click &ldquo;Notify us it&apos;s sent&rdquo; in the email to fast-track verification.
+                </p>
+              </div>
+            )}
+
             <PaymentButton
               product={`booking:${bookingId}`}
               email={email}
@@ -514,7 +537,9 @@ export function BookingFlow({ meetingType }: Props) {
               onSuccess={handlePaymentSuccess}
               onError={(err) => setBookErr(err)}
               labelINR={`Pay ₹${(priceINR / 100).toFixed(0)} — Confirm Booking →`}
-              labelUSD={`Cards · PayPal — $${(priceUSD / 100).toFixed(0)} USD`}
+              labelUSD={`$${(priceUSD / 100).toFixed(0)} USD · Choose your payment method`}
+              amountIntl={priceUSD / 100}
+              currencyIntl={geo?.currency ?? 'USD'}
             />
 
             {bookErr && <p className="font-sans text-red-400 text-xs mt-4 p-3 rounded bg-red-950/40 border border-red-900/50">{bookErr}</p>}
