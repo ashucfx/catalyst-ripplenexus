@@ -301,14 +301,12 @@ export default function TestimonialsPage() {
               >
                 Book Strategy Consultation →
               </Link>
-              <a
-                href="https://clientforge.theripplenexus.com/checkout"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/checkout"
                 className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-sans text-xs font-semibold tracking-wider uppercase rounded-full hover:border-signal-gold/40 transition-colors text-center"
               >
-                Self-Service Checkout ↗
-              </a>
+                Self-Service Checkout →
+              </Link>
             </div>
           </div>
         </div>
