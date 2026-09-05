@@ -17,7 +17,13 @@ export async function POST(req: NextRequest) {
     }
 
     const expected = crypto.createHmac('sha256', secret).update(rawBody).digest('hex')
-    if (expected !== signature) {
+    const expectedBuf = Buffer.from(expected, 'hex')
+    const signatureBuf = Buffer.from(signature, 'hex')
+
+    if (
+      expectedBuf.length !== signatureBuf.length ||
+      !crypto.timingSafeEqual(expectedBuf, signatureBuf)
+    ) {
       console.error('[webhooks/razorpay] Invalid signature')
       return NextResponse.json({ error: 'Invalid signature.' }, { status: 400 })
     }
@@ -43,7 +49,10 @@ export async function POST(req: NextRequest) {
 
       // Notes contain the product/booking info passed during checkout creation
       const product = payment.notes?.product ?? 'unknown'
-      const amountINR = Math.round(amountPaise / 100)
+      const rawCurrency = (payment.currency || 'INR').toUpperCase()
+      const isIntl = rawCurrency !== 'INR'
+      const method = isIntl ? 'razorpay_intl' : 'razorpay'
+      const amount = Math.round(amountPaise / 100)
 
       if (product.startsWith('booking:')) {
         const bookingId = product.replace('booking:', '')
@@ -52,7 +61,7 @@ export async function POST(req: NextRequest) {
         const { data: booking } = await db.from('bookings').select('status').eq('id', bookingId).single()
 
         if (booking && (booking.status === 'pending_payment' || booking.status === 'cancelled')) {
-          const result = await confirmAndNotifyBooking(bookingId, paymentId, 'razorpay')
+          const result = await confirmAndNotifyBooking(bookingId, paymentId, method)
           if (result === 'error') console.error('[webhooks/razorpay] confirmAndNotify returned error for booking', bookingId)
           if (result === 'collision') console.error('[webhooks/razorpay] collision detected for booking', bookingId)
         }
@@ -71,23 +80,30 @@ export async function POST(req: NextRequest) {
         }
       }
 
+      const formattedDisplayAmount = isIntl
+        ? `${rawCurrency} ${amount.toFixed(2)}`
+        : `₹${amount.toLocaleString('en-IN')}`
+
       await Promise.all([
         insertPayment({
           email,
           product,
-          method:    'razorpay',
-          amount:    amountINR,
-          currency:  'INR',
+          method,
+          amount,
+          currency:  rawCurrency,
           paymentId,
           orderId,
         }),
         resend.emails.send({
           from:    FROM,
           to:      ADMIN_EMAIL,
-          subject: `Webhook received — ${product} — ₹${amountINR.toLocaleString('en-IN')} — ${email}`,
+          subject: `Webhook received — ${product} — ${formattedDisplayAmount} — ${email}`,
           html: `<div style="font-family:Arial;background:#0A0B0D;color:#F4F1EB;padding:24px;">
-            <p style="color:#B8935B;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;margin:0 0 8px;">WEBHOOK PAYMENT CONFIRMED — RAZORPAY</p>
+            <p style="color:#B8935B;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;margin:0 0 8px;">
+              ${isIntl ? 'WEBHOOK PAYMENT CONFIRMED — RAZORPAY INTL' : 'WEBHOOK PAYMENT CONFIRMED — RAZORPAY'}
+            </p>
             <p style="margin:0 0 4px;">Product: <strong>${product}</strong></p>
+            <p style="margin:0 0 4px;">Amount: <strong>${formattedDisplayAmount}</strong></p>
             <p style="margin:0 0 4px;">Email: <a href="mailto:${email}" style="color:#B8935B;">${email}</a></p>
             <p style="margin:0 0 4px;">Razorpay Order ID: ${orderId}</p>
             <p style="margin:0;">Razorpay Payment ID: ${paymentId}</p>
