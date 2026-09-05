@@ -1,19 +1,18 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
+import { NextResponse } from 'next/server'
 import { verifyAdminCookie, getAdminSecret } from '@/lib/auth/admin'
 
-export async function GET(req: NextRequest) {
-  const store      = await cookies()
-  const all        = store.getAll()
-  const authed     = await verifyAdminCookie()
-  const secretSet  = !!getAdminSecret()
-  const rawCookie  = req.headers.get('cookie')
+export async function GET() {
+  const authed = await verifyAdminCookie()
+  if (!authed) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  const secretSet = !!getAdminSecret()
 
   return NextResponse.json({
-    authed,
-    secretSet,
-    cookieNames:      all.map(c => c.name),
-    hasCatalystAdmin: all.some(c => c.name === 'catalyst_admin'),
-    rawCookieHeader:  rawCookie ?? '(none)',
+    status: 'ok',
+    authed: true,
+    secretConfigured: secretSet,
+    timestamp: new Date().toISOString(),
   })
 }
