@@ -360,16 +360,14 @@ export function Header() {
               <span>Book Strategy Consultation</span>
               <span className="font-bold text-sm">→</span>
             </Link>
-            <a
-              href="https://clientforge.theripplenexus.com/checkout"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/checkout"
               className="border border-white/20 text-bone px-6 py-3 rounded-full font-mono text-xs uppercase tracking-widest text-center hover:border-signal-gold/50 hover:bg-white/[0.04] transition-all whitespace-nowrap flex items-center justify-center gap-1.5"
               onClick={() => setOpen(false)}
             >
-              <span>ClientForge Instant Checkout</span>
-              <span className="text-muted/60 text-xs">↗</span>
-            </a>
+              <span>Instant Checkout</span>
+              <span className="text-signal-gold text-xs">→</span>
+            </Link>
           </div>
         </div>
       </div>
