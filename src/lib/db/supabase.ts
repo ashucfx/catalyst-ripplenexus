@@ -75,34 +75,48 @@ export async function insertLead(data: {
 }
 
 export async function insertPayment(data: {
-  email:     string
-  product:   string
-  method:    'razorpay' | 'paypal'
-  amount:    number
-  currency:  string
-  paymentId: string
-  orderId?:  string
-}) {
+  email:               string
+  product:             string
+  method:              'razorpay' | 'paypal' | 'bank_transfer' | 'razorpay_intl'
+  amount:              number
+  currency:            string
+  paymentId:           string
+  orderId?:            string
+  reconciliation_ref?: string
+}): Promise<{ id: string } | null> {
   const db = getDb()
-  if (!db) return
-  const { error } = await db.from('payments').insert({
-    email:      data.email,
-    product:    data.product,
-    method:     data.method,
-    amount:     data.amount,
-    currency:   data.currency,
-    payment_id: data.paymentId,
-    order_id:   data.orderId ?? null,
-    status:     'completed',
-  })
+  if (!db) return null
+  const { data: inserted, error } = await db
+    .from('payments')
+    .insert({
+      email:              data.email,
+      product:            data.product,
+      method:             data.method,
+      amount:             data.amount,
+      currency:           data.currency,
+      payment_id:         data.paymentId,
+      order_id:           data.orderId ?? null,
+      reconciliation_ref: data.reconciliation_ref ?? null,
+      status:             'completed',
+    })
+    .select('id')
+    .single()
+
   if (error) {
     if (error.code === '23505') {
       console.warn('[db] payment already recorded:', error.message)
+      const { data: existing } = await db
+        .from('payments')
+        .select('id')
+        .eq('payment_id', data.paymentId)
+        .maybeSingle()
+      return existing as { id: string } | null
     } else {
       console.error('[db] payments insert:', error.message)
       throw new Error(`Payment insert failed: ${error.message}`)
     }
   }
+  return inserted as { id: string } | null
 }
 
 export async function insertPlatformWaitlist(email: string, plan?: string, phone?: string) {
