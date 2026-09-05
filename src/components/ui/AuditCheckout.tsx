@@ -78,14 +78,12 @@ export function AuditCheckout() {
           >
             Pick Consultation Slot Now →
           </Link>
-          <a
-            href="https://clientforge.theripplenexus.com/checkout?pkg=AUDIT"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/checkout?pkg=AUDIT"
             className="w-full sm:w-auto px-7 py-3.5 border border-white/20 text-bone font-mono text-xs uppercase tracking-widest font-semibold rounded-full hover:border-signal-gold/40 transition-colors text-center whitespace-nowrap"
           >
-            Self-Service Checkout ↗
-          </a>
+            Self-Service Checkout →
+          </Link>
         </div>
       </div>
     )
