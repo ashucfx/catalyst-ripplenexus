@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getDb } from '@/lib/db/supabase'
+import { timingSafeEqualStrings } from '@/lib/auth/token'
 
 export async function GET(req: NextRequest) {
-  // Verify cron authorization
-  const authHeader = req.headers.get('authorization')
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  // Verify cron authorization securely
+  const authHeader = req.headers.get('authorization') ?? ''
+  const cronSecret = process.env.CRON_SECRET
+  if (!cronSecret || !timingSafeEqualStrings(authHeader, `Bearer ${cronSecret}`)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
