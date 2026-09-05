@@ -32,23 +32,19 @@ export function BlueprintPricingMatrix() {
                 Book Strategy Consultation →
               </Link>
 
-            <a
-              href="https://clientforge.theripplenexus.com/checkout"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/checkout"
               className="w-full sm:w-auto px-6 py-3.5 border border-white/20 text-bone font-sans text-xs font-semibold tracking-wider uppercase rounded-full text-center hover:border-signal-gold/40 hover:bg-white/[0.05] transition-all"
             >
-              Self-Service Checkout ↗
-            </a>
+              Self-Service Checkout →
+            </Link>
 
-            <a
-              href="https://clientforge.theripplenexus.com/inquire"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/request"
               className="w-full sm:w-auto font-mono text-xs text-muted hover:text-signal-gold tracking-wider uppercase text-center py-2 transition-colors"
             >
-              Submit Direct Inquiry ↗
-            </a>
+              Submit Direct Inquiry →
+            </Link>
           </div>
         </div>
       </div>
