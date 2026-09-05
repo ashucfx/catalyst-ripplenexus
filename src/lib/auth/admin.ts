@@ -1,23 +1,36 @@
 import { cookies } from 'next/headers'
+import {
+  COOKIE_NAME,
+  MAX_AGE,
+  getAdminSecret,
+  timingSafeEqualStrings,
+  verifyAdminSecret,
+  createAdminSessionToken,
+  verifyAdminToken,
+} from './token'
 
-const COOKIE_NAME = 'catalyst_admin'
-const MAX_AGE     = 60 * 60 * 8  // 8 hours
-
-export function getAdminSecret(): string {
-  return process.env.ADMIN_SECRET ?? ''
+export {
+  COOKIE_NAME,
+  MAX_AGE,
+  getAdminSecret,
+  timingSafeEqualStrings,
+  verifyAdminSecret,
+  createAdminSessionToken,
+  verifyAdminToken,
 }
 
 export async function verifyAdminCookie(): Promise<boolean> {
   const store  = await cookies()
   const cookie = store.get(COOKIE_NAME)
   if (!cookie) return false
-  return cookie.value === getAdminSecret() && !!getAdminSecret()
+  return await verifyAdminToken(cookie.value)
 }
 
 export async function setAdminCookie(secret: string): Promise<boolean> {
-  if (!secret || secret !== getAdminSecret()) return false
+  if (!verifyAdminSecret(secret)) return false
   const store = await cookies()
-  store.set(COOKIE_NAME, secret, {
+  const token = await createAdminSessionToken()
+  store.set(COOKIE_NAME, token, {
     httpOnly: true,
     secure:   process.env.NODE_ENV === 'production',
     sameSite: 'lax',
