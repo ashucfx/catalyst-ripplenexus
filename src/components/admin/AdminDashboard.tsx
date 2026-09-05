@@ -4,6 +4,8 @@ import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { CRMTab } from '@/components/admin/CRMTab'
+import { PaymentsTab } from '@/components/admin/PaymentsTab'
+import { CostEngineTab } from '@/components/admin/CostEngineTab'
 
 const DAYS_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 
@@ -55,7 +57,7 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
   const router = useRouter()
   const [bookings,    setBookings]   = useState<Booking[]>(initialBookings)
   const [rules,       setRules]      = useState<Rule[]>(initialRules)
-  const [tab,         setTab]        = useState<'bookings' | 'availability' | 'crm'>('bookings')
+  const [tab, setTab] = useState<'bookings' | 'availability' | 'crm' | 'payments' | 'cost_engine'>('bookings')
   const [blockedDate, setBlockedDate] = useState('')
   const [blockedNote, setBlockedNote] = useState('')
   const [blockMsg,    setBlockMsg]    = useState('')
@@ -122,6 +124,8 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
     { id: 'bookings',     label: 'Bookings' },
     { id: 'availability', label: 'Availability' },
     { id: 'crm',          label: 'CRM Leads & Export' },
+    { id: 'payments',     label: '💳 Payments' },
+    { id: 'cost_engine',  label: '🛡️ Cost & Revenue Engine' },
   ] as const
 
   return (
@@ -351,6 +355,12 @@ export function AdminDashboard({ initialBookings, initialRules, adminTZ }: Props
 
         {/* ── CRM TAB ── */}
         {tab === 'crm' && <CRMTab />}
+
+        {/* ── PAYMENTS TAB ── */}
+        {tab === 'payments' && <PaymentsTab />}
+
+        {/* ── COST ENGINE & REVENUE PROTECTION TAB ── */}
+        {tab === 'cost_engine' && <CostEngineTab />}
 
       </main>
     </div>
