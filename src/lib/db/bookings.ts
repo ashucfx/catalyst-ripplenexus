@@ -84,19 +84,21 @@ export async function getBookingsForMonth(year: number, month: number) {
   const to   = new Date(year, month, 1).toISOString()
   const { data } = await db
     .from('bookings')
-    .select('id,starts_at,ends_at,status,created_at')
+    .select('id,starts_at,ends_at,status,created_at,payment_method')
     .gte('starts_at', from)
     .lt('starts_at', to)
     .in('status', ['confirmed','pending_payment'])
     
   if (!data) return []
 
-  // 1. Lazy Cleanup
+  // 1. Lazy Cleanup: 15 min for regular checkout, 72 hours for bank transfers
   const now = Date.now()
-  const TTL = 15 * 60 * 1000
+  const TTL_DEFAULT = 15 * 60 * 1000
+  const TTL_BANK_TRANSFER = 72 * 60 * 60 * 1000
   const validBookings = data.filter(b => {
     if (b.status === 'confirmed') return true
-    return (now - new Date(b.created_at).getTime()) < TTL
+    const ttl = b.payment_method === 'bank_transfer' ? TTL_BANK_TRANSFER : TTL_DEFAULT
+    return (now - new Date(b.created_at).getTime()) < ttl
   })
 
   // 2. Fire and Forget cleanup
@@ -118,19 +120,21 @@ export async function getBookingsForDate(dateISO: string) {
   const dayEnd   = new Date(dateISO + 'T23:59:59Z').toISOString()
   const { data } = await db
     .from('bookings')
-    .select('id,starts_at,ends_at,status,created_at')
+    .select('id,starts_at,ends_at,status,created_at,payment_method')
     .gte('starts_at', dayStart)
     .lte('starts_at', dayEnd)
     .in('status', ['confirmed','pending_payment'])
 
   if (!data) return []
 
-  // 1. Lazy Cleanup
+  // 1. Lazy Cleanup: 15 min for regular checkout, 72 hours for bank transfers
   const now = Date.now()
-  const TTL = 15 * 60 * 1000
+  const TTL_DEFAULT = 15 * 60 * 1000
+  const TTL_BANK_TRANSFER = 72 * 60 * 60 * 1000
   const validBookings = data.filter(b => {
     if (b.status === 'confirmed') return true
-    return (now - new Date(b.created_at).getTime()) < TTL
+    const ttl = b.payment_method === 'bank_transfer' ? TTL_BANK_TRANSFER : TTL_DEFAULT
+    return (now - new Date(b.created_at).getTime()) < ttl
   })
 
   // 2. Fire and Forget cleanup
@@ -143,6 +147,16 @@ export async function getBookingsForDate(dateISO: string) {
   }
 
   return validBookings
+}
+
+export async function markBookingAwaitingTransfer(bookingId: string): Promise<void> {
+  const db = getDb()
+  if (!db) return
+  await db
+    .from('bookings')
+    .update({ payment_method: 'bank_transfer' })
+    .eq('id', bookingId)
+    .eq('status', 'pending_payment')
 }
 
 export async function getPendingBookingForUser(email: string, startISO: string): Promise<Booking | null> {
