@@ -69,14 +69,12 @@ export default function AuditPage() {
               >
                 Book Strategy Consultation →
               </Link>
-              <a
-                href="https://clientforge.theripplenexus.com/checkout?pkg=AUDIT"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/checkout?pkg=AUDIT"
                 className="w-full sm:w-auto px-7 py-3.5 border border-white/20 text-bone font-mono text-xs font-semibold tracking-widest uppercase rounded-full text-center hover:border-signal-gold/50 transition-colors whitespace-nowrap"
               >
-                Self-Service Checkout ↗
-              </a>
+                Self-Service Checkout →
+              </Link>
             </div>
           </div>
 
