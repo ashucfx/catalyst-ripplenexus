@@ -3,10 +3,19 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import Link from 'next/link'
 
+const BASE = 'https://www.catalyst.theripplenexus.com'
+
 export const metadata: Metadata = {
-  title: 'Privacy Policy — Catalyst by Ripple Nexus',
-  description: 'How Catalyst collects, uses, and protects your executive data, resume information, and privacy.',
-  robots: { index: false, follow: false },
+  title: 'Privacy Policy & Executive Data Discretion — Catalyst by Ripple Nexus',
+  description: 'How Catalyst collects, uses, and protects your executive data, resume details, and confidentiality under strict institutional discretion.',
+  alternates: { canonical: `${BASE}/privacy` },
+  openGraph: {
+    title: 'Privacy Policy — Catalyst by Ripple Nexus',
+    description: 'Executive data protection and confidentiality protocols at Catalyst.',
+    url: `${BASE}/privacy`,
+    type: 'website',
+  },
+  robots: { index: true, follow: true },
 }
 
 export default function PrivacyPage() {

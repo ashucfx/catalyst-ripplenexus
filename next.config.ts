@@ -16,6 +16,18 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/og-image.png',
+        destination: '/opengraph-image',
+      },
+      {
+        source: '/twitter-image.png',
+        destination: '/twitter-image',
+      },
+    ]
+  },
   async headers() {
     return [
       {

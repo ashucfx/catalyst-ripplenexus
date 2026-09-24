@@ -3,10 +3,19 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import Link from 'next/link'
 
+const BASE = 'https://www.catalyst.theripplenexus.com'
+
 export const metadata: Metadata = {
-  title: 'Terms of Service — Catalyst by Ripple Nexus',
-  description: 'Terms governing the use of Catalyst services, executive consultations, and the www.catalyst.theripplenexus.com website.',
-  robots: { index: false, follow: false },
+  title: 'Terms of Service & Institutional Framework — Catalyst by Ripple Nexus',
+  description: 'Terms governing the engagement of Catalyst executive positioning services, Market Value Audits, and advisory engagements.',
+  alternates: { canonical: `${BASE}/terms` },
+  openGraph: {
+    title: 'Terms of Service — Catalyst by Ripple Nexus',
+    description: 'Terms governing executive positioning and consultation engagements.',
+    url: `${BASE}/terms`,
+    type: 'website',
+  },
+  robots: { index: true, follow: true },
 }
 
 export default function TermsPage() {

@@ -4,10 +4,29 @@ import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/Button'
 import { GeoPrice } from '@/components/ui/GeoPrice'
 
+const BASE = 'https://www.catalyst.theripplenexus.com'
+
 export const metadata: Metadata = {
-  title: 'The System — Catalyst Institutional Architecture',
+  title: 'The System — Catalyst Talent Positioning Architecture',
   description:
-    'Catalyst is a professional identity engineering system that re-architects how the global talent market perceives your value.',
+    'Catalyst is a professional identity engineering system that re-architects how the global talent market perceives your executive value. Explore our methodology, signalling theory, and institutional frameworks.',
+  alternates: { canonical: `${BASE}/system` },
+  openGraph: {
+    title: 'The System — Catalyst Talent Positioning Architecture',
+    description:
+      'Professional identity engineering and executive narrative architecture for senior leaders across India, UAE, Singapore, US, and UK.',
+    url: `${BASE}/system`,
+    type: 'website',
+    siteName: 'Catalyst by Ripple Nexus',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Catalyst Institutional System' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'The System — Catalyst Talent Positioning Architecture',
+    description:
+      'Professional identity engineering and executive narrative architecture for senior leaders.',
+    images: ['/og-image.png'],
+  },
 }
 
 const differentiators = [

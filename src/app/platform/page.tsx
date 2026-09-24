@@ -6,10 +6,27 @@ import { TPIMeter } from '@/components/ui/TPIMeter'
 import { InflectionMark } from '@/components/ui/InflectionMark'
 import { PricingSection } from '@/components/ui/PricingSection'
 
+const BASE = 'https://www.catalyst.theripplenexus.com'
+
 export const metadata: Metadata = {
-  title: 'Catalyst Platform — The Intelligence Engine',
+  title: 'The Catalyst Intelligence Engine — Platform Architecture — Catalyst',
   description:
-    'The Catalyst Intelligence Engine (CIE) — four modules powering real-time career positioning. Skills Ontology Mapper, Narrative Discretion Agent, Network Gravity Tracker, Career Pathing Canvas.',
+    'The Catalyst Intelligence Engine (CIE) — four AI-powered modules powering real-time career positioning. Skills Ontology Mapper, Narrative Discretion Agent, Network Gravity Tracker, and Career Pathing Canvas.',
+  alternates: { canonical: `${BASE}/platform` },
+  openGraph: {
+    title: 'Catalyst Intelligence Engine — Platform Architecture',
+    description: 'Four AI-powered modules: Skills Ontology Mapper, Narrative Discretion Agent, Network Gravity Tracker & Career Pathing Canvas.',
+    url: `${BASE}/platform`,
+    type: 'website',
+    siteName: 'Catalyst by Ripple Nexus',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Catalyst Intelligence Engine' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Catalyst Intelligence Engine — Platform Architecture',
+    description: 'Four AI-powered modules powering real-time career positioning.',
+    images: ['/og-image.png'],
+  },
 }
 
 const modules = [

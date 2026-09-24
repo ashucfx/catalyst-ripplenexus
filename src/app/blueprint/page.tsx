@@ -5,10 +5,27 @@ import { BlueprintPricingMatrix } from '@/components/ui/BlueprintPricingMatrix'
 import { Disclaimer } from '@/components/ui/Disclaimer'
 import Link from 'next/link'
 
+const BASE = 'https://www.catalyst.theripplenexus.com'
+
 export const metadata: Metadata = {
-  title: 'Career Booster & Premium Plus Packages — Catalyst by Ripple Nexus',
+  title: 'Career Booster & Premium Plus Packages — Executive Resume, LinkedIn & Portfolio — Catalyst',
   description:
-    'Executive Resume Rewrite, LinkedIn Profile & Custom Banner Design, Tailored Cover Letters, Personal Web Portfolio Website, Country-Based & Multi-Lingual Optimization.',
+    'Executive Resume Rewrite (98%+ ATS score), full LinkedIn Profile optimization with custom banner design, tailored cover letters, personal web portfolio, and multi-lingual CV adaptation. Country-specific optimization for India, UAE, Singapore, US & UK.',
+  alternates: { canonical: `${BASE}/blueprint` },
+  openGraph: {
+    title: 'Career Booster & Premium Plus Packages — Catalyst by Ripple Nexus',
+    description: 'Executive Resume Rewrite, LinkedIn optimization, custom banner design, cover letters & personal web portfolio. ATS 98%+ guarantee.',
+    url: `${BASE}/blueprint`,
+    type: 'website',
+    siteName: 'Catalyst by Ripple Nexus',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Catalyst Career Packages' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Career Booster & Premium Plus — Catalyst by Ripple Nexus',
+    description: 'Executive Resume, LinkedIn, Banner, Cover Letter & Portfolio. ATS 98%+ guarantee.',
+    images: ['/og-image.png'],
+  },
 }
 
 export default function BlueprintPage() {

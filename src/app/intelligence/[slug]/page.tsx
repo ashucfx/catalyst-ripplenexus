@@ -241,6 +241,8 @@ export async function generateStaticParams() {
   return Object.keys(articles).map((slug) => ({ slug }))
 }
 
+const BASE = 'https://www.catalyst.theripplenexus.com'
+
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
@@ -250,6 +252,25 @@ export async function generateMetadata(
   return {
     title: `${article.title} — Catalyst Intelligence`,
     description: article.subtitle,
+    alternates: { canonical: `${BASE}/intelligence/${slug}` },
+    authors: [{ name: 'Catalyst by Ripple Nexus' }],
+    openGraph: {
+      title: `${article.title} — Catalyst Intelligence`,
+      description: article.subtitle,
+      url: `${BASE}/intelligence/${slug}`,
+      type: 'article',
+      siteName: 'Catalyst by Ripple Nexus',
+      publishedTime: article.date,
+      authors: ['Catalyst by Ripple Nexus'],
+      section: article.cluster,
+      images: [{ url: '/og-image.png', width: 1200, height: 630, alt: article.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.subtitle,
+      images: ['/og-image.png'],
+    },
   }
 }
 
@@ -263,8 +284,40 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const prevSlug = currentIndex > 0 ? slugList[currentIndex - 1] : null
   const nextSlug = currentIndex < slugList.length - 1 ? slugList[currentIndex + 1] : null
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.subtitle,
+    datePublished: article.date,
+    author: {
+      '@type': 'Organization',
+      name: 'Catalyst by Ripple Nexus',
+      url: BASE,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Catalyst by Ripple Nexus',
+      url: BASE,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${BASE}/og-image.png`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${BASE}/intelligence/${slug}`,
+    },
+    articleSection: article.cluster,
+    inLanguage: 'en',
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <Header />
       <main className="pt-32 pb-16">
         <div className="max-w-dossier mx-auto px-6 lg:px-12">

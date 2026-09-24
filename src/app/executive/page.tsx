@@ -5,10 +5,27 @@ import { Button } from '@/components/ui/Button'
 import { GeoExecutivePrice } from '@/components/ui/GeoExecutivePrice'
 import { Disclaimer } from '@/components/ui/Disclaimer'
 
+const BASE = 'https://www.catalyst.theripplenexus.com'
+
 export const metadata: Metadata = {
-  title: 'Sovereign Executive Suite — Tier III',
+  title: 'Sovereign Executive Suite — C-Suite & Board-Level Career Positioning — Catalyst',
   description:
-    'The premium offer for CEOs, CFOs, Managing Directors, and Board aspirants. Identity masking, narrative discretion, and high-stakes negotiation coaching.',
+    'Confidential positioning service for CEOs, CFOs, Managing Directors, and Board aspirants. Identity masking, narrative discretion, digital footprint hygiene, and high-stakes equity negotiation coaching.',
+  alternates: { canonical: `${BASE}/executive` },
+  openGraph: {
+    title: 'Sovereign Executive Suite — Catalyst by Ripple Nexus',
+    description: 'Confidential C-Suite positioning: identity masking, narrative discretion, and high-stakes compensation negotiation.',
+    url: `${BASE}/executive`,
+    type: 'website',
+    siteName: 'Catalyst by Ripple Nexus',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Catalyst Sovereign Executive Suite' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Sovereign Executive Suite — Catalyst by Ripple Nexus',
+    description: 'Confidential C-Suite positioning: identity masking, narrative discretion & equity negotiation.',
+    images: ['/og-image.png'],
+  },
 }
 
 export default function ExecutivePage() {

@@ -3,10 +3,27 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/Button'
 
+const BASE = 'https://www.catalyst.theripplenexus.com'
+
 export const metadata: Metadata = {
-  title: 'Intelligence — Research & Thought Leadership',
+  title: 'Executive Intelligence — Career Research & Thought Leadership — Catalyst',
   description:
-    'Original research, white papers, and strategic analysis on Talent Positioning Architecture, the AI visibility crisis, and the future of professional capital.',
+    'Original research on Talent Positioning Architecture, the AI visibility crisis, executive compensation dynamics, algorithmic recruitment, and the future of professional capital. By Catalyst by Ripple Nexus.',
+  alternates: { canonical: `${BASE}/intelligence` },
+  openGraph: {
+    title: 'Executive Intelligence — Catalyst by Ripple Nexus',
+    description: 'Original research on executive positioning, AI recruitment, compensation dynamics & the future of professional capital.',
+    url: `${BASE}/intelligence`,
+    type: 'website',
+    siteName: 'Catalyst by Ripple Nexus',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Catalyst Intelligence' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Executive Intelligence — Catalyst by Ripple Nexus',
+    description: 'Original research on executive positioning, AI recruitment & compensation dynamics.',
+    images: ['/og-image.png'],
+  },
 }
 
 const articles = [

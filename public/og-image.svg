@@ -1,0 +1,70 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background: Obsidian Void -->
+  <rect width="1200" height="630" fill="#0A0B0D"/>
+
+  <!-- Subtle Ambient Glow -->
+  <radialGradient id="goldGlow" cx="20%" cy="20%" r="60%">
+    <stop offset="0%" stop-color="#B8935B" stop-opacity="0.12"/>
+    <stop offset="100%" stop-color="#0A0B0D" stop-opacity="0"/>
+  </radialGradient>
+  <rect width="1200" height="630" fill="url(#goldGlow)"/>
+
+  <!-- Top Gold Hairline Border -->
+  <line x1="0" y1="0" x2="1200" y2="0" stroke="url(#goldHairline)" stroke-width="2"/>
+  <linearGradient id="goldHairline" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+    <stop offset="0%" stop-color="#B8935B" stop-opacity="0"/>
+    <stop offset="50%" stop-color="#B8935B" stop-opacity="0.8"/>
+    <stop offset="100%" stop-color="#B8935B" stop-opacity="0"/>
+  </linearGradient>
+
+  <!-- Inflection Mark Logo (Exact Catalyst Mark) -->
+  <g transform="translate(80, 75) scale(0.6)">
+    <polygon points="0,120 22,120 96,0 74,0" fill="#F4F1EB"/>
+    <polygon points="96,0 74,0 50,38 72,38" fill="#B8935B"/>
+    <circle cx="85" cy="12" r="3.5" fill="#0A0B0D"/>
+  </g>
+
+  <!-- Institution Subtitle -->
+  <text x="160" y="120" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" letter-spacing="5" fill="#B8935B" text-transform="uppercase">
+    A RIPPLE NEXUS INSTITUTION
+  </text>
+
+  <!-- Main Headline -->
+  <text x="80" y="270" font-family="'Cormorant', Georgia, serif" font-size="64" font-weight="500" fill="#F4F1EB" letter-spacing="-1.5">
+    Get Paid What You're Actually Worth.
+  </text>
+
+  <!-- Subheadline -->
+  <text x="80" y="340" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="400" fill="#8B8681">
+    Executive Talent Positioning Architecture &amp; Professional Identity Engineering.
+  </text>
+  <text x="80" y="375" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="500" fill="#C5A059">
+    Average client salary uplift: $47,000 (+42% compensation growth).
+  </text>
+
+  <!-- Trust Badges Row -->
+  <g transform="translate(80, 440)">
+    <!-- Badge 1 -->
+    <rect x="0" y="0" width="220" height="36" rx="18" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+    <text x="110" y="23" font-family="'JetBrains Mono', monospace" font-size="12" fill="#F4F1EB" text-anchor="middle">ATS 98%+ Pass Rate</text>
+
+    <!-- Badge 2 -->
+    <rect x="235" y="0" width="270" height="36" rx="18" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+    <text x="370" y="23" font-family="'JetBrains Mono', monospace" font-size="12" fill="#F4F1EB" text-anchor="middle">48+ Verified Executive Reviews</text>
+
+    <!-- Badge 3 -->
+    <rect x="520" y="0" width="280" height="36" rx="18" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+    <text x="660" y="23" font-family="'JetBrains Mono', monospace" font-size="12" fill="#F4F1EB" text-anchor="middle">India · UAE/GCC · ASEAN · Global</text>
+  </g>
+
+  <!-- Bottom Divider Line -->
+  <line x1="80" y1="530" x2="1120" y2="530" stroke="#1F2226" stroke-width="1"/>
+
+  <!-- Footer Brand Elements -->
+  <text x="80" y="570" font-family="'Inter', -apple-system, BlinkMacSystemFont, sans-serif" font-size="15" font-weight="700" letter-spacing="4" fill="#B8935B">
+    CATALYST
+  </text>
+  <text x="1120" y="570" font-family="'Inter', -apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="400" fill="#8B8681" text-anchor="end">
+    catalyst.theripplenexus.com
+  </text>
+</svg>

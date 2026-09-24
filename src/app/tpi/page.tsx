@@ -5,10 +5,27 @@ import { TPICalculator } from '@/components/ui/TPICalculator'
 import { Disclaimer } from '@/components/ui/Disclaimer'
 import Link from 'next/link'
 
+const BASE = 'https://www.catalyst.theripplenexus.com'
+
 export const metadata: Metadata = {
-  title: 'Free TPI Score Diagnostic — Catalyst by Ripple Nexus',
+  title: 'Free Talent Positioning Index (TPI) Score — Executive Career Diagnostic — Catalyst',
   description:
-    'Calculate your Talent Positioning Index (TPI) score. 5-question executive diagnostic benchmarking your market visibility, compensation leverage, and ATS pass rates.',
+    'Calculate your free Talent Positioning Index (TPI) score. 5-question executive diagnostic benchmarking your market visibility, compensation leverage, ATS pass rates, and positioning gap against 75th–90th percentile peers.',
+  alternates: { canonical: `${BASE}/tpi` },
+  openGraph: {
+    title: 'Free TPI Score Diagnostic — Catalyst by Ripple Nexus',
+    description: 'Complimentary 5-question executive diagnostic. Benchmark your market visibility, compensation leverage & ATS pass rates.',
+    url: `${BASE}/tpi`,
+    type: 'website',
+    siteName: 'Catalyst by Ripple Nexus',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Catalyst TPI Diagnostic' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free TPI Score — Executive Career Diagnostic — Catalyst',
+    description: 'Complimentary 5-question executive diagnostic. Benchmark your positioning against top-tier peers.',
+    images: ['/og-image.png'],
+  },
 }
 
 export default function TPIPage() {

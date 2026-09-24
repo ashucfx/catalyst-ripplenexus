@@ -5,10 +5,27 @@ import { AuditCheckout } from '@/components/ui/AuditCheckout'
 import { Disclaimer } from '@/components/ui/Disclaimer'
 import Link from 'next/link'
 
+const BASE = 'https://www.catalyst.theripplenexus.com'
+
 export const metadata: Metadata = {
-  title: 'Market Value Audit & Strategy — Catalyst by Ripple Nexus',
+  title: 'Market Value Audit — Executive Resume & Compensation Benchmark — Catalyst',
   description:
-    'Confidential analyst-prepared evaluation of your executive market positioning, ATS keyword pass rates, compensation benchmarking, and 90-day positioning roadmap.',
+    'Confidential analyst-prepared evaluation of your executive market positioning. ATS keyword pass rate analysis, Talent Positioning Index (TPI) diagnostic, compensation benchmarking, and 90-day positioning roadmap. Delivered in 48 hours.',
+  alternates: { canonical: `${BASE}/audit` },
+  openGraph: {
+    title: 'Market Value Audit — Catalyst by Ripple Nexus',
+    description: 'Confidential ATS analysis, TPI diagnostic, compensation benchmark & 90-day positioning roadmap. Delivered in 48 hours.',
+    url: `${BASE}/audit`,
+    type: 'website',
+    siteName: 'Catalyst by Ripple Nexus',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Catalyst Market Value Audit' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Market Value Audit — Catalyst by Ripple Nexus',
+    description: 'Confidential ATS analysis, TPI diagnostic & compensation benchmark. Delivered in 48 hours.',
+    images: ['/og-image.png'],
+  },
 }
 
 export default function AuditPage() {

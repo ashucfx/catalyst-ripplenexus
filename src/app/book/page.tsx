@@ -5,9 +5,29 @@ import { Footer } from '@/components/layout/Footer'
 import { getMeetingTypes } from '@/lib/db/bookings'
 import { Disclaimer } from '@/components/ui/Disclaimer'
 
+const BASE = 'https://www.catalyst.theripplenexus.com'
+
 export const metadata: Metadata = {
   title: 'Book a Strategy Consultation Session — Catalyst by Ripple Nexus',
-  description: 'Select a 1-on-1 executive strategy session, Market Value Audit, or positioning call with senior Catalyst consultants.',
+  description:
+    'Schedule a confidential 1-on-1 executive strategy consultation, Market Value Audit, or Positioning Blueprint session with senior Catalyst advisors.',
+  alternates: { canonical: `${BASE}/book` },
+  openGraph: {
+    title: 'Book an Executive Strategy Session — Catalyst by Ripple Nexus',
+    description:
+      'Schedule a confidential 1-on-1 executive strategy consultation, Market Value Audit, or Positioning Blueprint session.',
+    url: `${BASE}/book`,
+    type: 'website',
+    siteName: 'Catalyst by Ripple Nexus',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Book Catalyst Executive Session' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Book an Executive Strategy Session — Catalyst by Ripple Nexus',
+    description:
+      'Schedule a confidential 1-on-1 executive strategy consultation, Market Value Audit, or Positioning Blueprint session.',
+    images: ['/og-image.png'],
+  },
 }
 
 const icons: Record<string, string> = {

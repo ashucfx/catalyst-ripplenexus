@@ -11,13 +11,31 @@ interface Props {
   params: Promise<{ type: string }>
 }
 
+const BASE = 'https://www.catalyst.theripplenexus.com'
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { type } = await params
   const mt = await getMeetingType(type)
   if (!mt) return { title: 'Not Found' }
+  const url = `${BASE}/book/${type}`
   return {
     title: `Book: ${mt.name} — Catalyst by Ripple Nexus`,
     description: mt.description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: `Book: ${mt.name} — Catalyst by Ripple Nexus`,
+      description: mt.description,
+      url,
+      type: 'website',
+      siteName: 'Catalyst by Ripple Nexus',
+      images: [{ url: '/og-image.png', width: 1200, height: 630, alt: mt.name }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Book: ${mt.name} — Catalyst`,
+      description: mt.description,
+      images: ['/og-image.png'],
+    },
   }
 }
 
